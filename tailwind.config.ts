@@ -1,19 +1,23 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
+import { keepTheme } from 'keep-react/keepTheme';
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}', // Adjust path to include TypeScript and JavaScript files
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}', // Ensure paths include all relevant directories
   ],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
+      fontWeight: {
+        'extra-light': '200',
+        'light-bold': '550',
+        'blackest': '950'
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    // Add any plugins you might be using
+  ],
 };
-export default config;
+
+export default keepTheme(config);
