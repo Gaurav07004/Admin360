@@ -2,8 +2,8 @@
 "use client";
 
 import Image from "next/image";
-import { FiSearch } from "react-icons/fi";
-import { IoMailOutline, IoNotificationsOutline, IoRemoveOutline, IoCalendarOutline } from "react-icons/io5";
+//import { FiSearch } from "react-icons/fi";
+import { IoMailOutline, IoRemoveOutline, IoCalendarOutline } from "react-icons/io5";
 import profilePic from "../Assets/Profile.jpg";
 
 const Header: React.FC = () => {
@@ -42,7 +42,7 @@ const Header: React.FC = () => {
                 </div>
                 <IoRemoveOutline className="text-3xl text-gray-300 rotate-90" />
                 <div className="flex items-center space-x-2">
-                    <Image src={profilePic} alt="Profile Picture" className="w-10 h-10 object-cover rounded-full shadow-md" />
+                    <Image src={profilePic} alt="Profile Picture" className="w-10 h-10 object-cover rounded-md shadow-md" />
                     <div>
                         <p className="text-sm font-semibold text-gray-600">Gaurav Singh</p>
                         <p className="text-xs text-gray-400">Sales Manager</p>
