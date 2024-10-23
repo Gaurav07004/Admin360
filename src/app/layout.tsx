@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
-import StoreProvider from './StoreProvider'; // Import the StoreProvider
-import Sidebar from '@/components/Sidebar'; // Adjust the path as needed
-import Header from '@/components/Header'; // Adjust the path as needed
+import StoreProvider from './StoreProvider';
+import Sidebar from '@/components/Sidebar';
+import Header from '@/components/Header';
+import { ToastWrapper } from 'keep-react';
 
 const manrope = localFont({
   src: './fonts/Manrope.ttf',
@@ -25,13 +26,30 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${manrope.variable} antialiased`}>
         <StoreProvider>
-          <div className="flex p-4 gap-5 h-[44.2rem]">
-            <Sidebar />
-            <div className="flex-1 flex flex-col gap-5">
+          <ToastWrapper
+            toastOptions={{
+              classNames: {
+                toast: 'dark:bg-metal-900 border dark:border-metal-800 border-green-400 bg-white py-5 px-6',
+                title: 'text-metal-900 dark:text-white',
+                description: 'dark:text-metal-300 text-metal-600',
+                actionButton: 'dark:bg-metal-800 bg-metal-900 text-white',
+                cancelButton: 'dark:bg-metal-800 bg-metal-900 text-white',
+                closeButton: 'dark:bg-metal-800 bg-metal-900 text-white',
+                error: 'text-error-500',
+                success: 'text-success-500',
+                warning: 'text-warning-500',
+                info: 'text-primary-500',
+              },
+            }}
+          />
+
+          <div className="flex p-4">
+            <div className="w-64 fixed h-screen">
+              <Sidebar />
+            </div>
+            <div className="ml-64 flex-1 flex flex-col overflow-auto gap-5">
               <Header />
-              <main className='overflow-y-auto'>
-                {children}
-              </main>
+              <main className="gap-5">{children}</main>
             </div>
           </div>
         </StoreProvider>

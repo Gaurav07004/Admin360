@@ -1,17 +1,16 @@
 import React from 'react';
-import { CalendarBlank, Crown, CurrencyInr, Spinner, Tag, Hash } from "phosphor-react";
 import TableComponent from '@/components/table';
 import Wooden from '../Assets/Wooden.webp';
 import Sofa from '../Assets/Sofa.webp';
 // import Image from 'next/image';
 
 const columns = [
-    { id: 'id', label: 'Sr. No', icon: <Hash className="size-4 fill-metal-900 dark:fill-white" /> },
-    { id: 'product', label: 'Product', icon: <Tag className="size-4 fill-metal-900 dark:fill-white" /> },
-    { id: 'date', label: 'Date', icon: <CalendarBlank className="size-4 fill-metal-900 dark:fill-white" /> },
-    { id: 'status', label: 'Status', icon: <Spinner className="size-4 fill-metal-900 dark:fill-white" /> },
-    { id: 'price', label: 'Price', icon: <CurrencyInr className="size-4 fill-metal-900 dark:fill-white" /> },
-    { id: 'customer', label: 'Customer', icon: <Crown className="size-4 fill-metal-900 dark:fill-white" /> },
+    { id: 'id', label: 'Sr. No' },
+    { id: 'product', label: 'Product' },
+    { id: 'date', label: 'Date' },
+    { id: 'status', label: 'Status' },
+    { id: 'price', label: 'Price' },
+    { id: 'customer', label: 'Customer' },
 ];
 
 const data = [

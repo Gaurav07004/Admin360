@@ -29,7 +29,7 @@ const Sidebar: React.FC = () => {
                     className={classNames("p-[0.60rem] w-full text-left rounded flex items-center justify-between transition text-[0.85rem] font-medium", {
                         "bg-[#698474] text-[#ECEFF1]": activeMenu === menu,
                         "text-red-700": menu === "Log out",
-                        "hover:bg-[#69847482] hover:text-white": activeMenu !== menu && menu !== "Log out",
+                        "hover:bg-[#6984742c]": activeMenu !== menu && menu !== "Log out",
                     })}
                     role="button"
                 >
@@ -44,7 +44,7 @@ const Sidebar: React.FC = () => {
     );
 
     return (
-        <nav className="bg-white w-[15rem] h-auto p-5 rounded-[1rem]">
+        <nav className="bg-white w-[15rem] h-auto py-4 px-6 rounded-[1rem]">
             <ul className="text-black space-y-2 flex flex-col gap-[1.45rem]">
                 <section className="flex flex-col space-y-2">
                     <Image className="mb-4" src={logo} alt="logo" width={90} height={50} />

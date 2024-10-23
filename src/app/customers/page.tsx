@@ -16,7 +16,7 @@ const statistics = [
         icon1: <PiUsersLight className="w-5 h-5 text-blue-600" />,
         icon2: <PiChartLineUpLight className="w-7 h-7 text-green-600" />,
         title: 'Total Customers',
-        value: '21,877',
+        value: '10',
         percentage: '18%',
         description: 'Compared to the previous month, showing a significant increase.',
         bgColor: 'bg-blue-100',
@@ -28,7 +28,7 @@ const statistics = [
         icon1: <PiCheckLight className="w-5 h-5 text-green-600" />,
         icon2: <PiChartLineDownLight className="w-7 h-7 text-red-600" />,
         title: 'Total Orders',
-        value: '959',
+        value: '515',
         percentage: '8%',
         description: 'Compared to last month, indicating steady growth.',
         bgColor: 'bg-green-100',
@@ -40,7 +40,7 @@ const statistics = [
         icon1: <PiEyeLight className="w-5 h-5 text-purple-600" />,
         icon2: <PiChartLineUpLight className="w-7 h-7 text-green-600" />,
         title: 'Total Visit',
-        value: '180',
+        value: '90',
         percentage: '7%',
         description: 'Compared to the previous month, reflecting a steady rise in visits.',
         bgColor: 'bg-purple-100',
@@ -61,7 +61,7 @@ const StatisticCard: React.FC<{
     color: string;
 }> = ({ icon1, icon2, title, value, percentage, description, bgColor, borderColor, color }) => (
     <section
-        className={`bg-white rounded-[1rem] p-6 w-full`}
+        className={`bg-white rounded-[1rem] py-5 px-6 w-full`}
     >
         <div className='flex justify-between items-center mb-6'>
             <div className='flex items-center gap-4'>
@@ -82,94 +82,6 @@ const StatisticCard: React.FC<{
         </div>
     </section>
 );
-
-// interface DataItem {
-//     id: string;
-//     product: string;
-//     date: string;
-//     status: string;
-//     price: number;
-//     customer: string;
-//     img: StaticImageData;
-// }
-
-// interface Column {
-//     id: string;
-//     label: string;
-//     icon: JSX.Element;
-// }
-
-// const data2: DataItem[] = [
-//     { id: `01`, product: 'Wooden Dining Table', date: 'Aug 30, 2024', status: 'Delivered', price: 20000, customer: 'Ankit Sharma', img: Wooden },
-//     { id: `02`, product: 'Leather Sofa', date: 'Sept 10, 2024', status: 'Cancelled', price: 35000, customer: 'Pooja Verma', img: Sofa },
-// ];
-
-// const columns: Column[] = [
-//     { id: 'srNo', label: 'Sr. No', icon: <Hash className="w-5 h-5 fill-metal-900 dark:fill-white" /> },
-//     { id: 'product', label: 'Product', icon: <Tag className="w-5 h-5 fill-metal-900 dark:fill-white" /> },
-//     { id: 'date', label: 'Date', icon: <CalendarBlank className="w-5 h-5 fill-metal-900 dark:fill-white" /> },
-//     { id: 'status', label: 'Status', icon: <Spinner className="w-5 h-5 fill-metal-900 dark:fill-white" /> },
-//     { id: 'price', label: 'Price', icon: <CurrencyInr className="w-5 h-5 fill-metal-900 dark:fill-white" /> },
-//     { id: 'customer', label: 'Customer', icon: <Crown className="w-5 h-5 fill-metal-900 dark:fill-white" /> },
-// ];
-
-// const getBadgeColor = (status: string): 'success' | 'error' | 'warning' => {
-//     switch (status) {
-//         case 'Delivered': return 'success';
-//         case 'Cancelled': return 'error';
-//         default: return 'warning';
-//     }
-// };
-
-// const TableComponent: React.FC = () => {
-//     return (
-//         <Table className="!bg-white w-full">
-//             <TableCaption className="!bg-white">
-//                 <div className="flex items-center justify-between">
-//                     <div className="flex items-center gap-5">
-//                         <p className="text-lg font-semibold text-gray-600">Recent Orders</p>
-//                     </div>
-//                     <button className="flex items-center py-2 px-4 text-sm text-gray-600 bg-gray-200 rounded-lg hover:bg-gray-100 border border-gray-300">
-//                         <VscSettings className="text-base mr-2" />
-//                         Filter
-//                     </button>
-//                 </div>
-//             </TableCaption>
-//             <TableHeader>
-//                 <TableRow>
-//                     {columns.map((col) => (
-//                         <TableHead key={col.id}>
-//                             <p className="flex items-center gap-2 text-gray-600">{col.icon}{col.label}</p>
-//                         </TableHead>
-//                     ))}
-//                 </TableRow>
-//             </TableHeader>
-//             <TableBody>
-//                 {data2.map((item) => (
-//                     <TableRow key={item.id} className="text-center">
-//                         <TableCell>{item.id}</TableCell>
-//                         <TableCell className="flex items-center gap-4">
-//                             <Image
-//                                 src={item.img}
-//                                 alt={item.product}
-//                                 className="w-10 h-10 object-cover rounded-md"
-//                             />
-//                             {item.product}
-//                         </TableCell>
-//                         <TableCell>{item.date}</TableCell>
-//                         <TableCell>
-//                             <Badge variant="border" color={getBadgeColor(item.status)}>
-//                                 {item.status}
-//                             </Badge>
-//                         </TableCell>
-//                         <TableCell>{item.price.toLocaleString()}</TableCell>
-//                         <TableCell>{item.customer}</TableCell>
-//                     </TableRow>
-//                 ))}
-//             </TableBody>
-//         </Table>
-//     );
-// };
 
 const Page: React.FC = () => {
     return (

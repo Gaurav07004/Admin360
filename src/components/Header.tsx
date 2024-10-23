@@ -11,7 +11,7 @@ const Header: React.FC = () => {
 
     // Format the date as "September 11. 2024"
     const options = { day: 'numeric', month: 'short', year: 'numeric' };
-    const formattedDate = currentDate.toLocaleDateString('en-US', options).replace(',', ',');
+    const formattedDate = currentDate.toLocaleDateString('en-IN', options);
 
     return (
         <nav className="flex items-center justify-between py-4 px-6 bg-white rounded-[1rem] w-[100%]">
