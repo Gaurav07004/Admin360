@@ -3,22 +3,27 @@ import { FiSearch } from 'react-icons/fi';
 import Image from 'next/image';
 import AreaChartComponent from '@/components/SmallCharts';
 import Modal from '@/components/ModalComponent';
-import empty from '@/Assets/Empty.png'
-import { Badge, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, Empty, EmptyDescription, EmptyImage, EmptyTitle } from 'keep-react';
+import empty from '@/Assets/Empty.png';
+import { Badge, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from 'keep-react';
 
 const renderCellContent = (item, col, getBadgeColor) => {
     const value = item[col.id];
 
     if (typeof value === 'string' || typeof value === 'number') {
-        if (col.id === 'status' && getBadgeColor) {
+        if ((col.id === 'status' || col.id === 'paymentStatus' || col.id === 'orderStatus') && getBadgeColor) {
             return (
-                <Badge variant="base" color={getBadgeColor(value)} className={`text-sm rounded-md border ${getBadgeColor(value) === 'success' ? 'border-green-300' : 'border-red-300'}`}>
+                <Badge
+                    variant="base"
+                    color={getBadgeColor(value)}
+                    className={`text-sm rounded-md border ${getBadgeColor(value) === 'success' ? 'border-green-300' : 'border-red-300'}`}
+                >
                     {value}
                 </Badge>
             );
         }
         return <span className={col.id === 'Email' ? 'lowercase' : ''}>{value}</span>;
     }
+
     if (value && typeof value === 'object' && 'src' in value && typeof value.src === 'string') {
         return (
             <Image
@@ -54,7 +59,6 @@ const TableComponent = ({ data, columns, caption, getBadgeColor, Applyfilter }) 
 
     const handleSearch = (query) => {
         setSearchQuery(query);
-
         const newFilteredData = data.filter((item) =>
             columns.some((col) => {
                 const value = item[col.id];
@@ -70,8 +74,8 @@ const TableComponent = ({ data, columns, caption, getBadgeColor, Applyfilter }) 
 
     return (
         <>
-            <Table className="!bg-white w-full">
-                <TableCaption className='border border-gray-300'>
+            <Table className="!bg-white w-full overflow-auto">
+                <TableCaption className="border border-gray-300">
                     <section className="flex items-center justify-between">
                         <p className="text-lg font-semibold text-gray-600">{caption}</p>
                         {Applyfilter && (
@@ -92,23 +96,26 @@ const TableComponent = ({ data, columns, caption, getBadgeColor, Applyfilter }) 
                         )}
                     </section>
                 </TableCaption>
-                <TableHeader className='border border-gray-300'>
+                <TableHeader className="border border-gray-300 bg-[#f0f0f0]">
                     <TableRow>
                         {columns.map((col) => (
-                            <TableHead key={col.id} className='border border-gray-300'>
+                            <TableHead key={col.id} className="border border-gray-300">
                                 <p className="flex items-center w-fit gap-1 mb-0 m-auto text-stone-400 font-semibold">
-                                    {col.icon}{col.label}
+                                    {col.label}
                                 </p>
                             </TableHead>
                         ))}
                     </TableRow>
                 </TableHeader>
-                <TableBody className='border border-gray-300'>
+                <TableBody className="border border-gray-300">
                     {filteredData.length > 0 ? (
                         filteredData.map((item, index) => (
-                            <TableRow key={index} className="text-center border border-gray-300">
+                            <TableRow
+                                key={index}
+                                className={`text-center border border-gray-300 hover:bg-[#FFF2F2] transition-colors duration-300 `}
+                            >
                                 {columns.map((col) => (
-                                    <TableCell key={col.id} className='text-gray-500 font-semibold border border-gray-300'>
+                                    <TableCell key={col.id} className="text-gray-500 font-semibold border border-gray-300">
                                         {renderCellContent(item, col, getBadgeColor)}
                                     </TableCell>
                                 ))}
@@ -140,7 +147,6 @@ const TableComponent = ({ data, columns, caption, getBadgeColor, Applyfilter }) 
                                 </div>
                             </TableCell>
                         </TableRow>
-
                     )}
                 </TableBody>
             </Table>

@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} antialiased`}>
+      <body className={`${manrope.variable} antialiased h-screen overflow-hidden`}>
         <StoreProvider>
           <ToastWrapper
             toastOptions={{
@@ -43,13 +43,13 @@ export default function RootLayout({
             }}
           />
 
-          <div className="flex p-4">
+          <div className="flex h-full p-4">
             <div className="w-64 fixed h-screen">
               <Sidebar />
             </div>
-            <div className="ml-64 flex-1 flex flex-col overflow-auto gap-5">
+            <div className="ml-64 flex-1 flex flex-col overflow-hidden h-full">
               <Header />
-              <main className="gap-5">{children}</main>
+              <main className="overflow-y-auto flex-1 gap-5 mt-4">{children}</main>
             </div>
           </div>
         </StoreProvider>

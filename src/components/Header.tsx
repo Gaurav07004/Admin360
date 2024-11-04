@@ -15,16 +15,6 @@ const Header: React.FC = () => {
 
     return (
         <nav className="flex items-center justify-between py-4 px-6 bg-white rounded-[1rem] w-[100%]">
-            {/* <div className="flex items-center justify-between w-[22.8rem]">
-                <input
-                    type="text"
-                    placeholder="Search"
-                    className="outline-none p-2 text-gray-400 bg-[#eff0f0] rounded-md placeholder:text-[0.9rem] w-[20rem]"
-                />
-                <button className="p-2 bg-[#698474] rounded-md text-white">
-                    <FiSearch className="w-5 h-5" />
-                </button>
-            </div> */}
             <div className="flex flex-col items-start">
                 <p className="text-2xl font-semibold text-[#5e6574]">Hello, Gaurav</p>
                 <p className="text-xs text-gray-400 font-semibold">Track your overall progress here. You're almost there!</p>

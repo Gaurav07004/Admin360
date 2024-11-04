@@ -2,12 +2,6 @@
 
 import React from "react";
 import { PiUsersLight, PiChartLineUpLight, PiChartLineDownLight, PiCheckLight, PiEyeLight } from "react-icons/pi";
-// import { Badge, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "keep-react";
-// import { CalendarBlank, Crown, CurrencyInr, Spinner, Tag, Hash } from "phosphor-react";
-// import { VscSettings } from "react-icons/vsc";
-// import Image, { StaticImageData } from 'next/image';
-// import Wooden from '@/Assets/Wooden.webp';
-// import Sofa from '@/Assets/Sofa.webp';
 import CustomerTable from '@/components/CustomerTable'
 
 const statistics = [

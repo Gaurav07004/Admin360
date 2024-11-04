@@ -51,7 +51,7 @@ const AreaChartComponent: React.FC = () => {
         if (active && payload && payload.length) {
             const { name, value } = payload[0];
             return (
-                <div className="bg-[#698474] text-white p-2 rounded text-sm">
+                <div className="bg-[#FF6500] text-white p-2 rounded text-sm">
                     <p>{`${name}: ${formatNumberWithCommas(value)}`}</p>
                 </div>
             );
@@ -66,7 +66,7 @@ const AreaChartComponent: React.FC = () => {
     }) => {
         if (active && payload && payload.length) {
             return (
-                <div className="bg-[#698474] text-white p-2 rounded text-sm shadow-lg">
+                <div className="bg-[#FF9D3D] text-white p-2 rounded text-sm shadow-lg border-[1.5px] border-[#FF6500]">
                     <p>{label}</p>
                     <p>{`Price: ₹${formatNumberWithCommas(payload[0].value)}`}</p>
                 </div>
@@ -88,7 +88,7 @@ const AreaChartComponent: React.FC = () => {
 
         return (
             <section className="flex justify-start items-center gap-5 w-full">
-                <section className="bg-white rounded-[1rem] py-4 px-6 w-full">
+                <section className="bg-white rounded-[1rem] py-6 px-8 w-full">
                     <div className="flex flex-col justify-between w-1/2 relative">
                         <p className="text-lg text-left font-semibold mb-[2.25rem] text-gray-600">Product Sold</p>
                         <div className="grid grid-cols-2 items-center gap-2">
@@ -137,7 +137,7 @@ const AreaChartComponent: React.FC = () => {
                         </ResponsiveContainer>
                     </div>
                 </section>
-                <section className="bg-white rounded-[1rem] py-4 px-6 w-full">
+                <section className="bg-white rounded-[1rem] py-6 px-8 w-full">
                     <div className="text-left text-gray-600">
                         <div className="flex items-center justify-between w-full mb-2">
                             <p className="text-lg font-semibold">Total Income</p>
@@ -159,7 +159,7 @@ const AreaChartComponent: React.FC = () => {
 
     return (
         <>
-            <section className="bg-white rounded-[1rem] py-4 px-6 w-full">
+            <section className="bg-white rounded-[1rem] py-5 px-7 w-full">
                 <div className="mb-4 text-left text-gray-600">
                     <p className="text-lg font-semibold mb-2">Total Revenue</p>
                     <div className="flex items-center gap-2">
@@ -175,16 +175,16 @@ const AreaChartComponent: React.FC = () => {
                     <AreaChart data={data}>
                         <defs>
                             <linearGradient id="price" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="10%" stopColor="#698474" stopOpacity={0.3} />
-                                <stop offset="95%" stopColor="#698474" stopOpacity={0} />
+                                <stop offset="10%" stopColor="#FF6500" stopOpacity={0.3} />
+                                <stop offset="95%" stopColor="#FF6500" stopOpacity={0} />
                             </linearGradient>
                         </defs>
-                        <Area type="natural" dataKey="price" stroke="#698474" fillOpacity={1} fill="url(#price)" />
-                        <XAxis className="text-body-4 font-medium text-metal-600" dataKey="name" stroke="#698474" strokeWidth={0.5} dy={12} />
+                        <Area type="natural" dataKey="price" stroke="#FF6500" fillOpacity={1} fill="url(#price)" />
+                        <XAxis className="text-body-4 font-medium text-metal-600" dataKey="name" stroke="#4b5563" strokeWidth={0.5} dy={12} />
                         <YAxis
                             className="text-body-4 font-medium text-metal-600"
                             dataKey="price"
-                            stroke="#698474"
+                            stroke="#4b5563"
                             strokeWidth={0.5}
                             dx={-10}
                             tickFormatter={(value: number) => `₹${formatNumberWithCommas(value)}`}

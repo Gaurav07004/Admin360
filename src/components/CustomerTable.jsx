@@ -7,7 +7,7 @@ import TableComponent from "./table";
 import { toast } from 'keep-react'
 
 const columns = [
-    { id: 'id', label: 'Sr. No' },
+    { id: 'id', label: 'Customer ID' },
     { id: 'Customer', label: 'Customer' },
     { id: 'Email', label: 'Email' },
     { id: 'Location', label: 'Location' },
