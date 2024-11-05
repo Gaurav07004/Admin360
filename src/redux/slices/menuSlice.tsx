@@ -3,12 +3,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface MenuState {
     activeMenu: string;
     activeSubMenu: string | null;
+    modal: boolean;
 }
 
 // Load the activeMenu from localStorage, or default to 'Dashboard'
 const initialState: MenuState = {
     activeMenu: localStorage.getItem("activeMenu") || 'Dashboard',
     activeSubMenu: null,
+    modal: false
 };
 
 const menuSlice = createSlice({
@@ -23,8 +25,11 @@ const menuSlice = createSlice({
         setActiveSubMenu: (state, action: PayloadAction<string | null>) => {
             state.activeSubMenu = action.payload;
         },
+        setModal: (state, action: PayloadAction<boolean>) => {
+            state.modal = action.payload;
+        },
     },
 });
 
-export const { setActiveMenu, setActiveSubMenu } = menuSlice.actions;
+export const { setActiveMenu, setActiveSubMenu, setModal } = menuSlice.actions;
 export default menuSlice.reducer;

@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setStatus } from "../redux/slices/CustomerSlice";
+import { setStatus } from "../redux/slices/customerSlice";
 import { PiDotsThreeOutlineLight } from "react-icons/pi";
 import TableComponent from "./table";
 import { toast } from 'keep-react'

@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       fontWeight: {
         'extra-light': '200',
-        'light-bold': '550',
+        'light-bold': '700',
         'blackest': '950'
       }
     },

@@ -5,8 +5,11 @@ import Image from "next/image";
 //import { FiSearch } from "react-icons/fi";
 import { IoMailOutline, IoRemoveOutline, IoCalendarOutline } from "react-icons/io5";
 import profilePic from "../Assets/Profile.jpg";
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 const Header: React.FC = () => {
+    const { imageUrl } = useSelector((state: RootState) => state.user);
     const currentDate = new Date();
 
     // Format the date as "September 11. 2024"
@@ -32,7 +35,13 @@ const Header: React.FC = () => {
                 </div>
                 <IoRemoveOutline className="text-3xl text-gray-300 rotate-90" />
                 <div className="flex items-center space-x-2">
-                    <Image src={profilePic} alt="Profile Picture" className="w-10 h-10 object-cover rounded-md shadow-md" />
+                    <Image
+                        src={imageUrl || profilePic}
+                        alt="Profile Picture"
+                        className="w-10 h-10 object-cover rounded-md shadow-md"
+                        width={0}
+                        height={0}
+                    />
                     <div>
                         <p className="text-sm font-semibold text-gray-600">Gaurav Singh</p>
                         <p className="text-xs text-gray-400">Sales Manager</p>

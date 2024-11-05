@@ -3,13 +3,13 @@
 import React, { useEffect } from "react";
 import { RootState } from "../redux/store";
 import Image from "next/image";
+import logo from "../Assets/Logo.png";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveMenu, setActiveSubMenu } from "../redux/slices/menuSlice";
 import classNames from "classnames";
 import { PiBoundingBoxLight, PiShoppingCartSimpleLight, PiChartLineUpLight, PiCubeLight, PiUsersThreeLight, PiTruckLight } from "react-icons/pi";
 import { CiSettings, CiLogout } from "react-icons/ci";
-import logo from "../Assets/Logo.png";
 
 const Sidebar: React.FC = () => {
     const { activeMenu } = useSelector((state: RootState) => state.menu);

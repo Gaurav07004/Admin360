@@ -1,28 +1,34 @@
-// import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+// src/redux/uploadSlice.ts
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// interface MenuState {
-//     activeMenu: string;
-//     activeSubMenu: string | null;
-// }
+interface UploadState {
+    files: File[];
+    imageUrl: string | null;
+}
 
-// const initialState: MenuState = {
-//     activeMenu: 'Dashboard',
-//     activeSubMenu: null,
-// };
+const initialState: UploadState = {
+    files: [],
+    imageUrl: null,
+};
 
-// const menuSlice = createSlice({
-//     name: 'menu',
-//     initialState,
-//     reducers: {
-//         setActiveMenu: (state, action: PayloadAction<string>) => {
-//             state.activeMenu = action.payload;
-//             state.activeSubMenu = null;
-//         },
-//         setActiveSubMenu: (state, action: PayloadAction<string | null>) => {
-//             state.activeSubMenu = action.payload;
-//         },
-//     },
-// });
+const uploadSlice = createSlice({
+    name: 'user',
+    initialState,
+    reducers: {
+        setFiles(state, action: PayloadAction<File[]>) {
+            state.files = action.payload;
+            state.imageUrl = action.payload.length > 0 ? URL.createObjectURL(action.payload[0]) : null;
+        },
+        deleteFile(state, action: PayloadAction<string>) {
+            state.files = state.files.filter(file => file.name !== action.payload);
+            if (state.imageUrl && state.files.length === 0) {
+                state.imageUrl = null;
+            } else {
+                state.imageUrl = state.files.length > 0 ? URL.createObjectURL(state.files[0]) : null;
+            }
+        },
+    },
+});
 
-// export const { setActiveMenu, setActiveSubMenu } = menuSlice.actions;
-// export default menuSlice.reducer;
+export const { setFiles, deleteFile } = uploadSlice.actions;
+export default uploadSlice.reducer;

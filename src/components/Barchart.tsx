@@ -22,25 +22,26 @@ const chartConfig: ChartConfig = {
 };
 
 const chartData = [
-    { month: 'January', desktop: 95, mobile: 80 },
-    { month: 'February', desktop: 150, mobile: 120 },
-    { month: 'March', desktop: 130, mobile: 100 },
-    { month: 'April', desktop: 73, mobile: 190 },
-    { month: 'May', desktop: 100, mobile: 130 },
-    { month: 'June', desktop: 150, mobile: 140 },
-    { month: 'July', desktop: 160, mobile: 120 },
-    { month: 'August', desktop: 150, mobile: 150 },
-    { month: 'September', desktop: 140, mobile: 160 },
-    { month: 'October', desktop: 160, mobile: 170 },
-    { month: 'November', desktop: 160, mobile: 180 },
-    { month: 'December', desktop: 150, mobile: 150 },
+    { month: 'January', desktop: 100, mobile: 70 },
+    { month: 'February', desktop: 160, mobile: 120 },
+    { month: 'March', desktop: 130, mobile: 90 },
+    { month: 'April', desktop: 70, mobile: 190 },
+    { month: 'May', desktop: 110, mobile: 150 },
+    { month: 'June', desktop: 140, mobile: 100 },
+    { month: 'July', desktop: 170, mobile: 130 },
+    { month: 'August', desktop: 120, mobile: 160 },
+    { month: 'September', desktop: 160, mobile: 110 },
+    { month: 'October', desktop: 130, mobile: 180 },
+    { month: 'November', desktop: 110, mobile: 130 },
+    { month: 'December', desktop: 150, mobile: 110 },
 ];
+
 
 // Custom Tooltip Component
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-[#34495e] text-white p-2 rounded text-sm shadow-lg">
+            <div className="bg-[#006989] text-white p-2 rounded text-sm shadow-lg">
                 <h4 className="font-bold">{payload[0].payload.month}</h4>
                 <p className="text-white">{`${chartConfig.desktop.label}: ${payload[0].payload.desktop}`}</p>
                 <p className="text-white">{`${chartConfig.mobile.label}: ${payload[1].payload.mobile}`}</p>
