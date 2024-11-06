@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import Image from 'next/image';
 import AreaChartComponent from '@/components/SmallCharts';
-import Modal from '@/components/ModalComponent';
 import empty from '@/Assets/Empty.png';
 import { Badge, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from 'keep-react';
 
@@ -10,12 +9,17 @@ const renderCellContent = (item, col, getBadgeColor) => {
     const value = item[col.id];
 
     if (typeof value === 'string' || typeof value === 'number') {
-        if ((col.id === 'status' || col.id === 'paymentStatus' || col.id === 'orderStatus') && getBadgeColor) {
+        if ((col.id === 'customerStatus' || col.id === 'paymentStatus' || col.id === 'stockStatus' || col.id === 'orderStatus' || col.id === 'paymentStatus') && getBadgeColor) {
             return (
                 <Badge
                     variant="base"
                     color={getBadgeColor(value)}
-                    className={`text-sm rounded-md border ${getBadgeColor(value) === 'success' ? 'border-green-300' : 'border-red-300'}`}
+                    className={`text-sm rounded-md border ${getBadgeColor(value) === 'success' ? 'border-green-300' :
+                        getBadgeColor(value) === 'warning' ? 'border-yellow-300' :
+                            getBadgeColor(value) === 'error' ? 'border-red-300' :
+                                getBadgeColor(value) === 'info' ? 'border-blue-300' :
+                                    'border-gray-300'
+                        }`}
                 >
                     {value}
                 </Badge>
@@ -150,7 +154,6 @@ const TableComponent = ({ data, columns, caption, getBadgeColor, Applyfilter }) 
                     )}
                 </TableBody>
             </Table>
-            <Modal />
         </>
     );
 };

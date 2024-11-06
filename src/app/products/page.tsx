@@ -1,45 +1,43 @@
 "use client";
 
 import React from "react";
-import { CgNotes } from "react-icons/cg";
 import { LuCheckCircle } from "react-icons/lu";
-import { RxTimer } from "react-icons/rx";
-import { GrPowerCycle } from "react-icons/gr";
-import BarChart from "@/components/OrderChart";
-import OrderTable from '@/components/OrderTable'
+import { RxCube } from "react-icons/rx";
+import { PiWarning, PiCloudArrowDown } from "react-icons/pi";
+import BarChart from "@/components/ProductChart";
+import ProductTable from '@/components/ProductTable'
 
 const statistics = [
     {
         id: 1,
-        title: "Total",
-        value: "17,917",
+        title: "Total Products",
+        value: "17.9K",
         bgColor: "bg-blue-400",
-        icon: <CgNotes className="w-5 h-5 text-white" />,
+        icon: <RxCube className="w-[1.4rem] h-[1.4rem] text-white" />,
     },
     {
         id: 2,
-        title: "Completed",
-        value: "16,104",
-        bgColor: "bg-red-300",
-        icon: <LuCheckCircle className="w-5 h-5 text-white" />,
+        title: "In Stock",
+        value: "16.1K",
+        bgColor: "bg-green-400",
+        icon: <LuCheckCircle className="w-[1.4rem] h-[1.4rem] text-white" />,
     },
     {
         id: 3,
-        title: "Pending",
+        title: "Out of Stock",
         value: "88",
-        bgColor: "bg-amber-200",
-        icon: <RxTimer className="w-5 h-5 text-white" />,
+        bgColor: "bg-red-400",
+        icon: <PiWarning className="w-[1.4rem] h-[1.4rem] text-white" />,
     },
     {
         id: 4,
-        title: "Processing",
+        title: "Low Stock",
         value: "207",
-        bgColor: "bg-purple-300",
-        icon: <GrPowerCycle className="w-5 h-5 text-white" />,
+        bgColor: "bg-orange-300",
+        icon: <PiCloudArrowDown className="w-[1.4rem] h-[1.4rem] text-white" />,
     },
 ];
 
-// Define types for the statistic card props
 interface StatisticCardProps {
     title: string;
     value: string;
@@ -48,7 +46,7 @@ interface StatisticCardProps {
 }
 
 const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, bgColor, icon }) => (
-    <div className="bg-white rounded-[1rem] px-8 py-12 flex gap-5 w-[14rem] h-auto">
+    <div className="bg-white rounded-[1rem] px-8 py-12 flex gap-5 w-[15rem] h-auto">
         <div className={`${bgColor} rounded-md p-4 flex items-center justify-center`} aria-label={title}>
             {icon}
         </div>
@@ -63,7 +61,7 @@ const Page: React.FC = () => {
     return (
         <section className="gap-5 flex flex-col justify-between items-center">
             <div className="flex gap-6 w-full">
-                <section className="grid grid-cols-2 gap-5 w-[37%]">
+                <section className="grid grid-cols-2 gap-5 w-[40%]">
                     {statistics.map((stat) => (
                         <StatisticCard
                             key={stat.id}
@@ -74,13 +72,14 @@ const Page: React.FC = () => {
                         />
                     ))}
                 </section>
-                <div className="bg-white rounded-[1rem] px-8 pt-6 pb-2 w-[63%]">
+                <div className="bg-white rounded-[1rem] px-8 pt-6 pb-2 w-[60%]">
                     <BarChart />
                 </div>
             </div>
-            <OrderTable />
+            <ProductTable />
         </section>
     );
 };
 
 export default Page;
+
