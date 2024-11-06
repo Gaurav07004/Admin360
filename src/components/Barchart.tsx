@@ -11,29 +11,29 @@ type ChartConfig = {
 };
 
 const chartConfig: ChartConfig = {
-    desktop: {
-        label: 'Desktop',
+    OrderRunning: {
+        label: 'OrderRunning',
         color: '#006A67',
     },
-    mobile: {
-        label: 'Mobile',
+    OnProcess: {
+        label: 'OnProcess',
         color: '#D76C82',
     },
 };
 
 const chartData = [
-    { month: 'January', desktop: 100, mobile: 70 },
-    { month: 'February', desktop: 160, mobile: 120 },
-    { month: 'March', desktop: 130, mobile: 90 },
-    { month: 'April', desktop: 70, mobile: 190 },
-    { month: 'May', desktop: 110, mobile: 150 },
-    { month: 'June', desktop: 140, mobile: 100 },
-    { month: 'July', desktop: 170, mobile: 130 },
-    { month: 'August', desktop: 120, mobile: 160 },
-    { month: 'September', desktop: 160, mobile: 110 },
-    { month: 'October', desktop: 130, mobile: 180 },
-    { month: 'November', desktop: 110, mobile: 130 },
-    { month: 'December', desktop: 150, mobile: 110 },
+    { month: 'January', OrderRunning: 100, OnProcess: 70 },
+    { month: 'February', OrderRunning: 160, OnProcess: 120 },
+    { month: 'March', OrderRunning: 130, OnProcess: 90 },
+    { month: 'April', OrderRunning: 70, OnProcess: 190 },
+    { month: 'May', OrderRunning: 110, OnProcess: 150 },
+    { month: 'June', OrderRunning: 140, OnProcess: 100 },
+    { month: 'July', OrderRunning: 170, OnProcess: 130 },
+    { month: 'August', OrderRunning: 120, OnProcess: 160 },
+    { month: 'September', OrderRunning: 160, OnProcess: 110 },
+    { month: 'October', OrderRunning: 130, OnProcess: 180 },
+    { month: 'November', OrderRunning: 110, OnProcess: 130 },
+    { month: 'December', OrderRunning: 150, OnProcess: 110 },
 ];
 
 
@@ -43,8 +43,8 @@ const CustomTooltip = ({ active, payload }) => {
         return (
             <div className="bg-[#006989] text-white p-2 rounded text-sm shadow-lg">
                 <h4 className="font-bold">{payload[0].payload.month}</h4>
-                <p className="text-white">{`${chartConfig.desktop.label}: ${payload[0].payload.desktop}`}</p>
-                <p className="text-white">{`${chartConfig.mobile.label}: ${payload[1].payload.mobile}`}</p>
+                <p className="text-white">{`${chartConfig.OrderRunning.label}: ${payload[0].payload.OrderRunning}`}</p>
+                <p className="text-white">{`${chartConfig.OnProcess.label}: ${payload[1].payload.OnProcess}`}</p>
             </div>
         );
     }
@@ -74,8 +74,8 @@ const BarChartComponent: React.FC = () => {
                     />
                     <YAxis tickLine={false} tickMargin={24} axisLine={false} />
                     <Tooltip content={<CustomTooltip />} />
-                    <Bar radius={[0, 0, 0, 0]} barSize={10} dataKey="desktop" stackId="a" fill={chartConfig.desktop.color} />
-                    <Bar radius={[8, 8, 0, 0]} barSize={10} dataKey="mobile" stackId="a" fill={chartConfig.mobile.color} />
+                    <Bar radius={[0, 0, 0, 0]} barSize={10} dataKey="OrderRunning" stackId="a" fill={chartConfig.OrderRunning.color} />
+                    <Bar radius={[8, 8, 0, 0]} barSize={10} dataKey="OnProcess" stackId="a" fill={chartConfig.OnProcess.color} />
                 </BarChart>
             </ResponsiveContainer>
 
