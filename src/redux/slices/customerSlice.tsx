@@ -239,9 +239,9 @@ const CustomerSlice = createSlice({
     name: 'customer',
     initialState,
     reducers: {
-        updateCustomerStatus: (state, action: PayloadAction<{ id: number; customerStatus: 'Active' | 'Inactive' }>) => {
-            const { id, customerStatus } = action.payload;
-            const customer = state.customers.find(p => p.id === id);
+        updateCustomerStatus: (state, action: PayloadAction<{ customerID: string; customerStatus: 'Active' | 'Inactive' }>) => {
+            const { customerID, customerStatus } = action.payload;
+            const customer = state.customers.find(p => p.customerID === customerID);
             if (customer) {
                 customer.customerStatus = customerStatus;
             }

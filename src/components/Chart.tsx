@@ -51,7 +51,7 @@ const AreaChartComponent: React.FC = () => {
         if (active && payload && payload.length) {
             const { name, value } = payload[0];
             return (
-                <div className="bg-[#FF6500] text-white p-2 rounded text-sm">
+                <div className="bg-[#FF9D3D] text-white p-2 rounded text-sm">
                     <p>{`${name}: ${formatNumberWithCommas(value)}`}</p>
                 </div>
             );
@@ -179,6 +179,7 @@ const AreaChartComponent: React.FC = () => {
                                 <stop offset="95%" stopColor="#FF6500" stopOpacity={0} />
                             </linearGradient>
                         </defs>
+                        <Area type="natural" dataKey="price" stroke="#FF6500" fillOpacity={1} fill="url(#price)" />
                         <Area type="natural" dataKey="price" stroke="#FF6500" fillOpacity={1} fill="url(#price)" />
                         <XAxis className="text-body-4 font-medium text-metal-600" dataKey="name" stroke="#4b5563" strokeWidth={0.5} dy={12} />
                         <YAxis

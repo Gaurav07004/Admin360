@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { FiSearch } from 'react-icons/fi';
+import { FiSearch, FiPlus } from 'react-icons/fi';
 import Image from 'next/image';
 import AreaChartComponent from '@/components/SmallCharts';
 import empty from '@/Assets/Empty.png';
-import { Badge, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from 'keep-react';
+import { Badge, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, Button } from 'keep-react';
 
 const renderCellContent = (item, col, getBadgeColor) => {
     const value = item[col.id];
@@ -40,7 +40,9 @@ const renderCellContent = (item, col, getBadgeColor) => {
 
     if (col.id === 'Action') {
         return (
-            <div className="relative bg-gray-100 px-3 py-2 rounded-md border border-gray-300">
+            <div className="relative bg-gray-100 px-3 py-2 rounded-md border border-gray-300"
+
+            >
                 {value}
             </div>
         );
@@ -57,7 +59,7 @@ const renderCellContent = (item, col, getBadgeColor) => {
     return null;
 };
 
-const TableComponent = ({ data, columns, caption, getBadgeColor, Applyfilter }) => {
+const TableComponent = ({ data, columns, caption, getBadgeColor }) => {
     const [filteredData, setFilteredData] = useState(data);
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -74,6 +76,7 @@ const TableComponent = ({ data, columns, caption, getBadgeColor, Applyfilter }) 
 
     useEffect(() => {
         handleSearch(searchQuery);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, searchQuery]);
 
     return (
@@ -82,22 +85,24 @@ const TableComponent = ({ data, columns, caption, getBadgeColor, Applyfilter }) 
                 <TableCaption className="border border-gray-300">
                     <section className="flex items-center justify-between">
                         <p className="text-lg font-semibold text-gray-600">{caption}</p>
-                        {Applyfilter && (
-                            <div className="flex items-center justify-between z-50 gap-8">
-                                <div className="relative flex items-center rounded-md">
-                                    <input
-                                        type="text"
-                                        value={searchQuery}
-                                        onChange={(e) => handleSearch(e.target.value)}
-                                        placeholder="Search"
-                                        className="outline-none p-2 text-gray-400 border border-gray-300 rounded-md placeholder:text-[0.9rem] w-[15rem] shadow-sm"
-                                    />
-                                    <div className="absolute right-1 p-[0.4rem] bg-[#698474] rounded-md text-white">
-                                        <FiSearch className="w-5 h-5" />
-                                    </div>
+                        <div className="flex items-center justify-between z-50 gap-8">
+                            <div className="relative flex items-center rounded-md">
+                                <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(e) => handleSearch(e.target.value)}
+                                    placeholder="Search"
+                                    className="outline-none p-2 text-gray-400 border border-gray-300 rounded-md placeholder:text-[0.9rem] w-[15rem] shadow-sm"
+                                />
+                                <div className="absolute right-1 p-[0.4rem] bg-orange-400 rounded-md text-white">
+                                    <FiSearch className="w-5 h-5" />
                                 </div>
                             </div>
-                        )}
+                            {caption === 'Product Information' && (<div className="relative flex items-center gap-3 bg-gray-50 rounded-lg">
+                                <FiPlus className="absolute left-3 top-[0.6rem] text-[#FF6500] w-[1.1rem] h-[1.1rem]" />
+                                <Button className="py-2 pl-9 pr-4 bg-[#ff660021] text-[#FF6500] hover:bg-orange-200">New Product</Button>
+                            </div>)}
+                        </div>
                     </section>
                 </TableCaption>
                 <TableHeader className="border border-gray-300 bg-[#f0f0f0]">

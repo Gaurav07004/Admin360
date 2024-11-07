@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCustomerStatus } from "../redux/slices/customerSlice";  // Ensure this action is imported
+import { updateCustomerStatus } from "../redux/slices/customerSlice";
 import { PiDotsThreeOutlineLight } from "react-icons/pi";
 import { RootState } from '../redux/store';
 import TableComponent from "./table";
@@ -35,11 +35,11 @@ const CustomerTable = () => {
         setMounted(true);
     }, []);
 
-    const handleMenuClick = (id: number, currentStatus: string) => {
+    const handleMenuClick = (customerID: string, currentStatus: string) => {
         try {
             const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
-            dispatch(updateCustomerStatus({ id, customerStatus: newStatus }));  // Dispatch the correct action to update the status
-            toast.success(`Customer ID ${id} status changed to ${newStatus}.`);
+            dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
+            toast.success(`Customer ID ${customerID} status changed to ${newStatus}.`);
         } catch (error) {
             toast.error('Failed to update status.');
         }
@@ -57,7 +57,7 @@ const CustomerTable = () => {
             <div>
                 <PiDotsThreeOutlineLight
                     className="size-4 fill-metal-900 dark:fill-white m-auto rounded-full"
-                    onClick={() => handleMenuClick(customer.id, customer.customerStatus)}  // Correct customer object usage
+                    onClick={() => handleMenuClick(customer.customerID, customer.customerStatus)}
                 />
             </div>
         ),
