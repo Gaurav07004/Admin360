@@ -1,45 +1,42 @@
 "use client";
 
 import React from "react";
-import { PiUsersLight, PiChartLineUpLight, PiChartLineDownLight, PiCheckLight, PiEyeLight } from "react-icons/pi";
+import { PiChartLineUpLight, PiChartLineDownLight } from "react-icons/pi";
+import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import CustomerTable from '@/components/CustomerTable'
+import { FiUsers, FiEye } from "react-icons/fi";
+import { LuCheckCircle } from "react-icons/lu";
 
 const statistics = [
     {
         id: 1,
-        icon1: <PiUsersLight className="w-5 h-5 text-blue-600" />,
-        icon2: <PiChartLineUpLight className="w-7 h-7 text-green-600" />,
+        icon1: <FiUsers className="w-[1.2rem] h-[1.2rem] text-white" />,
+        icon2: <TbArrowBadgeUpFilled className="w-7 h-7 text-green-500" />,
         title: 'Total Customers',
         value: '10',
         percentage: '18%',
         description: 'Compared to the previous month, showing a significant increase.',
-        bgColor: 'bg-blue-100',
-        borderColor: 'border-blue-300',
-        color: 'text-green-600'
+        bgColor: 'bg-gradient-to-l from-blue-300 to-blue-400',
     },
     {
         id: 2,
-        icon1: <PiCheckLight className="w-5 h-5 text-green-600" />,
-        icon2: <PiChartLineDownLight className="w-7 h-7 text-red-600" />,
+        icon1: <LuCheckCircle className="w-[1.2rem] h-[1.2rem] text-white" />,
+        icon2: <TbArrowBadgeDownFilled className="w-7 h-7 text-red-500" />,
         title: 'Total Orders',
-        value: '515',
+        value: '50',
         percentage: '8%',
         description: 'Compared to last month, indicating steady growth.',
-        bgColor: 'bg-green-100',
-        borderColor: 'border-green-300',
-        color: 'text-red-600'
+        bgColor: 'bg-gradient-to-l from-green-300 to-green-400',
     },
     {
         id: 3,
-        icon1: <PiEyeLight className="w-5 h-5 text-purple-600" />,
-        icon2: <PiChartLineUpLight className="w-7 h-7 text-green-600" />,
+        icon1: <FiEye className="w-[1.2rem] h-[1.2rem] text-white" />,
+        icon2: <TbArrowBadgeUpFilled className="w-7 h-7 text-green-500" />,
         title: 'Total Visit',
         value: '90',
         percentage: '7%',
         description: 'Compared to the previous month, reflecting a steady rise in visits.',
-        bgColor: 'bg-purple-100',
-        borderColor: 'border-purple-300',
-        color: 'text-green-600'
+        bgColor: "bg-gradient-to-br from-orange-500 to-orange-300",
     },
 ];
 
@@ -51,15 +48,13 @@ const StatisticCard: React.FC<{
     percentage: string;
     description: string;
     bgColor: string;
-    borderColor: string;
-    color: string;
-}> = ({ icon1, icon2, title, value, percentage, description, bgColor, borderColor, color }) => (
+}> = ({ icon1, icon2, title, value, percentage, description, bgColor }) => (
     <section
         className={`bg-white rounded-[1rem] py-5 px-6 w-full`}
     >
         <div className='flex justify-between items-center mb-6'>
             <div className='flex items-center gap-4'>
-                <div className={`p-2 rounded-md border ${bgColor} ${borderColor} flex items-center justify-center`}>
+                <div className={`${bgColor} rounded-md p-3 flex items-center justify-center`} aria-label={title}>
                     {icon1}
                 </div>
                 <div className="text-gray-700 font-semibold text-lg">{title}</div>
@@ -70,8 +65,8 @@ const StatisticCard: React.FC<{
             <div>
                 {icon2}
             </div>
-            <span className={`${color} text-sm`}>
-                {percentage} <span className="text-gray-600 text-xs">{description}</span>
+            <span className={`text-gray-600 text-sm`}>
+                {percentage} <span className="text-xs">{description}</span>
             </span>
         </div>
     </section>
@@ -91,8 +86,6 @@ const Page: React.FC = () => {
                         percentage={stat.percentage}
                         description={stat.description}
                         bgColor={stat.bgColor}
-                        borderColor={stat.borderColor}
-                        color={stat.color}
                     />
                 ))}
             </section>
