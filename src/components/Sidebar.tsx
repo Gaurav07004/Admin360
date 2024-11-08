@@ -70,11 +70,11 @@ const Sidebar: React.FC = () => {
                     {renderMenuItem("Dashboard", PiBoundingBoxLight, "/dashboard")}
                     {renderMenuItem("Customers", PiUsersThreeLight, "/customers")}
                     {renderMenuItem("Orders", PiShoppingCartSimpleLight, "/orders", "10")}
-                    {renderMenuItem("Analytics", PiChartLineUpLight, "/analytics")}
+                    {renderMenuItem("Products", PiCubeLight, "/products")}
                 </section>
                 <section className="flex flex-col space-y-2">
                     <div className="text-xs text-[#7D7C7C]">Sales</div>
-                    {renderMenuItem("Products", PiCubeLight, "/products")}
+                    {renderMenuItem("Analytics", PiChartLineUpLight, "/analytics")}
                     {renderMenuItem("Shipments", PiTruckLight, "/sales/shipments")}
                 </section>
                 <section className="flex flex-col space-y-2">

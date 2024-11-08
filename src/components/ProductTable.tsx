@@ -97,7 +97,6 @@ const ProductTable = () => {
             columns={columns}
             caption="Product Information"
             getBadgeColor={getBadgeColor}
-            Applyfilter={true}
         />
     );
 };

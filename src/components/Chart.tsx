@@ -26,15 +26,18 @@ type PieDataPoint = {
 
 const AreaChartComponent: React.FC = () => {
     const data: DataPoint[] = [
-        { name: `Jan '24`, price: 4000 },
-        { name: `Feb '24`, price: 4589 },
-        { name: `Mar '24`, price: 7000 },
-        { name: `Apr '24`, price: 5400 },
-        { name: `May '24`, price: 9000 },
-        { name: `Jun '24`, price: 6501 },
-        { name: `Jul '24`, price: 6000 },
-        { name: `Aug '24`, price: 3000 },
-        { name: `Sep '24`, price: 4080 },
+        { name: `Jan'24`, price: 4000 },
+        { name: `Feb'24`, price: 4589 },
+        { name: `Mar'24`, price: 7000 },
+        { name: `Apr'24`, price: 5400 },
+        { name: `May'24`, price: 9000 },
+        { name: `Jun'24`, price: 6501 },
+        { name: `Jul'24`, price: 6000 },
+        { name: `Aug'24`, price: 3000 },
+        { name: `Sep'24`, price: 4080 },
+        { name: `Oct'24`, price: 6000 },
+        { name: `Nov'24`, price: 3000 },
+        { name: `Dec'24`, price: 4080 },
     ];
 
     const formatNumberWithCommas = (number: number): string => {
@@ -181,9 +184,9 @@ const AreaChartComponent: React.FC = () => {
                         </defs>
                         <Area type="natural" dataKey="price" stroke="#FF6500" fillOpacity={1} fill="url(#price)" />
                         <Area type="natural" dataKey="price" stroke="#FF6500" fillOpacity={1} fill="url(#price)" />
-                        <XAxis className="text-body-4 font-medium text-metal-600" dataKey="name" stroke="#4b5563" strokeWidth={0.5} dy={12} />
+                        <XAxis className="text-xs font-medium text-metal-600" dataKey="name" stroke="#4b5563" strokeWidth={0.5} dy={12} />
                         <YAxis
-                            className="text-body-4 font-medium text-metal-600"
+                            className="text-xs font-medium text-metal-600"
                             dataKey="price"
                             stroke="#4b5563"
                             strokeWidth={0.5}
