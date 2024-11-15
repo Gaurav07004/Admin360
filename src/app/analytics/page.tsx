@@ -7,8 +7,19 @@ import { FiUsers } from "react-icons/fi";
 import { RxCube } from "react-icons/rx";
 import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import LineChart from "@/components/CustomerActivity";
+import OrderStat from "@/components/OrderStatistics";
+import DemographicsChart from "@/components/DemographicsChart";
 
-const statistics = [
+interface Statistic {
+    id: number;
+    title: string;
+    value: string;
+    previousValue: string;
+    bgColor: string;
+    icon1: React.ReactNode;
+}
+
+const statistics: Statistic[] = [
     {
         id: 1,
         title: "Total Sales",
@@ -52,9 +63,8 @@ interface StatisticCardProps {
 }
 
 const calculatePercentageChange = (currentValue: string, previousValue: string): string => {
-    const current = parseFloat(currentValue.replace("K", "").trim()) * 1000;
-    const previous = parseFloat(previousValue.replace("K", "").trim()) * 1000;
-
+    const current = parseFloat(currentValue.replace("K", "")) * 1000;
+    const previous = parseFloat(previousValue.replace("K", "")) * 1000;
     const change = ((current - previous) / previous) * 100;
     return change.toFixed(2);
 };
@@ -74,7 +84,7 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
                 </div>
                 <div className="text-gray-800 font-bold text-2xl">{value}</div>
             </div>
-            <div className={`text-gray-600 text-xs font-semibold mt-3 flex items-center gap-2`}>
+            <div className="text-gray-600 text-xs font-semibold mt-3 flex items-center gap-2">
                 <span className={`text-xs flex items-center rounded-md px-2 py-1 ${isPositive ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}>
                     {isPositive ? <TbArrowBadgeUpFilled className="w-5 h-5 text-green-500" /> : <TbArrowBadgeDownFilled className="w-5 h-5 text-red-500" />}
                     {isPositive && "+"}
@@ -88,17 +98,23 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
 
 const Page: React.FC = () => {
     return (
-        <section className="gap-5 flex flex-col justify-between">
-            <div className="flex gap-6 w-full">
-                <section className="grid grid-cols-4 gap-5 w-full">
-                    {statistics.map((stat) => (
-                        <StatisticCard key={stat.id} title={stat.title} value={stat.value} previousValue={stat.previousValue} bgColor={stat.bgColor} icon1={stat.icon1} />
-                    ))}
-                </section>
-            </div>
-            <div className="w-[55%]">
-                <LineChart />
-            </div>
+        <section className="gap-5 flex flex-col">
+            <section className="grid grid-cols-4 gap-5 w-full">
+                {statistics.map((stat) => (
+                    <StatisticCard key={stat.id} {...stat} />
+                ))}
+            </section>
+            <section className="flex justify-between gap-5">
+                <div className="w-[70%]">
+                    <LineChart />
+                </div>
+                <div className="w-[30%]">
+                    <OrderStat />
+                </div>
+            </section>
+            <section>
+                <DemographicsChart />
+            </section>
         </section>
     );
 };

@@ -30,50 +30,52 @@ const Bar: React.FC<BarProps> = ({ Female, Male }) => (
     </div>
 );
 
+const generateBars = () => {
+    const bars: BarProps[] = [
+        { Female: 50, Male: 48 },
+        { Female: 85, Male: 80 },
+        { Female: 78, Male: 65 },
+        { Female: 85, Male: 78 },
+        { Female: 55, Male: 85 },
+        { Female: 45, Male: 40 },
+        { Female: 90, Male: 80 },
+        { Female: 50, Male: 55 },
+        { Female: 45, Male: 60 },
+        { Female: 88, Male: 70 },
+        { Female: 30, Male: 25 },
+        { Female: 85, Male: 75 },
+        { Female: 70, Male: 48 },
+        { Female: 80, Male: 55 },
+        { Female: 75, Male: 68 },
+        { Female: 50, Male: 55 },
+        { Female: 65, Male: 50 },
+        { Female: 48, Male: 52 },
+        { Female: 25, Male: 48 },
+        { Female: 85, Male: 55 },
+        { Female: 65, Male: 50 },
+        { Female: 35, Male: 40 },
+        { Female: 25, Male: 30 },
+        { Female: 20, Male: 25 },
+        { Female: 15, Male: 20 },
+        { Female: 10, Male: 15 },
+    ];
+
+    return bars.map((bar, index) => <Bar key={index} Female={bar.Female} Male={bar.Male} />);
+};
+
+const products: Product[] = [
+    { name: "Emerald Velvet Chair", price: "$355.90", sold: "917", img: Emerald_Velvet_Chair },
+    { name: "Velvet Coral Sofa", price: "$279.00", sold: "804", img: Velvet_Coral_Sofa },
+    { name: "Rotterdam Table", price: "$329.95", sold: "738", img: Rotterdam_Table },
+    { name: "Yellow Lamp", price: "$315.50", sold: "684", img: Yellow_Lamp },
+];
+
+const trafficData: TrafficData[] = [
+    { ageRange: "35+" }, { ageRange: "30+" }, { ageRange: "25+" }, { ageRange: "20+" }, { ageRange: "15+" }, { ageRange: "10+" }
+];
+
+
 const Dashboard: React.FC = () => {
-    const products: Product[] = [
-        { name: "Emerald Velvet Chair", price: "$355.90", sold: "917", img: Emerald_Velvet_Chair },
-        { name: "Velvet Coral Sofa", price: "$279.00", sold: "804", img: Velvet_Coral_Sofa },
-        { name: "Rotterdam Table", price: "$329.95", sold: "738", img: Rotterdam_Table },
-        { name: "Yellow Lamp", price: "$315.50", sold: "684", img: Yellow_Lamp },
-    ];
-
-    const trafficData: TrafficData[] = [
-        { ageRange: "35+" }, { ageRange: "30+" }, { ageRange: "25+" }, { ageRange: "20+" }, { ageRange: "15+" }, { ageRange: "10+" }
-    ];
-
-    const generateBars = () => {
-        const bars: BarProps[] = [
-            { Female: 50, Male: 48 },
-            { Female: 85, Male: 80 },
-            { Female: 78, Male: 65 },
-            { Female: 85, Male: 78 },
-            { Female: 55, Male: 85 },
-            { Female: 45, Male: 40 },
-            { Female: 90, Male: 80 },
-            { Female: 50, Male: 55 },
-            { Female: 45, Male: 60 },
-            { Female: 88, Male: 70 },
-            { Female: 30, Male: 25 },
-            { Female: 85, Male: 75 },
-            { Female: 70, Male: 48 },
-            { Female: 80, Male: 55 },
-            { Female: 75, Male: 68 },
-            { Female: 50, Male: 55 },
-            { Female: 65, Male: 50 },
-            { Female: 48, Male: 52 },
-            { Female: 25, Male: 48 },
-            { Female: 85, Male: 55 },
-            { Female: 65, Male: 50 },
-            { Female: 35, Male: 40 },
-            { Female: 25, Male: 30 },
-            { Female: 20, Male: 25 },
-            { Female: 15, Male: 20 },
-            { Female: 10, Male: 15 },
-        ];
-
-        return bars.map((bar, index) => <Bar key={index} Female={bar.Female} Male={bar.Male} />);
-    };
 
     return (
         <div className="flex flex-col items-center gap-5 w-full">
