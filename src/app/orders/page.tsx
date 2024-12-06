@@ -61,7 +61,7 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, bgColor, ic
 
 const Page: React.FC = () => {
     return (
-        <section className="gap-5 flex flex-col justify-between items-center">
+        <section className="gap-5 flex flex-col justify-between">
             <div className="flex gap-6 w-full">
                 <section className="grid grid-cols-2 gap-5 w-[37%]">
                     {statistics.map((stat) => (

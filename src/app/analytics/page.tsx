@@ -8,7 +8,8 @@ import { RxCube } from "react-icons/rx";
 import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import LineChart from "@/components/CustomerActivity";
 import OrderStat from "@/components/OrderStatistics";
-import DemographicsChart from "@/components/DemographicsChart";
+//import DemographicsChart from "@/components/DemographicsChart";
+// import SalesChart from "@/components/InventoryStatus";
 
 interface Statistic {
     id: number;
@@ -111,9 +112,6 @@ const Page: React.FC = () => {
                 <div className="w-[30%]">
                     <OrderStat />
                 </div>
-            </section>
-            <section>
-                <DemographicsChart />
             </section>
         </section>
     );

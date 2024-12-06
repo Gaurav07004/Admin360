@@ -92,7 +92,7 @@ const StatisticCard: React.FC<{
 
 const Page: React.FC = () => {
     return (
-        <section className="gap-5 flex flex-col justify-between items-center">
+        <section className="gap-5 flex flex-col justify-between">
             <section className="flex justify-start items-center gap-5 w-full">
                 {statistics.map((stat) => (
                     <StatisticCard key={stat.id} stat={stat} />

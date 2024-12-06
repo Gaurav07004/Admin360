@@ -2,17 +2,14 @@
 
 import { useState } from "react";
 import { ResponsiveContainer, XAxis, YAxis, Tooltip as ChartTooltip, CartesianGrid, Area, AreaChart } from "recharts";
-import { FiShoppingCart, FiCreditCard, FiCheckCircle, FiEye } from "react-icons/fi";
-import { Button } from "keep-react";
+import { FiShoppingCart, FiCheckCircle, FiEye } from "react-icons/fi";
 import { CgNotes } from "react-icons/cg";
 
-// Define chart data sets for each button
 interface ChartData {
     timeRange: string;
     price: number;
 }
 
-// Define chart data sets for each button
 const chartDataSets: Record<string, ChartData[]> = {
     productView: [
         { timeRange: "06:00 AM", price: 50000 },
@@ -41,7 +38,7 @@ const chartDataSets: Record<string, ChartData[]> = {
         { timeRange: "05:00 AM", price: 82000 },
     ],
     addToCart: [
-        { timeRange: "06:00 AM", price: 49000 }, // Slight discount
+        { timeRange: "06:00 AM", price: 49000 },
         { timeRange: "07:00 AM", price: 49500 },
         { timeRange: "08:00 AM", price: 50500 },
         { timeRange: "09:00 AM", price: 71000 },
@@ -49,7 +46,7 @@ const chartDataSets: Record<string, ChartData[]> = {
         { timeRange: "11:00 AM", price: 91000 },
         { timeRange: "12:00 PM", price: 61500 },
         { timeRange: "01:00 PM", price: 56500 },
-        { timeRange: "02:00 PM", price: 31000 }, // Larger discount for afternoon engagement
+        { timeRange: "02:00 PM", price: 31000 },
         { timeRange: "03:00 PM", price: 66000 },
         { timeRange: "04:00 PM", price: 76000 },
         { timeRange: "05:00 PM", price: 96500 },
@@ -67,7 +64,7 @@ const chartDataSets: Record<string, ChartData[]> = {
         { timeRange: "05:00 AM", price: 82500 },
     ],
     checkout: [
-        { timeRange: "06:00 AM", price: 48000 }, // More discount to encourage checkout
+        { timeRange: "06:00 AM", price: 48000 },
         { timeRange: "07:00 AM", price: 49000 },
         { timeRange: "08:00 AM", price: 49500 },
         { timeRange: "09:00 AM", price: 70500 },
@@ -75,7 +72,7 @@ const chartDataSets: Record<string, ChartData[]> = {
         { timeRange: "11:00 AM", price: 89500 },
         { timeRange: "12:00 PM", price: 59500 },
         { timeRange: "01:00 PM", price: 54000 },
-        { timeRange: "02:00 PM", price: 29500 }, // Afternoon checkout incentives
+        { timeRange: "02:00 PM", price: 29500 },
         { timeRange: "03:00 PM", price: 64000 },
         { timeRange: "04:00 PM", price: 74000 },
         { timeRange: "05:00 PM", price: 93500 },
@@ -93,7 +90,7 @@ const chartDataSets: Record<string, ChartData[]> = {
         { timeRange: "05:00 AM", price: 81000 },
     ],
     purchase: [
-        { timeRange: "06:00 AM", price: 47000 }, // Final incentive for purchase
+        { timeRange: "06:00 AM", price: 47000 },
         { timeRange: "07:00 AM", price: 48000 },
         { timeRange: "08:00 AM", price: 49000 },
         { timeRange: "09:00 AM", price: 70000 },
@@ -120,14 +117,12 @@ const chartDataSets: Record<string, ChartData[]> = {
     ],
 };
 
-// Type for the button config
 interface ButtonConfig {
     label: string;
     icon: React.ComponentType;
     dataKey: string;
 }
 
-// Define button configurations with labels and icons
 const buttonConfig: ButtonConfig[] = [
     { label: "Product View", icon: FiEye, dataKey: "productView" },
     { label: "Add to Cart", icon: FiShoppingCart, dataKey: "addToCart" },
@@ -135,7 +130,6 @@ const buttonConfig: ButtonConfig[] = [
     { label: "Purchase", icon: FiCheckCircle, dataKey: "purchase" },
 ];
 
-// Custom Tooltip component for formatting tooltip content
 const CustomTooltip = ({ active, payload }: { active: boolean, payload: any[] }) => {
     if (active && payload && payload.length) {
         return (
@@ -147,21 +141,17 @@ const CustomTooltip = ({ active, payload }: { active: boolean, payload: any[] })
     return null;
 };
 
-// Utility function for formatting large numbers
 const formatNumberWithK = (number: number) => {
     return number >= 1000 ? (number / 1000).toFixed(1) + "K" : number.toString();
 };
 
-// Main component
 const LineChartComponent = () => {
-    // State to manage the selected chart data and active button
     const [selectedChartData, setSelectedChartData] = useState(chartDataSets.productView);
     const [activeButton, setActiveButton] = useState<string>("productView");
 
-    // Handler to change chart data based on the button clicked
     const handleButtonClick = (dataKey: string) => {
         setSelectedChartData(chartDataSets[dataKey]);
-        setActiveButton(dataKey); // Set active button when clicked
+        setActiveButton(dataKey);
     };
 
     return (
@@ -174,7 +164,7 @@ const LineChartComponent = () => {
                     <defs>
                         <linearGradient id="price" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="10%" stopColor="#FF6500" stopOpacity={0.2} />
-                            <stop offset="60%" stopColor="#FF6500" stopOpacity={0} />
+                            <stop offset="80%" stopColor="#FF6500" stopOpacity={0} />
                         </linearGradient>
                     </defs>
                     <CartesianGrid vertical={false} stroke="#E1E5EA" strokeWidth={0.8} />
@@ -185,17 +175,18 @@ const LineChartComponent = () => {
                 </AreaChart>
             </ResponsiveContainer>
 
-            {/* Map through button configurations to render buttons with different icons */}
-            <section className="flex items-center justify-between mt-4">
+            <section className="flex flex-wrap items-center justify-between mt-5 gap-4">
                 {buttonConfig.map((button, index) => (
-                    <div key={index} className="relative flex items-center gap-3 bg-gray-50 rounded-lg mt-2">
-                        <button.icon className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-xs ${activeButton === button.dataKey ? "text-[#FF6500]  transition-all" : "text-orange-400"}`} />
-                        <div
+                    <div key={index} className={`relative flex items-center gap-3 rounded-lg transition-all ${activeButton === button.dataKey ? "bg-[#FF660021] text-[#FF6500]" : "bg-gray-100 text-orange-400"}`}>
+                        <button.icon className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-base transition-all ${activeButton === button.dataKey ? "text-[#FF6500]" : "text-orange-400"}`} aria-hidden="true" />
+                        <button
                             onClick={() => handleButtonClick(button.dataKey)}
-                            className={`py-3 pl-9 pr-4 rounded-lg w-full text-xs ${activeButton === button.dataKey ? "bg-[#ff660021] text-[#FF6500]  transition-all" : "bg-[#F9F9F9] text-orange-400"}`}
+                            className={`py-3 pl-10 pr-6 rounded-lg w-full text-xs font-medium text-left transition-all ${activeButton === button.dataKey ? "text-[#FF6500]" : "text-orange-400"
+                                }`}
+                            aria-pressed={activeButton === button.dataKey}
                         >
                             {button.label}
-                        </div>
+                        </button>
                     </div>
                 ))}
             </section>

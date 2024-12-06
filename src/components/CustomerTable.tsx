@@ -71,7 +71,7 @@ const CustomerTable = () => {
             columns={columns}
             caption="Customer Information"
             getBadgeColor={getBadgeColor}
-            Applyfilter={true}
+        // Applyfilter={true}
         />
     );
 };

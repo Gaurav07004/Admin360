@@ -25,7 +25,7 @@ const renderCellContent = (item, col, getBadgeColor) => {
                 </Badge>
             );
         }
-        return <span className={col.id === 'Email' ? 'lowercase' : ''}>{value}</span>;
+        return <span>{value}</span>;
     }
 
     if (value && typeof value === 'object' && 'src' in value && typeof value.src === 'string') {
@@ -80,9 +80,9 @@ const TableComponent = ({ data, columns, caption, getBadgeColor }) => {
     }, [data, searchQuery]);
 
     return (
-        <>
+        <section className='p-4 bg-white rounded-[1rem]'>
             <Table className="!bg-white w-full overflow-auto">
-                <TableCaption className="border border-gray-300">
+                <TableCaption className="border border-gray-300 !px-3">
                     <section className="flex items-center justify-between">
                         <p className="text-lg font-semibold text-gray-600">{caption}</p>
                         <div className="flex items-center justify-between z-50 gap-8">
@@ -159,7 +159,7 @@ const TableComponent = ({ data, columns, caption, getBadgeColor }) => {
                     )}
                 </TableBody>
             </Table>
-        </>
+        </section>
     );
 };
 

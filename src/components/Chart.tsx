@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, ChartTooltip, Badge, Pie, PieChart, Cell } from "keep-react";
-import { PiArrowUpRightBold, PiCircleFill } from "react-icons/pi";
+import { PiArrowUpRightBold, PiArrowDownRightBold, PiCircleFill } from "react-icons/pi";
 
 type DataPoint = {
     name: string,
@@ -29,7 +29,7 @@ const data: DataPoint[] = [
     { name: `Sep'24`, price: 4080 },
     { name: `Oct'24`, price: 6000 },
     { name: `Nov'24`, price: 3000 },
-    { name: `Dec'24`, price: 4080 },
+    // { name: `Dec'24`, price: 4080 },
 ];
 
 const PieChartTooltip: React.FC<{ payload?: any, active?: boolean }> = ({ payload, active }) => {
@@ -127,6 +127,13 @@ const AreaChartComponent: React.FC = () => {
     const finalPrice = data[data.length - 1].price;
     const percentageChange = ((finalPrice - initialPrice) / initialPrice) * 100;
 
+    // Determine icon and badge colors based on percentage change
+    const isPositive = percentageChange >= 0;
+    const badgeColor = isPositive ? "success" : "error";
+    const icon = isPositive ? <PiArrowUpRightBold /> : <PiArrowDownRightBold />;
+    const badgeBackgroundColor = isPositive ? "text-green-500" : "text-red-400";
+    const badgeTextColor = isPositive ? "text-green-600" : "text-red-500";
+
     return (
         <>
             <section className="bg-white rounded-[1rem] py-5 px-7 w-full">
@@ -134,9 +141,12 @@ const AreaChartComponent: React.FC = () => {
                     <p className="text-lg font-semibold mb-2">Total Revenue</p>
                     <div className="flex items-center gap-2">
                         <p className="text-3xl">₹{formatNumberWithCommas(parseFloat(totalRevenue.toFixed(2)))}</p>
-
-                        <Badge variant="border" color="success" className="!py-3 !px-2 flex items-center gap-2 text-sm">
-                            <PiArrowUpRightBold /> <span>{percentageChange.toFixed(2)}%</span>
+                        <Badge
+                            variant="border"
+                            color={badgeColor}
+                            className={`!py-3 !px-2 flex items-center gap-2 text-sm ${badgeBackgroundColor} ${badgeTextColor}`}
+                        >
+                            {icon} <span>{percentageChange.toFixed(2)}%</span>
                         </Badge>
                     </div>
                     <p className="text-xs">Gained ₹{formatNumberWithCommas(parseFloat(gainedThisMonth.toFixed(2)))} this month</p>
@@ -145,11 +155,10 @@ const AreaChartComponent: React.FC = () => {
                     <AreaChart data={data}>
                         <defs>
                             <linearGradient id="price" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="10%" stopColor="#FF6500" stopOpacity={0.3} />
-                                <stop offset="95%" stopColor="#FF6500" stopOpacity={0} />
+                                <stop offset="10%" stopColor="#FF6500" stopOpacity={0.2} />
+                                <stop offset="75%" stopColor="#FF6500" stopOpacity={0} />
                             </linearGradient>
                         </defs>
-                        <Area type="natural" dataKey="price" stroke="#FF6500" fillOpacity={1} fill="url(#price)" />
                         <Area type="natural" dataKey="price" stroke="#FF6500" fillOpacity={1} fill="url(#price)" />
                         <XAxis className="text-xs font-medium text-metal-600" dataKey="name" stroke="#4b5563" strokeWidth={0.5} dy={12} />
                         <YAxis className="text-xs font-medium text-metal-600" dataKey="price" stroke="#4b5563" strokeWidth={0.5} dx={-10} tickFormatter={(value: number) => `₹${formatNumberWithCommas(value)}`} />
