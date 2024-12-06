@@ -9,7 +9,7 @@ const renderCellContent = (item, col, getBadgeColor) => {
     const value = item[col.id];
 
     if (typeof value === 'string' || typeof value === 'number') {
-        if ((col.id === 'customerStatus' || col.id === 'paymentStatus' || col.id === 'stockStatus' || col.id === 'orderStatus' || col.id === 'paymentStatus') && getBadgeColor) {
+        if ((col.id === 'customerStatus' || col.id === 'status' || col.id === 'paymentStatus' || col.id === 'stockStatus' || col.id === 'orderStatus' || col.id === 'paymentStatus') && getBadgeColor) {
             return (
                 <Badge
                     variant="base"

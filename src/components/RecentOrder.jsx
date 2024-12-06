@@ -1,7 +1,5 @@
 import React from 'react';
 import TableComponent from '@/components/table';
-import Wooden from '../Assets/Wooden.webp';
-import Sofa from '../Assets/Sofa.webp';
 // import Image from 'next/image';
 
 const columns = [
@@ -14,8 +12,8 @@ const columns = [
 ];
 
 const data = [
-    { id: '01', product: 'Wooden Dining Table', date: 'Aug 30, 2024', status: 'Delivered', price: 20000, customer: 'Ankit Sharma', img: Wooden },
-    { id: '02', product: 'Leather Sofa', date: 'Sept 10, 2024', status: 'Cancelled', price: 35000, customer: 'Pooja Verma', img: Sofa },
+    { id: '01', product: 'Dell Inspiron 15 Laptop', date: 'Aug 30, 2024', status: 'Delivered', price: 20000, customer: 'Ankit Sharma' },
+    { id: '02', product: 'Sony Headphones', date: 'Sept 10, 2024', status: 'Cancelled', price: 35000, customer: 'Pooja Verma' },
 ];
 
 const getBadgeColor = (status) => {

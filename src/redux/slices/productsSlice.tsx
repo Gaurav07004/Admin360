@@ -18,7 +18,7 @@ const initialState: ProductState = {
     products: [
         { id: 1, productID: 'P001', productName: 'Dell Inspiron 15 Laptop', category: 'Electronics', price: 50000, stockStatus: 'Available', stockQuantity: 20 },
         { id: 2, productID: 'P002', productName: 'Sony WH-1000XM4 Headphones', category: 'Accessories', price: 1500, stockStatus: 'Available', stockQuantity: 50 },
-        { id: 3, productID: 'P003', productName: 'Apple iPhone 14', category: 'Electronics', price: 30000, stockStatus: 'Out of Stock', stockQuantity: 0 },
+        { id: 3, productID: 'P003', productName: 'Apple iPhone 15', category: 'Electronics', price: 80000, stockStatus: 'Out of Stock', stockQuantity: 0 },
         { id: 4, productID: 'P004', productName: 'Samsung Galaxy Watch 5', category: 'Electronics', price: 8000, stockStatus: 'Available', stockQuantity: 30 },
         { id: 5, productID: 'P005', productName: 'JBL Flip 5 Bluetooth Speaker', category: 'Accessories', price: 2500, stockStatus: 'Low Stock', stockQuantity: 3 },
         { id: 6, productID: 'P006', productName: 'Logitech MX Master 3 Wireless Mouse', category: 'Accessories', price: 800, stockStatus: 'Out of Stock', stockQuantity: 0 },

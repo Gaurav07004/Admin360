@@ -1,10 +1,10 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
-import Velvet_Coral_Sofa from "../Assets/Velvet_Coral_Sofa.png";
-import Emerald_Velvet_Chair from "../Assets/Emerald_Velvet_Chair.png";
-import Rotterdam_Table from "../Assets/Rotterdam_Table.jpeg";
-import Yellow_Lamp from "../Assets/Yellow_Lamp.png";
+import Product_1 from "../Assets/Dell Inspiron 15 Laptop.png";
+import Product_2 from "../Assets/Targus Laptop Sleeve.webp";
+import Product_3 from "../Assets/Apple iPhone 15.webp";
+import Product_4 from "../Assets/Samsung Galaxy Watch 5.webp";
 
 interface Product {
     name: string;
@@ -14,10 +14,10 @@ interface Product {
 }
 
 const products: Product[] = [
-    { name: "Emerald Velvet Chair", price: "$355.90", sold: "917", img: Emerald_Velvet_Chair },
-    { name: "Velvet Coral Sofa", price: "$279.00", sold: "804", img: Velvet_Coral_Sofa },
-    { name: "Rotterdam Table", price: "$329.95", sold: "738", img: Rotterdam_Table },
-    { name: "Yellow Lamp", price: "$315.50", sold: "684", img: Yellow_Lamp },
+    { name: "Dell Inspiron 15 Laptop", price: "₹50000", sold: "917", img: Product_1 },
+    { name: "Targus Laptop Sleeve", price: "₹800", sold: "804", img: Product_2 },
+    { name: "Apple iPhone 15", price: "₹80000", sold: "738", img: Product_3 },
+    { name: "Samsung Galaxy Watch 5", price: "₹8000", sold: "684", img: Product_4 },
 ];
 
 const Dashboard: React.FC = () => {
@@ -29,15 +29,21 @@ const Dashboard: React.FC = () => {
                 </div>
                 <ul>
                     {products.map((product, index) => (
-                        <li key={index} className="flex items-center justify-between p-4 mb-[0.55rem] bg-gray-100 rounded-lg border border-gray-300">
-                            <div className="flex items-center gap-5">
-                                <Image src={product.img} alt={product.name} className="w-10 h-10 object-cover rounded-md" />
-                                <div>
-                                    <p className="text-sm font-semibold text-gray-500">{product.name}</p>
+                        <li key={index} className="p-4 mb-2 w-full bg-gray-100 rounded-lg border border-gray-300">
+                            <div className="flex items-center w-full">
+                                <Image
+                                    src={product.img}
+                                    alt={product.name}
+                                    className="w-12 h-12 object-contain rounded-md"
+                                />
+                                <div className="ml-4 flex-1">
+                                    <div className="flex justify-between w-full">
+                                        <p className="text-sm font-semibold text-gray-500">{product.name}</p>
+                                        <span className="text-sm font-semibold text-gray-500">{product.price}</span>
+                                    </div>
                                     <p className="text-xs text-gray-500">{product.sold} sold</p>
                                 </div>
                             </div>
-                            <span className="text-sm font-semibold text-gray-500">{product.price}</span>
                         </li>
                     ))}
                 </ul>

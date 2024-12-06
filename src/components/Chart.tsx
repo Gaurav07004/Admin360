@@ -2,6 +2,7 @@
 import React from "react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, ChartTooltip, Badge, Pie, PieChart, Cell } from "keep-react";
 import { PiArrowUpRightBold, PiArrowDownRightBold, PiCircleFill } from "react-icons/pi";
+import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 
 type DataPoint = {
     name: string,
@@ -18,19 +19,25 @@ const formatNumberWithCommas = (number: number): string => {
 };
 
 const data: DataPoint[] = [
-    { name: `Jan'24`, price: 4000 },
-    { name: `Feb'24`, price: 4589 },
-    { name: `Mar'24`, price: 7000 },
-    { name: `Apr'24`, price: 5400 },
-    { name: `May'24`, price: 9000 },
-    { name: `Jun'24`, price: 6501 },
-    { name: `Jul'24`, price: 6000 },
-    { name: `Aug'24`, price: 3000 },
-    { name: `Sep'24`, price: 4080 },
-    { name: `Oct'24`, price: 6000 },
-    { name: `Nov'24`, price: 3000 },
-    // { name: `Dec'24`, price: 4080 },
+    { name: `Jan'24`, price: 500000 },
+    { name: `Feb'24`, price: 500000 },
+    { name: `Mar'24`, price: 500000 },
+    { name: `Apr'24`, price: 700000 },
+    { name: `May'24`, price: 650000 },
+    { name: `Jun'24`, price: 900000 },
+    { name: `Jul'24`, price: 600000 },
+    { name: `Aug'24`, price: 550000 },
+    { name: `Sep'24`, price: 300000 },
+    { name: `Oct'24`, price: 600000 },
+    { name: `Nov'24`, price: 650000 },
+    { name: `Dec'24`, price: 750000 },
 ];
+
+const formatNumberWithL = (number: number): string => {
+    return number >= 100000
+        ? (number / 100000).toFixed(1) + "L"
+        : number.toLocaleString();
+};
 
 const PieChartTooltip: React.FC<{ payload?: any, active?: boolean }> = ({ payload, active }) => {
     if (active && payload && payload.length) {
@@ -56,39 +63,50 @@ const AreaChartTooltip: React.FC<{ payload?: any, label?: string, active?: boole
     return null;
 };
 
-const ProductSold: React.FC = () => {
+const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
     const data: PieDataPoint[] = [
-        { value: 2500, name: "Stools" },
-        { value: 1200, name: "Sofas" },
-        { value: 1350, name: "Chairs" },
-        { value: 1500, name: "Tables" },
+        { value: 2500, name: "Laptops" },
+        { value: 1200, name: "Smartphones" },
+        { value: 1350, name: "Tablets" },
+        { value: 1500, name: "Headphones" },
     ];
 
-    const COLORS = ["#FFB300", "#8E24AA", "#E91E63", "#FB8C00"];
+    const COLORS = ["#00BCD4", "#FF9800", "#9C27B0", "#8BC34A"];
     const totalValue = data.reduce((acc, item) => acc + item.value, 0);
+    const totalIncome = totalRevenue + 50000 + 50000;
+    const lastYearIncome = totalRevenue + 110000;
+    const percentageChange = ((totalIncome - lastYearIncome) / lastYearIncome) * 100;
+    const isPositive = percentageChange >= 0;
+    const icon = isPositive ? (
+        <TbArrowBadgeUpFilled className="w-5 h-5 text-green-500" />
+    ) : (
+        <TbArrowBadgeDownFilled className="w-5 h-5 text-red-500" />
+    );
+    const badgeBackgroundColor = isPositive ? "bg-green-100" : "bg-red-100";
+    const badgeTextColor = isPositive ? "text-green-600" : "text-red-500";
 
     return (
         <section className="flex justify-start items-center gap-5 w-full">
             <section className="bg-white rounded-[1rem] py-6 px-8 w-full">
                 <div className="flex flex-col justify-between w-1/2 relative">
-                    <p className="text-lg text-left font-semibold mb-[2.25rem] text-gray-600">Product Sold</p>
+                    <p className="text-lg text-left font-semibold mb-[1.25rem] text-gray-600">Product Sold</p>
                     <div className="grid grid-cols-2 items-center gap-2">
-                        <Badge className="bg-[#FDFFD2] py-[0.95rem] px-[0.3rem] rounded-lg gap-2 border-[0.0001rem] border-[#FFAF61]">
-                            <PiCircleFill className="text-[#FFD700]" /> <span className="text-slate-600 text-[0.9rem]">Stools</span>
+                        <Badge className="bg-[#E0F7FA] py-[0.95rem] px-[0.3rem] w-fit rounded-lg gap-2 border-[0.0001rem] border-[#00BCD4]">
+                            <PiCircleFill className="text-[#00BCD4]" /> <span className="text-slate-600 text-[0.9rem]">Laptops</span>
                         </Badge>
-                        <Badge className="bg-[#FFE5D5] py-[0.95rem] px-[0.3rem] rounded-lg gap-2 border-[0.0001rem] border-[#FF8C00]">
-                            <PiCircleFill className="text-[#FF8C00]" /> <span className="text-slate-600 text-[0.9rem]">Sofas</span>
+                        <Badge className="bg-[#FFF3E0] py-[0.95rem] px-[0.3rem] w-fit rounded-lg gap-2 border-[0.0001rem] border-[#FF9800]">
+                            <PiCircleFill className="text-[#FF9800]" /> <span className="text-slate-600 text-[0.9rem]">Smartphones</span>
                         </Badge>
-                        <Badge className="bg-[#FDE2E7] py-[0.95rem] px-[0.3rem] rounded-lg gap-2 border-[0.0001rem] border-[#FF69B4]">
-                            <PiCircleFill className="text-[#FF69B4]" /> <span className="text-slate-600 text-[0.9rem]">Chairs</span>
+                        <Badge className="bg-[#F3E5F5] py-[0.95rem] px-[0.3rem] w-fit rounded-lg gap-2 border-[0.0001rem] border-[#9C27B0]">
+                            <PiCircleFill className="text-[#9C27B0]" /> <span className="text-slate-600 text-[0.9rem]">Tablets</span>
                         </Badge>
-                        <Badge className="bg-[#E6E0FF] py-[0.95rem] px-[0.3rem] rounded-lg gap-2 border-[0.0001rem] border-[#9370DB]">
-                            <PiCircleFill className="text-[#9370DB]" /> <span className="text-slate-600 text-[0.9rem]">Tables</span>
+                        <Badge className="bg-[#F1F8E9] py-[0.95rem] px-[0.3rem] w-fit rounded-lg gap-2 border-[0.0001rem] border-[#8BC34A]">
+                            <PiCircleFill className="text-[#8BC34A]" /> <span className="text-slate-600 text-[0.9rem]">Headphones</span>
                         </Badge>
                     </div>
-                    <ResponsiveContainer width="100%" height={150} className="absolute top-[0rem] left-[13rem]">
+                    <ResponsiveContainer width="100%" height={130} className="absolute top-[0rem] left-[13rem]">
                         <PieChart>
-                            <Pie cx="50%" cy="50%" outerRadius={62} innerRadius={48} paddingAngle={2} data={data} dataKey="value" nameKey="name" cornerRadius={50}>
+                            <Pie cx="50%" cy="50%" outerRadius={60} innerRadius={48} paddingAngle={2} data={data} dataKey="value" nameKey="name" cornerRadius={0}>
                                 {data.map((entry, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
@@ -105,17 +123,27 @@ const ProductSold: React.FC = () => {
                 </div>
             </section>
             <section className="bg-white rounded-[1rem] py-6 px-8 w-full">
-                <div className="text-left text-gray-600">
-                    <div className="flex items-center justify-between w-full mb-2">
-                        <p className="text-lg font-semibold">Total Income</p>
-                        <Badge variant="border" color="success" className="!py-[0.8rem] !px-2 flex items-center gap-2 text-sm rounded-md border border-green-500">
-                            <PiArrowUpRightBold />
-                        </Badge>
+                <div className="text-left text-gray-700">
+                    <div className="w-full mb-[1.25rem]">
+                        <div className="flex items-center justify-between">
+                            <p className="text-lg font-semibold text-gray-600">Total Income</p>
+                            <span
+                                className={`text-xs flex items-center rounded-md px-2 py-2 ${badgeBackgroundColor} ${badgeTextColor}`}>
+                                {icon}
+                            </span>
+                        </div>
+                        <p className="text-2xl text-gray-600">₹{totalIncome.toLocaleString()}</p>
                     </div>
-                    <p className="text-3xl">₹590,570.00</p>
-                    <p className="text-xs mt-[3rem] mb-0">24% increase compared to last Year</p>
+                    <div className="flex gap-4 font-semibold items-center mt-6">
+                        <span
+                            className={`text-xs flex items-center rounded-md px-2 py-1 ${badgeBackgroundColor} ${badgeTextColor}`}>
+                            {icon} {isPositive ? "+" : "-"}{Math.abs(percentageChange).toFixed(2)}%
+                        </span>
+                        <span className="text-gray-600 text-xs">{isPositive ? "Increase compared to last year" : "Decrease compared to last year"}</span>
+                    </div>
                 </div>
             </section>
+
         </section>
     );
 };
@@ -123,11 +151,11 @@ const ProductSold: React.FC = () => {
 const AreaChartComponent: React.FC = () => {
     const totalRevenue: number = data.reduce((acc: number, item: DataPoint) => acc + item.price, 0);
     const gainedThisMonth: number = data[data.length - 1].price - data[data.length - 2].price;
+
     const initialPrice = data[0].price;
     const finalPrice = data[data.length - 1].price;
     const percentageChange = ((finalPrice - initialPrice) / initialPrice) * 100;
 
-    // Determine icon and badge colors based on percentage change
     const isPositive = percentageChange >= 0;
     const badgeColor = isPositive ? "success" : "error";
     const icon = isPositive ? <PiArrowUpRightBold /> : <PiArrowDownRightBold />;
@@ -159,14 +187,14 @@ const AreaChartComponent: React.FC = () => {
                                 <stop offset="75%" stopColor="#FF6500" stopOpacity={0} />
                             </linearGradient>
                         </defs>
-                        <Area type="natural" dataKey="price" stroke="#FF6500" fillOpacity={1} fill="url(#price)" />
+                        <Area type="natural" dataKey="price" stroke="#FF6500" fillOpacity={1} fill="url(#price)" strokeWidth={0.8} />
                         <XAxis className="text-xs font-medium text-metal-600" dataKey="name" stroke="#4b5563" strokeWidth={0.5} dy={12} />
-                        <YAxis className="text-xs font-medium text-metal-600" dataKey="price" stroke="#4b5563" strokeWidth={0.5} dx={-10} tickFormatter={(value: number) => `₹${formatNumberWithCommas(value)}`} />
+                        <YAxis className="text-xs font-medium text-metal-600" dataKey="price" stroke="#4b5563" strokeWidth={0.5} dx={-10} tickFormatter={formatNumberWithL} />
                         <ChartTooltip content={<AreaChartTooltip />} />
                     </AreaChart>
                 </ResponsiveContainer>
             </section>
-            <ProductSold />
+            <ProductSold totalRevenue={totalRevenue} />
         </>
     );
 };
