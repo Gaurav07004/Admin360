@@ -13,6 +13,7 @@ import Image from "next/image";
 import profilePic from "@/Assets/Profile.jpg";
 import { PiCircleFill, PiPhoneCallLight } from "react-icons/pi";
 import { IoMailOutline } from "react-icons/io5";
+import Timeline from "@/components/TimelineComponent"
 
 interface Customer {
     id: number;
@@ -70,6 +71,26 @@ const CustomerDetailPage: React.FC = () => {
     //         </div>
     //     );
     // }
+    const data = [
+        { label: "Total Order", value: "12" },
+        { label: "Total Delivered", value: "08" },
+        { label: "Total Cancelled", value: "02" },
+        { label: "Total Pending", value: "02" },
+    ];
+
+    const customerDetails = [
+        { label: "Customer ID", value: "C001" },
+        { label: "Customer Name", value: "Amit Kumar" },
+        { label: "Email", value: "amit.kumar@gmail.com", link: "amit.kumar@gmail.com" },
+        { label: "Contact Number", value: "9768741433", link: "9768741433" },
+    ];
+
+    const details = [
+        { label: "Order", value: "12" },
+        { label: "Location", value: "Delhi, India" },
+        { label: "Date Joined", value: "Jan 15, 2024" },
+        { label: "Customer Status", value: "Active" }
+    ];
 
     return (
         <>
@@ -81,11 +102,10 @@ const CustomerDetailPage: React.FC = () => {
             )}
             <div
                 ref={drawerRef}
-                className={`fixed top-3 bottom-3 right-3 w-full max-w-[36rem] p-5 rounded-xl bg-white shadow-lg text-black transform ${drawerStatus ? 'translate-x-0' : 'translate-x-full'
+                className={`fixed top-3 bottom-3 right-3 w-full max-w-[36rem] p-5 rounded-xl bg-white shadow-lg text-black transform overflow-auto ${drawerStatus ? 'translate-x-0' : 'translate-x-full'
                     } transition-transform duration-500 ease-in-out z-20`}
             >
-                {/* Header Section */}
-                <section className="flex items-center justify-between">
+                <section className="flex items-center justify-between ">
                     <div className="flex items-center space-x-2">
                         <div className="text-gray-800 font-semibold text-lg">Customer Preview</div>
                         <TfiLayoutLineSolid className="text-xl text-gray-400 rotate-90" />
@@ -99,8 +119,9 @@ const CustomerDetailPage: React.FC = () => {
                     </div>
                 </section>
                 <Divider className="border-t-[0.5px] border-gray-200 mt-4 -mx-[1.1rem]" />
-                {/* <section className="flex flex-col mt-6 space-y-4"> */}
-                <div className="flex flex-col mt-6 justify-between border border-gray-200 rounded-lg shadow-sm">
+
+                {/* Main scrollable content */}
+                <div className="flex flex-col my-6 justify-between border border-gray-200 rounded-lg shadow-sm"> {/* Add overflow-auto here */}
                     <div className="flex items-center p-4 border-b-[0.5px] border-gray-200">
                         <Image
                             src={profilePic}
@@ -109,7 +130,6 @@ const CustomerDetailPage: React.FC = () => {
                             width={64}
                             height={64}
                         />
-                        {/* Details */}
                         <div className="ml-4">
                             <div className="flex items-center justify-between w-fit">
                                 <div className="text-gray-800 text-base font-semibold">Amit Kumar</div>
@@ -136,26 +156,68 @@ const CustomerDetailPage: React.FC = () => {
                             </div>
                         </div>
                     </div>
+
                     <div className="grid grid-cols-4 text-gray-500 uppercase">
-                        <div className="flex flex-col border-r-[0.5px] p-4 border-gray-200">
-                            <span className="text-[0.65rem] font-semibold text-gray-400">Total Order</span>
-                            <span className="text-[0.8rem] font-semibold mt-2">12</span>
+                        {data.map((item, index) => (
+                            <div
+                                key={index}
+                                className={`flex flex-col p-4 ${index !== data.length - 1 ? "border-r-[0.5px] border-gray-200" : ""
+                                    } hover:bg-gray-50 transition`}
+                            >
+                                <span className="text-[0.65rem] font-semibold text-gray-400">{item.label}</span>
+                                <span className="text-[0.8rem] font-semibold mt-2">{item.value}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <Divider className="border-t-[0.5px] border-gray-200 mt-4 -mx-[1.1rem]" />
+                <div className="my-4">
+                    <div className="text-gray-500 font-semibold text-sm">Customer Details</div>
+                    <div className="grid grid-cols-2 gap-8 my-4 text-xs">
+                        <div className="space-y-4">
+                            {customerDetails.map((item, index) => (
+                                <div key={index}>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <span className="font-semibold text-gray-400">{item.label}</span>
+                                        <div className="space-y-1">
+                                            {item.link ? (
+                                                <a href={item.link} className="text-blue-500 hover:underline">
+                                                    {item.value}
+                                                </a>
+                                            ) : (
+                                                <span>{item.value}</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                    {index !== customerDetails.length - 1 ? (
+                                        <Divider className="border-t-[0.5px] border-gray-200" />
+                                    ) : null}
+                                </div>
+                            ))}
                         </div>
-                        <div className="flex flex-col border-r-[0.5px] p-4 border-gray-200">
-                            <span className="text-[0.65rem] font-semibold text-gray-400">Total Delivered</span>
-                            <span className="text-[0.8rem] font-semibold mt-2">08</span>
-                        </div>
-                        <div className="flex flex-col border-r-[0.5px] p-4 border-gray-200">
-                            <span className="text-[0.65rem] font-semibold text-gray-400">Total Cancelled</span>
-                            <span className="text-[0.8rem] font-semibold mt-2">02</span>
-                        </div>
-                        <div className="flex flex-col p-4">
-                            <span className="text-[0.65rem] font-semibold text-gray-400">Total Pending</span>
-                            <span className="text-[0.8rem] font-semibold mt-2">02</span>
+                        <div className="space-y-4">
+                            {details.map((item, index) => (
+                                <div key={index}>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <span className="font-semibold text-gray-400">{item.label}</span>
+                                        <div className="space-y-1">
+                                            <span>{item.value}</span>
+                                        </div>
+                                    </div>
+                                    {index !== customerDetails.length - 1 ? (
+                                        <Divider className="border-t-[0.5px] border-gray-200" />
+                                    ) : null}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
+
+                <Divider className="border-t-[0.5px] border-gray-200 mt-4 -mx-[1.1rem]" />
+                <Timeline />
             </div>
+
         </>
     );
 };
