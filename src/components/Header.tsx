@@ -3,10 +3,11 @@
 
 import Image from "next/image";
 //import { FiSearch } from "react-icons/fi";
-import { IoMailOutline, IoRemoveOutline, IoCalendarOutline } from "react-icons/io5";
+import { IoMailOutline, IoCalendarOutline } from "react-icons/io5";
 import profilePic from "../Assets/Profile.jpg";
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { TfiLayoutLineSolid } from "react-icons/tfi";
 
 const Header: React.FC = () => {
     const { imageUrl } = useSelector((state: RootState) => state.user);
@@ -33,7 +34,7 @@ const Header: React.FC = () => {
                     <IoMailOutline className="w-5 h-5 text-gray-500" />
                     <span className="absolute top-[0.5rem] left-[1.35rem] w-[0.55rem] h-[0.55rem] bg-red-500 rounded-full border-2 border-white"></span>
                 </div>
-                <IoRemoveOutline className="text-3xl text-gray-300 rotate-90" />
+                <TfiLayoutLineSolid className="text-xl text-gray-300 rotate-90" />
                 <div className="flex items-center space-x-2">
                     <Image
                         src={imageUrl || profilePic}

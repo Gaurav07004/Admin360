@@ -85,7 +85,7 @@ const TableComponent = ({ data, columns, caption, getBadgeColor }) => {
                 <TableCaption className="border border-gray-300 !px-3">
                     <section className="flex items-center justify-between">
                         <p className="text-lg font-semibold text-gray-600">{caption}</p>
-                        <div className="flex items-center justify-between z-50 gap-8">
+                        <div className="flex items-center justify-between gap-8">
                             <div className="relative flex items-center rounded-md">
                                 <input
                                     type="text"

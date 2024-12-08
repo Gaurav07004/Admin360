@@ -8,7 +8,7 @@ interface MenuState {
 
 // Load the activeMenu from localStorage, or default to 'Dashboard'
 const initialState: MenuState = {
-    activeMenu: localStorage.getItem("activeMenu") || 'Dashboard',
+    activeMenu: 'Dashboard', // localStorage.getItem("activeMenu") || 
     activeSubMenu: null,
     modal: false
 };
@@ -20,7 +20,7 @@ const menuSlice = createSlice({
         setActiveMenu: (state, action: PayloadAction<string>) => {
             state.activeMenu = action.payload;
             state.activeSubMenu = null;
-            localStorage.setItem("activeMenu", action.payload); // Save to localStorage
+            // localStorage.setItem("activeMenu", action.payload); // Save to localStorage
         },
         setActiveSubMenu: (state, action: PayloadAction<string | null>) => {
             state.activeSubMenu = action.payload;

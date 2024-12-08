@@ -5,6 +5,7 @@ import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import CustomerTable from '@/components/CustomerTable';
 import { FiUsers, FiEye } from "react-icons/fi";
 import { LuCheckCircle } from "react-icons/lu";
+import Customer from '@/app/customers/[id]/page'
 
 interface Statistic {
     id: number;
@@ -99,6 +100,7 @@ const Page: React.FC = () => {
                 ))}
             </section>
             <CustomerTable />
+            <Customer />
         </section>
     );
 };

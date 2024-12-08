@@ -34,7 +34,8 @@
     ".next/types/**/*.ts",
     "src/components/table.jsx",
     "src/components/RecentOrder.jsx",
-    "src/redux/slices/customerSlice.tsx"
+    "src/redux/slices/customerSlice.tsx",
+    "src/app/settings/page.jsx"
   ],
   "exclude": [
     "node_modules"

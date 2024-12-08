@@ -1,11 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCustomerStatus } from "../redux/slices/customerSlice";
+import { setDrawerStatus } from "../redux/slices/customerSlice";
+// import DrawerComponent from '@/components/Drawer';
 import { PiDotsThreeOutlineLight } from "react-icons/pi";
+// import { PiDotsThreeOutlineLight } from "react-icons/pi";
+// import { Button, Drawer, DrawerAction, DrawerContent, Skeleton, SkeletonLine } from 'keep-react'
 import { RootState } from '../redux/store';
 import TableComponent from "./table";
-import { toast } from 'keep-react';
+// import { toast } from 'keep-react';
 
 const columns = [
     { id: 'customerID', label: 'Customer ID' },
@@ -28,22 +32,38 @@ const getBadgeColor = (status: string) => {
 
 const CustomerTable = () => {
     const dispatch = useDispatch();
-    const { customers } = useSelector((state: RootState) => state.customer);
+    const { customers, drawerStatus } = useSelector((state: RootState) => state.customer);
     const [mounted, setMounted] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
+
+    const handleCustomer = () => {
+        dispatch(setDrawerStatus(!drawerStatus));
+    };
+
+    // const handleStatusChange = (customerID: string, currentStatus: string) => {
+    //     try {
+    //         const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
+    //         dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
+    //         toast.success(`Customer ID ${customerID} status changed to ${newStatus}.`);
+    //     } catch (error) {
+    //         toast.error('Failed to update status.');
+    //     }
+    // };
 
     useEffect(() => {
         setMounted(true);
     }, []);
 
-    const handleMenuClick = (customerID: string, currentStatus: string) => {
-        try {
-            const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
-            dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
-            toast.success(`Customer ID ${customerID} status changed to ${newStatus}.`);
-        } catch (error) {
-            toast.error('Failed to update status.');
-        }
-    };
+    // const handleMenuClick = (customerID: string, currentStatus: string) => {
+    //     try {
+    //         const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
+    //         dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
+    //         toast.success(`Customer ID ${customerID} status changed to ${newStatus}.`);
+    //     } catch (error) {
+    //         toast.error('Failed to update status.');
+    //     }
+    // };
 
     const data = customers.map((customer) => ({
         customerID: customer.customerID,
@@ -54,25 +74,25 @@ const CustomerTable = () => {
         customerStatus: customer.customerStatus,
         order: customer.order,
         action: (
-            <div>
-                <PiDotsThreeOutlineLight
-                    className="size-4 fill-metal-900 dark:fill-white m-auto rounded-full"
-                    onClick={() => handleMenuClick(customer.customerID, customer.customerStatus)}
-                />
-            </div>
+            <PiDotsThreeOutlineLight
+                className="size-4 fill-metal-900 dark:fill-white m-auto rounded-full"
+                onClick={() => handleCustomer()}
+            />
         ),
     }));
 
     if (!mounted) return null;
 
     return (
-        <TableComponent
-            data={data}
-            columns={columns}
-            caption="Customer Information"
-            getBadgeColor={getBadgeColor}
-        // Applyfilter={true}
-        />
+        <>
+            <TableComponent
+                data={data}
+                columns={columns}
+                caption="Customer Information"
+                getBadgeColor={getBadgeColor}
+            />
+        </>
+
     );
 };
 

@@ -17,6 +17,7 @@ interface Customer {
 interface CustomerState {
     customers: Customer[];
     sortedTable: string[];
+    drawerStatus: boolean;
 }
 
 const initialState: CustomerState = {
@@ -233,6 +234,7 @@ const initialState: CustomerState = {
         },
     ],
     sortedTable: [],
+    drawerStatus: false,
 };
 
 const CustomerSlice = createSlice({
@@ -249,10 +251,13 @@ const CustomerSlice = createSlice({
         setSortedReviews(state, action: PayloadAction<string[]>) {
             state.sortedTable = action.payload;
         },
+        setDrawerStatus(state, action: PayloadAction<boolean>) {
+            state.drawerStatus = action.payload;
+        }
     }
 });
 
-export const { updateCustomerStatus, setSortedReviews } = CustomerSlice.actions;
+export const { updateCustomerStatus, setSortedReviews, setDrawerStatus } = CustomerSlice.actions;
 export const selectCustomerState = (state: RootState) => state.customer;
 
 export default CustomerSlice.reducer;

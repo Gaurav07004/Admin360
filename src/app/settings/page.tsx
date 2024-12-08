@@ -161,3 +161,69 @@ function Profile() {
 }
 
 export default Profile;
+
+// import React, { useState, useRef, useEffect } from 'react';
+
+// const App = () => {
+//     const [isOpen, setIsOpen] = useState(false);
+
+//     // Explicitly typing the refs as HTMLDivElement
+//     const drawerRef = useRef<HTMLDivElement>(null);
+//     const overlayRef = useRef<HTMLDivElement>(null);
+
+//     const toggleDrawer = () => {
+//         setIsOpen(!isOpen);
+//     };
+
+//     // Close drawer if click happens outside of drawer or overlay
+//     const handleClickOutside = (event: MouseEvent) => {
+//         // Close drawer if click is outside the drawer and overlay
+//         if (drawerRef.current && !drawerRef.current.contains(event.target as Node) &&
+//             overlayRef.current && overlayRef.current.contains(event.target as Node)) {
+//             setIsOpen(false);
+//         }
+//     };
+
+//     useEffect(() => {
+//         if (isOpen) {
+//             document.addEventListener("mousedown", handleClickOutside);
+//         }
+//         return () => {
+//             document.removeEventListener("mousedown", handleClickOutside);
+//         };
+//     }, [isOpen]);
+
+//     return (
+//         <div className="relative w-full h-screen bg-gray-100">
+//             <div className="flex justify-center items-center h-full">
+//                 <button
+//                     className="px-6 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 transition-all"
+//                     onClick={toggleDrawer}
+//                 >
+//                     Open Drawer
+//                 </button>
+//             </div>
+
+//             {/* Overlay */}
+//             {isOpen && (
+//                 <div
+//                     ref={overlayRef}
+//                     className="fixed inset-0 bg-black bg-opacity-50 z-10"
+//                 />
+//             )}
+
+//             {/* Drawer */}
+//             <div
+//                 ref={drawerRef}
+//                 className={`fixed top-0 right-0 w-full max-w-md h-full bg-gray-800 text-white transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-500 ease-in-out z-20`}
+//             >
+//                 <div className="p-6">
+//                     <h2 className="text-xl font-semibold">Drawer Content</h2>
+//                     <p>This is the content inside the drawer.</p>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default App;
