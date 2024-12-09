@@ -10,7 +10,7 @@ import { setActiveMenu, setActiveSubMenu } from "../redux/slices/menuSlice";
 import logo from "../Assets/Logo.png";
 import profilePic from "../Assets/Profile.jpg";
 import classNames from "classnames";
-import { PiBoundingBoxLight, PiShoppingCartSimpleLight, PiChartLineUpLight, PiCubeLight, PiUsersThreeLight, PiTruckLight } from "react-icons/pi";
+import { PiBoundingBoxLight, PiShoppingCartSimpleLight, PiChartLineUpLight, PiCubeLight, PiUsersThreeLight } from "react-icons/pi";
 import { CiSettings, CiLogout } from "react-icons/ci";
 
 const menuConfig = [

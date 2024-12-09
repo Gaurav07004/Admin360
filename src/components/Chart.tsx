@@ -74,7 +74,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
     const COLORS = ["#00BCD4", "#FF9800", "#9C27B0", "#8BC34A"];
     const totalValue = data.reduce((acc, item) => acc + item.value, 0);
     const totalIncome = totalRevenue + 50000 + 50000;
-    const lastYearIncome = totalRevenue + 110000;
+    const lastYearIncome = totalRevenue + 200000;
     const percentageChange = ((totalIncome - lastYearIncome) / lastYearIncome) * 100;
     const isPositive = percentageChange >= 0;
     const icon = isPositive ? (
@@ -132,7 +132,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                                 {icon}
                             </span>
                         </div>
-                        <p className="text-2xl text-gray-600">₹{totalIncome.toLocaleString()}</p>
+                        <p className="text-2xl text-gray-600">₹{formatNumberWithCommas(parseFloat(totalRevenue.toFixed(2)))}</p>
                     </div>
                     <div className="flex gap-4 font-semibold items-center mt-6">
                         <span
