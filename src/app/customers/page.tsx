@@ -80,7 +80,7 @@ const StatisticCard: React.FC<{
                 <div className="text-gray-800 font-bold text-3xl">{value}</div>
             </div>
             <div className="flex gap-4 font-semibold">
-                <span className={`text-xs flex items-center rounded-md px-2 py-1 ${isPositive ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}>
+                <span className={`text-xs flex items-center rounded-md px-2 cursor-pointer py-1 ${isPositive ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}>
                     {isPositive ? <TbArrowBadgeUpFilled className="w-5 h-5 text-green-500" /> : <TbArrowBadgeDownFilled className="w-5 h-5 text-red-500" />}
                     {isPositive && "+"}
                     {percentageChange}%

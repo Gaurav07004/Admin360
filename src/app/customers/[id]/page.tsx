@@ -31,6 +31,7 @@ const CustomerDetailPage: React.FC = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const [customer, setCustomer] = useState<Customer | null>(null);
+    const [customerStatus, setCustomerStatus] = useState<string>("Active");
     const [loading, setLoading] = useState<boolean>(true);
     const { drawerStatus } = useSelector((state: RootState) => state.customer);
     const drawerRef = useRef<HTMLDivElement>(null);
@@ -76,10 +77,14 @@ const CustomerDetailPage: React.FC = () => {
         return <p>Loading...</p>;
     }
 
+    const renderCustomerStatus = () => {
+        setCustomerStatus((prevStatus) => (prevStatus === "Active" ? "Inactive" : "Active"));
+    };
+
     const renderCustomerPreview = () => (
         <section className="flex items-center justify-between sticky top-0 z-10 bg-white p-4 border-b-[0.5px] border-gray-200">
             <div className="flex items-center space-x-2">
-                <div className="text-[#FF6500] font-semibold text-lg">Customer Preview</div>
+                <div className="text-[#FF6500] font-semibold text-sm uppercase">Customer Preview</div>
                 <TfiLayoutLineSolid className="text-xl text-[#FF6500] rotate-90" />
                 <div className="text-[#FF6500] text-sm">1 of 10</div>
             </div>
@@ -106,13 +111,20 @@ const CustomerDetailPage: React.FC = () => {
                     <div className="flex items-center justify-between w-fit">
                         <div className="text-gray-800 text-base font-semibold">Amit Kumar</div>
                         <div className="ml-4">
-                            <Badge
+                            {/* <Badge
                                 variant="base"
-                                color="success"
-                                className="text-xs rounded-md mb-[0.15rem] border border-green-300"
+                                color={customerStatus === 'Active' ? "success" : "error"}
+                                className={`text-[0.6rem] py-1 rounded-md mb-[0.15rem] border ${customerStatus === 'Active' ? "border-green-300" : "border-red-300"} uppercase`}
+                                onClick={renderCustomerStatus}
                             >
-                                Active
-                            </Badge>
+                                {customerStatus}
+                            </Badge> */}
+                            <span
+                                className={`text-[0.6rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${customerStatus === 'Active' ? "bg-green-100 text-green-500 hover:bg-green-200" : "bg-red-100 text-red-500 hover:bg-red-200"}`}
+                                onClick={renderCustomerStatus}
+                            >
+                                {customerStatus}
+                            </span>
                         </div>
                     </div>
                     <div className="flex items-center text-gray-500 mt-1 space-x-3">
@@ -136,7 +148,7 @@ const CustomerDetailPage: React.FC = () => {
                             } hover:bg-gray-100 transition`}
                     >
                         <span className="text-[0.65rem] font-semibold text-gray-400">{item.label}</span>
-                        <span className="text-[0.8rem] font-semibold mt-2">{item.value}</span>
+                        <span className="text-sm font-semibold mt-2">{item.value}</span>
                     </div>
                 ))}
             </div>
@@ -145,14 +157,14 @@ const CustomerDetailPage: React.FC = () => {
 
     const renderCustomerDetails = () => (
         <div className="m-5">
-            <div className="text-[#FF6500] font-semibold text-sm">Customer Details</div>
-            <div className="grid grid-cols-2 gap-8 my-4 text-xs">
+            <div className="text-[#FF6500] font-semibold text-xs mb-4 uppercase">Customer Details</div>
+            <div className="grid grid-cols-2 gap-8 my-4">
                 <div className="space-y-4">
                     {customerDetails.map((item, index) => (
                         <div key={index}>
                             <div className="flex items-center justify-between mb-2">
-                                <span className="font-semibold text-gray-400">{item.label}</span>
-                                <div className="space-y-1">
+                                <span className="font-semibold text-gray-400 uppercase text-[0.65rem]">{item.label}</span>
+                                <div className="space-y-1 text-xs">
                                     {item.link ? (
                                         <a href={item.link} className="text-[#FF6500] hover:underline">
                                             {item.value}
@@ -172,8 +184,8 @@ const CustomerDetailPage: React.FC = () => {
                     {details.map((item, index) => (
                         <div key={index}>
                             <div className="flex items-center justify-between mb-2">
-                                <span className="font-semibold text-gray-400">{item.label}</span>
-                                <div className="space-y-1">
+                                <span className="font-semibold text-gray-400 uppercase text-[0.65rem]">{item.label}</span>
+                                <div className="space-y-1 text-xs">
                                     <span>{item.value}</span>
                                 </div>
                             </div>
@@ -207,6 +219,7 @@ const CustomerDetailPage: React.FC = () => {
             >
                 {renderCustomerPreview()}
                 <div className="overflow-auto ">
+                    <Divider className="border-t-[0.5px] border-gray-200 mt-4" />
                     {renderCustomerInfo()}
                     <Divider className="border-t-[0.5px] border-gray-200 mt-4" />
                     {renderCustomerDetails()}
