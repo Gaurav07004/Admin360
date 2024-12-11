@@ -48,8 +48,8 @@ const renderCellContent = (item, col, getBadgeColor) => {
         );
     }
 
-    if (col.id === 'Visit') {
-        return <AreaChartComponent data={[item.chartData, item.color]} />;
+    if (col.id === 'visit') {
+        return <AreaChartComponent data={[item.visit, item.color]} />;
     }
 
     if (React.isValidElement(value)) {
@@ -109,7 +109,7 @@ const TableComponent = ({ data, columns, caption, getBadgeColor }) => {
                     <TableRow>
                         {columns.map((col) => (
                             <TableHead key={col.id} className="border border-gray-300">
-                                <p className="flex items-center w-fit gap-1 mb-0 m-auto text-stone-400 font-semibold">
+                                <p className="text-center text-stone-400 font-semibold">
                                     {col.label}
                                 </p>
                             </TableHead>

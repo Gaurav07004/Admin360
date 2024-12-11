@@ -2,7 +2,7 @@
 'use client';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDrawerStatus } from "../redux/slices/customerSlice";
+import { setDrawerStatus, setSelectedCustomer } from "../redux/slices/customerSlice";
 // import DrawerComponent from '@/components/Drawer';
 import { PiDotsThreeOutlineLight } from "react-icons/pi";
 // import { PiDotsThreeOutlineLight } from "react-icons/pi";
@@ -17,8 +17,9 @@ const columns = [
     { id: 'email', label: 'Email' },
     { id: 'location', label: 'Location' },
     { id: 'dateJoined', label: 'Date Joined' },
-    { id: 'customerStatus', label: 'Customer Status' },
+    { id: 'customerStatus', label: 'Status' },
     { id: 'order', label: 'Order' },
+    { id: 'visit', label: 'Visit' },
     { id: 'action', label: 'Action' },
 ];
 
@@ -37,8 +38,12 @@ const CustomerTable = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     // const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
 
-    const handleCustomer = () => {
-        dispatch(setDrawerStatus(!drawerStatus));
+    const handleCustomer = (customerID: string) => {
+        const selectedCustomer = customers.find((customer) => customer.customerID === customerID);
+        if (selectedCustomer) {
+            dispatch(setSelectedCustomer(selectedCustomer));
+            dispatch(setDrawerStatus(!drawerStatus));
+        }
     };
 
     // const handleStatusChange = (customerID: string, currentStatus: string) => {
@@ -73,10 +78,12 @@ const CustomerTable = () => {
         dateJoined: customer.dateJoined,
         customerStatus: customer.customerStatus,
         order: customer.order,
+        visit: customer.visit,
+        color: customer.color,
         action: (
             <PiDotsThreeOutlineLight
                 className="size-4 fill-metal-900 dark:fill-white m-auto rounded-full"
-                onClick={() => handleCustomer()}
+                onClick={() => handleCustomer(customer.customerID)}
             />
         ),
     }));

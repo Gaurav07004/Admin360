@@ -73,7 +73,7 @@ const TimelineComponent = () => {
     return (
         <section className="p-4">
             <div className="text-[#FF6500] font-semibold text-xs mb-4 uppercase">Recent Order</div>
-            <Timeline className="border-l-[1px] m-4 border-orange-300">
+            <Timeline className=" border-dashed border-l-[2px] m-4 border-orange-300">
                 {recentOrders.map((event, index) => {
                     const isTodayOrPast = new Date(event.date) <= new Date(currentDate);
                     const isToday = event.date === currentDate;
@@ -138,7 +138,7 @@ const TimelineComponent = () => {
             {/* Display Previous Orders */}
             <div className="mt-8">
                 <div className="text-[#FF6500] font-semibold text-xs mb-4 uppercase">Previous Orders</div>
-                <Timeline className="border-l-[1px] m-4 border-orange-300">
+                <Timeline className="border-dashed border-l-[2px] m-4 border-orange-300">
                     {previousOrders.map((event, index) => (
                         <TimelineItem key={index} className="mb-6 relative">
                             <TimelinePoint

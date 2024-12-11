@@ -6,10 +6,11 @@ interface Customer {
     customerID: string;
     customerName: string;
     email: string;
+    mobileNumber: number;
     location: string;
     dateJoined: string;
     order: number;
-    chartData: { name: string; price: number }[];
+    visit: { name: string; price: number }[];
     color: string;
     customerStatus: 'Active' | 'Inactive';
 }
@@ -18,6 +19,7 @@ interface CustomerState {
     customers: Customer[];
     sortedTable: string[];
     drawerStatus: boolean;
+    selectedCustomer: Customer | null;
 }
 
 const initialState: CustomerState = {
@@ -28,10 +30,11 @@ const initialState: CustomerState = {
             customerName: "Amit Kumar",
             email: "amit.kumar@gmail.com",
             location: "Delhi",
+            mobileNumber: 9768741433,
             dateJoined: "Jan 15, 2024",
             customerStatus: "Active",
             order: 12,
-            chartData: [
+            visit: [
                 { name: "Jan", price: 123 },
                 { name: "Feb", price: 987 },
                 { name: "Mar", price: 432 },
@@ -49,10 +52,11 @@ const initialState: CustomerState = {
             customerName: "Priya Sharma",
             email: "priya.sharma@gmail.com",
             location: "Mumbai",
+            mobileNumber: 9768741433,
             dateJoined: "Feb 20, 2024",
             customerStatus: 'Inactive',
             order: 80,
-            chartData: [
+            visit: [
                 { name: "Jan", price: 301 },
                 { name: "Feb", price: 654 },
                 { name: "Mar", price: 209 },
@@ -70,10 +74,11 @@ const initialState: CustomerState = {
             customerName: "Rajesh Gupta",
             email: "rajesh.gupta@gmail.com",
             location: "Bangalore",
+            mobileNumber: 9768741433,
             dateJoined: "Mar 10, 2024",
             customerStatus: 'Active',
             order: 15,
-            chartData: [
+            visit: [
                 { name: "Jan", price: 789 },
                 { name: "Feb", price: 345 },
                 { name: "Mar", price: 678 },
@@ -91,10 +96,11 @@ const initialState: CustomerState = {
             customerName: "Neha Patel",
             email: "neha.patel@gmail.com",
             location: "Ahmedabad",
+            mobileNumber: 9768741433,
             dateJoined: "Apr 5, 2024",
             customerStatus: 'Active',
             order: 10,
-            chartData: [
+            visit: [
                 { name: "Jan", price: 564 },
                 { name: "Feb", price: 210 },
                 { name: "Mar", price: 789 },
@@ -112,10 +118,11 @@ const initialState: CustomerState = {
             customerName: "Sanjay Reddy",
             email: "sanjay.reddy@gmail.com",
             location: "Hyderabad",
+            mobileNumber: 9768741433,
             dateJoined: "May 12, 2024",
             customerStatus: 'Inactive',
             order: 60,
-            chartData: [
+            visit: [
                 { name: "Jan", price: 135 },
                 { name: "Feb", price: 678 },
                 { name: "Mar", price: 432 },
@@ -133,10 +140,11 @@ const initialState: CustomerState = {
             customerName: "Ravi Kumar",
             email: "ravi.kumar@gmail.com",
             location: "Chennai",
+            mobileNumber: 9768741433,
             dateJoined: "Jun 22, 2024",
             customerStatus: 'Active',
             order: 18,
-            chartData: [
+            visit: [
                 { name: "Jan", price: 453 },
                 { name: "Feb", price: 789 },
                 { name: "Mar", price: 234 },
@@ -154,10 +162,11 @@ const initialState: CustomerState = {
             customerName: "Sonia Verma",
             email: "sonia.verma@gmail.com",
             location: "Pune",
+            mobileNumber: 9768741433,
             dateJoined: "Jul 30, 2024",
             customerStatus: 'Active',
             order: 100,
-            chartData: [
+            visit: [
                 { name: "Jan", price: 289 },
                 { name: "Feb", price: 450 },
                 { name: "Mar", price: 123 },
@@ -175,10 +184,11 @@ const initialState: CustomerState = {
             customerName: "Deepak Mehta",
             email: "deepak.mehta@gmail.com",
             location: "Jaipur",
+            mobileNumber: 9768741433,
             dateJoined: "Aug 18, 2024",
             customerStatus: 'Inactive',
             order: 90,
-            chartData: [
+            visit: [
                 { name: "Jan", price: 321 },
                 { name: "Feb", price: 543 },
                 { name: "Mar", price: 654 },
@@ -196,10 +206,11 @@ const initialState: CustomerState = {
             customerName: "Sunil Mehta",
             email: "sunil.mehta@gmail.com",
             location: "Delhi",
+            mobileNumber: 9768741433,
             dateJoined: "Jan 18, 2024",
             customerStatus: 'Active',
             order: 80,
-            chartData: [
+            visit: [
                 { name: "Jan", price: 360 },
                 { name: "Feb", price: 543 },
                 { name: "Mar", price: 654 },
@@ -217,10 +228,11 @@ const initialState: CustomerState = {
             customerName: "Vivek Sharma",
             email: "vivek.sharma@gmail.com",
             location: "Mumbai",
+            mobileNumber: 9768741433,
             dateJoined: "Mar 14, 2024",
             customerStatus: 'Inactive',
             order: 50,
-            chartData: [
+            visit: [
                 { name: "Jan", price: 241 },
                 { name: "Feb", price: 543 },
                 { name: "Mar", price: 644 },
@@ -235,6 +247,7 @@ const initialState: CustomerState = {
     ],
     sortedTable: [],
     drawerStatus: false,
+    selectedCustomer: null,
 };
 
 const CustomerSlice = createSlice({
@@ -253,11 +266,14 @@ const CustomerSlice = createSlice({
         },
         setDrawerStatus(state, action: PayloadAction<boolean>) {
             state.drawerStatus = action.payload;
-        }
+        },
+        setSelectedCustomer(state, action: PayloadAction<Customer>) {
+            state.selectedCustomer = action.payload;
+        },
     }
 });
 
-export const { updateCustomerStatus, setSortedReviews, setDrawerStatus } = CustomerSlice.actions;
+export const { updateCustomerStatus, setSortedReviews, setDrawerStatus, setSelectedCustomer } = CustomerSlice.actions;
 export const selectCustomerState = (state: RootState) => state.customer;
 
 export default CustomerSlice.reducer;
