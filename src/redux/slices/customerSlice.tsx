@@ -10,6 +10,9 @@ interface Customer {
     location: string;
     dateJoined: string;
     order: number;
+    delivered: number,
+    cancelled: number,
+    pending: number,
     visit: { name: string; price: number }[];
     color: string;
     customerStatus: 'Active' | 'Inactive';
@@ -19,7 +22,7 @@ interface CustomerState {
     customers: Customer[];
     sortedTable: string[];
     drawerStatus: boolean;
-    selectedCustomer: Customer | null;
+    selectedCustomer: Customer;
 }
 
 const initialState: CustomerState = {
@@ -30,10 +33,13 @@ const initialState: CustomerState = {
             customerName: "Amit Kumar",
             email: "amit.kumar@gmail.com",
             location: "Delhi",
-            mobileNumber: 9768741433,
+            mobileNumber: 9768011433,
             dateJoined: "Jan 15, 2024",
             customerStatus: "Active",
             order: 12,
+            delivered: 8,
+            cancelled: 2,
+            pending: 2,
             visit: [
                 { name: "Jan", price: 123 },
                 { name: "Feb", price: 987 },
@@ -52,10 +58,13 @@ const initialState: CustomerState = {
             customerName: "Priya Sharma",
             email: "priya.sharma@gmail.com",
             location: "Mumbai",
-            mobileNumber: 9768741433,
+            mobileNumber: 9768021433,
             dateJoined: "Feb 20, 2024",
             customerStatus: 'Inactive',
             order: 80,
+            delivered: 76,
+            cancelled: 2,
+            pending: 2,
             visit: [
                 { name: "Jan", price: 301 },
                 { name: "Feb", price: 654 },
@@ -74,10 +83,13 @@ const initialState: CustomerState = {
             customerName: "Rajesh Gupta",
             email: "rajesh.gupta@gmail.com",
             location: "Bangalore",
-            mobileNumber: 9768741433,
+            mobileNumber: 9768031433,
             dateJoined: "Mar 10, 2024",
             customerStatus: 'Active',
             order: 15,
+            delivered: 11,
+            cancelled: 2,
+            pending: 2,
             visit: [
                 { name: "Jan", price: 789 },
                 { name: "Feb", price: 345 },
@@ -96,10 +108,13 @@ const initialState: CustomerState = {
             customerName: "Neha Patel",
             email: "neha.patel@gmail.com",
             location: "Ahmedabad",
-            mobileNumber: 9768741433,
+            mobileNumber: 9768041433,
             dateJoined: "Apr 5, 2024",
             customerStatus: 'Active',
             order: 10,
+            delivered: 8,
+            cancelled: 2,
+            pending: 2,
             visit: [
                 { name: "Jan", price: 564 },
                 { name: "Feb", price: 210 },
@@ -118,10 +133,13 @@ const initialState: CustomerState = {
             customerName: "Sanjay Reddy",
             email: "sanjay.reddy@gmail.com",
             location: "Hyderabad",
-            mobileNumber: 9768741433,
+            mobileNumber: 9768051433,
             dateJoined: "May 12, 2024",
             customerStatus: 'Inactive',
             order: 60,
+            delivered: 56,
+            cancelled: 2,
+            pending: 2,
             visit: [
                 { name: "Jan", price: 135 },
                 { name: "Feb", price: 678 },
@@ -140,10 +158,13 @@ const initialState: CustomerState = {
             customerName: "Ravi Kumar",
             email: "ravi.kumar@gmail.com",
             location: "Chennai",
-            mobileNumber: 9768741433,
+            mobileNumber: 9768061433,
             dateJoined: "Jun 22, 2024",
             customerStatus: 'Active',
             order: 18,
+            delivered: 14,
+            cancelled: 2,
+            pending: 2,
             visit: [
                 { name: "Jan", price: 453 },
                 { name: "Feb", price: 789 },
@@ -162,10 +183,13 @@ const initialState: CustomerState = {
             customerName: "Sonia Verma",
             email: "sonia.verma@gmail.com",
             location: "Pune",
-            mobileNumber: 9768741433,
+            mobileNumber: 9768071433,
             dateJoined: "Jul 30, 2024",
             customerStatus: 'Active',
             order: 100,
+            delivered: 96,
+            cancelled: 2,
+            pending: 2,
             visit: [
                 { name: "Jan", price: 289 },
                 { name: "Feb", price: 450 },
@@ -184,10 +208,13 @@ const initialState: CustomerState = {
             customerName: "Deepak Mehta",
             email: "deepak.mehta@gmail.com",
             location: "Jaipur",
-            mobileNumber: 9768741433,
+            mobileNumber: 9768081433,
             dateJoined: "Aug 18, 2024",
             customerStatus: 'Inactive',
             order: 90,
+            delivered: 86,
+            cancelled: 2,
+            pending: 2,
             visit: [
                 { name: "Jan", price: 321 },
                 { name: "Feb", price: 543 },
@@ -206,10 +233,13 @@ const initialState: CustomerState = {
             customerName: "Sunil Mehta",
             email: "sunil.mehta@gmail.com",
             location: "Delhi",
-            mobileNumber: 9768741433,
+            mobileNumber: 9768091433,
             dateJoined: "Jan 18, 2024",
             customerStatus: 'Active',
             order: 80,
+            delivered: 76,
+            cancelled: 2,
+            pending: 2,
             visit: [
                 { name: "Jan", price: 360 },
                 { name: "Feb", price: 543 },
@@ -228,10 +258,13 @@ const initialState: CustomerState = {
             customerName: "Vivek Sharma",
             email: "vivek.sharma@gmail.com",
             location: "Mumbai",
-            mobileNumber: 9768741433,
+            mobileNumber: 9768101433,
             dateJoined: "Mar 14, 2024",
             customerStatus: 'Inactive',
             order: 50,
+            delivered: 46,
+            cancelled: 2,
+            pending: 2,
             visit: [
                 { name: "Jan", price: 241 },
                 { name: "Feb", price: 543 },

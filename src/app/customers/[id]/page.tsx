@@ -1,7 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setDrawerStatus, updateCustomerStatus } from "@/redux/slices/customerSlice";
 import { RootState } from "@/redux/store";
@@ -14,81 +13,28 @@ import { PiCircleFill, PiPhoneCallLight } from "react-icons/pi";
 import { IoMailOutline } from "react-icons/io5";
 import Timeline from "@/components/TimelineComponent";
 
-interface Customer {
-    id: number;
-    name: string;
-    email: string;
-    details: string;
-}
-
-const customers: Customer[] = [
-    { id: 1, name: "John Doe", email: "john@example.com", details: "Customer details for John Doe" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", details: "Customer details for Jane Smith" },
-    { id: 3, name: "Alice Johnson", email: "alice@example.com", details: "Customer details for Alice Johnson" },
-];
-
 const CustomerDetailPage: React.FC = () => {
-    const { id } = useParams();
     const dispatch = useDispatch();
-    const [customer, setCustomer] = useState<Customer | null>(null);
-    const [customerStatus, setCustomerStatus] = useState<string>("Active");
-    const [loading, setLoading] = useState<boolean>(true);
     const { drawerStatus, selectedCustomer } = useSelector((state: RootState) => state.customer);
     const drawerRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
 
     const data = [
-        { label: "Total Order", value: "12" },
-        { label: "Total Delivered", value: "08" },
-        { label: "Total Cancelled", value: "02" },
-        { label: "Total Pending", value: "02" },
+        { label: "Total Order", value: selectedCustomer?.order },
+        { label: "Total Delivered", value: selectedCustomer?.delivered },
+        { label: "Total Cancelled", value: selectedCustomer?.cancelled },
+        { label: "Total Pending", value: selectedCustomer?.pending },
     ];
-
-    const customerDetails = [
-        { label: "Customer ID", value: "C001" },
-        { label: "Customer Name", value: "Amit Kumar" },
-        { label: "Email", value: "amit.kumar@gmail.com", link: "amit.kumar@gmail.com" },
-        { label: "Contact Number", value: "9768741433", link: "9768741433" },
-    ];
-
-    const details = [
-        { label: "Order", value: "12" },
-        { label: "Location", value: "Delhi, India" },
-        { label: "Date Joined", value: "Jan 15, 2024" },
-        { label: "Customer Status", value: "Active" }
-    ];
-
-    useEffect(() => {
-        if (id) {
-            const customerId = Number(id);
-            const foundCustomer = customers.find((cust) => cust.id === customerId);
-            setCustomer(foundCustomer || null);
-        } else {
-            setCustomer(null);
-        }
-        setLoading(false);
-    }, [id]);
 
     const handleToggle = () => {
         dispatch(setDrawerStatus(false));
     };
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    const renderCustomerStatus = () => {
-        setCustomerStatus((prevStatus) => (prevStatus === "Active" ? "Inactive" : "Active"));
-    };
-
-    const handleStatusChange = (customerID: string, currentStatus: string) => {
-        try {
-            const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
-            dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
-            toast.success(`Customer ID ${customerID} status changed to ${newStatus}.`);
-        } catch (error) {
-            toast.error('Failed to update status.');
-        }
+    const handleStatusChange = (customerID: string, customerStatus: string) => {
+        const newStatus = customerStatus === 'Active' ? 'Inactive' : 'Active';
+        dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
+        toast.success(`Customer status updated to ${newStatus}.`);
+        dispatch(setDrawerStatus(false));
     };
 
     const renderCustomerPreview = () => (
@@ -122,8 +68,8 @@ const CustomerDetailPage: React.FC = () => {
                         <div className="text-gray-800 text-base font-semibold">{selectedCustomer?.customerName}</div>
                         <div className="ml-4">
                             <span
-                                className={`text-[0.6rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${customerStatus === 'Active' ? "bg-green-100 text-green-500 hover:bg-green-200" : "bg-red-100 text-red-500 hover:bg-red-200"}`}
-                                onClick={renderCustomerStatus}
+                                className={`text-[0.6rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${selectedCustomer?.customerStatus === 'Active' ? "bg-green-100 text-green-500 hover:bg-green-200" : "bg-red-100 text-red-500 hover:bg-red-200"}`}
+                                onClick={() => handleStatusChange(selectedCustomer?.customerID, selectedCustomer?.customerStatus)}
                             >
                                 {selectedCustomer?.customerStatus}
                             </span>
@@ -157,54 +103,47 @@ const CustomerDetailPage: React.FC = () => {
         </div>
     );
 
-    const renderCustomerDetails = () => (
-        <div className="m-5">
-            <div className="text-[#FF6500] font-semibold text-xs mb-4 uppercase">Customer Details</div>
-            <div className="grid grid-cols-2 gap-8 my-4">
-                <div className="space-y-4">
-                    {selectedCustomer?.map((item, index) => (
+    const customerDetails = [
+        { label: 'Customer ID', value: selectedCustomer?.customerID },
+        { label: 'Name', value: selectedCustomer?.customerName },
+        { label: 'Email', value: selectedCustomer?.email },
+        { label: 'Phone', value: selectedCustomer?.mobileNumber },
+        { label: 'Location', value: selectedCustomer?.location },
+        { label: 'Joined On', value: selectedCustomer?.dateJoined },
+        { label: 'Order', value: selectedCustomer?.order },
+        { label: 'Status', value: selectedCustomer?.customerStatus },
+    ];
+    const renderCustomerDetails = () => {
+        return (
+            <div className="m-5">
+                <div className="text-[#FF6500] font-semibold text-xs mb-4 uppercase">Customer Details</div>
+                <div className="grid grid-cols-2 gap-5 my-4">
+                    {customerDetails.map((detail, index) => (
                         <div key={index}>
-                            <div className="flex items-center justify-between mb-2">
-                                <span className="font-semibold text-gray-400 uppercase text-[0.65rem]">{item.label}</span>
-                                <div className="space-y-1 text-xs">
-                                    {item.link ? (
-                                        <a href={item.link} className="text-[#FF6500] hover:underline">
-                                            {item.value}
-                                        </a>
-                                    ) : (
-                                        <span>{item.value}</span>
-                                    )}
+                            <div>
+                                <div className="flex items-center justify-between">
+                                    <span className="font-semibold text-gray-400 uppercase text-[0.65rem]">{detail.label}</span>
+                                    <div className={`text-xs ${detail.label === "Email" || detail.label === "Phone" ? 'text-orange-400' : ""}`}>
+                                        <span>{detail.value || 'N/A'}</span>
+                                    </div>
                                 </div>
+                                {index < customerDetails.length - 1 && (
+                                    <Divider className="border-t-[0.5px] border-gray-300" />
+                                )}
                             </div>
-                            {index !== customerDetails.length - 1 ? (
-                                <Divider className="border-t-[0.5px] border-gray-300" />
-                            ) : null}
-                        </div>
-                    ))}
-                </div>
-                <div className="space-y-4">
-                    {details.map((item, index) => (
-                        <div key={index}>
-                            <div className="flex items-center justify-between mb-2">
-                                <span className="font-semibold text-gray-400 uppercase text-[0.65rem]">{item.label}</span>
-                                <div className="space-y-1 text-xs">
-                                    <span>{item.value}</span>
-                                </div>
-                            </div>
-                            {index !== customerDetails.length - 1 ? (
-                                <Divider className="border-t-[0.5px] border-gray-300" />
-                            ) : null}
                         </div>
                     ))}
                 </div>
             </div>
-        </div>
-    );
+        );
+    };
 
     const renderPreview = () => (
         <section className="sticky bottom-0 z-10 bg-white w-full h-7"></section>
     );
 
+    useEffect(() => {
+    }, [selectedCustomer]);
 
     return (
         <>
@@ -221,7 +160,6 @@ const CustomerDetailPage: React.FC = () => {
             >
                 {renderCustomerPreview()}
                 <div className="overflow-auto ">
-                    <Divider className="border-t-[0.5px] border-gray-200 mt-4" />
                     {renderCustomerInfo()}
                     <Divider className="border-t-[0.5px] border-gray-200 mt-4" />
                     {renderCustomerDetails()}
