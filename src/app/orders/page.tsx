@@ -7,6 +7,7 @@ import { RxTimer } from "react-icons/rx";
 import { GrPowerCycle } from "react-icons/gr";
 import BarChart from "@/components/OrderChart";
 import OrderTable from '@/components/OrderTable'
+import Order from '@/app/orders/[id]/page'
 
 const statistics = [
     {
@@ -79,6 +80,7 @@ const Page: React.FC = () => {
                 </div>
             </div>
             <OrderTable />
+            <Order />
         </section>
     );
 };

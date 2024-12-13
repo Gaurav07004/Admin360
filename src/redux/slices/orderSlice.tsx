@@ -12,13 +12,26 @@ interface Order {
     paymentStatus: string;
 }
 
+interface Event {
+    title: string;
+    status: string;
+    date: string;
+    description: string;
+    courier?: string;
+    warehouse?: string;
+    estimatedDelivery?: string;
+}
+
 interface OrderState {
     orders: Order[];
+    events: Event[];
     sortedTable: string[];
+    drawerStatus: boolean;
+    selectedOrder: Order | null;
 }
 
 const formatDate = (dateString: string) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
 };
 
@@ -35,7 +48,62 @@ const initialState: OrderState = {
         { id: 9, orderID: 'OR09', customerName: 'Nisha Rani', orderDate: formatDate('2024-06-25'), orderStatus: 'Shipped', cost: 2900, paymentMethod: 'Debit Card', paymentStatus: 'Pending' },
         { id: 10, orderID: 'OR10', customerName: 'Deepak Joshi', orderDate: formatDate('2024-07-15'), orderStatus: 'Cancelled', cost: 1600, paymentMethod: 'Cash on Delivery', paymentStatus: 'Failed' }
     ],
+    events: [
+        {
+            title: "Order Placed",
+            date: "2024-12-09",
+            description: "Your order has been placed. The items were processed and are ready for shipment.",
+            status: "Completed",
+        },
+        {
+            title: "Order Confirmed",
+            date: "2024-12-10",
+            description: "Your order was confirmed and prepared for shipment.",
+            status: "Completed",
+        },
+        {
+            title: "Shipped",
+            date: "2024-12-11",
+            description: "Your order has been shipped. It left the warehouse and is on its way to you.",
+            courier: "XYZ Logistics",
+            warehouse: "Warehouse XYZ",
+            status: "Completed",
+        },
+        {
+            title: "Out for Delivery",
+            date: "2024-12-12",
+            description: "Your order was out for delivery and arrived on the scheduled date.",
+            estimatedDelivery: "Thu, Dec 12, 2024, by 7 PM",
+            status: "Completed",
+        },
+        {
+            title: "Delivered",
+            date: "2024-12-12",
+            description: "Your package was successfully delivered to the provided address.",
+            status: "Completed",
+        },
+        {
+            title: "Delivered",
+            date: "2024-09-08",
+            description: "Your package was successfully delivered to the provided address.",
+            status: "Completed",
+        },
+        {
+            title: "Delivered",
+            date: "2024-10-10",
+            description: "Your package was successfully delivered to the provided address.",
+            status: "Completed",
+        },
+        {
+            title: "Delivered",
+            date: "2024-11-23",
+            description: "Your package was successfully delivered to the provided address.",
+            status: "Completed",
+        },
+    ],
     sortedTable: [],
+    drawerStatus: false,
+    selectedOrder: null,
 };
 
 const OrderSlice = createSlice({
@@ -52,10 +120,19 @@ const OrderSlice = createSlice({
         setSortedReviews(state, action: PayloadAction<string[]>) {
             state.sortedTable = action.payload;
         },
+        setDrawerStatus(state, action: PayloadAction<boolean>) {
+            state.drawerStatus = action.payload;
+        },
+        setSelectedOrder(state, action: PayloadAction<Order>) {
+            state.selectedOrder = action.payload;
+        },
+        addEvent(state, action: PayloadAction<Event>) {
+            state.events.push(action.payload);
+        }
     }
 });
 
-export const { updateOrderStatus, setSortedReviews } = OrderSlice.actions;
-export const selectCustomerState = (state: RootState) => state.customer;
+export const { updateOrderStatus, setSortedReviews, setDrawerStatus, setSelectedOrder, addEvent } = OrderSlice.actions;
+export const selectOrderState = (state: RootState) => state.order;
 
 export default OrderSlice.reducer;

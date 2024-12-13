@@ -36,7 +36,6 @@ const CustomerTable = () => {
     const { customers, drawerStatus } = useSelector((state: RootState) => state.customer);
     const [mounted, setMounted] = useState(false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    // const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
 
     const handleCustomer = (customerID: string) => {
         const selectedCustomer = customers.find((customer) => customer.customerID === customerID);
@@ -46,29 +45,9 @@ const CustomerTable = () => {
         }
     };
 
-    // const handleStatusChange = (customerID: string, currentStatus: string) => {
-    //     try {
-    //         const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
-    //         dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
-    //         toast.success(`Customer ID ${customerID} status changed to ${newStatus}.`);
-    //     } catch (error) {
-    //         toast.error('Failed to update status.');
-    //     }
-    // };
-
     useEffect(() => {
         setMounted(true);
     }, []);
-
-    // const handleMenuClick = (customerID: string, currentStatus: string) => {
-    //     try {
-    //         const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
-    //         dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
-    //         toast.success(`Customer ID ${customerID} status changed to ${newStatus}.`);
-    //     } catch (error) {
-    //         toast.error('Failed to update status.');
-    //     }
-    // };
 
     const data = customers.map((customer) => ({
         customerID: customer.customerID,

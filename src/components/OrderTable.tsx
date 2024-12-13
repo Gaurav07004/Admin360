@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateOrderStatus } from "../redux/slices/orderSlice";
+import { updateOrderStatus, setSelectedOrder, setDrawerStatus } from "../redux/slices/orderSlice";
 import { PiDotsThreeOutlineLight } from "react-icons/pi";
 import TableComponent from "./table";
 import { toast } from 'keep-react';
@@ -34,7 +34,7 @@ const getBadgeColor = (status: string) => {
 
 const OrderTable = () => {
     const dispatch = useDispatch();
-    const { orders } = useSelector((state: RootState) => state.order);
+    const { orders, drawerStatus } = useSelector((state: RootState) => state.order);
 
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
@@ -71,6 +71,14 @@ const OrderTable = () => {
         }
     };
 
+    const handleOrder = () => {
+        // const selectedCustomer = customers.find((customer) => customer.customerID === customerID);
+        //if (selectedCustomer) {
+        // dispatch(setSelectedCustomer(selectedCustomer));
+        dispatch(setDrawerStatus(!drawerStatus));
+        //}
+    };
+
     const data = orders.map((order) => ({
         orderNumber: order.orderID,
         orderDate: order.orderDate,
@@ -80,12 +88,10 @@ const OrderTable = () => {
         paymentMethod: order.paymentMethod,
         paymentStatus: order.paymentStatus,
         action: (
-            <div>
-                <PiDotsThreeOutlineLight
-                    className="size-4 fill-metal-900 dark:fill-white m-auto rounded-full"
-                    onClick={() => handleMenuClick(order.orderID, order.orderStatus)}
-                />
-            </div>
+            <PiDotsThreeOutlineLight
+                className="size-4 fill-metal-900 dark:fill-white m-auto rounded-full"
+                onClick={() => handleOrder()}
+            />
         ),
     }));
 
@@ -98,7 +104,6 @@ const OrderTable = () => {
             columns={columns}
             caption="Order Information"
             getBadgeColor={getBadgeColor}
-            Applyfilter={true}
         />
     );
 };
