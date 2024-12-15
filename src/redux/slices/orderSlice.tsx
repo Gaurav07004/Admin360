@@ -6,7 +6,6 @@ import Product_2 from "@/Assets/Targus Laptop Sleeve.webp";
 import Product_3 from "@/Assets/Apple iPhone 15.webp";
 import Product_4 from "@/Assets/Samsung Galaxy Watch 5.webp";
 
-// Order interface definition
 interface Order {
     id: number;
     orderID: string;
@@ -20,7 +19,7 @@ interface Order {
     trackingNumber: string | null;
     customerPhone: string;
     itemName: string;
-    itemImage: any; // Updated to represent the image URL as a string
+    itemImage: any;
     courier: string;
     Recent_Orders?: {
         title: string;
@@ -34,7 +33,6 @@ interface Order {
     }[];
 }
 
-// Order state interface definition
 interface OrderState {
     orders: Order[];
     sortedTable: string[];
@@ -42,13 +40,6 @@ interface OrderState {
     selectedOrder: Order | null;
 }
 
-// Function to format the date in the desired format
-const formatDate = (dateString: string): string => {
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
-};
-
-// Initial state for orders
 const initialState: OrderState = {
     orders: [
         {
@@ -57,7 +48,7 @@ const initialState: OrderState = {
             orderDate: '2024-12-01',
             customerName: 'Amit Kumar',
             orderStatus: 'Delivered',
-            cost: 1500,
+            cost: 60000,
             paymentMethod: 'Credit Card',
             paymentStatus: 'Paid',
             deliveryAddress: '123, MG Road, Delhi',
@@ -80,7 +71,7 @@ const initialState: OrderState = {
             orderDate: '2024-12-02',
             customerName: 'Neha Singh',
             orderStatus: 'Delivered',
-            cost: 2200,
+            cost: 700,
             paymentMethod: 'Debit Card',
             paymentStatus: 'Paid',
             deliveryAddress: '456, Main Street, Bangalore',
@@ -103,7 +94,7 @@ const initialState: OrderState = {
             orderDate: '2024-12-03',
             customerName: 'Rajesh Verma',
             orderStatus: 'Pending',
-            cost: 1800,
+            cost: 90000,
             paymentMethod: 'UPI',
             paymentStatus: 'Pending',
             deliveryAddress: '789, Sector 12, Gurgaon',
@@ -124,7 +115,7 @@ const initialState: OrderState = {
             orderDate: '2024-12-04',
             customerName: 'Suman Gupta',
             orderStatus: 'Unreachable',
-            cost: 999,
+            cost: 700,
             paymentMethod: 'Credit Card',
             paymentStatus: 'Paid',
             deliveryAddress: '101, Park Avenue, Noida',
@@ -146,7 +137,7 @@ const initialState: OrderState = {
             orderDate: '2024-12-05',
             customerName: 'Amit Patel',
             orderStatus: 'Cancelled',
-            cost: 2500,
+            cost: 60000,
             paymentMethod: 'Debit Card',
             paymentStatus: 'Refunded',
             deliveryAddress: '202, South Avenue, Mumbai',
@@ -167,7 +158,7 @@ const initialState: OrderState = {
             orderDate: '2024-12-06',
             customerName: 'Priya Yadav',
             orderStatus: 'Delivered',
-            cost: 1200,
+            cost: 90000,
             paymentMethod: 'Credit Card',
             paymentStatus: 'Paid',
             deliveryAddress: '300, West Street, Jaipur',
@@ -189,7 +180,7 @@ const initialState: OrderState = {
             orderDate: '2024-12-07',
             customerName: 'Raj Malhotra',
             orderStatus: 'Pending',
-            cost: 3000,
+            cost: 60000,
             paymentMethod: 'Cash on Delivery',
             paymentStatus: 'Pending',
             deliveryAddress: '400, East Road, Chennai',
@@ -209,7 +200,7 @@ const initialState: OrderState = {
             orderDate: '2024-12-08',
             customerName: 'Simran Kaur',
             orderStatus: 'Delivered',
-            cost: 3500,
+            cost: 700,
             paymentMethod: 'UPI',
             paymentStatus: 'Paid',
             deliveryAddress: '123, Juhu Beach Road, Mumbai',
@@ -232,7 +223,7 @@ const initialState: OrderState = {
             orderDate: '2024-12-10',
             customerName: 'Ravi Shankar',
             orderStatus: 'Delivered',
-            cost: 2500,
+            cost: 60000,
             paymentMethod: 'Debit Card',
             paymentStatus: 'Paid',
             deliveryAddress: '500, DLF Cyber City, Gurgaon',
@@ -255,7 +246,7 @@ const initialState: OrderState = {
             orderDate: '2024-12-12',
             customerName: 'Vikram Arora',
             orderStatus: 'Shipped',
-            cost: 1300,
+            cost: 7000,
             paymentMethod: 'Credit Card',
             paymentStatus: 'Paid',
             deliveryAddress: '456, Indiranagar, Bangalore',
@@ -278,7 +269,6 @@ const initialState: OrderState = {
     selectedOrder: null,
 };
 
-// Redux slice for managing orders
 const OrderSlice = createSlice({
     name: 'Order',
     initialState,
@@ -302,11 +292,8 @@ const OrderSlice = createSlice({
     },
 });
 
-// Export actions
 export const { updateOrderStatus, setSortedReviews, setDrawerStatus, setSelectedOrder } = OrderSlice.actions;
 
-// Selector to access order state
 export const selectOrderState = (state: RootState) => state.order;
 
-// Export reducer
 export default OrderSlice.reducer;
