@@ -3,13 +3,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setDrawerStatus, setSelectedCustomer } from "../redux/slices/customerSlice";
-// import DrawerComponent from '@/components/Drawer';
 import { PiDotsThreeOutlineLight } from "react-icons/pi";
-// import { PiDotsThreeOutlineLight } from "react-icons/pi";
-// import { Button, Drawer, DrawerAction, DrawerContent, Skeleton, SkeletonLine } from 'keep-react'
 import { RootState } from '../redux/store';
 import TableComponent from "./table";
-// import { toast } from 'keep-react';
 
 const columns = [
     { id: 'customerID', label: 'Customer ID' },
@@ -58,6 +54,7 @@ const CustomerTable = () => {
         customerStatus: customer.customerStatus,
         order: customer.order,
         visit: customer.visit,
+        Recent_Orders: customer.Recent_Orders,
         color: customer.color,
         action: (
             <PiDotsThreeOutlineLight

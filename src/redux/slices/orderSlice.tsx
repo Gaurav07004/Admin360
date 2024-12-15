@@ -1,6 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import Product_1 from "@/Assets/Dell Inspiron 15 Laptop.png";
+import Product_2 from "@/Assets/Targus Laptop Sleeve.webp";
+import Product_3 from "@/Assets/Apple iPhone 15.webp";
+import Product_4 from "@/Assets/Samsung Galaxy Watch 5.webp";
 
+// Order interface definition
 interface Order {
     id: number;
     orderID: string;
@@ -10,95 +16,261 @@ interface Order {
     cost: number;
     paymentMethod: string;
     paymentStatus: string;
+    deliveryAddress: string;
+    trackingNumber: string | null;
+    customerPhone: string;
+    itemName: string;
+    itemImage: any; // Updated to represent the image URL as a string
+    courier: string;
+    Recent_Orders?: {
+        title: string;
+        status: 'Completed' | 'Pending' | 'In Progress';
+        date: string;
+        time: string;
+        description: string;
+        courier?: string;
+        warehouse?: string;
+        estimatedDelivery?: string;
+    }[];
 }
 
-interface Event {
-    title: string;
-    status: string;
-    date: string;
-    description: string;
-    courier?: string;
-    warehouse?: string;
-    estimatedDelivery?: string;
-}
-
+// Order state interface definition
 interface OrderState {
     orders: Order[];
-    events: Event[];
     sortedTable: string[];
     drawerStatus: boolean;
     selectedOrder: Order | null;
 }
 
-const formatDate = (dateString: string) => {
+// Function to format the date in the desired format
+const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
 };
 
+// Initial state for orders
 const initialState: OrderState = {
     orders: [
-        { id: 1, orderID: 'OR01', customerName: 'Amit Kumar', orderDate: formatDate('2024-01-15'), orderStatus: 'Delivered', cost: 1500, paymentMethod: 'Credit Card', paymentStatus: 'Paid' },
-        { id: 2, orderID: 'OR02', customerName: 'Priya Sharma', orderDate: formatDate('2024-02-20'), orderStatus: 'Pending', cost: 2500, paymentMethod: 'PayPal', paymentStatus: 'Pending' },
-        { id: 3, orderID: 'OR03', customerName: 'Ravi Verma', orderDate: formatDate('2024-03-05'), orderStatus: 'Unreachable', cost: 3200, paymentMethod: 'Debit Card', paymentStatus: 'Paid' },
-        { id: 4, orderID: 'OR04', customerName: 'Sneha Patel', orderDate: formatDate('2024-03-20'), orderStatus: 'Delivered', cost: 1800, paymentMethod: 'Credit Card', paymentStatus: 'Paid' },
-        { id: 5, orderID: 'OR05', customerName: 'Ayesha Khan', orderDate: formatDate('2024-04-15'), orderStatus: 'Pending', cost: 2100, paymentMethod: 'Net Banking', paymentStatus: 'Pending' },
-        { id: 6, orderID: 'OR06', customerName: 'Vikram Singh', orderDate: formatDate('2024-05-01'), orderStatus: 'Unreachable', cost: 4500, paymentMethod: 'Cash on Delivery', paymentStatus: 'Pending' },
-        { id: 7, orderID: 'OR07', customerName: 'Riya Mehta', orderDate: formatDate('2024-05-20'), orderStatus: 'Cancelled', cost: 3000, paymentMethod: 'Credit Card', paymentStatus: 'Failed' },
-        { id: 8, orderID: 'OR08', customerName: 'Karan Singh', orderDate: formatDate('2024-06-10'), orderStatus: 'Delivered', cost: 1300, paymentMethod: 'PayPal', paymentStatus: 'Paid' },
-        { id: 9, orderID: 'OR09', customerName: 'Nisha Rani', orderDate: formatDate('2024-06-25'), orderStatus: 'Shipped', cost: 2900, paymentMethod: 'Debit Card', paymentStatus: 'Pending' },
-        { id: 10, orderID: 'OR10', customerName: 'Deepak Joshi', orderDate: formatDate('2024-07-15'), orderStatus: 'Cancelled', cost: 1600, paymentMethod: 'Cash on Delivery', paymentStatus: 'Failed' }
-    ],
-    events: [
         {
-            title: "Order Placed",
-            date: "2024-12-09",
-            description: "Your order has been placed. The items were processed and are ready for shipment.",
-            status: "Completed",
+            id: 1,
+            orderID: 'OR001',
+            orderDate: '2024-12-01',
+            customerName: 'Amit Kumar',
+            orderStatus: 'Delivered',
+            cost: 1500,
+            paymentMethod: 'Credit Card',
+            paymentStatus: 'Paid',
+            deliveryAddress: '123, MG Road, Delhi',
+            trackingNumber: 'TK123456',
+            customerPhone: '9876543210',
+            itemName: 'Dell Inspiron 15 Laptop',
+            itemImage: Product_1,
+            courier: 'XYZ Logistics',
+            Recent_Orders: [
+                { title: 'Order Placed', status: 'Completed', date: '2024-12-01', time: '10:00', description: 'Your order has been placed.' },
+                { title: 'Order Confirmed', status: 'Completed', date: '2024-12-02', time: '14:00', description: 'Your order was confirmed and processed.' },
+                { title: 'Shipped', status: 'Completed', date: '2024-12-03', time: '09:00', description: 'Your order has been shipped.' },
+                { title: 'Out for Delivery', status: 'Completed', date: '2024-12-04', time: '08:00', description: 'Your order is out for delivery.' },
+                { title: 'Delivered', status: 'Completed', date: '2024-12-04', time: '17:00', description: 'Your order was delivered to the provided address.' },
+            ],
         },
         {
-            title: "Order Confirmed",
-            date: "2024-12-10",
-            description: "Your order was confirmed and prepared for shipment.",
-            status: "Completed",
+            id: 2,
+            orderID: 'OR002',
+            orderDate: '2024-12-02',
+            customerName: 'Neha Singh',
+            orderStatus: 'Delivered',
+            cost: 2200,
+            paymentMethod: 'Debit Card',
+            paymentStatus: 'Paid',
+            deliveryAddress: '456, Main Street, Bangalore',
+            trackingNumber: 'TK987654',
+            customerPhone: '9988776655',
+            itemName: 'Targus Laptop Sleeve',
+            itemImage: Product_2,
+            courier: 'ABC Logistics',
+            Recent_Orders: [
+                { title: 'Order Placed', status: 'Completed', date: '2024-12-02', time: '11:00', description: 'Your order has been placed.' },
+                { title: 'Order Confirmed', status: 'Completed', date: '2024-12-02', time: '16:00', description: 'Your order was confirmed and processed.' },
+                { title: 'Shipped', status: 'Completed', date: '2024-12-03', time: '12:00', description: 'Your order has been shipped.' },
+                { title: 'Out for Delivery', status: 'Pending', date: '2024-12-05', time: '09:00', description: 'Your order is out for delivery.' },
+                { title: 'Delivered', status: 'Pending', date: '2024-12-05', time: '18:00', description: 'Your order will be delivered today.' },
+            ],
         },
         {
-            title: "Shipped",
-            date: "2024-12-11",
-            description: "Your order has been shipped. It left the warehouse and is on its way to you.",
-            courier: "XYZ Logistics",
-            warehouse: "Warehouse XYZ",
-            status: "Completed",
+            id: 3,
+            orderID: 'OR003',
+            orderDate: '2024-12-03',
+            customerName: 'Rajesh Verma',
+            orderStatus: 'Pending',
+            cost: 1800,
+            paymentMethod: 'UPI',
+            paymentStatus: 'Pending',
+            deliveryAddress: '789, Sector 12, Gurgaon',
+            trackingNumber: null,
+            customerPhone: '9876547890',
+            itemName: 'Apple Iphone 15',
+            itemImage: Product_3,
+            courier: 'FastShip',
+            Recent_Orders: [
+                { title: 'Order Placed', status: 'Completed', date: '2024-12-03', time: '09:00', description: 'Your order has been placed.' },
+                { title: 'Order Confirmed', status: 'Pending', date: '2024-12-04', time: '11:00', description: 'Your order is being processed.' },
+                { title: 'Payment Pending', status: 'Pending', date: '2024-12-04', time: '14:00', description: 'Payment has not been received yet.' },
+            ],
         },
         {
-            title: "Out for Delivery",
-            date: "2024-12-12",
-            description: "Your order was out for delivery and arrived on the scheduled date.",
-            estimatedDelivery: "Thu, Dec 12, 2024, by 7 PM",
-            status: "Completed",
+            id: 4,
+            orderID: 'OR004',
+            orderDate: '2024-12-04',
+            customerName: 'Suman Gupta',
+            orderStatus: 'Unreachable',
+            cost: 999,
+            paymentMethod: 'Credit Card',
+            paymentStatus: 'Paid',
+            deliveryAddress: '101, Park Avenue, Noida',
+            trackingNumber: 'TK222333',
+            customerPhone: '8765432109',
+            itemName: 'Targus Laptop Sleeve',
+            itemImage: Product_2,
+            courier: 'LogiExpress',
+            Recent_Orders: [
+                { title: 'Order Placed', status: 'Completed', date: '2024-12-04', time: '10:30', description: 'Your order has been placed.' },
+                { title: 'Order Confirmed', status: 'Completed', date: '2024-12-04', time: '15:00', description: 'Your order has been confirmed.' },
+                { title: 'Shipped', status: 'Completed', date: '2024-12-05', time: '08:00', description: 'Your order is on the way.' },
+                { title: 'Unreachable', status: 'Completed', date: '2024-12-06', time: '14:00', description: 'Delivery attempt failed, customer unreachable.' },
+            ],
         },
         {
-            title: "Delivered",
-            date: "2024-12-14",
-            description: "Your package was successfully delivered to the provided address.",
-            status: "Completed",
+            id: 5,
+            orderID: 'OR005',
+            orderDate: '2024-12-05',
+            customerName: 'Amit Patel',
+            orderStatus: 'Cancelled',
+            cost: 2500,
+            paymentMethod: 'Debit Card',
+            paymentStatus: 'Refunded',
+            deliveryAddress: '202, South Avenue, Mumbai',
+            trackingNumber: null,
+            customerPhone: '9977554433',
+            itemName: 'Dell Inspiron 15 Laptop',
+            itemImage: Product_1,
+            courier: 'QuickShip',
+            Recent_Orders: [
+                { title: 'Order Placed', status: 'Completed', date: '2024-12-05', time: '12:30', description: 'Your order has been placed.' },
+                { title: 'Order Confirmed', status: 'Completed', date: '2024-12-06', time: '10:00', description: 'Your order has been confirmed.' },
+                { title: 'Cancelled', status: 'Completed', date: '2024-12-07', time: '17:30', description: 'Your order has been cancelled at your request.' },
+            ],
         },
         {
-            title: "Delivered",
-            date: "2024-09-08",
-            description: "Your package was successfully delivered to the provided address.",
-            status: "Completed",
+            id: 6,
+            orderID: 'OR006',
+            orderDate: '2024-12-06',
+            customerName: 'Priya Yadav',
+            orderStatus: 'Delivered',
+            cost: 1200,
+            paymentMethod: 'Credit Card',
+            paymentStatus: 'Paid',
+            deliveryAddress: '300, West Street, Jaipur',
+            trackingNumber: 'TK456789',
+            customerPhone: '9123456789',
+            itemName: 'Apple Iphone 15',
+            itemImage: Product_3,
+            courier: 'Global Courier',
+            Recent_Orders: [
+                { title: 'Order Placed', status: 'Completed', date: '2024-12-06', time: '10:00', description: 'Your order has been placed.' },
+                { title: 'Shipped', status: 'Completed', date: '2024-12-07', time: '11:00', description: 'Your order has been shipped.' },
+                { title: 'Out for Delivery', status: 'Completed', date: '2024-12-08', time: '08:00', description: 'Your order is out for delivery.' },
+                { title: 'Delivered', status: 'Completed', date: '2024-12-08', time: '18:00', description: 'Your order was delivered successfully.' },
+            ],
         },
         {
-            title: "Delivered",
-            date: "2024-10-10",
-            description: "Your package was successfully delivered to the provided address.",
-            status: "Completed",
+            id: 7,
+            orderID: 'OR007',
+            orderDate: '2024-12-07',
+            customerName: 'Raj Malhotra',
+            orderStatus: 'Pending',
+            cost: 3000,
+            paymentMethod: 'Cash on Delivery',
+            paymentStatus: 'Pending',
+            deliveryAddress: '400, East Road, Chennai',
+            trackingNumber: null,
+            customerPhone: '9223344556',
+            itemName: 'Dell Inspiron 15 Laptop',
+            itemImage: Product_1,
+            courier: 'Speedy Delivery',
+            Recent_Orders: [
+                { title: 'Order Placed', status: 'Completed', date: '2024-12-07', time: '13:00', description: 'Your order has been placed.' },
+                { title: 'Order Confirmed', status: 'Pending', date: '2024-12-08', time: '16:00', description: 'Your order has been confirmed, awaiting payment.' },
+            ],
         },
         {
-            title: "Delivered",
-            date: "2024-11-23",
-            description: "Your package was successfully delivered to the provided address.",
-            status: "Completed",
+            id: 8,
+            orderID: 'OR008',
+            orderDate: '2024-12-08',
+            customerName: 'Simran Kaur',
+            orderStatus: 'Delivered',
+            cost: 3500,
+            paymentMethod: 'UPI',
+            paymentStatus: 'Paid',
+            deliveryAddress: '123, Juhu Beach Road, Mumbai',
+            trackingNumber: 'TK667788',
+            customerPhone: '8899776655',
+            itemName: 'Targus Laptop Sleeve',
+            itemImage: Product_2,
+            courier: 'ParcelXpress',
+            Recent_Orders: [
+                { title: 'Order Placed', status: 'Completed', date: '2024-12-08', time: '09:00', description: 'Your order has been placed.' },
+                { title: 'Order Confirmed', status: 'Completed', date: '2024-12-08', time: '12:00', description: 'Your order has been confirmed.' },
+                { title: 'Shipped', status: 'Completed', date: '2024-12-09', time: '16:00', description: 'Your order has been shipped.' },
+                { title: 'Out for Delivery', status: 'Completed', date: '2024-12-10', time: '08:30', description: 'Your order is out for delivery.' },
+                { title: 'Delivered', status: 'Completed', date: '2024-12-10', time: '19:00', description: 'Your order has been delivered.' },
+            ],
+        },
+        {
+            id: 9,
+            orderID: 'OR009',
+            orderDate: '2024-12-10',
+            customerName: 'Ravi Shankar',
+            orderStatus: 'Delivered',
+            cost: 2500,
+            paymentMethod: 'Debit Card',
+            paymentStatus: 'Paid',
+            deliveryAddress: '500, DLF Cyber City, Gurgaon',
+            trackingNumber: 'TK223344',
+            customerPhone: '9988776655',
+            itemName: 'Dell Inspiron 15 Laptop',
+            itemImage: Product_1,
+            courier: 'SwiftShip',
+            Recent_Orders: [
+                { title: 'Order Placed', status: 'Completed', date: '2024-12-10', time: '12:00', description: 'Your order has been placed.' },
+                { title: 'Order Confirmed', status: 'Completed', date: '2024-12-10', time: '14:30', description: 'Your order was confirmed and processed.' },
+                { title: 'Shipped', status: 'Completed', date: '2024-12-11', time: '10:00', description: 'Your order has been shipped.' },
+                { title: 'Out for Delivery', status: 'Completed', date: '2024-12-12', time: '09:30', description: 'Your order is out for delivery.' },
+                { title: 'Delivered', status: 'Completed', date: '2024-12-12', time: '18:30', description: 'Your order has been delivered successfully.' },
+            ],
+        },
+        {
+            id: 10,
+            orderID: 'OR010',
+            orderDate: '2024-12-12',
+            customerName: 'Vikram Arora',
+            orderStatus: 'Shipped',
+            cost: 1300,
+            paymentMethod: 'Credit Card',
+            paymentStatus: 'Paid',
+            deliveryAddress: '456, Indiranagar, Bangalore',
+            trackingNumber: 'TK778899',
+            customerPhone: '8777889990',
+            itemName: 'Samsung Galaxy Watch 5',
+            itemImage: Product_4,
+            courier: 'LogiTrans',
+            Recent_Orders: [
+                { title: 'Order Placed', status: 'Completed', date: '2024-12-12', time: '11:00', description: 'Your order has been placed.' },
+                { title: 'Order Confirmed', status: 'Completed', date: '2024-12-12', time: '14:00', description: 'Your order was confirmed and processed.' },
+                { title: 'Shipped', status: 'Completed', date: '2024-12-14', time: '10:00', description: 'Your order has been shipped.' },
+                { title: 'Out for Delivery', status: 'Pending', date: '2024-12-17', time: '09:00', description: 'Your order is out for delivery.' },
+                { title: 'Delivered', status: 'Pending', date: '2024-12-17', time: '18:00', description: 'Your order will be delivered today.' },
+            ],
         },
     ],
     sortedTable: [],
@@ -106,33 +278,35 @@ const initialState: OrderState = {
     selectedOrder: null,
 };
 
+// Redux slice for managing orders
 const OrderSlice = createSlice({
     name: 'Order',
     initialState,
     reducers: {
         updateOrderStatus: (state, action: PayloadAction<{ orderID: string; orderStatus: 'Delivered' | 'Pending' | 'Unreachable' | 'Cancelled' | 'Shipped' }>) => {
             const { orderID, orderStatus } = action.payload;
-            const order = state.orders.find(p => p.orderID === orderID);
+            const order = state.orders.find(order => order.orderID === orderID);
             if (order) {
                 order.orderStatus = orderStatus;
             }
         },
-        setSortedReviews(state, action: PayloadAction<string[]>) {
+        setSortedReviews: (state, action: PayloadAction<string[]>) => {
             state.sortedTable = action.payload;
         },
-        setDrawerStatus(state, action: PayloadAction<boolean>) {
+        setDrawerStatus: (state, action: PayloadAction<boolean>) => {
             state.drawerStatus = action.payload;
         },
-        setSelectedOrder(state, action: PayloadAction<Order>) {
+        setSelectedOrder: (state, action: PayloadAction<Order>) => {
             state.selectedOrder = action.payload;
         },
-        addEvent(state, action: PayloadAction<Event>) {
-            state.events.push(action.payload);
-        }
-    }
+    },
 });
 
-export const { updateOrderStatus, setSortedReviews, setDrawerStatus, setSelectedOrder, addEvent } = OrderSlice.actions;
+// Export actions
+export const { updateOrderStatus, setSortedReviews, setDrawerStatus, setSelectedOrder } = OrderSlice.actions;
+
+// Selector to access order state
 export const selectOrderState = (state: RootState) => state.order;
 
+// Export reducer
 export default OrderSlice.reducer;

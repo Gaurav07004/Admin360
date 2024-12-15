@@ -8,7 +8,7 @@ import { toast } from 'keep-react';
 import { RootState } from '../redux/store';
 
 const columns = [
-    { id: 'orderNumber', label: 'Order Number' },
+    { id: 'orderID', label: 'Order ID' },
     { id: 'orderDate', label: 'Order Date' },
     { id: 'customerName', label: 'Customer Name' },
     { id: 'orderStatus', label: 'Order Status' },
@@ -35,7 +35,6 @@ const getBadgeColor = (status: string) => {
 const OrderTable = () => {
     const dispatch = useDispatch();
     const { orders, drawerStatus } = useSelector((state: RootState) => state.order);
-
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
         setMounted(true);
@@ -71,16 +70,16 @@ const OrderTable = () => {
         }
     };
 
-    const handleOrder = () => {
-        // const selectedCustomer = customers.find((customer) => customer.customerID === customerID);
-        //if (selectedCustomer) {
-        // dispatch(setSelectedCustomer(selectedCustomer));
-        dispatch(setDrawerStatus(!drawerStatus));
-        //}
+    const handleOrder = (orderID: string) => {
+        const selectedOrder = orders.find((order) => order.orderID === orderID);
+        if (selectedOrder) {
+            dispatch(setSelectedOrder(selectedOrder));
+            dispatch(setDrawerStatus(!drawerStatus));
+        }
     };
 
     const data = orders.map((order) => ({
-        orderNumber: order.orderID,
+        orderID: order.orderID,
         orderDate: order.orderDate,
         customerName: order.customerName,
         orderStatus: order.orderStatus,
@@ -90,7 +89,7 @@ const OrderTable = () => {
         action: (
             <PiDotsThreeOutlineLight
                 className="size-4 fill-metal-900 dark:fill-white m-auto rounded-full"
-                onClick={() => handleOrder()}
+                onClick={() => handleOrder(order.orderID)}
             />
         ),
     }));

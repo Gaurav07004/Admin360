@@ -14,6 +14,16 @@ interface Customer {
     cancelled: number,
     pending: number,
     visit: { name: string; price: number }[];
+    Recent_Orders?: {
+        title: string;
+        status: string;
+        date: string;
+        time: string;
+        description: string;
+        courier?: string;
+        warehouse?: string;
+        estimatedDelivery?: string;
+    }[],
     color: string;
     customerStatus: 'Active' | 'Inactive';
 }
@@ -22,7 +32,7 @@ interface CustomerState {
     customers: Customer[];
     sortedTable: string[];
     drawerStatus: boolean;
-    selectedCustomer: Customer;
+    selectedCustomer: Customer | null;
 }
 
 const initialState: CustomerState = {
@@ -49,6 +59,51 @@ const initialState: CustomerState = {
                 { name: "Jun", price: 543 },
                 { name: "Jul", price: 678 },
                 { name: "Aug", price: 345 },
+            ],
+            Recent_Orders: [
+                {
+
+                    title: "Order Placed",
+                    date: "2024-12-09",
+                    time: "10:00",
+                    description: "Your order has been placed. The items were processed and are ready for shipment.",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Order Confirmed",
+                    date: "2024-12-10",
+                    time: "14:30",
+                    description: "Your order was confirmed and prepared for shipment.",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Shipped",
+                    date: "2024-12-11",
+                    time: "13:00",
+                    description: "Your order has been shipped. It left the warehouse and is on its way to you.",
+                    courier: "XYZ Logistics",
+                    warehouse: "Warehouse XYZ",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Out for Delivery",
+                    date: "2024-12-12",
+                    time: "09:00",
+                    description: "Your order was out for delivery and arrived on the scheduled date.",
+                    estimatedDelivery: "Thu, Dec 12, 2024",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Delivered",
+                    date: "2024-12-15",
+                    time: "14:00",
+                    description: "Your package was successfully delivered to the provided address.",
+                    status: "Completed",
+                },
             ],
             color: "#698474",
         },
@@ -100,6 +155,51 @@ const initialState: CustomerState = {
                 { name: "Jul", price: 890 },
                 { name: "Aug", price: 234 },
             ],
+            Recent_Orders: [
+                {
+
+                    title: "Order Placed",
+                    date: "2024-12-10",
+                    time: "10:00",
+                    description: "Your order has been placed. The items were processed and are ready for shipment.",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Order Confirmed",
+                    date: "2024-12-12",
+                    time: "14:30",
+                    description: "Your order was confirmed and prepared for shipment.",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Shipped",
+                    date: "2024-12-14",
+                    time: "13:00",
+                    description: "Your order has been shipped. It left the warehouse and is on its way to you.",
+                    courier: "XYZ Logistics",
+                    warehouse: "Warehouse XYZ",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Out for Delivery",
+                    date: "2024-12-15",
+                    time: "09:00",
+                    description: "Your order was out for delivery and arrived on the scheduled date.",
+                    estimatedDelivery: "Thu, Dec 12, 2024",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Delivered",
+                    date: "2024-12-17",
+                    time: "17:00",
+                    description: "Your package was successfully delivered to the provided address.",
+                    status: "Completed",
+                },
+            ],
             color: "#219C90",
         },
         {
@@ -124,6 +224,51 @@ const initialState: CustomerState = {
                 { name: "Jun", price: 234 },
                 { name: "Jul", price: 567 },
                 { name: "Aug", price: 890 },
+            ],
+            Recent_Orders: [
+                {
+
+                    title: "Order Placed",
+                    date: "2024-12-01",
+                    time: "10:00",
+                    description: "Your order has been placed. The items were processed and are ready for shipment.",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Order Confirmed",
+                    date: "2024-12-03",
+                    time: "14:30",
+                    description: "Your order was confirmed and prepared for shipment.",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Shipped",
+                    date: "2024-12-04",
+                    time: "13:00",
+                    description: "Your order has been shipped. It left the warehouse and is on its way to you.",
+                    courier: "XYZ Logistics",
+                    warehouse: "Warehouse XYZ",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Out for Delivery",
+                    date: "2024-12-05",
+                    time: "09:00",
+                    description: "Your order was out for delivery and arrived on the scheduled date.",
+                    estimatedDelivery: "Thu, Dec 12, 2024",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Delivered",
+                    date: "2024-12-06",
+                    time: "17:00",
+                    description: "Your package was successfully delivered to the provided address.",
+                    status: "Completed",
+                },
             ],
             color: "#0D1282",
         },
@@ -175,6 +320,51 @@ const initialState: CustomerState = {
                 { name: "Jul", price: 456 },
                 { name: "Aug", price: 789 },
             ],
+            Recent_Orders: [
+                {
+
+                    title: "Order Placed",
+                    date: "2024-12-15",
+                    time: "10:00",
+                    description: "Your order has been placed. The items were processed and are ready for shipment.",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Order Confirmed",
+                    date: "2024-12-17",
+                    time: "14:30",
+                    description: "Your order was confirmed and prepared for shipment.",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Shipped",
+                    date: "2024-12-18",
+                    time: "13:00",
+                    description: "Your order has been shipped. It left the warehouse and is on its way to you.",
+                    courier: "XYZ Logistics",
+                    warehouse: "Warehouse XYZ",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Out for Delivery",
+                    date: "2024-12-19",
+                    time: "09:00",
+                    description: "Your order was out for delivery and arrived on the scheduled date.",
+                    estimatedDelivery: "Thu, Dec 12, 2024",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Delivered",
+                    date: "2024-12-20",
+                    time: "17:00",
+                    description: "Your package was successfully delivered to the provided address.",
+                    status: "Completed",
+                },
+            ],
             color: "#B71375",
         },
         {
@@ -199,6 +389,51 @@ const initialState: CustomerState = {
                 { name: "Jun", price: 890 },
                 { name: "Jul", price: 234 },
                 { name: "Aug", price: 567 },
+            ],
+            Recent_Orders: [
+                {
+
+                    title: "Order Placed",
+                    date: "2024-12-06",
+                    time: "10:00",
+                    description: "Your order has been placed. The items were processed and are ready for shipment.",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Order Confirmed",
+                    date: "2024-12-08",
+                    time: "14:30",
+                    description: "Your order was confirmed and prepared for shipment.",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Shipped",
+                    date: "2024-12-11",
+                    time: "13:00",
+                    description: "Your order has been shipped. It left the warehouse and is on its way to you.",
+                    courier: "XYZ Logistics",
+                    warehouse: "Warehouse XYZ",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Out for Delivery",
+                    date: "2024-12-12",
+                    time: "09:00",
+                    description: "Your order was out for delivery and arrived on the scheduled date.",
+                    estimatedDelivery: "Thu, Dec 12, 2024",
+                    status: "Completed",
+                },
+                {
+
+                    title: "Delivered",
+                    date: "2024-12-13",
+                    time: "17:00",
+                    description: "Your package was successfully delivered to the provided address.",
+                    status: "Completed",
+                },
             ],
             color: "#EA5455",
         },
@@ -235,7 +470,7 @@ const initialState: CustomerState = {
             location: "Delhi",
             mobileNumber: 9768091433,
             dateJoined: "Jan 18, 2024",
-            customerStatus: 'Active',
+            customerStatus: 'Inactive',
             order: 80,
             delivered: 76,
             cancelled: 2,
