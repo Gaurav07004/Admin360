@@ -19,7 +19,7 @@ const menuConfig = [
         items: [
             { name: "Dashboard", icon: PiBoundingBoxLight, href: "/dashboard" },
             { name: "Customers", icon: PiUsersThreeLight, href: "/customers" },
-            { name: "Orders", icon: PiShoppingCartSimpleLight, href: "/orders", notification: 10 },
+            { name: "Orders", icon: PiShoppingCartSimpleLight, href: "/orders" },
         ],
     },
     {
@@ -43,12 +43,12 @@ const Sidebar: React.FC = () => {
     const { imageUrl } = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const storedMenu = localStorage.getItem("activeMenu");
-        if (storedMenu) {
-            dispatch(setActiveMenu(storedMenu));
-        }
-    }, [dispatch]);
+    // useEffect(() => {
+    //     const storedMenu = localStorage.getItem("activeMenu");
+    //     if (storedMenu) {
+    //         dispatch(setActiveMenu(storedMenu));
+    //     }
+    // }, [dispatch]);
 
     const handleMenuClick = (menu: string) => {
         dispatch(setActiveMenu(menu));
@@ -87,7 +87,7 @@ const Sidebar: React.FC = () => {
                 {menuConfig.map((section, index) => (
                     <section key={index} className="flex flex-col gap-2">
                         {section.title && <div className="text-xs text-gray-500">{section.title}</div>}
-                        {section.items.map(({ name, icon, href, notification }) => renderMenuItem(name, icon, href, notification))}
+                        {section.items.map(({ name, icon, href }) => renderMenuItem(name, icon, href))}
                     </section>
                 ))}
                 <Divider className="border-t border-gray-300 mx-[-1rem] mt-4" />

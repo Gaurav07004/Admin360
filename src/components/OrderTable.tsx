@@ -26,7 +26,7 @@ const getBadgeColor = (status: string) => {
         case 'Cancelled': return 'error';
         case 'Shipped': return 'primary';
         case 'Confirmed': return 'success';
-        case 'Failed': return 'error';
+        case 'Refunded': return 'primary';
         case 'Paid': return 'success';
         default: return 'default';
     }
