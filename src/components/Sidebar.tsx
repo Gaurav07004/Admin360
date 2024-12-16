@@ -18,21 +18,21 @@ const menuConfig = [
         title: "Menu",
         items: [
             { name: "Dashboard", icon: PiBoundingBoxLight, href: "/dashboard" },
-            { name: "Customers", icon: PiUsersThreeLight, href: "/customers" },
-            { name: "Orders", icon: PiShoppingCartSimpleLight, href: "/orders" },
+            { name: "Customers", icon: PiUsersThreeLight, href: "/dashboard/customers" },
+            { name: "Orders", icon: PiShoppingCartSimpleLight, href: "/dashboard/orders", },
         ],
     },
     {
         title: "Sales",
         items: [
-            { name: "Analytics", icon: PiChartLineUpLight, href: "/analytics" },
-            { name: "Products", icon: PiCubeLight, href: "/products" },
+            { name: "Analytics", icon: PiChartLineUpLight, href: "/dashboard/analytics" },
+            { name: "Products", icon: PiCubeLight, href: "/dashboard/products" },
         ],
     },
     {
         title: "Account",
         items: [
-            { name: "Settings", icon: CiSettings, href: "/settings" },
+            { name: "Settings", icon: CiSettings, href: "/dashboard/settings" },
             { name: "Log out", icon: CiLogout, href: "/logout" },
         ],
     },
@@ -79,7 +79,7 @@ const Sidebar: React.FC = () => {
     );
 
     return (
-        <nav className="bg-white w-60 h-auto py-6 px-4 rounded-[1rem]" role="navigation">
+        <nav className="bg-white w-60 h-auto py-7 px-4 rounded-[1rem]" role="navigation">
             <ul className="space-y-6">
                 <div className="mb-5">
                     <Image src={logo} alt="logo" width={90} height={50} />

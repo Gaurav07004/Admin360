@@ -60,7 +60,6 @@ const Dashboard: React.FC = () => {
     return (
         <div className="flex flex-col items-center gap-5 w-full">
             <OrderStat />
-
             <div className="w-full py-4 px-5 bg-white rounded-[1rem]">
                 <div className="flex justify-between items-center mb-8">
                     <p className="text-lg font-semibold text-gray-600">Customer Traffic</p>

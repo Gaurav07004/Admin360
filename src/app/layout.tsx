@@ -1,11 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import StoreProvider from './StoreProvider';
-import Sidebar from '@/components/Sidebar';
-import Header from '@/components/Header';
 import { ToastWrapper } from 'keep-react';
 
 const manrope = localFont({
@@ -44,16 +40,7 @@ export default function RootLayout({
               },
             }}
           />
-
-          <div className="flex h-full p-4">
-            <div className="w-64 fixed h-screen">
-              <Sidebar />
-            </div>
-            <div className="ml-64 flex-1 flex flex-col overflow-hidden h-full">
-              <Header />
-              <main className="overflow-y-auto flex-1 gap-5 mt-4">{children}</main>
-            </div>
-          </div>
+          {children}
         </StoreProvider>
       </body>
     </html>

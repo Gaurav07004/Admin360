@@ -5,7 +5,7 @@ import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import CustomerTable from '@/components/CustomerTable';
 import { FiUsers, FiEye } from "react-icons/fi";
 import { LuCheckCircle } from "react-icons/lu";
-import Customer from '@/app/customers/[id]/page'
+import Customer from '@/app/dashboard/customers/[id]/page'
 
 interface Statistic {
     id: number;
