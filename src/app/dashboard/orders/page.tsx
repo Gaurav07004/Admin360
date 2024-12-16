@@ -7,7 +7,7 @@ import { RxTimer } from "react-icons/rx";
 import { GrPowerCycle } from "react-icons/gr";
 import BarChart from "@/components/OrderChart";
 import OrderTable from '@/components/OrderTable'
-import Order from '@/app/orders/[id]/page'
+import Order from '@/app/dashboard/orders/[id]/page'
 
 const statistics = [
     {

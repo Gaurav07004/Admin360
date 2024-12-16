@@ -1,3 +1,5 @@
+'use client'
+
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
 
@@ -6,6 +8,7 @@ export default function DashboardLayout({
 }: {
     children: React.ReactNode;
 }) {
+
     return (
         <div className="flex h-full p-4">
             <div className="w-64 fixed h-screen">

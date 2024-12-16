@@ -12,11 +12,11 @@ type ChartConfig = {
 const chartConfig: ChartConfig = {
     Sold: {
         label: 'Sold',
-        color: '#384B70',  // Blue color for sold products
+        color: '#384B70',
     },
     Returned: {
         label: 'Returned',
-        color: '#D8A25E',  // Amber color for returned products
+        color: '#D8A25E',
     },
 };
 
@@ -72,7 +72,7 @@ const BarChartComponent: React.FC = () => {
                         tickFormatter={(value) => value.slice(0, 3)}
                     />
                     <YAxis tickLine={false} tickMargin={24} axisLine={false} />
-                    <Tooltip content={<CustomTooltip />} />
+                    <Tooltip content={<CustomTooltip active={undefined} payload={undefined} />} />
                     <Bar radius={[0, 0, 0, 0]} barSize={10} dataKey="Sold" stackId="a" fill={chartConfig.Sold.color} />
                     <Bar radius={[8, 8, 0, 0]} barSize={10} dataKey="Returned" stackId="a" fill={chartConfig.Returned.color} />
                 </BarChart>
