@@ -38,7 +38,7 @@ const menuConfig = [
         title: "Account",
         items: [
             { name: "Settings", icon: CiSettings, href: "/dashboard/settings" },
-            { name: "Log out", icon: CiLogout, href: "/logout" },
+            { name: "Log out", icon: CiLogout, href: "/logIn" },
         ],
     },
 ];

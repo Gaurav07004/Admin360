@@ -8,6 +8,7 @@ import { HiArrowLongRight } from "react-icons/hi2";
 import { Divider } from 'keep-react';
 import Image from "next/image";
 import { Timeline, TimelineContent, TimelineItem, TimelinePoint } from "keep-react";
+import { PiCheckBold } from "react-icons/pi";
 
 
 const CustomerDetailPage: React.FC = () => {
@@ -60,7 +61,7 @@ const CustomerDetailPage: React.FC = () => {
                                             ${isToday ? "border-green-500 bg-green-200" : "border-orange-400 bg-orange-100"}
                                             w-[1.05rem] h-[1.05rem] rounded-full shadow-lg flex items-center justify-center`}
                                 />
-                                {isToday && <div className="ring-4 ring-green-500 w-[1.05rem] h-[1.05rem] rounded-full absolute -left-[0.55rem] animate-pulse"></div>}
+                                {isToday && <PiCheckBold className="text-[0.6rem] text-green-600 absolute top-[0.2rem] -left-[0.3rem]" />}
                                 <TimelineContent>
                                     <div className="text-[0.9rem] font-semibold text-gray-600 dark:text-white flex items-center gap-2">
                                         <span>{event.title}</span>
