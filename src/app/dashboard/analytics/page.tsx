@@ -8,8 +8,6 @@ import { RxCube } from "react-icons/rx";
 import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import LineChart from "@/components/CustomerActivity";
 import OrderStat from "@/components/OrderStatistics";
-//import DemographicsChart from "@/components/DemographicsChart";
-// import SalesChart from "@/components/InventoryStatus";
 
 interface Statistic {
     id: number;

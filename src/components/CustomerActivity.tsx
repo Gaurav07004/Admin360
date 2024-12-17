@@ -176,16 +176,16 @@ const LineChartComponent = () => {
             </ResponsiveContainer>
 
             <section className="flex flex-wrap items-center justify-between mt-[3.2rem] gap-4">
-                {buttonConfig.map((button, index) => (
-                    <div key={index} className={`relative flex items-center gap-3 rounded-lg transition-all ${activeButton === button.dataKey ? "bg-[#FF660021] text-[#FF6500]" : "bg-gray-100 text-orange-400"}`}>
-                        <button.icon className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-base transition-all ${activeButton === button.dataKey ? "text-[#FF6500]" : "text-orange-400"}`} aria-hidden="true" />
+                {buttonConfig.map((data, index) => (
+                    <div key={index} className={`relative flex items-center gap-3 rounded-lg transition-all ${activeButton === data.dataKey ? "bg-[#FF660021] text-[#FF6500]" : "bg-gray-100 text-orange-400"}`}>
+                        <data.icon className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-base transition-all ${activeButton === data.dataKey ? "text-[#FF6500]" : "text-orange-400"}`} />
                         <button
-                            onClick={() => handleButtonClick(button.dataKey)}
-                            className={`py-3 pl-10 pr-6 rounded-lg w-full text-xs font-medium text-left transition-all ${activeButton === button.dataKey ? "text-[#FF6500]" : "text-orange-400"
+                            onClick={() => handleButtonClick(data.dataKey)}
+                            className={`py-3 pl-10 pr-6 rounded-lg w-full text-xs font-medium text-left transition-all ${activeButton === data.dataKey ? "text-[#FF6500]" : "text-orange-400"
                                 }`}
-                            aria-pressed={activeButton === button.dataKey}
+                            aria-pressed={activeButton === data.dataKey}
                         >
-                            {button.label}
+                            {data.label}
                         </button>
                     </div>
                 ))}

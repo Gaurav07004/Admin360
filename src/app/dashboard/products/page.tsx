@@ -38,36 +38,6 @@ const statistics = [
     },
 ];
 
-// const statistics = [
-//     {
-//         id: 1,
-//         title: "Total Sales",
-//         value: "17.9K",
-//         bgColor: "bg-gradient-to-br from-blue-500 to-blue-300",
-//         icon: <RxCube className="w-[1.8rem] h-[1.8rem] text-white transition-transform transform hover:scale-110" />,
-//     },
-//     {
-//         id: 2,
-//         title: "Total Orders",
-//         value: "16.1K",
-//         bgColor: "bg-gradient-to-br from-green-500 to-green-300",
-//         icon: <LuCheckCircle className="w-[1.8rem] h-[1.8rem] text-white transition-transform transform hover:scale-110" />,
-//     },
-//     {
-//         id: 3,
-//         title: "New Customers",
-//         value: "88",
-//         bgColor: "bg-gradient-to-br from-red-500 to-red-300",
-//         icon: <PiWarning className="w-[1.8rem] h-[1.8rem] text-white transition-transform transform hover:scale-110" />,
-//     },
-//     {
-//         id: 4,
-//         title: "Returning Customers",
-//         value: "207",
-//         bgColor: "bg-gradient-to-br from-orange-500 to-orange-300",
-//         icon: <PiCloudArrowDown className="w-[1.8rem] h-[1.8rem] text-white transition-transform transform hover:scale-110" />,
-//     },
-// ];
 
 interface StatisticCardProps {
     title: string;

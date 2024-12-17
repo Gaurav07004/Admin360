@@ -42,11 +42,7 @@ const UploadComponent = () => {
                     width={0}
                     height={0}
                 />
-                <div>
-                    <p className="text-sm font-semibold text-gray-600">Edit Profile Image</p>
-                    {/* <span className="text-xs cursor-pointer text-gray-400 mr-2 font-bold">Delete</span>
-                    <span className="text-xs cursor-pointer font-bold text-[#FF6F20]">Update</span> */}
-                </div>
+                <p className="text-sm font-semibold text-gray-600">Edit Profile Image</p>
             </div>
             <Upload options={{ onDrop, multiple: false }} className='border-none pt-6 pb-2 px-0'>
                 <UploadBody className="border-dashed border-2 border-gray-300 rounded-md py-6 text-center cursor-pointer">

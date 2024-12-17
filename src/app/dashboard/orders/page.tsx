@@ -40,7 +40,6 @@ const statistics = [
     },
 ];
 
-// Define types for the statistic card props
 interface StatisticCardProps {
     title: string;
     value: string;

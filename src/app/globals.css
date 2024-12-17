@@ -6,8 +6,6 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary: #e9f2f0;
-  --second: #257f71;
 }
 
 ::-webkit-scrollbar {
@@ -33,8 +31,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ededed;
-    --foreground: #ededed;
+    --background: #e9e9e997;
   }
 }
 
@@ -42,8 +39,6 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
-  primary_bg: var(--primary);
-  second_bg: var(--second);
 }
 
 @layer utilities {

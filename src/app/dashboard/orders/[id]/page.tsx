@@ -65,16 +65,6 @@ const CustomerDetailPage: React.FC = () => {
                                 <TimelineContent>
                                     <div className="text-[0.9rem] font-semibold text-gray-600 dark:text-white flex items-center gap-2">
                                         <span>{event.title}</span>
-                                        {/* <span
-                                            className={`text-[0.65rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${isTodayOrPast
-                                                ? event.status === "Completed"
-                                                    ? "bg-green-100 text-green-500 hover:bg-green-200"
-                                                    : "bg-red-100 text-red-500 hover:bg-red-200"
-                                                : "bg-red-100 text-red-500 hover:bg-red-200 cursor-not-allowed"
-                                                }`}
-                                        >
-                                            {isTodayOrPast ? event.status : "Pending"}
-                                        </span> */}
                                     </div>
                                     <p className="text-[0.65rem] font-normal text-gray-500 uppercase">
                                         {isTodayOrPast

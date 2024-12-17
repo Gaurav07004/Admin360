@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Divider } from "keep-react";
 import Image from "next/image";
-import Link from "next/link";
-import { useSelector } from "react-redux";
-import logo from "../Assets/Logo.png";
-import profilePic from "../Assets/Profile.jpg";
+import logo from "@/Assets/New_Logo.png";
+import profilePic from "@/Assets/Profile.jpg";
 import {
     PiBoundingBoxLight,
     PiShoppingCartSimpleLight,
@@ -86,7 +86,7 @@ const Sidebar: React.FC = () => {
         <nav className="bg-white w-60 h-auto py-7 px-4 rounded-[1rem]" role="navigation">
             <ul className="space-y-6">
                 <div className="mb-5">
-                    <Image src={logo} alt="logo" width={90} height={50} />
+                    <Image src={logo} alt="logo" width={0} height={0} className='w-[12rem] h-auto' />
                 </div>
                 {menuConfig.map((section, index) => (
                     <section key={index} className="flex flex-col gap-2">
