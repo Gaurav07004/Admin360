@@ -32,8 +32,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/table.jsx",
-    "src/components/RecentOrder.jsx",
+    "src/components/table.tsx",
+    "src/components/RecentOrder.tsx",
     "src/redux/slices/customerSlice.tsx",
     "src/app/settings/page.jsx",
     "src/app/dashboard/page.tsx"

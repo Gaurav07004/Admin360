@@ -5,19 +5,35 @@ import AreaChartComponent from '@/components/SmallCharts';
 import empty from '@/Assets/Empty.png';
 import { Badge, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, Button } from 'keep-react';
 
-const renderCellContent = (item, col, getBadgeColor) => {
+interface TableColumn {
+    id: string;
+    label: string;
+}
+
+interface TableRowData {
+    [key: string]: string | number | object | React.ReactNode;
+}
+
+interface TableComponentProps {
+    data: TableRowData[];
+    columns: TableColumn[];
+    caption: string;
+    getBadgeColor?: (status: string) => 'success' | 'warning' | 'error' | 'primary';
+}
+
+const renderCellContent = (item: TableRowData, col: TableColumn, getBadgeColor?: (status: string) => 'success' | 'warning' | 'error' | 'primary') => {
     const value = item[col.id];
 
     if (typeof value === 'string' || typeof value === 'number') {
-        if ((col.id === 'customerStatus' || col.id === 'status' || col.id === 'paymentStatus' || col.id === 'stockStatus' || col.id === 'orderStatus' || col.id === 'paymentStatus') && getBadgeColor) {
+        if ((col.id === 'customerStatus' || col.id === 'status' || col.id === 'paymentStatus' || col.id === 'stockStatus' || col.id === 'orderStatus') && getBadgeColor) {
             return (
                 <Badge
                     variant="base"
-                    color={getBadgeColor(value)}
-                    className={`text-sm rounded-md border ${getBadgeColor(value) === 'success' ? 'border-green-300' :
-                        getBadgeColor(value) === 'warning' ? 'border-yellow-300' :
-                            getBadgeColor(value) === 'error' ? 'border-red-300' :
-                                getBadgeColor(value) === 'info' ? 'border-blue-300' :
+                    color={getBadgeColor(value.toString())}
+                    className={`text-sm rounded-md border ${getBadgeColor(value.toString()) === 'success' ? 'border-green-300' :
+                        getBadgeColor(value.toString()) === 'warning' ? 'border-yellow-300' :
+                            getBadgeColor(value.toString()) === 'error' ? 'border-red-300' :
+                                getBadgeColor(value.toString()) === 'primary' ? 'border-blue-300' :
                                     'border-gray-300'
                         }`}
                 >
@@ -31,7 +47,7 @@ const renderCellContent = (item, col, getBadgeColor) => {
     if (value && typeof value === 'object' && 'src' in value && typeof value.src === 'string') {
         return (
             <Image
-                src={value.src}
+                src={value.src as string}
                 alt={item['product'] || 'Image'}
                 className="w-8 h-8 object-cover rounded-md"
             />
@@ -40,9 +56,7 @@ const renderCellContent = (item, col, getBadgeColor) => {
 
     if (col.id === 'Action') {
         return (
-            <div className="relative bg-gray-100 px-3 py-2 rounded-md border border-gray-300"
-
-            >
+            <div className="relative bg-gray-100 px-3 py-2 rounded-md border border-gray-300">
                 {value}
             </div>
         );
@@ -59,11 +73,11 @@ const renderCellContent = (item, col, getBadgeColor) => {
     return null;
 };
 
-const TableComponent = ({ data, columns, caption, getBadgeColor }) => {
-    const [filteredData, setFilteredData] = useState(data);
-    const [searchQuery, setSearchQuery] = useState('');
+const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption, getBadgeColor }) => {
+    const [filteredData, setFilteredData] = useState<TableRowData[]>(data);
+    const [searchQuery, setSearchQuery] = useState<string>('');
 
-    const handleSearch = (query) => {
+    const handleSearch = (query: string) => {
         setSearchQuery(query);
         const newFilteredData = data.filter((item) =>
             columns.some((col) => {
@@ -80,7 +94,7 @@ const TableComponent = ({ data, columns, caption, getBadgeColor }) => {
     }, [data, searchQuery]);
 
     return (
-        <section className='p-4 bg-white rounded-[1rem]'>
+        <section className="p-4 bg-white rounded-[1rem]">
             <Table className="!bg-white w-full overflow-auto">
                 <TableCaption className="border border-gray-300 !px-3">
                     <section className="flex items-center justify-between">
@@ -98,10 +112,12 @@ const TableComponent = ({ data, columns, caption, getBadgeColor }) => {
                                     <FiSearch className="w-5 h-5" />
                                 </div>
                             </div>
-                            {caption === 'Product Information' && (<div className="relative flex items-center gap-3 bg-gray-50 rounded-lg">
-                                <FiPlus className="absolute left-3 top-[0.6rem] text-[#FF6500] w-[1.1rem] h-[1.1rem]" />
-                                <Button className="py-2 pl-9 pr-4 bg-[#ff660021] text-[#FF6500] hover:bg-orange-200">New Product</Button>
-                            </div>)}
+                            {caption === 'Product Information' && (
+                                <div className="relative flex items-center gap-3 bg-gray-50 rounded-lg">
+                                    <FiPlus className="absolute left-3 top-[0.6rem] text-[#FF6500] w-[1.1rem] h-[1.1rem]" />
+                                    <Button className="py-2 pl-9 pr-4 bg-[#ff660021] text-[#FF6500] hover:bg-orange-200">New Product</Button>
+                                </div>
+                            )}
                         </div>
                     </section>
                 </TableCaption>
@@ -145,7 +161,7 @@ const TableComponent = ({ data, columns, caption, getBadgeColor }) => {
                                     </div>
                                     <h2 className="text-xl font-semibold mb-2 text-gray-700">No Data Available</h2>
                                     <p className="text-gray-500 mb-6">
-                                        It looks like there nothing here yet. Try adjusting your filters or search terms, or refresh the page to see if new data has become available.
+                                        It looks like there is nothing here yet. Try adjusting your filters or search terms, or refresh the page to see if new data has become available.
                                     </p>
                                     <button
                                         onClick={() => window.location.reload()}
