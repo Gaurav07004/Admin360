@@ -86,7 +86,7 @@ const Sidebar: React.FC = () => {
         <nav className="bg-white w-60 h-auto py-7 px-4 rounded-[1rem]" role="navigation">
             <ul className="space-y-6">
                 <div className="mb-5">
-                    <Image src={logo} alt="logo" width={0} height={0} className='w-[12rem] h-auto' />
+                    <Image src={logo} alt="logo" width={0} height={0} className='w-[11rem] h-auto' />
                 </div>
                 {menuConfig.map((section, index) => (
                     <section key={index} className="flex flex-col gap-2">
