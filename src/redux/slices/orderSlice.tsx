@@ -44,7 +44,7 @@ const initialState: OrderState = {
     orders: [
         {
             id: 1,
-            orderID: 'OR001',
+            orderID: 'AT82913',
             orderDate: '2024-12-01',
             customerName: 'Amit Kumar',
             orderStatus: 'Delivered',
@@ -54,7 +54,7 @@ const initialState: OrderState = {
             deliveryAddress: '123, MG Road, Delhi',
             trackingNumber: 'TK123456',
             customerPhone: '9876543210',
-            itemName: 'Dell Inspiron 15 Laptop',
+            itemName: 'Dell Inspiron 15',
             itemImage: Product_1,
             courier: 'XYZ Logistics',
             Recent_Orders: [
@@ -67,7 +67,7 @@ const initialState: OrderState = {
         },
         {
             id: 2,
-            orderID: 'OR002',
+            orderID: 'AT82914',
             orderDate: '2024-12-02',
             customerName: 'Neha Singh',
             orderStatus: 'Delivered',
@@ -90,7 +90,7 @@ const initialState: OrderState = {
         },
         {
             id: 3,
-            orderID: 'OR003',
+            orderID: 'AT82915',
             orderDate: '2024-12-03',
             customerName: 'Rajesh Verma',
             orderStatus: 'Pending',
@@ -111,7 +111,7 @@ const initialState: OrderState = {
         },
         {
             id: 4,
-            orderID: 'OR004',
+            orderID: 'AT82916',
             orderDate: '2024-12-04',
             customerName: 'Suman Gupta',
             orderStatus: 'Unreachable',
@@ -133,7 +133,7 @@ const initialState: OrderState = {
         },
         {
             id: 5,
-            orderID: 'OR005',
+            orderID: 'AT82917',
             orderDate: '2024-12-05',
             customerName: 'Amit Patel',
             orderStatus: 'Cancelled',
@@ -154,7 +154,7 @@ const initialState: OrderState = {
         },
         {
             id: 6,
-            orderID: 'OR006',
+            orderID: 'AT82918',
             orderDate: '2024-12-06',
             customerName: 'Priya Yadav',
             orderStatus: 'Delivered',
@@ -176,7 +176,7 @@ const initialState: OrderState = {
         },
         {
             id: 7,
-            orderID: 'OR007',
+            orderID: 'AT82919',
             orderDate: '2024-12-07',
             customerName: 'Raj Malhotra',
             orderStatus: 'Pending',
@@ -196,7 +196,7 @@ const initialState: OrderState = {
         },
         {
             id: 8,
-            orderID: 'OR008',
+            orderID: 'AT82920',
             orderDate: '2024-12-08',
             customerName: 'Simran Kaur',
             orderStatus: 'Delivered',
@@ -219,7 +219,7 @@ const initialState: OrderState = {
         },
         {
             id: 9,
-            orderID: 'OR009',
+            orderID: 'AT82921',
             orderDate: '2024-12-10',
             customerName: 'Ravi Shankar',
             orderStatus: 'Delivered',
@@ -242,7 +242,7 @@ const initialState: OrderState = {
         },
         {
             id: 10,
-            orderID: 'OR010',
+            orderID: 'AT82922',
             orderDate: '2024-12-12',
             customerName: 'Vikram Arora',
             orderStatus: 'Shipped',

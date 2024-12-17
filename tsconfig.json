@@ -28,7 +28,7 @@
     }
   },
   "include": [
-    "next-env.d.ts",
+    "src/redux/next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",

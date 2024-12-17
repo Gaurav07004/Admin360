@@ -1,4 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import Product_1 from "@/Assets/Dell Inspiron 15 Laptop.png";
+import Product_2 from "@/Assets/Targus Laptop Sleeve.webp";
+import Product_3 from "@/Assets/Apple iPhone 15.webp";
+import Product_4 from "@/Assets/Samsung Galaxy Watch 5.webp";
 
 interface Product {
     id: number;
@@ -12,6 +16,8 @@ interface Product {
 
 interface ProductState {
     products: Product[];
+    drawerStatus: boolean;
+    selectedProduct: Product | null;
 }
 
 const initialState: ProductState = {
@@ -26,7 +32,9 @@ const initialState: ProductState = {
         { id: 8, productID: 'P008', productName: 'LG UltraGear 27" LED Monitor', category: 'Electronics', price: 12000, stockStatus: 'Low Stock', stockQuantity: 4 },
         { id: 9, productID: 'P009', productName: 'Anker PowerCore 10000 Power Bank', category: 'Accessories', price: 1200, stockStatus: 'Available', stockQuantity: 60 },
         { id: 10, productID: 'P010', productName: 'Targus Laptop Sleeve', category: 'Accessories', price: 700, stockStatus: 'Out of Stock', stockQuantity: 0 }
-    ]
+    ],
+    drawerStatus: false,
+    selectedProduct: null,
 };
 
 const productSlice = createSlice({
@@ -47,8 +55,14 @@ const productSlice = createSlice({
                 product.stockQuantity = stockQuantity;
             }
         },
+        setDrawerStatus: (state, action: PayloadAction<boolean>) => {
+            state.drawerStatus = action.payload;
+        },
+        setSelectedProduct: (state, action: PayloadAction<Order>) => {
+            state.selectedProduct = action.payload;
+        },
     },
 });
 
-export const { updateProductStatus, updateProductStock } = productSlice.actions;
+export const { updateProductStatus, updateProductStock, setDrawerStatus, setSelectedProduct } = productSlice.actions;
 export default productSlice.reducer;

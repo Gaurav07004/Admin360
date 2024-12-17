@@ -5,7 +5,7 @@ import { PiDotsThreeOutlineLight } from 'react-icons/pi';
 import { toast } from 'keep-react';
 import { RootState } from '../redux/store';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { updateProductStatus, updateProductStock } from '../redux/slices/productsSlice';
+import { updateProductStatus, updateProductStock, setSelectedProduct, setDrawerStatus } from '../redux/slices/productsSlice';
 import TableComponent from './table';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -34,13 +34,13 @@ const getBadgeColor = (status: string) => {
         case 'Available': return 'success';
         case 'Out of Stock': return 'error';
         case 'Low Stock': return 'warning';
-        default: return 'default';
+        default: return 'primary';
     }
 };
 
 const ProductTable = () => {
     const dispatch = useDispatch();
-    const { products } = useSelector((state: RootState) => state.products);
+    const { products, drawerStatus } = useSelector((state: RootState) => state.products);
 
     const handleProductMenuClick = (productID: string, status: 'Available' | 'Out of Stock' | 'Low Stock') => {
         try {
@@ -68,6 +68,14 @@ const ProductTable = () => {
         }
     };
 
+    const handleOrder = (productID: string) => {
+        const selectedProduct = products.find((product) => product.productID === productID);
+        if (selectedProduct) {
+            dispatch(setSelectedProduct(selectedProduct));
+            dispatch(setDrawerStatus(!drawerStatus));
+        }
+    };
+
     // const handleStockChange = (id: number, stockQuantity: number) => {
     //     const newStock = stockQuantity > 0 ? stockQuantity - 1 : stockQuantity;
     //     dispatch(updateProductStock({ id, stockQuantity: newStock }));
@@ -85,7 +93,7 @@ const ProductTable = () => {
             <div>
                 <PiDotsThreeOutlineLight
                     className="size-4 fill-metal-900 dark:fill-white m-auto rounded-full"
-                    onClick={() => handleProductMenuClick(product.productID, product.stockStatus)}
+                    onClick={() => handleOrder(product.productID)}
                 />
             </div>
         ),

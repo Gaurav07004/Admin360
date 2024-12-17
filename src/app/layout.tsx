@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} antialiased h-screen overflow-hidden`}>
+      <body className={`font-sans antialiased h-screen overflow-hidden`}>
         <StoreProvider>
           <ToastWrapper
             toastOptions={{

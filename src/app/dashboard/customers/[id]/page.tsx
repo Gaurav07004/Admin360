@@ -154,15 +154,15 @@ const CustomerDetailPage: React.FC = () => {
     const renderCustomerPreview = () => (
         <section className="flex items-center justify-between sticky top-0 z-10 bg-white p-4 border-b-[0.5px] border-gray-200">
             <div className="flex items-center space-x-2">
-                <div className="text-[#FF6500] font-semibold text-sm uppercase">Customer Preview</div>
-                <TfiLayoutLineSolid className="text-xl text-[#FF6500] rotate-90" />
-                <div className="text-[#FF6500] text-sm">{selectedCustomer?.id} of 10</div>
+                <div className="text-gray-600 text-[0.9rem] font-semibold tracking-wide uppercase">Customer Preview</div>
+                <TfiLayoutLineSolid className="text-gray-600 text-[0.9rem] font-semibold tracking-wide rotate-90" />
+                <div className="text-gray-600 text-[0.9rem] font-semibold tracking-wide">{selectedCustomer?.id} of 10</div>
             </div>
             <div
                 className="flex items-center justify-center w-8 h-8 bg-gray-100 hover:bg-orange-100 rounded-lg transition duration-300"
                 onClick={handleToggle}
             >
-                <HiArrowLongRight className="w-5 h-5 text-[#FF6500]" />
+                <HiArrowLongRight className="w-5 h-5 text-gray-500" />
             </div>
         </section>
     );
@@ -249,12 +249,12 @@ const CustomerDetailPage: React.FC = () => {
             {drawerStatus && (
                 <div
                     ref={overlayRef}
-                    className="fixed inset-0 bg-black bg-opacity-50 z-10"
+                    className="fixed inset-0 bg-black bg-opacity-20 z-10"
                 />
             )}
             <div
                 ref={drawerRef}
-                className={`fixed top-3 bottom-3 right-3 w-full max-w-[36rem] rounded-xl bg-white shadow-lg text-black transform overflow-auto ${drawerStatus ? 'translate-x-0' : 'translate-x-full'
+                className={`fixed top-3 bottom-3 right-3 w-full max-w-[32rem] rounded-xl bg-white shadow-md text-black transform overflow-auto ${drawerStatus ? 'translate-x-0' : 'translate-x-full'
                     } transition-transform duration-500 ease-in-out z-20`}
             >
                 {renderCustomerPreview()}

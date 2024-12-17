@@ -18,16 +18,10 @@ const CustomerDetailPage: React.FC = () => {
     const overlayRef = useRef<HTMLDivElement>(null);
 
     const data = [
-        { label: "Created at", value: selectedOrder?.orderDate },
-        { label: "Delivery Services", value: selectedOrder?.courier },
-        { label: "Payment method", value: selectedOrder?.paymentMethod },
-        { label: "Order Status", value: selectedOrder?.orderStatus },
-    ];
-
-    const data_customer = [
-        { label: "Customer Name", value: selectedOrder?.customerName },
-        { label: "Email", value: selectedOrder?.courier },
-        { label: "Phone Number", value: selectedOrder?.customerPhone },
+        { label: "Order Item", value: selectedOrder?.itemName || 'Dell Inspiron 15 Laptop' },
+        { label: "Courier", value: selectedOrder?.courier || 'ups.R.Gosling ' },
+        { label: "Order Date", value: selectedOrder?.orderDate || '12 Dec 2024' },
+        { label: "Address", value: selectedOrder?.deliveryAddress || '4517 Washington Ave. Manchester, Kentuc...' },
     ];
 
     const recentOrder = selectedOrder?.Recent_Orders?.map(order => ({
@@ -54,7 +48,7 @@ const CustomerDetailPage: React.FC = () => {
 
         return (
             <section className="p-4">
-                <div className="text-[#FF6500] font-bold text-xs mb-4 uppercase">Order Timeline</div>
+                <div className="text-[#FF6500] font-semibold text-xs mb-4 uppercase">Recent Orders</div>
                 <Timeline className="border-dashed border-l-[2px] m-4 border-orange-300">
                     {recentOrder.map((event, index) => {
                         const isTodayOrPast = new Date(`${event.date} ${event.time}`) < new Date(`${currentDate} ${currentTime}`);
@@ -100,93 +94,59 @@ const CustomerDetailPage: React.FC = () => {
         );
     };
 
+    const handleStatusChange = () => {
+        dispatch(setDrawerStatus(false));
+    };
+
     const renderCustomerPreview = () => (
         <section className="flex items-center justify-between sticky top-0 z-10 bg-white p-4 border-b-[0.5px] border-gray-200">
-            <div className="flex flex-col justify-normal items-start">
-                <div className="text-gray-600 text-[1.2rem] font-semibold uppercase tracking-wide">#{selectedOrder?.orderID}</div>
-                <div className="text-[0.7rem] font-medium text-slate-600">Order details</div>
+            <div className="flex items-center space-x-2">
+                <div className="text-[#FF6500] font-semibold text-sm uppercase">Order Preview</div>
             </div>
             <div
                 className="flex items-center justify-center w-8 h-8 bg-gray-100 hover:bg-orange-100 rounded-lg transition duration-300"
                 onClick={() => { dispatch(setDrawerStatus(false)); }}
             >
-                <HiArrowLongRight className="w-5 h-5 text-gray-600" />
+                <HiArrowLongRight className="w-5 h-5 text-[#FF6500]" />
             </div>
         </section>
     );
 
-    const renderCustomerInfo = () => {
-        return (
-            <>
-                <div className="p-4 bg-white rounded-lg">
-                    <div className="text-[#FF6500] font-bold text-xs mb-4 uppercase">Items</div>
-                    <div className="flex justify-between w-full items-center">
-                        <div className="space-x-3 flex items-center w-fit">
-                            <Image
-                                src={selectedOrder?.itemImage}
-                                alt="Profile Picture"
-                                className="w-16 h-16 object-contain rounded-lg border-[2.5px] border-gray-200 p-1 bg-slate-100"
-                            />
-                            <div>
-                                <h3 className="text-sm font-semibold text-gray-700">{selectedOrder?.itemName}</h3>
-                                <p className="text-[0.8rem] font-medium text-slate-500">Fashion</p>
-                            </div>
-                        </div>
-                        <p className="text-[0.8rem] font-medium text-slate-500 w-[3rem]">1 pcs</p>
-                        <p className="text-sm font-semibold text-gray-800 w-[5rem]">₹{selectedOrder?.cost}</p>
-                    </div>
+    const renderCustomerInfo = () => (
+        <div className="flex flex-col justify-between border border-gray-300 rounded-lg m-5">
+            <div className="flex justify-between p-4 border-b-[0.5px] border-gray-300">
+                <div className="flex flex-col items-center gap-2">
+                    <Image
+                        src={selectedOrder?.itemImage}
+                        alt="Profile Picture"
+                        className="w-[8rem] h-[6rem] object-contain rounded-md border-[3px] border-gray-200 p-2"
+                    />
+                    <div className="text-gray-600 text-[1rem] font-semibold">Order ID: {selectedOrder?.orderID}</div>
                 </div>
-                <Divider className="border-t-[0.5px] border-gray-200 mt-2" />
-                <div className="flex flex-col text-gray-500 ">
-                    {data.map((item, index) => (
-                        <div
-                            key={index}
-                            className={`flex items-center justify-between w-full py-3 px-4`}
-                        >
-                            <span className="w-1/2 text-[0.9rem] font-medium text-slate-500">{item.label}</span>
-                            <span className="w-1/2 text-[0.8rem] font-semibold text-gray-800">{item.value}</span>
-                        </div>
-                    ))}
+                <div
+                    className={`text-[0.7rem] w-fit h-fit uppercase rounded-md px-2 py-2 cursor-pointer transition-colors ${selectedOrder?.orderStatus === 'Delivered' || selectedOrder?.orderStatus === 'Shipped'
+                        ? 'bg-green-100 text-green-500 hover:bg-green-200'
+                        : 'bg-red-100 text-red-500 hover:bg-red-200'
+                        }`}
+                    onClick={() => handleStatusChange()}
+                >
+                    {selectedOrder?.orderStatus}
                 </div>
-                <Divider className="border-t-[0.5px] border-gray-200 mt-2" />
-                <div className="flex flex-col text-gray-500 ">
-                    {data_customer.map((item, index) => (
-                        <div
-                            key={index}
-                            className={`flex items-center justify-between w-full py-3 px-4`}
-                        >
-                            <span className="w-1/2 text-[0.9rem] font-medium text-slate-500">{item.label}</span>
-                            <span className="w-1/2 text-[0.8rem] font-semibold text-gray-800">{item.value}</span>
-                        </div>
-                    ))}
-                </div>
-            </>
-        );
-    };
 
-    const renderPaymentInfo = () => {
-        const shiping = 100.25;
-        const subTotal = selectedOrder?.cost - shiping;
-
-        return (
-            <>
-                <div className="p-4 bg-white rounded-lg">
-                    <div className="text-[#FF6500] font-bold text-xs mb-4 uppercase">Payment</div>
-                    <div className="flex flex-col">
-                        {[{ title: 'Sub Total', value: subTotal }, { title: 'Shiping Charge', value: shiping }, { title: 'Total', value: selectedOrder?.cost }].map((item, index) => (
-                            <div
-                                key={index}
-                                className={`flex items-center justify-between w-full py-2`}
-                            >
-                                <span className="w-1/2 text-[0.9rem] font-medium text-slate-500">{item.title}</span>
-                                <span className="w-1/2 text-[0.8rem] font-semibold text-gray-800">₹{item.value}</span>
-                            </div>
-                        ))}
+            </div>
+            <div className="grid grid-cols-2 text-gray-500">
+                {data.map((item, index) => (
+                    <div
+                        key={index}
+                        className={`flex flex-col p-4 hover:bg-gray-100 transition ${item.label === "Order Item" || item.label === "Order Date" ? 'border-r-[0.5px] border-gray-300' : ""} ${item.label === "Order Item" || item.label === "Courier" ? 'border-b-[0.5px] border-gray-300' : ""}`}
+                    >
+                        <span className="text-xs font-semibold text-gray-400 uppercase">{item.label}</span>
+                        <span className="text-[0.7rem] font-semibold mt-2">{item.value}</span>
                     </div>
-                </div>
-            </>
-        );
-    };
+                ))}
+            </div>
+        </div>
+    );
 
     const renderPreview = () => (
         <section className="sticky bottom-0 z-10 bg-white w-full h-7"></section>
@@ -200,21 +160,19 @@ const CustomerDetailPage: React.FC = () => {
             {drawerStatus && (
                 <div
                     ref={overlayRef}
-                    className="fixed inset-0 bg-black bg-opacity-20 z-10"
+                    className="fixed inset-0 bg-black bg-opacity-50 z-10"
                 />
             )}
             <div
                 ref={drawerRef}
-                className={`fixed top-3 bottom-3 right-3 w-full max-w-[30rem] rounded-xl bg-white shadow-md text-black transform overflow-auto ${drawerStatus ? 'translate-x-0' : 'translate-x-full'
+                className={`fixed top-3 bottom-3 right-3 w-full max-w-[36rem] rounded-xl bg-white shadow-lg text-black transform overflow-auto ${drawerStatus ? 'translate-x-0' : 'translate-x-full'
                     } transition-transform duration-500 ease-in-out z-20`}
             >
                 {renderCustomerPreview()}
                 <div className="overflow-auto ">
                     {renderCustomerInfo()}
-                    <Divider className="border-t-[0.5px] border-gray-200 mt-2" />
+                    <Divider className="border-t-[0.5px] border-gray-200 mt-4" />
                     {TimelineComponent()}
-                    <Divider className="border-t-[0.5px] border-gray-200 mt-2" />
-                    {renderPaymentInfo()}
                 </div>
                 {renderPreview()}
             </div>

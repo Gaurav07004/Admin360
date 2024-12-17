@@ -28,7 +28,7 @@ const getBadgeColor = (status: string) => {
         case 'Confirmed': return 'success';
         case 'Refunded': return 'primary';
         case 'Paid': return 'success';
-        default: return 'default';
+        default: return 'primary';
     }
 };
 

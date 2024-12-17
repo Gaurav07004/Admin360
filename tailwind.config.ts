@@ -8,10 +8,8 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      fontWeight: {
-        'extra-light': '200',
-        'light-bold': '700',
-        'blackest': '950',
+      fontFamily: {
+        custom: ['"Open Sans"', 'sans-serif'], // Example custom font
       },
       animation: {
         rotate: 'rotate 2s infinite linear',
