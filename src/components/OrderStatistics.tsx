@@ -38,10 +38,10 @@ const Dashboard: React.FC = () => {
                                 />
                                 <div className="ml-4 flex-1">
                                     <div className="flex justify-between w-full">
-                                        <p className="text-sm font-semibold text-gray-500">{product.name}</p>
-                                        <span className="text-sm font-semibold text-gray-500">{product.price}</span>
+                                        <p className="text-sm font-semibold text-gray-700">{product.name}</p>
+                                        <span className="text-sm font-medium text-slate-700">{product.price}</span>
                                     </div>
-                                    <p className="text-xs text-gray-500">{product.sold} sold</p>
+                                    <p className="text-[0.8rem] font-medium text-slate-500">{product.sold} sold</p>
                                 </div>
                             </div>
                         </li>

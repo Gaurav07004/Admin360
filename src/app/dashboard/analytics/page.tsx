@@ -30,24 +30,24 @@ const statistics: Statistic[] = [
     {
         id: 2,
         title: "Total Orders",
-        value: "15.8K",
-        previousValue: "16.1K",
+        value: "15",
+        previousValue: "16",
         bgColor: "bg-gradient-to-br from-green-500 to-green-300",
         icon1: <RxCube className="w-[1.2rem] h-[1.2rem] text-white" />,
     },
     {
         id: 3,
         title: "Total Products",
-        value: "224",
-        previousValue: "207",
+        value: "10",
+        previousValue: "08",
         bgColor: "bg-gradient-to-br from-orange-500 to-orange-300",
         icon1: <CgNotes className="w-[1.2rem] h-[1.2rem] text-white" />,
     },
     {
         id: 4,
         title: "New Customers",
-        value: "88",
-        previousValue: "90",
+        value: "10",
+        previousValue: "9",
         bgColor: "bg-gradient-to-br from-red-500 to-red-300",
         icon1: <FiUsers className="w-[1.2rem] h-[1.2rem] text-white" />,
     },
@@ -81,7 +81,7 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
                     </div>
                     <div className="text-gray-700 font-semibold text-lg">{title}</div>
                 </div>
-                <div className="text-gray-800 font-bold text-2xl">{value}</div>
+                <div className="text-gray-800 font-bold text-xl">{value}</div>
             </div>
             <div className="text-gray-600 text-xs font-semibold mt-3 flex items-center gap-2">
                 <span className={`text-xs flex items-center rounded-md px-2 py-1 ${isPositive ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}>

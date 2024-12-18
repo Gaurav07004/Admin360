@@ -7,33 +7,34 @@ import { PiWarning, PiCloudArrowDown } from "react-icons/pi";
 import BarChart from "@/components/ProductChart";
 import ProductTable from '@/components/ProductTable'
 import Product from '@/app/dashboard/products/[id]/page'
+import NewProduct from '@/components/newProduct'
 
 const statistics = [
     {
         id: 1,
         title: "Total Products",
-        value: "17.9K",
+        value: "10",
         bgColor: "bg-gradient-to-br from-blue-500 to-blue-300",
         icon: <RxCube className="w-[1.4rem] h-[1.4rem] text-white" />,
     },
     {
         id: 2,
         title: "In Stock",
-        value: "16.1K",
+        value: "04",
         bgColor: "bg-gradient-to-br from-green-500 to-green-300",
         icon: <LuCheckCircle className="w-[1.4rem] h-[1.4rem] text-white" />,
     },
     {
         id: 3,
         title: "Out of Stock",
-        value: "88",
+        value: "03",
         bgColor: "bg-gradient-to-br from-red-500 to-red-300",
         icon: <PiWarning className="w-[1.4rem] h-[1.4rem] text-white" />,
     },
     {
         id: 4,
         title: "Low Stock",
-        value: "207",
+        value: "03",
         bgColor: "bg-gradient-to-br from-orange-500 to-orange-300",
         icon: <PiCloudArrowDown className="w-[1.4rem] h-[1.4rem] text-white" />,
     },
@@ -80,6 +81,7 @@ const Page: React.FC = () => {
             </div>
             <ProductTable />
             <Product />
+            <NewProduct />
         </section>
     );
 };

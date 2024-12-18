@@ -3,6 +3,9 @@ import { FiSearch, FiPlus } from 'react-icons/fi';
 import Image from 'next/image';
 import AreaChartComponent from '@/components/SmallCharts';
 import empty from '@/Assets/Empty.png';
+import { useDispatch, useSelector } from "react-redux";
+import { setProductDrawerStatus } from "@/redux/slices/productsSlice";
+import { RootState } from "@/redux/store";
 import { Badge, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, Button } from 'keep-react';
 
 interface TableColumn {
@@ -78,6 +81,8 @@ const renderCellContent = (item: TableRowData, col: TableColumn, getBadgeColor?:
 const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption, getBadgeColor }) => {
     const [filteredData, setFilteredData] = useState<TableRowData[]>(data);
     const [searchQuery, setSearchQuery] = useState<string>('');
+    const dispatch = useDispatch();
+    const { productDrawerStatus } = useSelector((state: RootState) => state.product);
 
     const handleSearch = (query: string) => {
         setSearchQuery(query);
@@ -115,7 +120,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption,
                                 </div>
                             </div>
                             {caption === 'Product Information' && (
-                                <div className="relative flex items-center gap-3 bg-gray-50 rounded-lg">
+                                <div className="relative flex items-center gap-3 bg-gray-50 rounded-lg" onClick={() => { dispatch(setProductDrawerStatus(!productDrawerStatus)) }}>
                                     <FiPlus className="absolute left-3 top-[0.72rem] text-[#FF6500] w-[1.1rem] h-[1.1rem]" />
                                     <Button className="py-2 pl-9 pr-4 bg-[#ff660021] text-[#FF6500] hover:bg-orange-200">New Product</Button>
                                 </div>

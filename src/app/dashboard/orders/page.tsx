@@ -4,7 +4,7 @@ import React from "react";
 import { CgNotes } from "react-icons/cg";
 import { LuCheckCircle } from "react-icons/lu";
 import { RxTimer } from "react-icons/rx";
-import { GrPowerCycle } from "react-icons/gr";
+import { RxCrossCircled } from "react-icons/rx";
 import BarChart from "@/components/OrderChart";
 import OrderTable from '@/components/OrderTable'
 import Order from '@/app/dashboard/orders/[id]/page'
@@ -12,31 +12,31 @@ import Order from '@/app/dashboard/orders/[id]/page'
 const statistics = [
     {
         id: 1,
-        title: "Total",
-        value: "17,917",
+        title: "Total Order",
+        value: "10",
         bgColor: "bg-gradient-to-r from-blue-500 to-blue-300",
         icon: <CgNotes className="w-5 h-5 text-white" />,
     },
     {
         id: 2,
-        title: "Completed",
-        value: "16,104",
+        title: "Completed Order",
+        value: "05",
         bgColor: "bg-gradient-to-r from-green-500 to-green-400",
         icon: <LuCheckCircle className="w-5 h-5 text-white" />,
     },
     {
         id: 3,
-        title: "Pending",
-        value: "88",
+        title: "Pending Order",
+        value: "02",
         bgColor: "bg-gradient-to-br from-orange-500 to-orange-300",
         icon: <RxTimer className="w-5 h-5 text-white" />,
     },
     {
         id: 4,
-        title: "Processing",
-        value: "207",
+        title: "Cancelled Order",
+        value: "02",
         bgColor: "bg-gradient-to-r from-red-500 to-red-400",
-        icon: <GrPowerCycle className="w-5 h-5 text-white" />,
+        icon: <RxCrossCircled className="w-5 h-5 text-white" />,
     },
 ];
 
@@ -48,8 +48,8 @@ interface StatisticCardProps {
 }
 
 const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, bgColor, icon }) => (
-    <div className="bg-white rounded-[1rem] px-8 py-12 flex gap-5 w-[14rem] h-auto">
-        <div className={`${bgColor} rounded-md p-4 flex items-center justify-center`} aria-label={title}>
+    <div className="bg-white rounded-[1rem] px-6 py-11 flex gap-5 w-[14rem] h-auto">
+        <div className={`${bgColor} rounded-md p-3 flex items-center justify-center`} aria-label={title}>
             {icon}
         </div>
         <div className="flex-col items-center justify-center">

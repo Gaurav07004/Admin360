@@ -39,7 +39,7 @@ const initialState: CustomerState = {
     customers: [
         {
             id: 1,
-            customerID: 'C001',
+            customerID: 'CD82910',
             customerName: "Amit Kumar",
             email: "amit.kumar@gmail.com",
             location: "Delhi",
@@ -109,7 +109,7 @@ const initialState: CustomerState = {
         },
         {
             id: 2,
-            customerID: "C002",
+            customerID: "CD82912",
             customerName: "Priya Sharma",
             email: "priya.sharma@gmail.com",
             location: "Mumbai",
@@ -134,7 +134,7 @@ const initialState: CustomerState = {
         },
         {
             id: 3,
-            customerID: "C003",
+            customerID: "CD82913",
             customerName: "Rajesh Gupta",
             email: "rajesh.gupta@gmail.com",
             location: "Bangalore",
@@ -204,7 +204,7 @@ const initialState: CustomerState = {
         },
         {
             id: 4,
-            customerID: "C004",
+            customerID: "CD82914",
             customerName: "Neha Patel",
             email: "neha.patel@gmail.com",
             location: "Ahmedabad",
@@ -274,7 +274,7 @@ const initialState: CustomerState = {
         },
         {
             id: 5,
-            customerID: "C005",
+            customerID: "CD82915",
             customerName: "Sanjay Reddy",
             email: "sanjay.reddy@gmail.com",
             location: "Hyderabad",
@@ -299,7 +299,7 @@ const initialState: CustomerState = {
         },
         {
             id: 6,
-            customerID: "C006",
+            customerID: "CD82916",
             customerName: "Ravi Kumar",
             email: "ravi.kumar@gmail.com",
             location: "Chennai",
@@ -369,7 +369,7 @@ const initialState: CustomerState = {
         },
         {
             id: 7,
-            customerID: "C007",
+            customerID: "CD82917",
             customerName: "Sonia Verma",
             email: "sonia.verma@gmail.com",
             location: "Pune",
@@ -439,7 +439,7 @@ const initialState: CustomerState = {
         },
         {
             id: 8,
-            customerID: "C008",
+            customerID: "CD82918",
             customerName: "Deepak Mehta",
             email: "deepak.mehta@gmail.com",
             location: "Jaipur",
@@ -464,7 +464,7 @@ const initialState: CustomerState = {
         },
         {
             id: 9,
-            customerID: "C009",
+            customerID: "CD82919",
             customerName: "Sunil Mehta",
             email: "sunil.mehta@gmail.com",
             location: "Delhi",
@@ -489,7 +489,7 @@ const initialState: CustomerState = {
         },
         {
             id: 10,
-            customerID: "C010",
+            customerID: "CD82920",
             customerName: "Vivek Sharma",
             email: "vivek.sharma@gmail.com",
             location: "Mumbai",

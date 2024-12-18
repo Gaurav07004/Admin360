@@ -38,13 +38,13 @@ interface Product {
     seo: {
         title: string,
         description: string,
-        features?: string[],
     };
 }
 
 interface ProductState {
     products: Product[];
     drawerStatus: boolean;
+    productDrawerStatus: boolean;
     selectedProduct: Product | null;
 }
 
@@ -381,11 +381,14 @@ const productSlice = createSlice({
         setDrawerStatus: (state, action: PayloadAction<boolean>) => {
             state.drawerStatus = action.payload;
         },
+        setProductDrawerStatus: (state, action: PayloadAction<boolean>) => {
+            state.productDrawerStatus = action.payload;
+        },
         setSelectedProduct: (state, action: PayloadAction<Product>) => {
             state.selectedProduct = action.payload;
         },
     },
 });
 
-export const { updateProductStatus, updateProductStock, setDrawerStatus, setSelectedProduct } = productSlice.actions;
+export const { updateProductStatus, updateProductStock, setDrawerStatus, setSelectedProduct, setProductDrawerStatus } = productSlice.actions;
 export default productSlice.reducer;
