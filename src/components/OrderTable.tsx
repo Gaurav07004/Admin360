@@ -9,10 +9,11 @@ import { RootState } from '../redux/store';
 
 const columns = [
     { id: 'orderID', label: 'Order ID' },
-    { id: 'orderDate', label: 'Order Date' },
     { id: 'customerName', label: 'Customer Name' },
-    { id: 'orderStatus', label: 'Order Status' },
+    { id: 'orderDate', label: 'Order Date' },
+    { id: 'itemName', label: 'Order Item' },
     { id: 'cost', label: 'Cost' },
+    { id: 'orderStatus', label: 'Order Status' },
     { id: 'paymentMethod', label: 'Payment Method' },
     { id: 'paymentStatus', label: 'Payment Status' },
     { id: 'action', label: 'Action' },
@@ -80,8 +81,9 @@ const OrderTable = () => {
 
     const data = orders.map((order) => ({
         orderID: order.orderID,
-        orderDate: order.orderDate,
         customerName: order.customerName,
+        itemName: order.itemName,
+        orderDate: order.orderDate,
         orderStatus: order.orderStatus,
         cost: order.cost,
         paymentMethod: order.paymentMethod,

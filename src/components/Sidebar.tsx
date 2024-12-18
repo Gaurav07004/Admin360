@@ -59,7 +59,7 @@ const Sidebar: React.FC = () => {
             <li key={menu}>
                 <Link href={href}>
                     <div
-                        className={`p-[0.70rem] w-full text-left rounded-lg flex items-center justify-between transition text-sm font-medium ${isActive
+                        className={`p-[0.70rem] w-full text-left rounded-lg flex items-center justify-between transition text-sm ${isActive
                             ? "bg-[#ff66002b] text-[#FF6500] border border-[#FF6500]"
                             : menu === "Log out"
                                 ? "text-[#FF6500]"
@@ -90,7 +90,7 @@ const Sidebar: React.FC = () => {
                 </div>
                 {menuConfig.map((section, index) => (
                     <section key={index} className="flex flex-col gap-2">
-                        {section.title && <div className="text-xs text-gray-500">{section.title}</div>}
+                        {section.title && <div className="text-[0.68rem] text-gray-500 uppercase font-medium">{section.title}</div>}
                         {section.items.map(({ name, icon, href }) => renderMenuItem(name, icon, href))}
                     </section>
                 ))}

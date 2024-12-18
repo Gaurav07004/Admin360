@@ -23,9 +23,11 @@ const columns = [
     { id: 'productID', label: 'Product ID' },
     { id: 'productName', label: 'Product Name' },
     { id: 'category', label: 'Category' },
-    { id: 'price', label: 'Price' },
+    { id: 'subcategory', label: 'Sub Category' },
+    { id: 'price', label: 'Product Price' },
     { id: 'stockStatus', label: 'Stock Status' },
-    { id: 'stockQuantity', label: 'Stock Quantity' },
+    { id: 'stockQuantity', label: 'Quantity' },
+    { id: 'purchaseCount', label: 'Total Purchase' },
     { id: 'action', label: 'Action' },
 ];
 
@@ -40,7 +42,7 @@ const getBadgeColor = (status: string) => {
 
 const ProductTable = () => {
     const dispatch = useDispatch();
-    const { products, drawerStatus } = useSelector((state: RootState) => state.products);
+    const { products, drawerStatus } = useSelector((state: RootState) => state.product);
 
     const handleProductMenuClick = (productID: string, status: 'Available' | 'Out of Stock' | 'Low Stock') => {
         try {
@@ -68,7 +70,7 @@ const ProductTable = () => {
         }
     };
 
-    const handleOrder = (productID: string) => {
+    const handleProduct = (productID: string) => {
         const selectedProduct = products.find((product) => product.productID === productID);
         if (selectedProduct) {
             dispatch(setSelectedProduct(selectedProduct));
@@ -85,19 +87,23 @@ const ProductTable = () => {
     const data = products.map((product) => ({
         productID: product.productID,
         productName: product.productName,
+        productImage: product.productImage,
         category: product.category,
+        subcategory: product.subcategory,
         price: product.price,
         stockStatus: product.stockStatus,
         stockQuantity: product.stockQuantity,
+        purchaseCount: product.purchaseCount,
         action: (
             <div>
                 <PiDotsThreeOutlineLight
                     className="size-4 fill-metal-900 dark:fill-white m-auto rounded-full"
-                    onClick={() => handleOrder(product.productID)}
+                    onClick={() => handleProduct(product.productID)}
                 />
             </div>
         ),
     }));
+
 
     return (
         <TableComponent

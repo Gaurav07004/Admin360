@@ -40,12 +40,18 @@ interface OrderState {
     selectedOrder: Order | null;
 }
 
+const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString("en-US", {
+        month: "short", day: "numeric", year: "numeric"
+    });
+}
+
 const initialState: OrderState = {
     orders: [
         {
             id: 1,
             orderID: 'AT82913',
-            orderDate: '2024-12-01',
+            orderDate: formatDate('2024-12-01'),
             customerName: 'Amit Kumar',
             orderStatus: 'Delivered',
             cost: 60000,
@@ -68,7 +74,7 @@ const initialState: OrderState = {
         {
             id: 2,
             orderID: 'AT82914',
-            orderDate: '2024-12-02',
+            orderDate: formatDate('2024-12-02'),
             customerName: 'Neha Singh',
             orderStatus: 'Delivered',
             cost: 700,
@@ -91,7 +97,7 @@ const initialState: OrderState = {
         {
             id: 3,
             orderID: 'AT82915',
-            orderDate: '2024-12-03',
+            orderDate: formatDate('2024-12-03'),
             customerName: 'Rajesh Verma',
             orderStatus: 'Pending',
             cost: 90000,
@@ -112,7 +118,7 @@ const initialState: OrderState = {
         {
             id: 4,
             orderID: 'AT82916',
-            orderDate: '2024-12-04',
+            orderDate: formatDate('2024-12-04'),
             customerName: 'Suman Gupta',
             orderStatus: 'Unreachable',
             cost: 700,
@@ -134,7 +140,7 @@ const initialState: OrderState = {
         {
             id: 5,
             orderID: 'AT82917',
-            orderDate: '2024-12-05',
+            orderDate: formatDate('2024-12-05'),
             customerName: 'Amit Patel',
             orderStatus: 'Cancelled',
             cost: 60000,
@@ -155,7 +161,7 @@ const initialState: OrderState = {
         {
             id: 6,
             orderID: 'AT82918',
-            orderDate: '2024-12-06',
+            orderDate: formatDate('2024-12-06'),
             customerName: 'Priya Yadav',
             orderStatus: 'Delivered',
             cost: 90000,
@@ -177,7 +183,7 @@ const initialState: OrderState = {
         {
             id: 7,
             orderID: 'AT82919',
-            orderDate: '2024-12-07',
+            orderDate: formatDate('2024-12-07'),
             customerName: 'Raj Malhotra',
             orderStatus: 'Pending',
             cost: 60000,
@@ -197,7 +203,7 @@ const initialState: OrderState = {
         {
             id: 8,
             orderID: 'AT82920',
-            orderDate: '2024-12-08',
+            orderDate: formatDate('2024-12-08'),
             customerName: 'Simran Kaur',
             orderStatus: 'Delivered',
             cost: 700,
@@ -220,7 +226,7 @@ const initialState: OrderState = {
         {
             id: 9,
             orderID: 'AT82921',
-            orderDate: '2024-12-10',
+            orderDate: formatDate('2024-12-10'),
             customerName: 'Ravi Shankar',
             orderStatus: 'Delivered',
             cost: 60000,
@@ -243,7 +249,7 @@ const initialState: OrderState = {
         {
             id: 10,
             orderID: 'AT82922',
-            orderDate: '2024-12-12',
+            orderDate: formatDate('2024-12-12'),
             customerName: 'Vikram Arora',
             orderStatus: 'Shipped',
             cost: 7000,

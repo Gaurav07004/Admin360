@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import TableComponent from '@/components/table';
 // import Image from 'next/image';
@@ -16,7 +17,7 @@ const data = [
     { id: '02', product: 'Sony Headphones', date: 'Sept 10, 2024', status: 'Cancelled', price: 35000, customer: 'Pooja Verma' },
 ];
 
-const getBadgeColor = (status) => {
+const getBadgeColor = (status: any) => {
     switch (status) {
         case 'Delivered': return 'success';
         case 'Cancelled': return 'error';
@@ -29,7 +30,7 @@ const FurnitureTable = () => {
         <TableComponent
             data={data}
             columns={columns}
-            caption="Furniture Orders"
+            caption="Recent Orders"
             getBadgeColor={getBadgeColor}
         />
     );

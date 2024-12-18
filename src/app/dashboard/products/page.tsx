@@ -6,6 +6,7 @@ import { RxCube } from "react-icons/rx";
 import { PiWarning, PiCloudArrowDown } from "react-icons/pi";
 import BarChart from "@/components/ProductChart";
 import ProductTable from '@/components/ProductTable'
+import Product from '@/app/dashboard/products/[id]/page'
 
 const statistics = [
     {
@@ -78,6 +79,7 @@ const Page: React.FC = () => {
                 </div>
             </div>
             <ProductTable />
+            <Product />
         </section>
     );
 };

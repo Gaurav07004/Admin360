@@ -41,16 +41,16 @@ const CustomerDetailPage: React.FC = () => {
         estimatedDelivery: order?.estimatedDelivery,
     })) || [];
 
+    const formatDate = (date: string) => {
+        return new Date(date).toLocaleDateString("en-US", {
+            weekday: "short", month: "short", day: "numeric", year: "numeric"
+        });
+    }
+
     const TimelineComponent = () => {
         const currentDateTime = new Date();
         const currentDate = currentDateTime.toISOString().split("T")[0];
         const currentTime = currentDateTime.toTimeString().split(" ")[0].slice(0, 5);
-
-        const formatDate = (date: string) => {
-            return new Date(date).toLocaleDateString("en-US", {
-                weekday: "short", month: "short", day: "numeric", year: "numeric"
-            });
-        }
 
         return (
             <section className="p-4">
@@ -138,15 +138,33 @@ const CustomerDetailPage: React.FC = () => {
                 </div>
                 <Divider className="border-t-[0.5px] border-gray-200 mt-2" />
                 <div className="flex flex-col text-gray-500 ">
-                    {data.map((item, index) => (
-                        <div
-                            key={index}
-                            className={`flex items-center justify-between w-full py-3 px-4`}
-                        >
-                            <span className="w-1/2 text-[0.9rem] font-medium text-slate-500">{item.label}</span>
-                            <span className="w-1/2 text-[0.8rem] font-semibold text-gray-800">{item.value}</span>
-                        </div>
-                    ))}
+                    {data.map((item, index) => {
+                        const statusClasses = {
+                            Delivered: "bg-green-100 text-green-500 hover:bg-green-200 px-2 py-1 w-fit",
+                            Pending: "bg-yellow-100 text-yellow-500 hover:bg-yellow-200 px-2 py-1 w-fit",
+                            Cancelled: "bg-red-100 text-red-500 hover:bg-red-200 px-2 py-1 w-fit",
+                            Unreachable: "bg-red-100 text-red-500 hover:bg-red-200 px-2 py-1 w-fit",
+                            Shipped: "bg-blue-100 text-blue-600 hover:bg-blue-200 px-2 py-1 w-fit",
+                        };
+
+                        return (
+                            <div
+                                key={index}
+                                className="grid grid-cols-2 items-center w-full py-3 px-4 gap-4"
+                            >
+                                <span className="text-[0.9rem] font-medium text-slate-500">
+                                    {item.label}
+                                </span>
+                                <span
+                                    className={`text-[0.8rem] font-semibold text-gray-800 rounded-md ${statusClasses[item.value]
+                                        }`}
+                                >
+                                    {item.value}
+                                </span>
+                            </div>
+                        );
+                    })}
+
                 </div>
                 <Divider className="border-t-[0.5px] border-gray-200 mt-2" />
                 <div className="flex flex-col text-gray-500 ">
@@ -166,7 +184,7 @@ const CustomerDetailPage: React.FC = () => {
 
     const renderPaymentInfo = () => {
         const shiping = 100.25;
-        const subTotal = selectedOrder?.cost - shiping;
+        const subTotal = selectedOrder?.cost || 0 - shiping;
 
         return (
             <>

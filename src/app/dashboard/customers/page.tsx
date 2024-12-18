@@ -55,7 +55,6 @@ const StatisticCard: React.FC<{
     const percentageChange = ((currentCount - previousCount) / previousCount * 100).toFixed(1);
     const isPositive = parseFloat(percentageChange) > 0;
 
-    // Set icon based on type
     const icon1 = iconType === "customers" ? (
         <FiUsers className="w-[1.2rem] h-[1.2rem] text-white" />
     ) : iconType === "orders" ? (

@@ -9,7 +9,7 @@ const store = configureStore({
     reducer: {
         menu: menuReducer,
         user: userReducer,
-        products: productsReducer,
+        product: productsReducer,
         customer: customerReducer,
         order: orderReducer
     },

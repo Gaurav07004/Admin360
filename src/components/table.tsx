@@ -30,7 +30,7 @@ const renderCellContent = (item: TableRowData, col: TableColumn, getBadgeColor?:
                 <Badge
                     variant="base"
                     color={getBadgeColor(value.toString())}
-                    className={`text-sm rounded-md border ${getBadgeColor(value.toString()) === 'success' ? 'border-green-300' :
+                    className={`text-[0.85rem] rounded-md border font-medium !p-2 ${getBadgeColor(value.toString()) === 'success' ? 'border-green-300' :
                         getBadgeColor(value.toString()) === 'warning' ? 'border-yellow-300' :
                             getBadgeColor(value.toString()) === 'error' ? 'border-red-300' :
                                 getBadgeColor(value.toString()) === 'primary' ? 'border-blue-300' :
@@ -48,8 +48,10 @@ const renderCellContent = (item: TableRowData, col: TableColumn, getBadgeColor?:
         return (
             <Image
                 src={value.src as string}
-                alt={item['product'] || 'Image'}
-                className="w-8 h-8 object-cover rounded-md"
+                alt={item['product']}
+                className="object-cover mx-auto"
+                width={40}
+                height={40}
             />
         );
     }
@@ -114,7 +116,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption,
                             </div>
                             {caption === 'Product Information' && (
                                 <div className="relative flex items-center gap-3 bg-gray-50 rounded-lg">
-                                    <FiPlus className="absolute left-3 top-[0.6rem] text-[#FF6500] w-[1.1rem] h-[1.1rem]" />
+                                    <FiPlus className="absolute left-3 top-[0.72rem] text-[#FF6500] w-[1.1rem] h-[1.1rem]" />
                                     <Button className="py-2 pl-9 pr-4 bg-[#ff660021] text-[#FF6500] hover:bg-orange-200">New Product</Button>
                                 </div>
                             )}
