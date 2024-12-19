@@ -36,7 +36,20 @@
     "src/components/RecentOrder.tsx",
     "src/redux/slices/customerSlice.tsx",
     "src/app/settings/page.jsx",
-    "src/app/dashboard/page.tsx"
+    "src/app/dashboard/page.tsx",
+    "backend/server.js",
+    "backend/constants/config.js",
+    "backend/constants/messages.js",
+    "backend/middleware/authMiddleware.js",
+    "backend/models/User.js",
+    "backend/models/Product.js",
+    "backend/models/Order.js",
+    "backend/routes/userRoutes.js",
+    "backend/routes/productRoutes.js",
+    "backend/routes/authRoutes.js",
+    "backend/utils/tokenHelper.js",
+    "backend/utils/errorHandler.js",
+    "backend/utils/dbConnect.js"
   ],
   "exclude": [
     "node_modules"
