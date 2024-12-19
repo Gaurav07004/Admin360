@@ -233,12 +233,6 @@ const ForgotPasswordModal = () => {
                             </Button>
                         )}
                     </ModalFooter>
-                    <div className="text-sm text-center text-gray-500 mt-8">
-                        Don't have an account?{" "}
-                        <a href="#" className="text-[#FF6500] hover:underline">
-                            Sign Up
-                        </a>
-                    </div>
                 </ModalContent>
             </Modal>
         </>

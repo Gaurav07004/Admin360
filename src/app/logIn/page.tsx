@@ -42,7 +42,7 @@ const Login = () => {
         <>
             <div className="flex justify-center items-center w-full bg-orange-200 h-screen">
                 <div className="w-[70%] h-[96vh] flex justify-between items-center bg-white rounded-[1rem]">
-                    <div className="w-1/2 p-4 ml-6 flex justify-center items-center bg-gradient-to-l from-orange-400 to-orange-600 rounded-[2rem] h-[90vh]">
+                    <div className="w-1/2 p-4 ml-6 flex justify-center items-center bg-gradient-to-br from-orange-500 to-orange-300 rounded-[2rem] h-[90vh]">
                         <Image src={login} alt="Login Image" width={400} height={400} objectFit="cover" className="z-0" />
                     </div>
                     <div className="w-[40%] p-6 space-y-6">

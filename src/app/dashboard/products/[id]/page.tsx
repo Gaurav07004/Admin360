@@ -12,11 +12,15 @@ import Image from "next/image";
 
 const CustomerDetailPage: React.FC = () => {
     const dispatch = useDispatch();
-    const { drawerStatus, selectedProduct } = useSelector((state: RootState) => state.product);
+    const { drawerStatus, productDrawerStatus, selectedProduct } = useSelector((state: RootState) => state.product);
     const drawerRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
-    const percentageChange = ((selectedProduct?.purchaseCount - 500) / 500 * 100).toFixed(1);
-    const isPositive = parseFloat(percentageChange) > 0;
+
+    const previousCount = selectedProduct?.previousCount || 0;
+    const purchaseCount = selectedProduct?.purchaseCount || 0;
+    const profitOrLoss = previousCount - purchaseCount;
+    const profitOrLossPercentage = ((profitOrLoss / purchaseCount) * 100).toFixed(1);
+    const isProfit = profitOrLoss > 0;
 
     const renderStars = useMemo(() => {
         const stars = [];
@@ -83,17 +87,17 @@ const CustomerDetailPage: React.FC = () => {
                     <span className="text-[0.9rem] font-medium text-slate-500 ml-1">{selectedProduct?.rating || "N/A"}</span>
                 </div>
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-3">
                 <div className="flex items-center bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2 space-x-2">
                     <span className="text-[0.8rem] font-semibold text-gray-700">{selectedProduct?.purchaseCount || 0} Sold</span>
-                    <div className={`flex items-center ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
-                        {isPositive ? (
+                    <div className={`flex items-center ${isProfit ? 'text-green-500' : 'text-red-500'}`}>
+                        {isProfit ? (
                             <HiOutlineArrowTrendingUp size={14} />
                         ) : (
                             <HiOutlineArrowTrendingDown size={14} />
                         )}
                         <span className="text-[0.8rem] font-medium">
-                            {isPositive ? `+${percentageChange}%` : `${percentageChange}%`}
+                            {isProfit ? `+${profitOrLossPercentage}%` : `${profitOrLossPercentage}%`}
                         </span>
                     </div>
                 </div>
@@ -118,7 +122,7 @@ const CustomerDetailPage: React.FC = () => {
             <>
                 <div className="p-4 bg-white rounded-lg space-y-3">
                     <div className="text-[#FF6500] font-bold text-xs uppercase">Description</div>
-                    <p className="text-[0.85rem] font-semibold text-gray-700">{selectedProduct?.seo?.description}</p>
+                    <p className="text-[0.85rem] font-semibold text-gray-700">{selectedProduct?.description}</p>
                     <div className="flex items-center gap-4">
                         {selectedProduct?.tags.map((tag, index) => (
                             <span key={index} className="rounded-md px-3 py-2 bg-orange-50 text-orange-500 text-[0.8rem] font-semibold">
@@ -152,7 +156,7 @@ const CustomerDetailPage: React.FC = () => {
             {drawerStatus && <div ref={overlayRef} className="fixed inset-0 bg-black bg-opacity-20 z-10" />}
             <div
                 ref={drawerRef}
-                className={`fixed top-3 bottom-3 right-3 w-full max-w-[30rem] rounded-xl bg-white shadow-md text-black transform overflow-auto ${drawerStatus ? "translate-x-0" : "translate-x-full"
+                className={`fixed top-3 bottom-3 ${productDrawerStatus === true ? 'right-0' : 'right-3'} w-full max-w-[30rem] rounded-xl bg-white shadow-md text-black transform overflow-auto ${drawerStatus ? "translate-x-0" : "translate-x-full"
                     } transition-transform duration-500 ease-in-out z-20`}
             >
                 {renderCustomerPreview()}
