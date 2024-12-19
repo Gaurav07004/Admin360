@@ -1,14 +1,7 @@
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
 import './globals.css';
 import StoreProvider from './StoreProvider';
 import { ToastWrapper } from 'keep-react';
-
-const manrope = localFont({
-  src: './fonts/Manrope.ttf',
-  variable: '--font-geist-sans',
-  weight: '100 500',
-});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
