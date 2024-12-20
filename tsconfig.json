@@ -41,7 +41,7 @@
     "backend/constants/config.js",
     "backend/constants/messages.js",
     "backend/middleware/authMiddleware.js",
-    "backend/models/User.js",
+    "backend/models/Admin.js",
     "backend/models/Product.js",
     "backend/models/Order.js",
     "backend/routes/userRoutes.js",

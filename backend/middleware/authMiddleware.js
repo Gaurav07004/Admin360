@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const jwt = require('jsonwebtoken');
-const { User } = require('../models/User');
+const { User } = require('../models/Admin');
 // const { generateToken } = require('../utils/tokenHelper');
 
 const protect = async (req, res, next) => {

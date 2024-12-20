@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const { User } = require('../models/User');
+const { User } = require('../models/Admin');
 const { generateToken } = require('../utils/tokenHelper');
 const router = express.Router();
 

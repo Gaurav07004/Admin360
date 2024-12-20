@@ -18,6 +18,12 @@ const formatNumberWithCommas = (number: number): string => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+const formatNumberWithL = (number: number): string => {
+    return number >= 100000
+        ? (number / 100000).toFixed(1) + "L"
+        : number.toLocaleString();
+};
+
 const data: DataPoint[] = [
     { name: `Jan'24`, price: 500000 },
     { name: `Feb'24`, price: 500000 },
@@ -32,12 +38,6 @@ const data: DataPoint[] = [
     { name: `Nov'24`, price: 650000 },
     { name: `Dec'24`, price: 750000 },
 ];
-
-const formatNumberWithL = (number: number): string => {
-    return number >= 100000
-        ? (number / 100000).toFixed(1) + "L"
-        : number.toLocaleString();
-};
 
 const PieChartTooltip: React.FC<{ payload?: any, active?: boolean }> = ({ payload, active }) => {
     if (active && payload && payload.length) {
