@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const { User } = require('../models/Admin');
+const { Admin } = require('../models/Admin');
 const { generateToken } = require('../utils/tokenHelper');
 const router = express.Router();
 
@@ -9,27 +9,27 @@ router.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
-        const userExists = await User.findOne({ email });
-        if (userExists) {
-            return res.status(400).json({ message: 'User already exists' });
+        const adminExists = await admin.findOne({ email });
+        if (adminExists) {
+            return res.status(400).json({ message: 'admin already exists' });
         }
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const user = await User.create({
+        const admin = await admin.create({
             name,
             email,
             password: hashedPassword,
         });
 
-        const token = generateToken(user._id);
+        const token = generateToken(admin._id);
 
         res.status(201).json({
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
+            admin: {
+                id: admin._id,
+                name: admin.name,
+                email: admin.email,
             },
             token,
         });
@@ -42,23 +42,23 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const user = await User.findOne({ email });
-        if (!user) {
+        const admin = await Admin.findOne({ email });
+        if (!admin) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, admin.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
-        const token = generateToken(user._id);
+        const token = generateToken(admin._id);
 
         res.json({
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
+            admin: {
+                id: admin._id,
+                name: admin.name,
+                email: admin.email,
             },
             token,
         });
