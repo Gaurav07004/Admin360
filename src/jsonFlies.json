@@ -1,0 +1,10 @@
+[
+    {
+        "adminID": "AD9768",
+        "name": "Gaurav Singh",
+        "email": "gaurav.singh@gmail.com",
+        "password": "Gaurav82913",
+        "role": "admin",
+        "isActive": true
+    }
+]

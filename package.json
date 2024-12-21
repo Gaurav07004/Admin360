@@ -10,11 +10,16 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
+    "bcryptjs": "^2.4.3",
     "classnames": "^2.5.1",
+    "cookie": "^1.0.2",
+    "dotenv": "^16.4.7",
     "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-reactive-utils": "^8.5.1",
+    "jsonwebtoken": "^9.0.2",
     "keep-react": "^1.5.0",
     "lodash.debounce": "^4.0.8",
+    "mongoose": "^8.9.2",
     "next": "14.2.8",
     "phosphor-react": "^1.4.1",
     "react": "^18",
@@ -25,6 +30,8 @@
     "recharts": "^2.13.3"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
