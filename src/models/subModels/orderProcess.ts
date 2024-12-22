@@ -15,6 +15,6 @@ const OrderMetricsSchema = new Schema<IOrderMetrics>(
     { timestamps: true }
 );
 
-const OrderMetrics = models.OrderMetrics || model<IOrderMetrics>('OrderMetrics', OrderMetricsSchema);
+const OrderStat = models.OrderStat || model<IOrderMetrics>('OrderStat', OrderMetricsSchema);
 
-export default OrderMetrics;
+export default OrderStat;

@@ -1,6 +1,6 @@
 import { Schema, model, models, Document } from 'mongoose';
 
-interface IProductMetrics extends Document {
+interface IAnalytics extends Document {
     timeRange: string;
     productViewValue: number;
     addToCartValue: number;
@@ -8,7 +8,7 @@ interface IProductMetrics extends Document {
     purchaseValue: number;
 }
 
-const ProductMetricsSchema = new Schema<IProductMetrics>(
+const AnalyticsSchema = new Schema<IAnalytics>(
     {
         timeRange: { type: String, required: true },
         productViewValue: { type: Number, required: true },
@@ -19,6 +19,6 @@ const ProductMetricsSchema = new Schema<IProductMetrics>(
     { timestamps: true }
 );
 
-const ProductMetrics = models.ProductMetrics || model<IProductMetrics>('ProductMetrics', ProductMetricsSchema);
+const Analytics = models.Analytics || model<IAnalytics>('Analytics', AnalyticsSchema);
 
-export default ProductMetrics;
+export default Analytics;

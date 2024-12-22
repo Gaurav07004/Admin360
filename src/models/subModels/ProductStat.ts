@@ -1,12 +1,12 @@
 import { Schema, model, models, Document } from 'mongoose';
 
-interface ISalesMetrics extends Document {
+interface IProductStat extends Document {
     month: string;
     sold: number;
     returned: number;
 }
 
-const SalesMetricsSchema = new Schema<ISalesMetrics>(
+const ProductStatSchema = new Schema<IProductStat>(
     {
         month: { type: String, required: true },
         sold: { type: Number, required: true },
@@ -15,6 +15,6 @@ const SalesMetricsSchema = new Schema<ISalesMetrics>(
     { timestamps: true }
 );
 
-const SalesMetrics = models.SalesMetrics || model<ISalesMetrics>('SalesMetrics', SalesMetricsSchema);
+const ProductStat = models.ProductStat || model<IProductStat>('ProductStat', ProductStatSchema);
 
-export default SalesMetrics;
+export default ProductStat;
