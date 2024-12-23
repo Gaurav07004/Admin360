@@ -2,9 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import LineChart from '@/models/subModels/LineChart';
 import PieChart from '@/models/subModels/PieChart';
 import TopProduct from '@/models/subModels/TopOrder';
-import MonthlyData from '@/models/subModels/orderProcess';
-import OrderStatData from '@/models/subModels/ProductStat';
-import SalesCategory from '@/models/subModels/SalesCategory';
 import CustomerTraffic from '@/models/subModels/CustomerTraffic'
 
 const unifiedHandler = async (req: NextApiRequest, res: NextApiResponse, returnRawData = false) => {
@@ -12,18 +9,12 @@ const unifiedHandler = async (req: NextApiRequest, res: NextApiResponse, returnR
         const lineChartData = await LineChart.find();
         const pieChartData = await PieChart.find();
         const topProductData = await TopProduct.find();
-        const monthlyData = await MonthlyData.find();
-        const orderStatData = await OrderStatData.find();
-        const salesCategoryData = await SalesCategory.find();
         const CustomerTrafficData = await CustomerTraffic.find();
 
         const unifiedData = {
             lineChart: lineChartData,
             pieChart: pieChartData,
             topProducts: topProductData,
-            monthlyData: monthlyData,
-            orderStatData: orderStatData,
-            salesCategory: salesCategoryData,
             customerTraffic: CustomerTrafficData,
         };
 
