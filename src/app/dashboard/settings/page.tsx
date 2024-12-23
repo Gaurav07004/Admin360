@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Divider } from 'keep-react';
-import { FiUser, FiAtSign, FiUserCheck } from 'react-icons/fi';
+import { FiUser, FiAtSign, FiUserCheck, FiSettings } from 'react-icons/fi';
 import { VscLock } from "react-icons/vsc";
 import { MdErrorOutline } from "react-icons/md";
 import { AiOutlineCheckCircle } from "react-icons/ai";
@@ -9,12 +9,12 @@ import Upload from "@/components/Upload";
 import ForgetPassword from "@/components/ForgetPassword"
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { setUsernameStatus, setForm, setEmailStatus } from "@/redux/slices/commonSlice";
+import { setUsernameStatus, setForm, setEmailStatus, setModal } from "@/redux/slices/commonSlice";
 
 function Profile() {
     const dispatch = useDispatch();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const { usernameStatus, form, emailStatus } = useSelector((state: RootState) => state.menu);
+    const { usernameStatus, form, emailStatus, modal } = useSelector((state: RootState) => state.menu);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -38,6 +38,10 @@ function Profile() {
         }
 
         dispatch(setForm({ ...form, [name]: value }));
+    };
+
+    const toggleModal = () => {
+        dispatch(setModal(!modal));
     };
 
     return (
@@ -142,6 +146,13 @@ function Profile() {
                             </div>
                         </section>
                     </form>
+                    <section className="mt-4">
+                        <h3 className="text-sm font-semibold text-[#5e6574]">Admin Settings</h3>
+                        <div className="relative flex items-center gap-3 bg-gray-50 py-4 rounded-lg" onClick={toggleModal}>
+                            <FiSettings className="absolute left-3 top-[1.7rem] text-[#FF6500]" />
+                            <Button className="py-2 pl-9 pr-4 bg-[#ff660021] text-[#FF6500] hover:bg-[#ff660021]">Forgot Password</Button>
+                        </div>
+                    </section>
                     <ForgetPassword />
                 </section>
                 <section className="w-[30%] mt-4 border border-gray-300 py-4 px-6 rounded-xl">

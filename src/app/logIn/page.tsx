@@ -1,19 +1,29 @@
-'use client';
+"use client";
 import Image from "next/image";
 import logo from "@/Assets/New_Logo.png";
-import login from '@/Assets/login_1.png';
-import { FiAtSign, FiLock } from 'react-icons/fi';
-import { MdErrorOutline } from 'react-icons/md';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
+import login from "@/Assets/login_1.png";
+import { toast } from "keep-react"
+import { FiAtSign, FiLock } from "react-icons/fi";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { MdErrorOutline } from "react-icons/md";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { setModal, setForm, setEmailStatus } from "@/redux/slices/commonSlice";
-import ForgotPasswordModal from '@/components/ForgetPassword';
+import { setModal, setForm, setEmailStatus, setPasswordStatus, setShowNewPassword, setStatusMessage, setPasswordStatusMessage } from "@/redux/slices/commonSlice";
+import ForgotPasswordModal from "@/components/ForgetPassword";
 
 const Login = () => {
     const dispatch = useDispatch();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const { modal, form, passwordStatus, emailStatus } = useSelector((state: RootState) => state.menu);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{3,}$/;
+    const { modal, form, statusMessage, passwordStatus, passwordStatusMessage, emailStatus, showNewPassword } = useSelector((state: RootState) => state.menu);
+
+    const toggleModal = () => {
+        dispatch(setModal(!modal));
+    };
+
+    const toggleShowPassword = () => {
+        dispatch(setShowNewPassword(!showNewPassword));
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -29,13 +39,58 @@ const Login = () => {
         dispatch(setForm({ ...form, [name]: value }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Form Submitted:", form);
-    };
 
-    const toggleModal = () => {
-        dispatch(setModal(!modal));
+        if (!form.email || !form.password) {
+            dispatch(setPasswordStatus("invalid"))
+            dispatch(setEmailStatus("invalid"))
+            dispatch(setStatusMessage("Please enter a valid email address."));
+            dispatch(setPasswordStatusMessage("Please enter a valid password."));
+            return;
+        }
+
+        if (form.password) {
+            dispatch(setPasswordStatus(null));
+        }
+
+
+        try {
+            const loginData = {
+                email: form.email,
+                password: form.password,
+            };
+
+            const response = await fetch("http://localhost:3000/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(loginData),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                if (data.token) {
+                    localStorage.setItem("authToken", data.token);
+                    toast.success("Login successfull! Redirecting to dashboard ", { position: "top-right" });
+
+                    setTimeout(() => {
+                        window.location.href = "/dashboard";
+                    }, 2000);
+                } else {
+                    toast.error("Token not received. Please try again.", { position: "top-right" });
+                }
+            } else {
+                const errorData = await response.json();
+                const errorMessage = errorData.message || "Invalid credentials. Please check credentials.";
+                toast.warning(errorMessage, { position: "top-right" });
+            }
+        } catch (error) {
+            console.error("An error occurred during login:", error);
+            toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+        }
     };
 
     return (
@@ -47,56 +102,71 @@ const Login = () => {
                     </div>
                     <div className="w-[40%] p-6 space-y-6">
                         <div className="flex flex-col items-center justify-center mb-8">
-                            <Image
-                                src={logo}
-                                alt="logo"
-                                width={180}
-                                height={200}
-                                className="mb-6"
-                            />
+                            <Image src={logo} alt="logo" width={180} height={200} className="mb-6" />
                             <div className="text-center">
                                 <p className="text-3xl font-semibold text-gray-500">Welcome Back!</p>
                                 <p className="text-sm text-[#5e6574] mt-2">Please login to your account</p>
                             </div>
                         </div>
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <p className="text-sm font-semibold text-[#5e6574] mb-[0.3rem]">Username</p>
-                            <div className="relative">
-                                <FiAtSign className="absolute left-3 top-[1rem] text-gray-400" />
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={form.email}
-                                    onChange={handleChange}
-                                    placeholder="Username"
-                                    autoComplete="off"
-                                    className="w-full p-3 pl-10 border-2 border-gray-300 rounded-[0.5rem] text-gray-500 placeholder:text-sm text-sm focus:outline-none"
-                                />
-                                {emailStatus === "invalid" && <MdErrorOutline className="absolute right-3 top-[1rem] text-red-500 w-5 h-5" />}
-                                {emailStatus === "valid" && <AiOutlineCheckCircle className="absolute right-3 top-[1rem] text-green-500 w-5 h-5" />}
-                            </div>
-                            <p className="text-sm font-semibold text-[#5e6574] mb-[0.3rem]">Password</p>
-                            <div className="relative">
-                                <FiLock className="absolute left-3 top-[1rem] text-gray-400" />
-                                <input
-                                    type="password"
-                                    name="password"
-                                    value={form.password}
-                                    onChange={handleChange}
-                                    placeholder="Password"
-                                    autoComplete="off"
-                                    className="w-full p-3 pl-10 border-2 border-gray-300 rounded-[0.5rem] text-gray-500 placeholder:text-sm text-sm focus:outline-none"
-                                />
-                                {passwordStatus === "invalid" && <MdErrorOutline className="absolute right-3 top-[1rem] text-red-500 w-5 h-5" />}
-                                {passwordStatus === "valid" && <AiOutlineCheckCircle className="absolute right-3 top-[1rem] text-green-500 w-5 h-5" />}
-                            </div>
-                            <div className="text-right">
-                                <p className="text-sm text-orange-500 cursor-pointer mt-4" onClick={toggleModal}> Forgot your password? </p>
-                            </div>
-                            <button
-                                type="submit"
-                                className="w-full py-3 mt-4 bg-orange-500 text-white font-semibold rounded-md hover:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-orange-300 transition-colors"
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <section className="space-y-2">
+                                <label htmlFor="email" className="text-sm font-semibold text-gray-500 block">
+                                    Email Address
+                                </label>
+                                <div className="relative">
+                                    <FiAtSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={form.email}
+                                        onChange={handleChange}
+                                        placeholder="Email Address"
+                                        autoComplete="off"
+                                        className="w-full py-3 pl-10 pr-12 border border-gray-300 rounded-md text-gray-600 placeholder-gray-400 text-sm focus:outline-none "
+                                    />
+                                    {emailStatus === "invalid" && <MdErrorOutline className="absolute right-3 top-1/2 transform -translate-y-1/2 text-red-500 w-5 h-5" />}
+                                    {emailStatus === "valid" && <AiOutlineCheckCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 text-green-500 w-5 h-5" />}
+                                </div>
+                                {emailStatus === "invalid" ? (
+                                    <div className="mt-1 text-[0.8rem] font-medium text-red-500">
+                                        {statusMessage}
+                                    </div>
+                                ) : null}
+                            </section>
+
+                            <section className="space-y-2">
+                                <label htmlFor="password" className="text-sm font-semibold text-gray-500 block">
+                                    Password
+                                </label>
+                                <div className="relative">
+                                    <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                    <input
+                                        type={showNewPassword ? "text" : "password"}
+                                        name="password"
+                                        value={form.password}
+                                        onChange={handleChange}
+                                        placeholder="Password"
+                                        autoComplete="off"
+                                        className="w-full py-3 pl-10 pr-12 border border-gray-300 rounded-md text-gray-600 placeholder-gray-400 text-sm focus:outline-none"
+                                    />
+                                    <div className="text-lg absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700 transition" onClick={toggleShowPassword}>
+                                        {showNewPassword ? <VscEyeClosed className="text-gray-500 text-lg transition ease-in-out" /> : <VscEye className="text-gray-500 text-lg transition ease-in-out" />}
+                                    </div>
+                                </div>
+                                {passwordStatus === "invalid" ? (
+                                    <div className="mt-1 text-[0.8rem] font-medium text-red-600">
+                                        {passwordStatusMessage}
+                                    </div>
+                                ) : ""}
+                            </section>
+                            <div
+                                className="text-right text-sm text-orange-500 font-medium cursor-pointer mt-2 hover:underline hover:text-orange-600 transition duration-200 ease-in-out"
+                                onClick={toggleModal}
                             >
+                                Forgot your password?
+                            </div>
+
+                            <button type="submit" className="w-full py-3 mt-4 bg-orange-500 text-white font-semibold rounded-md hover:bg-orange-600 focus:outline-none">
                                 Login
                             </button>
                         </form>

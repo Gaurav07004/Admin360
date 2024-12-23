@@ -6,11 +6,13 @@ interface MenuState {
     isLoading: boolean;
     statusMessage: string;
     passwordStatusMessage: string;
+    OTPStatusMessage: string;
     emailStatus: "valid" | "invalid" | null;
     otp: string[];
     newPassword: string;
     confirmPassword: string;
     passwordStatus: "valid" | "invalid" | null;
+    OTPStatus: "valid" | "invalid" | null;
     showNewPassword: boolean;
     currentSection: number;
     form: { email: string; password: string, firstName: string, lastName: string, username: string };
@@ -24,7 +26,9 @@ const initialState: MenuState = {
     statusMessage: "",
     passwordStatusMessage: "",
     emailStatus: null,
-    otp: ["", "", "", "", "", ""],
+    otp: ["", "", "", "", "", "", "", ""],
+    OTPStatusMessage: "",
+    OTPStatus: null,
     newPassword: "",
     confirmPassword: "",
     passwordStatus: null,
@@ -53,6 +57,9 @@ const menuSlice = createSlice({
         setPasswordStatusMessage: (state, action: PayloadAction<string>) => {
             state.passwordStatusMessage = action.payload;
         },
+        setOTPStatusMessage: (state, action: PayloadAction<string>) => {
+            state.OTPStatusMessage = action.payload;
+        },
         setEmailStatus: (state, action: PayloadAction<"valid" | "invalid" | null>) => {
             state.emailStatus = action.payload;
         },
@@ -67,6 +74,9 @@ const menuSlice = createSlice({
         },
         setPasswordStatus: (state, action: PayloadAction<"valid" | "invalid" | null>) => {
             state.passwordStatus = action.payload;
+        },
+        setOTPStatus: (state, action: PayloadAction<"valid" | "invalid" | null>) => {
+            state.OTPStatus = action.payload;
         },
         setShowNewPassword: (state, action: PayloadAction<boolean>) => {
             state.showNewPassword = action.payload;
@@ -88,6 +98,8 @@ export const {
     setEmail,
     setIsLoading,
     setStatusMessage,
+    setOTPStatus,
+    setOTPStatusMessage,
     setPasswordStatusMessage,
     setEmailStatus,
     setOtp,
