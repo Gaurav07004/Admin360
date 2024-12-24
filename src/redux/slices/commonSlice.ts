@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface MenuState {
@@ -15,8 +16,12 @@ interface MenuState {
     OTPStatus: "valid" | "invalid" | null;
     showNewPassword: boolean;
     currentSection: number;
-    form: { email: string; password: string, firstName: string, lastName: string, username: string };
+    form: { email: string; password: string; firstName: string; lastName: string; username: string };
     usernameStatus: "valid" | "invalid" | null;
+    lineChartData: any[];  // Ensure this is properly typed as any[] instead of []
+    pieChartData: any[];  // Same as above
+    topProductData: any[];  // Same as above
+    CustomerTrafficData: any[];  // Same as above
 }
 
 const initialState: MenuState = {
@@ -36,6 +41,10 @@ const initialState: MenuState = {
     currentSection: 1,
     form: { email: "", password: "", firstName: "", lastName: "", username: "" },
     usernameStatus: null,
+    lineChartData: [],
+    pieChartData: [],
+    topProductData: [],
+    CustomerTrafficData: [],
 };
 
 const menuSlice = createSlice({
@@ -89,7 +98,19 @@ const menuSlice = createSlice({
         },
         setUsernameStatus: (state, action: PayloadAction<"valid" | "invalid" | null>) => {
             state.usernameStatus = action.payload;
-        }
+        },
+        setLineChartData: (state, action: PayloadAction<any[]>) => {  // Change here to accept any array
+            state.lineChartData = action.payload;
+        },
+        setPieChartData: (state, action: PayloadAction<any[]>) => {  // Change here to accept any array
+            state.pieChartData = action.payload;
+        },
+        setTopProduct: (state, action: PayloadAction<any[]>) => {  // Change here to accept any array
+            state.topProductData = action.payload;
+        },
+        setCustomerTraffic: (state, action: PayloadAction<any[]>) => {  // Change here to accept any array
+            state.CustomerTrafficData = action.payload;
+        },
     },
 });
 
@@ -109,7 +130,11 @@ export const {
     setShowNewPassword,
     setCurrentSection,
     setForm,
-    setUsernameStatus
+    setUsernameStatus,
+    setCustomerTraffic,
+    setLineChartData,
+    setPieChartData,
+    setTopProduct
 } = menuSlice.actions;
 
 export default menuSlice.reducer;

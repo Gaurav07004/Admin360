@@ -16,6 +16,7 @@ const config: Config = {
         'bounce-slow': 'bounce-slow 2s infinite ease-in-out',
         scaleout: 'scaleout 2s infinite ease-in-out',
         fadeIn: "fadeIn 0.5s ease-in-out",
+        pingSlow: 'pingSlow 2.5s ease-out infinite',
       },
       keyframes: {
         scaleout: {
@@ -36,6 +37,20 @@ const config: Config = {
           "100%": {
             opacity: "1",
             transform: "scale(1)",
+          },
+        },
+        pingSlow: {
+          '0%': {
+            transform: 'scale(1)',
+            opacity: '0.6',
+          },
+          '50%': {
+            transform: 'scale(1.6)',
+            opacity: '0.3',
+          },
+          '100%': {
+            transform: 'scale(2)',
+            opacity: '0',
           },
         },
       },

@@ -3,15 +3,12 @@ import React from "react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, ChartTooltip, Badge, Pie, PieChart, Cell } from "keep-react";
 import { PiArrowUpRightBold, PiArrowDownRightBold, PiCircleFill } from "react-icons/pi";
 import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 type DataPoint = {
     name: string,
-    price: number,
-};
-
-type PieDataPoint = {
     value: number,
-    name: string,
 };
 
 const formatNumberWithCommas = (number: number): string => {
@@ -23,21 +20,6 @@ const formatNumberWithL = (number: number): string => {
         ? (number / 100000).toFixed(1) + "L"
         : number.toLocaleString();
 };
-
-const data: DataPoint[] = [
-    { name: `Jan'24`, price: 500000 },
-    { name: `Feb'24`, price: 500000 },
-    { name: `Mar'24`, price: 500000 },
-    { name: `Apr'24`, price: 700000 },
-    { name: `May'24`, price: 650000 },
-    { name: `Jun'24`, price: 900000 },
-    { name: `Jul'24`, price: 600000 },
-    { name: `Aug'24`, price: 550000 },
-    { name: `Sep'24`, price: 300000 },
-    { name: `Oct'24`, price: 600000 },
-    { name: `Nov'24`, price: 650000 },
-    { name: `Dec'24`, price: 750000 },
-];
 
 const PieChartTooltip: React.FC<{ payload?: any, active?: boolean }> = ({ payload, active }) => {
     if (active && payload && payload.length) {
@@ -64,15 +46,10 @@ const AreaChartTooltip: React.FC<{ payload?: any, label?: string, active?: boole
 };
 
 const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
-    const data: PieDataPoint[] = [
-        { value: 2500, name: "Laptops" },
-        { value: 1200, name: "Smartphones" },
-        { value: 1350, name: "Tablets" },
-        { value: 1500, name: "Headphones" },
-    ];
+    const { pieChartData } = useSelector((state: RootState) => state.menu);
 
     const COLORS = ["#00BCD4", "#FF9800", "#9C27B0", "#8BC34A"];
-    const totalValue = data.reduce((acc, item) => acc + item.value, 0);
+    const totalValue = pieChartData?.reduce((acc, item) => acc + item.value, 0);
     const totalIncome = totalRevenue + 50000 + 50000;
     const lastYearIncome = totalRevenue + 200000;
     const percentageChange = ((totalIncome - lastYearIncome) / lastYearIncome) * 100;
@@ -106,8 +83,8 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                     </div>
                     <ResponsiveContainer width="100%" height={130} className="absolute top-[0rem] left-[13rem]">
                         <PieChart>
-                            <Pie cx="50%" cy="50%" outerRadius={60} innerRadius={48} paddingAngle={2} data={data} dataKey="value" nameKey="name" cornerRadius={0}>
-                                {data.map((entry, index) => (
+                            <Pie cx="50%" cy="50%" outerRadius={60} innerRadius={48} paddingAngle={2} data={pieChartData} dataKey="value" nameKey="name" cornerRadius={0}>
+                                {pieChartData.map((entry, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>
@@ -149,12 +126,14 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
 };
 
 const AreaChartComponent: React.FC = () => {
-    const totalRevenue: number = data.reduce((acc: number, item: DataPoint) => acc + item.price, 0);
-    const gainedThisMonth: number = data[data.length - 1].price - data[data.length - 2].price;
+    const { lineChartData } = useSelector((state: RootState) => state.menu);
 
-    const initialPrice = data[0].price;
-    const finalPrice = data[data.length - 1].price;
-    const percentageChange = ((finalPrice - initialPrice) / initialPrice) * 100;
+    const totalRevenue: number = lineChartData?.reduce((acc: number, item: DataPoint) => acc + item.value, 0) || 0;
+    const gainedThisMonth: number = lineChartData?.length > 1 ? lineChartData[lineChartData.length - 1].value - lineChartData[lineChartData.length - 2].value : 0;
+
+    const initialPrice = lineChartData?.[0]?.value || 0;
+    const finalPrice = lineChartData?.[lineChartData.length - 1]?.value || 0;
+    const percentageChange = ((finalPrice - initialPrice) / initialPrice) * 100 || 0;
 
     const isPositive = percentageChange >= 0;
     const badgeColor = isPositive ? "success" : "error";
@@ -164,7 +143,7 @@ const AreaChartComponent: React.FC = () => {
 
     return (
         <>
-            <section className="bg-white rounded-[1rem] py-5 px-7 w-full">
+            <section className="bg-white rounded-[1rem] py-5 px-7 w-full ">
                 <div className="mb-4 text-left text-gray-600">
                     <p className="text-lg font-semibold mb-2">Total Revenue</p>
                     <div className="flex items-center gap-2">
@@ -180,16 +159,16 @@ const AreaChartComponent: React.FC = () => {
                     <p className="text-xs">Gained ₹{formatNumberWithCommas(parseFloat(gainedThisMonth.toFixed(2)))} this month</p>
                 </div>
                 <ResponsiveContainer width="99%" height={250}>
-                    <AreaChart data={data}>
+                    <AreaChart data={lineChartData}>
                         <defs>
                             <linearGradient id="price" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="10%" stopColor="#FF6500" stopOpacity={0.2} />
                                 <stop offset="75%" stopColor="#FF6500" stopOpacity={0} />
                             </linearGradient>
                         </defs>
-                        <Area type="natural" dataKey="price" stroke="#FF6500" fillOpacity={1} fill="url(#price)" strokeWidth={0.8} />
+                        <Area type="natural" dataKey="value" stroke="#FF6500" fillOpacity={1} fill="url(#price)" strokeWidth={0.8} />
                         <XAxis className="text-xs font-medium text-metal-600" dataKey="name" stroke="#4b5563" strokeWidth={0.5} dy={12} />
-                        <YAxis className="text-xs font-medium text-metal-600" dataKey="price" stroke="#4b5563" strokeWidth={0.5} dx={-10} tickFormatter={formatNumberWithL} />
+                        <YAxis className="text-xs font-medium text-metal-600" dataKey="value" stroke="#4b5563" strokeWidth={0.5} dx={-10} tickFormatter={formatNumberWithL} />
                         <ChartTooltip content={<AreaChartTooltip />} />
                     </AreaChart>
                 </ResponsiveContainer>

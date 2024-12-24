@@ -1,5 +1,7 @@
 "use client";
 import OrderStat from "@/components/OrderStatistics";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 interface TrafficData {
     ageRange: string;
@@ -10,52 +12,24 @@ interface BarProps {
     Male: number;
 }
 
-const Bar: React.FC<BarProps> = ({ Female, Male }) => (
-    <div className="flex items-center gap-1 relative">
-        <div className="h-1 bg-pink-500 absolute top-0 right-0 rounded-s-lg" style={{ width: `${Female}px` }}></div>
-        <div></div>
-        <div className="h-1 bg-blue-500 absolute top-0 left-1 rounded-e-lg" style={{ width: `${Male}px` }}></div>
-    </div>
-);
-
-const generateBars = () => {
-    const bars: BarProps[] = [
-        { Female: 50, Male: 48 },
-        { Female: 85, Male: 80 },
-        { Female: 78, Male: 65 },
-        { Female: 85, Male: 78 },
-        { Female: 55, Male: 85 },
-        { Female: 45, Male: 40 },
-        { Female: 90, Male: 80 },
-        { Female: 50, Male: 55 },
-        { Female: 45, Male: 60 },
-        { Female: 88, Male: 70 },
-        { Female: 30, Male: 25 },
-        { Female: 85, Male: 75 },
-        { Female: 70, Male: 48 },
-        { Female: 80, Male: 55 },
-        { Female: 75, Male: 68 },
-        { Female: 50, Male: 55 },
-        { Female: 65, Male: 50 },
-        { Female: 48, Male: 52 },
-        { Female: 25, Male: 48 },
-        { Female: 85, Male: 55 },
-        { Female: 65, Male: 50 },
-        { Female: 35, Male: 40 },
-        { Female: 25, Male: 30 },
-        { Female: 20, Male: 25 },
-        { Female: 15, Male: 20 },
-    ];
-
-    return bars.map((bar, index) => <Bar key={index} Female={bar.Female} Male={bar.Male} />);
-};
-
-const trafficData: TrafficData[] = [
-    { ageRange: "35+" }, { ageRange: "30+" }, { ageRange: "25+" }, { ageRange: "20+" }, { ageRange: "15+" }, { ageRange: "10+" }
-];
-
-
 const Dashboard: React.FC = () => {
+    const { CustomerTrafficData } = useSelector((state: RootState) => state.menu);
+
+    const Bar: React.FC<BarProps> = ({ Female, Male }) => (
+        <div className="flex items-center gap-1 relative">
+            <div className="h-1 bg-pink-500 absolute top-0 right-0 rounded-s-lg" style={{ width: `${Female}px` }}></div>
+            <div></div>
+            <div className="h-1 bg-blue-500 absolute top-0 left-1 rounded-e-lg" style={{ width: `${Male}px` }}></div>
+        </div>
+    );
+
+    const generateBars = () => {
+        return CustomerTrafficData.map((bar, index) => <Bar key={index} Female={bar.Female} Male={bar.Male} />);
+    };
+
+    const trafficData: TrafficData[] = [
+        { ageRange: "35+" }, { ageRange: "30+" }, { ageRange: "25+" }, { ageRange: "20+" }, { ageRange: "15+" }, { ageRange: "10+" }
+    ];
 
     return (
         <div className="flex flex-col items-center gap-5 w-full">

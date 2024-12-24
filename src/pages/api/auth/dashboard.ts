@@ -14,7 +14,6 @@ const dashboardHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         const CustomerTrafficData = await CustomerTraffic.find();
 
         res.status(200).json({
-            message: 'Authenticated successfully',
             admin: req.admin,
             lineChartData,
             pieChartData,
