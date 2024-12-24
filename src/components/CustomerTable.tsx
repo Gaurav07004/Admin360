@@ -6,6 +6,8 @@ import { setDrawerStatus, setSelectedCustomer } from "../redux/slices/customerSl
 import { PiDotsThreeOutlineLight } from "react-icons/pi";
 import { RootState } from '../redux/store';
 import TableComponent from "./table";
+import { toast } from "keep-react"
+import { setCustomer } from "@/redux/slices/customerSlice";
 
 const columns = [
     { id: 'customerID', label: 'Customer ID' },
@@ -40,6 +42,41 @@ const CustomerTable = () => {
             dispatch(setDrawerStatus(!drawerStatus));
         }
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = localStorage.getItem("authToken");
+
+            if (!token) {
+                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 2000);
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:3000/api/auth/customer", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    dispatch(setCustomer(data));
+                } else {
+                    toast.error("Failed to fetch data.", { position: "top-right" });
+                }
+            } catch (error) {
+                toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+            }
+        };
+
+        fetchData();
+    }, [dispatch]);
 
     useEffect(() => {
         setMounted(true);

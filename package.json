@@ -13,6 +13,7 @@
     "bcryptjs": "^2.4.3",
     "classnames": "^2.5.1",
     "cookie": "^1.0.2",
+    "dateformat": "^5.0.3",
     "dotenv": "^16.4.7",
     "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-reactive-utils": "^8.5.1",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/dateformat": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
