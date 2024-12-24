@@ -1,16 +1,25 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import authenticateMiddleware from '@/middleware/authMiddleware';
-import unifiedHandler from '@/pages/api/auth/unified';
+import LineChart from '@/models/subModels/LineChart';
+import PieChart from '@/models/subModels/PieChart';
+import TopProduct from '@/models/subModels/TopOrder';
+import CustomerTraffic from '@/models/subModels/CustomerTraffic'
 
 const dashboardHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
 
-        const unifiedData = await unifiedHandler(req, res, true);
+        const lineChartData = await LineChart.find();
+        const pieChartData = await PieChart.find();
+        const topProductData = await TopProduct.find();
+        const CustomerTrafficData = await CustomerTraffic.find();
 
         res.status(200).json({
             message: 'Authenticated successfully',
             admin: req.admin,
-            ...unifiedData,
+            lineChartData,
+            pieChartData,
+            topProductData,
+            CustomerTrafficData
         });
     } catch (error) {
         console.error('Error fetching data:', error);

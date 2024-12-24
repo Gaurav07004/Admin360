@@ -3,8 +3,9 @@ import Image from "next/image";
 import logo from "@/Assets/New_Logo.png";
 import login from "@/Assets/login_1.png";
 import { toast } from "keep-react"
-import { FiAtSign, FiLock } from "react-icons/fi";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { GoLock } from "react-icons/go";
+import { IoMailOutline } from "react-icons/io5";
 import { MdErrorOutline } from "react-icons/md";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -114,7 +115,7 @@ const Login = () => {
                                     Email Address
                                 </label>
                                 <div className="relative">
-                                    <FiAtSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                    <IoMailOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg mt-[0.08rem]" />
                                     <input
                                         type="email"
                                         name="email"
@@ -139,7 +140,7 @@ const Login = () => {
                                     Password
                                 </label>
                                 <div className="relative">
-                                    <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                    <GoLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg mt-[0.08rem]" />
                                     <input
                                         type={showNewPassword ? "text" : "password"}
                                         name="password"
