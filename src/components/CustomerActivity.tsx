@@ -1,126 +1,31 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ResponsiveContainer, XAxis, YAxis, Tooltip as ChartTooltip, CartesianGrid, Area, AreaChart } from "recharts";
 import { FiShoppingCart, FiCheckCircle, FiEye } from "react-icons/fi";
 import { CgNotes } from "react-icons/cg";
+import { toast } from "keep-react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { setAddToCart } from "@/redux/slices/commonSlice";
+import { Skeleton, SkeletonLine } from 'keep-react'
+
+type ChartDataKey = 'productView' | 'addToCart' | 'checkout' | 'purchase';
 
 interface ChartData {
     timeRange: string;
-    price: number;
+    price?: number;
+    productView?: number;
+    addToCart?: number;
+    checkout?: number;
+    purchase?: number;
 }
-
-const chartDataSets: Record<string, ChartData[]> = {
-    productView: [
-        { timeRange: "06:00 AM", price: 50000 },
-        { timeRange: "07:00 AM", price: 50000 },
-        { timeRange: "08:00 AM", price: 50000 },
-        { timeRange: "09:00 AM", price: 70000 },
-        { timeRange: "10:00 AM", price: 65000 },
-        { timeRange: "11:00 AM", price: 90000 },
-        { timeRange: "12:00 PM", price: 60000 },
-        { timeRange: "01:00 PM", price: 55000 },
-        { timeRange: "02:00 PM", price: 30000 },
-        { timeRange: "03:00 PM", price: 65000 },
-        { timeRange: "04:00 PM", price: 75000 },
-        { timeRange: "05:00 PM", price: 95000 },
-        { timeRange: "06:00 PM", price: 90000 },
-        { timeRange: "07:00 PM", price: 85000 },
-        { timeRange: "08:00 PM", price: 55000 },
-        { timeRange: "09:00 PM", price: 50000 },
-        { timeRange: "10:00 PM", price: 70000 },
-        { timeRange: "11:00 PM", price: 70000 },
-        { timeRange: "12:00 AM", price: 79000 },
-        { timeRange: "01:00 AM", price: 70000 },
-        { timeRange: "02:00 AM", price: 77000 },
-        { timeRange: "03:00 AM", price: 85000 },
-        { timeRange: "04:00 AM", price: 90000 },
-        { timeRange: "05:00 AM", price: 82000 },
-    ],
-    addToCart: [
-        { timeRange: "06:00 AM", price: 49000 },
-        { timeRange: "07:00 AM", price: 49500 },
-        { timeRange: "08:00 AM", price: 50500 },
-        { timeRange: "09:00 AM", price: 71000 },
-        { timeRange: "10:00 AM", price: 66000 },
-        { timeRange: "11:00 AM", price: 91000 },
-        { timeRange: "12:00 PM", price: 61500 },
-        { timeRange: "01:00 PM", price: 56500 },
-        { timeRange: "02:00 PM", price: 31000 },
-        { timeRange: "03:00 PM", price: 66000 },
-        { timeRange: "04:00 PM", price: 76000 },
-        { timeRange: "05:00 PM", price: 96500 },
-        { timeRange: "06:00 PM", price: 92000 },
-        { timeRange: "07:00 PM", price: 86000 },
-        { timeRange: "08:00 PM", price: 56000 },
-        { timeRange: "09:00 PM", price: 51500 },
-        { timeRange: "10:00 PM", price: 71000 },
-        { timeRange: "11:00 PM", price: 71000 },
-        { timeRange: "12:00 AM", price: 80000 },
-        { timeRange: "01:00 AM", price: 70500 },
-        { timeRange: "02:00 AM", price: 78000 },
-        { timeRange: "03:00 AM", price: 85500 },
-        { timeRange: "04:00 AM", price: 91000 },
-        { timeRange: "05:00 AM", price: 82500 },
-    ],
-    checkout: [
-        { timeRange: "06:00 AM", price: 48000 },
-        { timeRange: "07:00 AM", price: 49000 },
-        { timeRange: "08:00 AM", price: 49500 },
-        { timeRange: "09:00 AM", price: 70500 },
-        { timeRange: "10:00 AM", price: 64000 },
-        { timeRange: "11:00 AM", price: 89500 },
-        { timeRange: "12:00 PM", price: 59500 },
-        { timeRange: "01:00 PM", price: 54000 },
-        { timeRange: "02:00 PM", price: 29500 },
-        { timeRange: "03:00 PM", price: 64000 },
-        { timeRange: "04:00 PM", price: 74000 },
-        { timeRange: "05:00 PM", price: 93500 },
-        { timeRange: "06:00 PM", price: 88000 },
-        { timeRange: "07:00 PM", price: 84000 },
-        { timeRange: "08:00 PM", price: 53000 },
-        { timeRange: "09:00 PM", price: 48500 },
-        { timeRange: "10:00 PM", price: 69000 },
-        { timeRange: "11:00 PM", price: 69000 },
-        { timeRange: "12:00 AM", price: 78000 },
-        { timeRange: "01:00 AM", price: 69500 },
-        { timeRange: "02:00 AM", price: 76000 },
-        { timeRange: "03:00 AM", price: 84000 },
-        { timeRange: "04:00 AM", price: 89000 },
-        { timeRange: "05:00 AM", price: 81000 },
-    ],
-    purchase: [
-        { timeRange: "06:00 AM", price: 47000 },
-        { timeRange: "07:00 AM", price: 48000 },
-        { timeRange: "08:00 AM", price: 49000 },
-        { timeRange: "09:00 AM", price: 70000 },
-        { timeRange: "10:00 AM", price: 63000 },
-        { timeRange: "11:00 AM", price: 88000 },
-        { timeRange: "12:00 PM", price: 58000 },
-        { timeRange: "01:00 PM", price: 52000 },
-        { timeRange: "02:00 PM", price: 28500 },
-        { timeRange: "03:00 PM", price: 62000 },
-        { timeRange: "04:00 PM", price: 72000 },
-        { timeRange: "05:00 PM", price: 91000 },
-        { timeRange: "06:00 PM", price: 86000 },
-        { timeRange: "07:00 PM", price: 82000 },
-        { timeRange: "08:00 PM", price: 51000 },
-        { timeRange: "09:00 PM", price: 47500 },
-        { timeRange: "10:00 PM", price: 67000 },
-        { timeRange: "11:00 PM", price: 67000 },
-        { timeRange: "12:00 AM", price: 76000 },
-        { timeRange: "01:00 AM", price: 67500 },
-        { timeRange: "02:00 AM", price: 74000 },
-        { timeRange: "03:00 AM", price: 82000 },
-        { timeRange: "04:00 AM", price: 87000 },
-        { timeRange: "05:00 AM", price: 79500 },
-    ],
-};
 
 interface ButtonConfig {
     label: string;
     icon: React.ComponentType;
-    dataKey: string;
+    dataKey: ChartDataKey;
 }
 
 const buttonConfig: ButtonConfig[] = [
@@ -145,13 +50,82 @@ const formatNumberWithK = (number: number) => {
     return number >= 1000 ? (number / 1000).toFixed(1) + "K" : number.toString();
 };
 
-const LineChartComponent = () => {
-    const [selectedChartData, setSelectedChartData] = useState(chartDataSets.productView);
-    const [activeButton, setActiveButton] = useState<string>("productView");
+const SalesFunnelChart = () => {
+    const dispatch = useDispatch();
+    const { addToCart } = useSelector((state: RootState) => state.menu);
+    const [selectedChartData, setSelectedChartData] = useState<ChartData[]>([]);
+    const [activeButton, setActiveButton] = useState<ChartDataKey>("productView");
+    const [isLoading, setIsLoading] = useState(true);
 
-    const handleButtonClick = (dataKey: string) => {
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = localStorage.getItem("authToken");
+
+            if (!token) {
+                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 2000);
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:3000/api/auth/analysis", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    dispatch(setAddToCart(data));
+                } else {
+                    toast.error("Failed to fetch data.", { position: "top-right" });
+                }
+            } catch (error) {
+                toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!isLoading && addToCart.length > 0) {
+            const chartDataSets: Record<ChartDataKey, ChartData[]> = {
+                productView: addToCart.map((item) => ({ timeRange: item.timeRange, price: item.productView })),
+                addToCart: addToCart.map((item) => ({ timeRange: item.timeRange, price: item.addToCart })),
+                checkout: addToCart.map((item) => ({ timeRange: item.timeRange, price: item.checkout })),
+                purchase: addToCart.map((item) => ({ timeRange: item.timeRange, price: item.purchase })),
+            };
+            setSelectedChartData(chartDataSets.productView);
+        }
+    }, [addToCart, isLoading]);
+
+    const handleButtonClick = (dataKey: ChartDataKey) => {
+        const chartDataSets: Record<ChartDataKey, ChartData[]> = {
+            productView: addToCart.map((item) => ({ timeRange: item.timeRange, price: item.productView })),
+            addToCart: addToCart.map((item) => ({ timeRange: item.timeRange, price: item.addToCart })),
+            checkout: addToCart.map((item) => ({ timeRange: item.timeRange, price: item.checkout })),
+            purchase: addToCart.map((item) => ({ timeRange: item.timeRange, price: item.purchase })),
+        };
         setSelectedChartData(chartDataSets[dataKey]);
         setActiveButton(dataKey);
+    };
+
+    const getColor = (dataKey: ChartDataKey) => {
+        const colors = {
+            productView: { stroke: "#FF6500", stopColor: "#FF6500" },
+            addToCart: { stroke: "#500073", stopColor: "#500073" },
+            checkout: { stroke: "#47663B", stopColor: "#47663B" },
+            purchase: { stroke: "#C62300", stopColor: "#C62300" },
+        };
+
+        return colors[dataKey] || { stroke: "#CCCCCC", stopColor: "#CCCCCC" };
     };
 
     return (
@@ -159,39 +133,50 @@ const LineChartComponent = () => {
             <div className="mb-4 text-left text-gray-600">
                 <p className="text-lg font-semibold mb-2">Sales Funnel</p>
             </div>
-            <ResponsiveContainer width="100%" height={250}>
-                <AreaChart data={selectedChartData} className="!p-0">
-                    <defs>
-                        <linearGradient id="price" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="10%" stopColor="#FF6500" stopOpacity={0.2} />
-                            <stop offset="80%" stopColor="#FF6500" stopOpacity={0} />
-                        </linearGradient>
-                    </defs>
-                    <CartesianGrid vertical={false} stroke="#E1E5EA" strokeWidth={0.8} />
-                    <XAxis className="text-xs font-medium text-metal-400" dataKey="timeRange" stroke="#8897ae" strokeWidth={0.5} ticks={["10:00 AM", "04:00 PM", "10:00 PM", "04:00 AM"]} dy={12} />
-                    <YAxis className="text-xs font-medium text-metal-600" dataKey="price" stroke="#8897ae" strokeWidth={0.5} dx={-10} tick={{ fontSize: 12, fill: "#8897ae" }} tickFormatter={formatNumberWithK} />
-                    <ChartTooltip content={<CustomTooltip />} />
-                    <Area dataKey="price" type="natural" stroke="#FF6500" strokeWidth={0.8} dot={false} fillOpacity={0.5} fill="url(#price)" />
-                </AreaChart>
-            </ResponsiveContainer>
-
-            <section className="flex flex-wrap items-center justify-between mt-[3rem] gap-4">
-                {buttonConfig.map((data, index) => (
-                    <div key={index} className={`relative flex items-center gap-3 rounded-lg transition-all ${activeButton === data.dataKey ? "bg-[#FF660021] text-[#FF6500]" : "bg-gray-100 text-orange-400"}`}>
-                        <data.icon className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-base transition-all ${activeButton === data.dataKey ? "text-[#FF6500]" : "text-orange-400"}`} />
-                        <button
-                            onClick={() => handleButtonClick(data.dataKey)}
-                            className={`py-3 pl-10 pr-6 rounded-lg w-full text-xs font-medium text-left transition-all ${activeButton === data.dataKey ? "text-[#FF6500]" : "text-orange-400"
-                                }`}
-                            aria-pressed={activeButton === data.dataKey}
-                        >
-                            {data.label}
-                        </button>
-                    </div>
-                ))}
-            </section>
+            {isLoading || selectedChartData.length === 0 ? (
+                <Skeleton className="max-w-xl space-y-2.5">
+                    <SkeletonLine className="h-4 w-full" />
+                    <SkeletonLine className="h-4 w-full" />
+                    <SkeletonLine className="h-4 w-3/5" />
+                    <SkeletonLine className="h-4 w-4/5" />
+                    <SkeletonLine className="h-10 w-2/5" />
+                </Skeleton>
+            ) : (
+                <>
+                    <ResponsiveContainer width="100%" height={250}>
+                        <AreaChart data={selectedChartData} className="!p-0" key={activeButton}>
+                            <defs>
+                                <linearGradient id="price" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="10%" stopColor={getColor(activeButton).stopColor} stopOpacity={0.2} />
+                                    <stop offset="80%" stopColor={getColor(activeButton).stopColor} stopOpacity={0} />
+                                </linearGradient>
+                            </defs>
+                            <CartesianGrid vertical={false} stroke="#E1E5EA" strokeWidth={0.8} />
+                            <XAxis className="text-xs font-medium text-metal-400" dataKey="timeRange" stroke="#8897ae" strokeWidth={0.5} ticks={["08:00 AM", "12:00 PM", "04:00 PM", "08:00 PM", "12:00 AM", "04:00 AM"]} dy={12} />
+                            <YAxis className="text-xs font-medium text-metal-600" dataKey="price" stroke="#8897ae" strokeWidth={0.5} dx={-10} tick={{ fontSize: 12, fill: "#8897ae" }} tickFormatter={formatNumberWithK} />
+                            <ChartTooltip content={<CustomTooltip active={false} payload={[]} />} />
+                            <Area dataKey="price" type="natural" stroke={getColor(activeButton).stroke} strokeWidth={0.8} dot={false} fillOpacity={0.5} fill="url(#price)" isAnimationActive={true} />
+                            <Area dataKey="price" type="natural" stroke={getColor(activeButton).stroke} strokeWidth={0.8} dot={false} fillOpacity={0.5} fill="url(#price)" isAnimationActive={true} />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                    <section className="flex flex-wrap items-center justify-between mt-[3rem] gap-4">
+                        {buttonConfig.map((data, index) => (
+                            <div key={index} className={`relative flex items-center gap-3 rounded-lg transition-all ${activeButton === data.dataKey ? "bg-[#FF660021] text-[#FF6500]" : "bg-gray-100 text-orange-400"}`}>
+                                <data.icon className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-base transition-all ${activeButton === data.dataKey ? "text-[#FF6500]" : "text-orange-400"}`} />
+                                <button
+                                    onClick={() => handleButtonClick(data.dataKey)}
+                                    className={`py-3 pl-10 pr-6 rounded-lg w-full text-xs font-medium text-left transition-all ${activeButton === data.dataKey ? "text-[#FF6500]" : "text-orange-400"}`}
+                                    aria-pressed={activeButton === data.dataKey}
+                                >
+                                    {data.label}
+                                </button>
+                            </div>
+                        ))}
+                    </section>
+                </>
+            )}
         </section>
     );
 };
 
-export default LineChartComponent;
+export default SalesFunnelChart;

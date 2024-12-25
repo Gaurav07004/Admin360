@@ -8,6 +8,7 @@ import { RootState } from '../store';
 
 interface OrderState {
     orders: any[];
+    orderMonthlyData: any[];
     sortedTable: string[];
     drawerStatus: boolean;
     selectedOrder: string[] | null;
@@ -15,6 +16,7 @@ interface OrderState {
 
 const initialState: OrderState = {
     orders: [],
+    orderMonthlyData: [],
     sortedTable: [],
     drawerStatus: false,
     selectedOrder: null,
@@ -34,8 +36,11 @@ const OrderSlice = createSlice({
         setSortedReviews: (state, action: PayloadAction<string[]>) => {
             state.sortedTable = action.payload;
         },
-        setOrder: (state, action: PayloadAction<string[]>) => {
+        setOrder: (state, action: PayloadAction<any[]>) => {
             state.orders = action.payload;
+        },
+        setOrderMonthlyData: (state, action: PayloadAction<any[]>) => {
+            state.orderMonthlyData = action.payload;
         },
         setDrawerStatus: (state, action: PayloadAction<boolean>) => {
             state.drawerStatus = action.payload;
@@ -46,7 +51,7 @@ const OrderSlice = createSlice({
     },
 });
 
-export const { updateOrderStatus, setSortedReviews, setDrawerStatus, setSelectedOrder, setOrder } = OrderSlice.actions;
+export const { updateOrderStatus, setSortedReviews, setDrawerStatus, setSelectedOrder, setOrder, setOrderMonthlyData } = OrderSlice.actions;
 
 export const selectOrderState = (state: RootState) => state.order;
 

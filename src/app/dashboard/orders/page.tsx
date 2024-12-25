@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import { useEffect } from "react";
+import { toast } from "keep-react"
 import { CgNotes } from "react-icons/cg";
 import { LuCheckCircle } from "react-icons/lu";
 import { RxTimer } from "react-icons/rx";
@@ -8,6 +9,8 @@ import { RxCrossCircled } from "react-icons/rx";
 import BarChart from "@/components/OrderChart";
 import OrderTable from '@/components/OrderTable'
 import Order from '@/app/dashboard/orders/[id]/page'
+import { useDispatch } from "react-redux";
+import { setOrder, setOrderMonthlyData } from "@/redux/slices/orderSlice";
 
 const statistics = [
     {
@@ -60,6 +63,44 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, bgColor, ic
 );
 
 const Page: React.FC = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = localStorage.getItem("authToken");
+
+            if (!token) {
+                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 2000);
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:3000/api/auth/order", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    dispatch(setOrder(data.orders));
+                    dispatch(setOrderMonthlyData(data.MonthlyOrders));
+                } else {
+                    toast.error("Failed to fetch data.", { position: "top-right" });
+                }
+            } catch (error) {
+                toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+            }
+        };
+
+        fetchData();
+    }, [dispatch]);
+
     return (
         <section className="gap-5 flex flex-col justify-between">
             <div className="flex gap-6 w-full">

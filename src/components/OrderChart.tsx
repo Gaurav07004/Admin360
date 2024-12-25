@@ -1,6 +1,8 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { FaCircle } from "react-icons/fa";
+import { RootState } from '../redux/store';
+import { useSelector } from "react-redux";
 
 
 type ChartConfig = {
@@ -21,23 +23,6 @@ const chartConfig: ChartConfig = {
     },
 };
 
-const chartData = [
-    { month: 'January', OrderRunning: 100, OnProcess: 70 },
-    { month: 'February', OrderRunning: 160, OnProcess: 120 },
-    { month: 'March', OrderRunning: 130, OnProcess: 90 },
-    { month: 'April', OrderRunning: 70, OnProcess: 190 },
-    { month: 'May', OrderRunning: 110, OnProcess: 150 },
-    { month: 'June', OrderRunning: 140, OnProcess: 100 },
-    { month: 'July', OrderRunning: 170, OnProcess: 130 },
-    { month: 'August', OrderRunning: 120, OnProcess: 160 },
-    { month: 'September', OrderRunning: 160, OnProcess: 110 },
-    { month: 'October', OrderRunning: 130, OnProcess: 180 },
-    { month: 'November', OrderRunning: 110, OnProcess: 130 },
-    { month: 'December', OrderRunning: 150, OnProcess: 110 },
-];
-
-
-// Custom Tooltip Component
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
@@ -52,6 +37,9 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 const BarChartComponent: React.FC = () => {
+    // const dispatch = useDispatch();
+    const { orderMonthlyData } = useSelector((state: RootState) => state.order);
+
     return (
         <>
             <div className='flex items-center justify-between mb-[2rem]'>
@@ -63,7 +51,7 @@ const BarChartComponent: React.FC = () => {
                 <button className="flex items-center py-2 px-5 text-sm text-gray-500 bg-gray-100 rounded-lg hover:bg-gray-100 border border-gray-300">Monthly</button>
             </div>
             <ResponsiveContainer className="mx-auto w-[600px]" height={200}>
-                <BarChart data={chartData}>
+                <BarChart data={orderMonthlyData}>
                     <CartesianGrid vertical={false} stroke="#E1E5EA" />
                     <XAxis
                         dataKey="month"
@@ -73,7 +61,7 @@ const BarChartComponent: React.FC = () => {
                         tickFormatter={(value) => value.slice(0, 3)}
                     />
                     <YAxis tickLine={false} tickMargin={24} axisLine={false} />
-                    <Tooltip content={<CustomTooltip />} />
+                    <Tooltip content={<CustomTooltip active={undefined} payload={undefined} />} />
                     <Bar radius={[0, 0, 0, 0]} barSize={10} dataKey="OrderRunning" stackId="a" fill={chartConfig.OrderRunning.color} />
                     <Bar radius={[8, 8, 0, 0]} barSize={10} dataKey="OnProcess" stackId="a" fill={chartConfig.OnProcess.color} />
                 </BarChart>

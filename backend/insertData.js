@@ -32,16 +32,15 @@ mongoose.connect(MONGO_URI || "").then(() => {
 }).catch((err) => console.log('MongoDB connection failed:', err));
 
 const unifiedSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    value: { type: String, required: true },
-    sold: { type: Number, required: true },
-    productImage: { type: String, required: true },
-    // checkoutvalue: { type: Number, required: true },
-    // purchasevalue: { type: Number, required: true },
+    timeRange: { type: String, required: true },
+    productView: { type: Number, required: true },
+    addToCart: { type: Number, required: true },
+    checkout: { type: Number, required: true },
+    purchase: { type: Number, required: true },
 
 });
 
-const TopOrder = mongoose.model("TopOrder", unifiedSchema);
+const SalesCategory = mongoose.model("SalesCategory", unifiedSchema);
 
 const unifiedData = [
     // { name: "Feb'24", value: 500000 },
@@ -62,10 +61,10 @@ const unifiedData = [
     // { name: "Tablets", value: 1350 },
     // { name: "Headphones", value: 1500 },
 
-    { name: "Dell Inspiron 15 Laptop", value: "₹50000", sold: 917, productImage: "productImage" },
-    { name: "Targus Laptop Sleeve", value: "₹800", sold: 804, productImage: "productImage" },
-    { name: "Apple iPhone 15", value: "₹80000", sold: 738, productImage: "productImage" },
-    { name: "Samsung Galaxy Watch 5", value: "₹8000", sold: 684, productImage: "productImage" },
+    // { name: "Dell Inspiron 15 Laptop", value: "₹50000", sold: 917, productImage: "productImage" },
+    // { name: "Targus Laptop Sleeve", value: "₹800", sold: 804, productImage: "productImage" },
+    // { name: "Apple iPhone 15", value: "₹80000", sold: 738, productImage: "productImage" },
+    // { name: "Samsung Galaxy Watch 5", value: "₹8000", sold: 684, productImage: "productImage" },
 
     // { Female: 50, Male: 48 },
     // { Female: 85, Male: 80 },
@@ -119,35 +118,35 @@ const unifiedData = [
     // { month: "November", OrderRunning: 110, OnProcess: 130 },
     // { month: "December", OrderRunning: 150, OnProcess: 110 },
 
-    // { timeRange: "06:00 AM", productViewvalue: 50000, addToCartvalue: 49000, checkoutvalue: 48000, purchasevalue: 47000 },
-    // { timeRange: "07:00 AM", productViewvalue: 50000, addToCartvalue: 49500, checkoutvalue: 49000, purchasevalue: 48000 },
-    // { timeRange: "08:00 AM", productViewvalue: 50000, addToCartvalue: 50500, checkoutvalue: 49500, purchasevalue: 49000 },
-    // { timeRange: "09:00 AM", productViewvalue: 70000, addToCartvalue: 71000, checkoutvalue: 70500, purchasevalue: 70000 },
-    // { timeRange: "10:00 AM", productViewvalue: 65000, addToCartvalue: 66000, checkoutvalue: 64000, purchasevalue: 63000 },
-    // { timeRange: "11:00 AM", productViewvalue: 90000, addToCartvalue: 91000, checkoutvalue: 89500, purchasevalue: 88000 },
-    // { timeRange: "01:00 PM", productViewvalue: 55000, addToCartvalue: 56500, checkoutvalue: 54000, purchasevalue: 52000 },
-    // { timeRange: "02:00 PM", productViewvalue: 30000, addToCartvalue: 31000, checkoutvalue: 29500, purchasevalue: 28500 },
-    // { timeRange: "12:00 PM", productViewvalue: 60000, addToCartvalue: 61500, checkoutvalue: 59500, purchasevalue: 58000 },
-    // { timeRange: "03:00 PM", productViewvalue: 65000, addToCartvalue: 66000, checkoutvalue: 64000, purchasevalue: 62000 },
-    // { timeRange: "04:00 PM", productViewvalue: 75000, addToCartvalue: 76000, checkoutvalue: 74000, purchasevalue: 72000 },
-    // { timeRange: "05:00 PM", productViewvalue: 95000, addToCartvalue: 96500, checkoutvalue: 93500, purchasevalue: 91000 },
-    // { timeRange: "06:00 PM", productViewvalue: 90000, addToCartvalue: 92000, checkoutvalue: 88000, purchasevalue: 86000 },
-    // { timeRange: "07:00 PM", productViewvalue: 85000, addToCartvalue: 86000, checkoutvalue: 84000, purchasevalue: 82000 },
-    // { timeRange: "08:00 PM", productViewvalue: 55000, addToCartvalue: 56000, checkoutvalue: 53000, purchasevalue: 51000 },
-    // { timeRange: "09:00 PM", productViewvalue: 50000, addToCartvalue: 51500, checkoutvalue: 48500, purchasevalue: 47500 },
-    // { timeRange: "10:00 PM", productViewvalue: 70000, addToCartvalue: 71000, checkoutvalue: 69000, purchasevalue: 67000 },
-    // { timeRange: "11:00 PM", productViewvalue: 70000, addToCartvalue: 71000, checkoutvalue: 69000, purchasevalue: 67000 },
-    // { timeRange: "12:00 AM", productViewvalue: 79000, addToCartvalue: 80000, checkoutvalue: 78000, purchasevalue: 76000 },
-    // { timeRange: "01:00 AM", productViewvalue: 70000, addToCartvalue: 70500, checkoutvalue: 69500, purchasevalue: 67500 },
-    // { timeRange: "02:00 AM", productViewvalue: 77000, addToCartvalue: 78000, checkoutvalue: 76000, purchasevalue: 74000 },
-    // { timeRange: "03:00 AM", productViewvalue: 85000, addToCartvalue: 85500, checkoutvalue: 84000, purchasevalue: 82000 },
-    // { timeRange: "04:00 AM", productViewvalue: 90000, addToCartvalue: 91000, checkoutvalue: 89000, purchasevalue: 87000 },
-    // { timeRange: "05:00 AM", productViewvalue: 82000, addToCartvalue: 82500, checkoutvalue: 81000, purchasevalue: 79500 },
+    { timeRange: "06:00 AM", productView: 50000, addToCart: 49000, checkout: 48000, purchase: 47000 },
+    { timeRange: "07:00 AM", productView: 50000, addToCart: 49500, checkout: 49000, purchase: 48000 },
+    { timeRange: "08:00 AM", productView: 50000, addToCart: 50500, checkout: 49500, purchase: 49000 },
+    { timeRange: "09:00 AM", productView: 70000, addToCart: 71000, checkout: 70500, purchase: 70000 },
+    { timeRange: "10:00 AM", productView: 65000, addToCart: 66000, checkout: 64000, purchase: 63000 },
+    { timeRange: "11:00 AM", productView: 90000, addToCart: 91000, checkout: 89500, purchase: 88000 },
+    { timeRange: "12:00 PM", productView: 60000, addToCart: 61500, checkout: 59500, purchase: 58000 },
+    { timeRange: "01:00 PM", productView: 55000, addToCart: 56500, checkout: 54000, purchase: 52000 },
+    { timeRange: "02:00 PM", productView: 30000, addToCart: 31000, checkout: 29500, purchase: 28500 },
+    { timeRange: "03:00 PM", productView: 65000, addToCart: 66000, checkout: 64000, purchase: 62000 },
+    { timeRange: "04:00 PM", productView: 75000, addToCart: 76000, checkout: 74000, purchase: 72000 },
+    { timeRange: "05:00 PM", productView: 95000, addToCart: 96500, checkout: 93500, purchase: 91000 },
+    { timeRange: "06:00 PM", productView: 90000, addToCart: 92000, checkout: 88000, purchase: 86000 },
+    { timeRange: "07:00 PM", productView: 85000, addToCart: 86000, checkout: 84000, purchase: 82000 },
+    { timeRange: "08:00 PM", productView: 55000, addToCart: 56000, checkout: 53000, purchase: 51000 },
+    { timeRange: "09:00 PM", productView: 50000, addToCart: 51500, checkout: 48500, purchase: 47500 },
+    { timeRange: "10:00 PM", productView: 70000, addToCart: 71000, checkout: 69000, purchase: 67000 },
+    { timeRange: "11:00 PM", productView: 70000, addToCart: 71000, checkout: 69000, purchase: 67000 },
+    { timeRange: "12:00 AM", productView: 79000, addToCart: 80000, checkout: 78000, purchase: 76000 },
+    { timeRange: "01:00 AM", productView: 70000, addToCart: 70500, checkout: 69500, purchase: 67500 },
+    { timeRange: "02:00 AM", productView: 77000, addToCart: 78000, checkout: 76000, purchase: 74000 },
+    { timeRange: "03:00 AM", productView: 85000, addToCart: 85500, checkout: 84000, purchase: 82000 },
+    { timeRange: "04:00 AM", productView: 90000, addToCart: 91000, checkout: 89000, purchase: 87000 },
+    { timeRange: "05:00 AM", productView: 82000, addToCart: 82500, checkout: 81000, purchase: 79500 },
 ];
 
 async function insertData() {
     try {
-        await TopOrder.insertMany(unifiedData);
+        await SalesCategory.insertMany(unifiedData);
         console.log("Data inserted successfully into a single collection");
     } catch (error) {
         console.error("Error inserting data:", error);
@@ -155,7 +154,5 @@ async function insertData() {
         mongoose.disconnect();
     }
 }
-
-insertData();
 
 

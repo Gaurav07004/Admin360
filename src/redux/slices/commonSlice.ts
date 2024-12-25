@@ -2,6 +2,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface MenuState {
+    token: string | null;
     modal: boolean;
     email: string;
     isLoading: boolean;
@@ -18,13 +19,18 @@ interface MenuState {
     currentSection: number;
     form: { email: string; password: string; firstName: string; lastName: string; username: string };
     usernameStatus: "valid" | "invalid" | null;
-    lineChartData: any[];  // Ensure this is properly typed as any[] instead of []
-    pieChartData: any[];  // Same as above
-    topProductData: any[];  // Same as above
-    CustomerTrafficData: any[];  // Same as above
+    lineChartData: any[];
+    pieChartData: any[];
+    topProductData: any[];
+    CustomerTrafficData: any[];
+    productView: any[];
+    addToCart: any[];
+    checkout: any[];
+    purchase: any[];
 }
 
 const initialState: MenuState = {
+    token: null,
     modal: false,
     email: "",
     isLoading: false,
@@ -45,12 +51,19 @@ const initialState: MenuState = {
     pieChartData: [],
     topProductData: [],
     CustomerTrafficData: [],
+    productView: [],
+    addToCart: [],
+    checkout: [],
+    purchase: [],
 };
 
 const menuSlice = createSlice({
     name: "menu",
     initialState,
     reducers: {
+        setToken: (state, action: PayloadAction<string | null>) => {
+            state.token = action.payload;
+        },
         setModal: (state, action: PayloadAction<boolean>) => {
             state.modal = action.payload;
         },
@@ -99,22 +112,35 @@ const menuSlice = createSlice({
         setUsernameStatus: (state, action: PayloadAction<"valid" | "invalid" | null>) => {
             state.usernameStatus = action.payload;
         },
-        setLineChartData: (state, action: PayloadAction<any[]>) => {  // Change here to accept any array
+        setLineChartData: (state, action: PayloadAction<any[]>) => {
             state.lineChartData = action.payload;
         },
-        setPieChartData: (state, action: PayloadAction<any[]>) => {  // Change here to accept any array
+        setPieChartData: (state, action: PayloadAction<any[]>) => {
             state.pieChartData = action.payload;
         },
-        setTopProduct: (state, action: PayloadAction<any[]>) => {  // Change here to accept any array
+        setTopProduct: (state, action: PayloadAction<any[]>) => {
             state.topProductData = action.payload;
         },
-        setCustomerTraffic: (state, action: PayloadAction<any[]>) => {  // Change here to accept any array
+        setCustomerTraffic: (state, action: PayloadAction<any[]>) => {
             state.CustomerTrafficData = action.payload;
+        },
+        setProductView: (state, action: PayloadAction<any[]>) => {
+            state.productView = action.payload;
+        },
+        setAddToCart: (state, action: PayloadAction<any[]>) => {
+            state.addToCart = action.payload;
+        },
+        setCheckout: (state, action: PayloadAction<any[]>) => {
+            state.checkout = action.payload;
+        },
+        setPurchase: (state, action: PayloadAction<any[]>) => {
+            state.purchase = action.payload;
         },
     },
 });
 
 export const {
+    setToken,
     setModal,
     setEmail,
     setIsLoading,
@@ -134,7 +160,11 @@ export const {
     setCustomerTraffic,
     setLineChartData,
     setPieChartData,
-    setTopProduct
+    setTopProduct,
+    setPurchase,
+    setAddToCart,
+    setProductView,
+    setCheckout,
 } = menuSlice.actions;
 
 export default menuSlice.reducer;

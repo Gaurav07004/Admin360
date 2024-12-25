@@ -6,7 +6,7 @@ import Chart from "@/components/Chart";
 import RecentOrder from "@/components/RecentOrder";
 import RightBar from "@/components/rightbar";
 import { useDispatch } from "react-redux";
-import { setCustomerTraffic, setLineChartData, setPieChartData, setTopProduct } from "@/redux/slices/commonSlice";
+import { setCustomerTraffic, setLineChartData, setPieChartData } from "@/redux/slices/commonSlice";
 
 function Page() {
     const dispatch = useDispatch();
@@ -37,7 +37,6 @@ function Page() {
                     const data = await response.json();
                     dispatch(setLineChartData(data.lineChartData));
                     dispatch(setPieChartData(data.pieChartData));
-                    dispatch(setTopProduct(data.topProductData));
                     dispatch(setCustomerTraffic(data.CustomerTrafficData));
                 } else {
                     toast.error("Failed to fetch data.", { position: "top-right" });
@@ -54,11 +53,11 @@ function Page() {
 
     return (
         isLoading ? (
-            <div className="flex justify-center items-center h-screen">
-                <div className="w-16 h-16 border-8 border-t-8 border-orange-500 border-solid rounded-full animate-spin"></div>
+            <div className="fixed top-[50%] left-[55%] flex justify-center items-center">
+                <div className="w-12 h-12 rounded-full border-[0.2rem] border-gray-300 border-t-orange-500 animate-spin"></div>
             </div>
         ) : (
-            <section className="flex gap-5">
+            <section className="flex gap-5 animate-fadeIn">
                 <section className="w-[70%] flex flex-col gap-5">
                     <Chart />
                     <RecentOrder />

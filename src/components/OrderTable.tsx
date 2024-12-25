@@ -1,12 +1,11 @@
 'use client';
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { updateOrderStatus, setSelectedOrder, setDrawerStatus } from "../redux/slices/orderSlice";
 import { PiDotsThreeOutlineLight } from "react-icons/pi";
 import TableComponent from "./table";
 import { toast } from 'keep-react';
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../redux/store';
-import { setOrder } from "@/redux/slices/orderSlice";
 
 const columns = [
     { id: 'orderID', label: 'Order ID' },
@@ -79,41 +78,6 @@ const OrderTable = () => {
             dispatch(setDrawerStatus(!drawerStatus));
         }
     };
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const token = localStorage.getItem("authToken");
-
-            if (!token) {
-                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
-                setTimeout(() => {
-                    window.location.href = "/";
-                }, 2000);
-                return;
-            }
-
-            try {
-                const response = await fetch("http://localhost:3000/api/auth/order", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`,
-                    },
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    dispatch(setOrder(data.orders));
-                } else {
-                    toast.error("Failed to fetch data.", { position: "top-right" });
-                }
-            } catch (error) {
-                toast.error("Unable to connect. Please check your network.", { position: "top-right" });
-            }
-        };
-
-        fetchData();
-    }, [dispatch]);
 
     const data = orders.map((order) => ({
         orderID: order.orderID,
