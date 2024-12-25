@@ -2,11 +2,12 @@
 'use client';
 import { useDispatch, useSelector } from 'react-redux';
 import { PiDotsThreeOutlineLight } from 'react-icons/pi';
-import { toast } from 'keep-react';
+// import { toast } from 'keep-react';
 import { RootState } from '../redux/store';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { updateProductStatus, updateProductStock, setSelectedProduct, setDrawerStatus } from '../redux/slices/productsSlice';
 import TableComponent from './table';
+
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface Product {
@@ -44,31 +45,31 @@ const ProductTable = () => {
     const dispatch = useDispatch();
     const { products, drawerStatus } = useSelector((state: RootState) => state.product);
 
-    const handleProductMenuClick = (productID: string, status: 'Available' | 'Out of Stock' | 'Low Stock') => {
-        try {
-            const newStatus = (() => {
-                switch (status) {
-                    case 'Available':
-                        return 'Low Stock';
-                    case 'Low Stock':
-                        return 'Out of Stock';
-                    case 'Out of Stock':
-                        return 'Available';
-                    default:
-                        return 'Available';
-                }
-            })();
+    // const handleProductMenuClick = (productID: string, status: 'Available' | 'Out of Stock' | 'Low Stock') => {
+    //     try {
+    //         const newStatus = (() => {
+    //             switch (status) {
+    //                 case 'Available':
+    //                     return 'Low Stock';
+    //                 case 'Low Stock':
+    //                     return 'Out of Stock';
+    //                 case 'Out of Stock':
+    //                     return 'Available';
+    //                 default:
+    //                     return 'Available';
+    //             }
+    //         })();
 
-            if (newStatus !== status) {
-                dispatch(updateProductStatus({ productID, status: newStatus }));
-                toast.success(`Product ID ${productID} status changed to ${newStatus}.`);
-            } else {
-                toast.info(`Product ID ${productID} is already in the ${status} state.`);
-            }
-        } catch (error) {
-            toast.error('Failed to update product status.');
-        }
-    };
+    //         if (newStatus !== status) {
+    //             dispatch(updateProductStatus({ productID, status: newStatus }));
+    //             toast.success(`Product ID ${productID} status changed to ${newStatus}.`);
+    //         } else {
+    //             toast.info(`Product ID ${productID} is already in the ${status} state.`);
+    //         }
+    //     } catch (error) {
+    //         toast.error('Failed to update product status.');
+    //     }
+    // };
 
     const handleProduct = (productID: string) => {
         const selectedProduct = products.find((product) => product.productID === productID);

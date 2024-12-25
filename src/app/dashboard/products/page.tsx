@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import { useEffect } from "react";
+import { toast } from "keep-react"
 import { LuCheckCircle } from "react-icons/lu";
 import { RxCube } from "react-icons/rx";
 import { PiWarning, PiCloudArrowDown } from "react-icons/pi";
@@ -8,6 +9,8 @@ import BarChart from "@/components/ProductChart";
 import ProductTable from '@/components/ProductTable'
 import Product from '@/app/dashboard/products/[id]/page'
 import NewProduct from '@/components/newProduct'
+import { useDispatch } from "react-redux";
+import { setProduct, setProductMonthlyData } from "@/redux/slices/productsSlice";
 
 const statistics = [
     {
@@ -61,6 +64,44 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, bgColor, ic
 );
 
 const Page: React.FC = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = localStorage.getItem("authToken");
+
+            if (!token) {
+                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 2000);
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:3000/api/auth/product", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    dispatch(setProduct(data.products));
+                    dispatch(setProductMonthlyData(data.ProductStats));
+                } else {
+                    toast.error("Failed to fetch data.", { position: "top-right" });
+                }
+            } catch (error) {
+                toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+            }
+        };
+
+        fetchData();
+    }, [dispatch]);
+
     return (
         <section className="gap-5 flex flex-col justify-between">
             <div className="flex gap-6 w-full">

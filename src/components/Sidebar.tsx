@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { Divider } from "keep-react";
+import { Divider, toast } from "keep-react";
 import Image from "next/image";
 import logo from "@/Assets/New_Logo.png";
 import profilePic from "@/Assets/Profile.jpg";
@@ -38,18 +39,19 @@ const menuConfig = [
         title: "Account",
         items: [
             { name: "Settings", icon: CiSettings, href: "/dashboard/settings" },
-            { name: "Log out", icon: CiLogout, href: "/logIn" },
+            { name: "Log out", icon: CiLogout, href: "#" },
         ],
     },
 ];
 
 const Sidebar: React.FC = () => {
-    const { imageUrl } = useSelector((state: RootState) => state.user);
+    const { imageUrl, adminData } = useSelector((state: RootState) => state.user);
     const pathname = usePathname();
+    const fullName = `${adminData.firstName} ${adminData.lastName}`;
 
     const renderMenuItem = (
         menu: string,
-        MenuIcon: React.ComponentType<{ className?: string }>,
+        MenuIcon: React.ComponentType<{ className?: string }> | any,
         href: string,
         notification?: number
     ) => {
@@ -66,6 +68,7 @@ const Sidebar: React.FC = () => {
                                 : "hover:bg-[#ff66002b] text-gray-800"
                             }`}
                         aria-current={isActive ? "page" : undefined}
+                        onClick={menu === "Log out" ? handleLogout : undefined}
                     >
                         <div className="flex items-center">
                             <MenuIcon className="w-5 h-5" />
@@ -82,11 +85,39 @@ const Sidebar: React.FC = () => {
         );
     };
 
+    const handleLogout = async (e: React.MouseEvent) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch("http://localhost:3000/api/auth/logout", {
+                method: "POST",
+            });
+
+            if (response.ok) {
+                localStorage.removeItem("authToken");
+
+                toast.success("Logout successful! Redirecting to login.", { position: "top-right" });
+
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 500);
+            } else {
+                const errorData = await response.json();
+                const errorMessage = errorData.message || "Something went wrong. Please try again.";
+                toast.error(errorMessage, { position: "top-right" });
+            }
+        } catch (error) {
+            console.error("An error occurred during logout:", error);
+            toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+        }
+    };
+
+
     return (
         <nav className="bg-white w-60 h-auto py-7 px-4 rounded-[1rem]" role="navigation">
             <ul className="space-y-6">
                 <div className="mb-5">
-                    <Image src={logo} alt="logo" width={0} height={0} className='w-[11rem] h-auto' />
+                    <Image src={logo} alt="logo" width={0} height={0} className="w-[11rem] h-auto" />
                 </div>
                 {menuConfig.map((section, index) => (
                     <section key={index} className="flex flex-col gap-2">
@@ -104,8 +135,8 @@ const Sidebar: React.FC = () => {
                         height={0}
                     />
                     <div>
-                        <p className="text-sm font-semibold text-gray-600 truncate">Gaurav Singh</p>
-                        <p className="text-xs text-gray-400">Sales Manager</p>
+                        <p className="text-sm font-semibold text-gray-600 truncate">{fullName}</p>
+                        <p className="text-xs text-gray-400">{adminData.role}</p>
                     </div>
                 </div>
             </ul>

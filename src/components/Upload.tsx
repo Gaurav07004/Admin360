@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Upload, UploadBody, UploadFooter, UploadIcon, UploadText, toast } from 'keep-react';
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
-import { setFiles, deleteFile } from '../redux/slices/userSlice';
+import { setFiles, deleteFile } from '../redux/slices/adminSlice';
 import { RootState } from '../redux/store';
 import profilePic from "../Assets/Profile.jpg";
 
@@ -30,6 +30,8 @@ const UploadComponent = () => {
     const handleDeleteFile = (fileName: string) => {
         dispatch(deleteFile(fileName));
     };
+
+    console.log("Image", imageUrl)
 
     return (
         <section>

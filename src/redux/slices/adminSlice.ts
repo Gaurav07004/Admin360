@@ -1,14 +1,15 @@
-// src/redux/uploadSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UploadState {
     files: File[];
     imageUrl: string | null;
+    adminData: { email: string; firstName: string; lastName: string; role: string; adminID: string };
 }
 
 const initialState: UploadState = {
     files: [],
     imageUrl: null,
+    adminData: { email: "", firstName: "", lastName: "", role: "", adminID: "" },
 };
 
 const uploadSlice = createSlice({
@@ -27,8 +28,11 @@ const uploadSlice = createSlice({
                 state.imageUrl = state.files.length > 0 ? URL.createObjectURL(state.files[0]) : null;
             }
         },
+        setAdminData: (state, action: PayloadAction<{ email: string; firstName: string; lastName: string; role: string, adminID: string }>) => {
+            state.adminData = action.payload;
+        },
     },
 });
 
-export const { setFiles, deleteFile } = uploadSlice.actions;
+export const { setFiles, deleteFile, setAdminData } = uploadSlice.actions;
 export default uploadSlice.reducer;

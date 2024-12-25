@@ -1,6 +1,8 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { FaCircle } from "react-icons/fa";
+import { RootState } from '../redux/store';
+import { useSelector } from "react-redux";
 
 type ChartConfig = {
     [key: string]: {
@@ -10,31 +12,31 @@ type ChartConfig = {
 };
 
 const chartConfig: ChartConfig = {
-    Sold: {
+    sold: {
         label: 'Sold',
         color: '#384B70',
     },
-    Returned: {
+    returned: {
         label: 'Returned',
         color: '#D8A25E',
     },
 };
 
 
-const chartData = [
-    { month: 'January', Sold: 150, Returned: 50 },
-    { month: 'February', Sold: 180, Returned: 60 },
-    { month: 'March', Sold: 130, Returned: 75 },
-    { month: 'April', Sold: 200, Returned: 85 },
-    { month: 'May', Sold: 170, Returned: 65 },
-    { month: 'June', Sold: 210, Returned: 70 },
-    { month: 'July', Sold: 190, Returned: 80 },
-    { month: 'August', Sold: 220, Returned: 75 },
-    { month: 'September', Sold: 160, Returned: 90 },
-    { month: 'October', Sold: 200, Returned: 65 },
-    { month: 'November', Sold: 210, Returned: 55 },
-    { month: 'December', Sold: 230, Returned: 50 },
-];
+// const chartData = [
+//     { month: 'January', sold: 150, returned: 50 },
+//     { month: 'February', sold: 180, returned: 60 },
+//     { month: 'March', sold: 130, returned: 75 },
+//     { month: 'April', sold: 200, returned: 85 },
+//     { month: 'May', sold: 170, returned: 65 },
+//     { month: 'June', sold: 210, returned: 70 },
+//     { month: 'July', sold: 190, returned: 80 },
+//     { month: 'August', sold: 220, returned: 75 },
+//     { month: 'September', sold: 160, returned: 90 },
+//     { month: 'October', sold: 200, returned: 65 },
+//     { month: 'November', sold: 210, returned: 55 },
+//     { month: 'December', sold: 230, returned: 50 },
+// ];
 
 // Custom Tooltip Component
 const CustomTooltip = ({ active, payload }) => {
@@ -42,15 +44,18 @@ const CustomTooltip = ({ active, payload }) => {
         return (
             <div className="bg-[#333] text-white p-2 rounded text-sm shadow-lg">
                 <h4 className="font-bold">{payload[0].payload.month}</h4>
-                <p>{`${chartConfig.Sold.label}: ${payload[0].payload.Sold}`}</p>
-                <p>{`${chartConfig.Returned.label}: ${payload[1].payload.Returned}`}</p>
+                <p>{`${chartConfig.sold.label}: ${payload[0].payload.sold}`}</p>
+                <p>{`${chartConfig.returned.label}: ${payload[1].payload.returned}`}</p>
             </div>
         );
     }
     return null;
 };
-
 const BarChartComponent: React.FC = () => {
+    const { productMonthlyData } = useSelector((state: RootState) => state.product);
+
+    console.log("productMonthlyData", productMonthlyData)
+
     return (
         <>
             <div className='flex items-center justify-between mb-8'>
@@ -62,7 +67,7 @@ const BarChartComponent: React.FC = () => {
                 <button className="flex items-center py-2 px-5 text-sm text-gray-500 bg-gray-100 rounded-lg hover:bg-gray-100 border border-gray-300">Monthly</button>
             </div>
             <ResponsiveContainer className="mx-auto w-[600px]" height={200}>
-                <BarChart data={chartData}>
+                <BarChart data={productMonthlyData}>
                     <CartesianGrid vertical={false} stroke="#E1E5EA" />
                     <XAxis
                         dataKey="month"
@@ -73,8 +78,8 @@ const BarChartComponent: React.FC = () => {
                     />
                     <YAxis tickLine={false} tickMargin={24} axisLine={false} />
                     <Tooltip content={<CustomTooltip active={undefined} payload={undefined} />} />
-                    <Bar radius={[0, 0, 0, 0]} barSize={10} dataKey="Sold" stackId="a" fill={chartConfig.Sold.color} />
-                    <Bar radius={[8, 8, 0, 0]} barSize={10} dataKey="Returned" stackId="a" fill={chartConfig.Returned.color} />
+                    <Bar radius={[0, 0, 0, 0]} barSize={10} dataKey="sold" stackId="a" fill={chartConfig.sold.color} />
+                    <Bar radius={[8, 8, 0, 0]} barSize={10} dataKey="returned" stackId="a" fill={chartConfig.returned.color} />
                 </BarChart>
             </ResponsiveContainer>
         </>

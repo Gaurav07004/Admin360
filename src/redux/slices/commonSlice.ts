@@ -17,7 +17,7 @@ interface MenuState {
     OTPStatus: "valid" | "invalid" | null;
     showNewPassword: boolean;
     currentSection: number;
-    form: { email: string; password: string; firstName: string; lastName: string; username: string };
+    form: { email: string; password: string; firstName: string; lastName: string; role: string; adminID: string };
     usernameStatus: "valid" | "invalid" | null;
     lineChartData: any[];
     pieChartData: any[];
@@ -45,7 +45,7 @@ const initialState: MenuState = {
     passwordStatus: null,
     showNewPassword: false,
     currentSection: 1,
-    form: { email: "", password: "", firstName: "", lastName: "", username: "" },
+    form: { email: "", password: "", firstName: "", lastName: "", role: "", adminID: "" },
     usernameStatus: null,
     lineChartData: [],
     pieChartData: [],
@@ -106,7 +106,7 @@ const menuSlice = createSlice({
         setCurrentSection: (state, action: PayloadAction<number>) => {
             state.currentSection = action.payload;
         },
-        setForm: (state, action: PayloadAction<{ password: string; email: string; firstName: string; lastName: string; username: string }>) => {
+        setForm: (state, action: PayloadAction<{ password: string; email: string; firstName: string; lastName: string; role: string, adminID: string }>) => {
             state.form = action.payload;
         },
         setUsernameStatus: (state, action: PayloadAction<"valid" | "invalid" | null>) => {
