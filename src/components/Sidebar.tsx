@@ -8,7 +8,7 @@ import { RootState } from "../redux/store";
 import { Divider, toast } from "keep-react";
 import Image from "next/image";
 import logo from "@/Assets/New_Logo.png";
-import profilePic from "@/Assets/Profile.jpg";
+import profilePic from "@/Assets/Men.jpg";
 import {
     PiBoundingBoxLight,
     PiShoppingCartSimpleLight,

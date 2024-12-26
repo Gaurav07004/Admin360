@@ -1,17 +1,42 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-// import Product_1 from "@/Assets/Dell Inspiron 15 Laptop.png";
-// import Product_2 from "@/Assets/Targus Laptop Sleeve.webp";
-// import Product_3 from "@/Assets/Apple iPhone 15.webp";
-// import Product_4 from "@/Assets/Samsung Galaxy Watch 5.webp";
+
+interface RecentOrder {
+    title: string;
+    status: 'Completed' | 'Pending';
+    date: string;
+    time: string;
+    description: string;
+    courier: string,
+    warehouse: string,
+    estimatedDelivery: string,
+}
+
+interface Order {
+    id: number;
+    orderID: string;
+    orderDate: string;
+    customerName: string;
+    orderStatus: 'Delivered' | 'Pending' | 'Unreachable' | 'Cancelled' | 'Shipped';
+    cost: number;
+    paymentMethod: string;
+    paymentStatus: 'Paid' | 'Unpaid';
+    deliveryAddress: string;
+    trackingNumber: string;
+    customerPhone: string;
+    itemName: string;
+    itemImage: string;
+    courier: string;
+    Recent_Orders: RecentOrder[];
+}
 
 interface OrderState {
-    orders: any[];
+    orders: Order[];
     orderMonthlyData: any[];
     sortedTable: string[];
     drawerStatus: boolean;
-    selectedOrder: string[] | null;
+    selectedOrder: Order | null;
 }
 
 const initialState: OrderState = {
@@ -26,17 +51,23 @@ const OrderSlice = createSlice({
     name: 'Order',
     initialState,
     reducers: {
-        // updateOrderStatus: (state, action: PayloadAction<{ orderID: string; orderStatus: 'Delivered' | 'Pending' | 'Unreachable' | 'Cancelled' | 'Shipped' }>) => {
-        //     const { orderID, orderStatus } = action.payload;
-        //     const order = state.orders.find(order => order.orderID === orderID);
-        //     if (order) {
-        //         order.orderStatus = orderStatus;
-        //     }
-        // },
+        updateOrderStatus: (
+            state,
+            action: PayloadAction<{
+                orderID: string;
+                orderStatus: 'Delivered' | 'Pending' | 'Unreachable' | 'Cancelled' | 'Shipped';
+            }>
+        ) => {
+            const { orderID, orderStatus } = action.payload;
+            const order = state.orders.find((order) => order.orderID === orderID);
+            if (order) {
+                order.orderStatus = orderStatus;
+            }
+        },
         setSortedReviews: (state, action: PayloadAction<string[]>) => {
             state.sortedTable = action.payload;
         },
-        setOrder: (state, action: PayloadAction<any[]>) => {
+        setOrder: (state, action: PayloadAction<Order[]>) => {
             state.orders = action.payload;
         },
         setOrderMonthlyData: (state, action: PayloadAction<any[]>) => {
@@ -51,7 +82,14 @@ const OrderSlice = createSlice({
     },
 });
 
-export const { updateOrderStatus, setSortedReviews, setDrawerStatus, setSelectedOrder, setOrder, setOrderMonthlyData } = OrderSlice.actions;
+export const {
+    updateOrderStatus,
+    setSortedReviews,
+    setDrawerStatus,
+    setSelectedOrder,
+    setOrder,
+    setOrderMonthlyData,
+} = OrderSlice.actions;
 
 export const selectOrderState = (state: RootState) => state.order;
 

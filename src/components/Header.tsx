@@ -4,7 +4,7 @@
 import Image from "next/image";
 //import { FiSearch } from "react-icons/fi";
 import { IoMailOutline, IoCalendarOutline } from "react-icons/io5";
-import profilePic from "../Assets/Profile.jpg";
+import profilePic from "../Assets/Men.jpg";
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { TfiLayoutLineSolid } from "react-icons/tfi";

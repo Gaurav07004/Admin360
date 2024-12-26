@@ -1,47 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import Product_1 from "@/Assets/Dell Inspiron 15 Laptop.png";
-// import Product_2 from "@/Assets/Targus Laptop Sleeve.webp";
-// import Product_3 from "@/Assets/Apple iPhone 15.webp";
-// import Product_4 from "@/Assets/Samsung Galaxy Watch 5.webp";
-// import Product_5 from "@/Assets/Power_Bank.png";
-// import Product_6 from "@/Assets/LG Monitor.png";
-// import Product_7 from "@/Assets/PlayStation.png";
-// import Product_8 from "@/Assets/Mouse.png";
-// import Product_9 from "@/Assets/JBL.png";
-// import Product_10 from "@/Assets/Sony.png";
 
-// interface Product {
-//     id: number;
-//     productID: string;
-//     productName: string;
-//     category: string;
-//     subcategory: string;
-//     price: number;
-//     stockStatus: "Available" | "Out of Stock" | "Low Stock";
-//     stockQuantity: number;
-//     supplier: {
-//         name: string,
-//         contact: string,
-//         email: string,
-//     };
-//     previousCount?: number;
-//     viewsCount: number;
-//     purchaseCount: number;
-//     wishlistCount: number;
-//     rating: number;
-//     lastUpdatedBy?: string;
-//     lastUpdatedAt?: string;
-//     productImage: any;
-//     tags: string[];
-//     description: string,
-// }
+interface Product {
+    id: number;
+    productID: string;
+    productName: string;
+    category: string;
+    subcategory: string;
+    price: number;
+    stockStatus: "Available" | "Out of Stock" | "Low Stock";
+    stockQuantity: number;
+    supplier: {
+        name: string,
+        contact: string,
+        email: string,
+    };
+    previousCount?: number;
+    viewsCount: number;
+    purchaseCount: number;
+    wishlistCount: number;
+    rating: number;
+    lastUpdatedBy?: string;
+    lastUpdatedAt?: string;
+    productImage: any;
+    tags: string[];
+    description: string,
+}
 
 interface ProductState {
-    products: any[];
+    products: Product[];
     drawerStatus: boolean;
     productDrawerStatus: boolean;
-    selectedProduct: string[] | null;
+    selectedProduct: Product | null;
     productMonthlyData: any[];
 }
 
@@ -344,10 +334,10 @@ const productSlice = createSlice({
         setProductDrawerStatus: (state, action: PayloadAction<boolean>) => {
             state.productDrawerStatus = action.payload;
         },
-        setSelectedProduct: (state, action: PayloadAction<string[]>) => {
+        setSelectedProduct: (state, action: PayloadAction<Product>) => {
             state.selectedProduct = action.payload;
         },
-        setProduct: (state, action: PayloadAction<any[]>) => {
+        setProduct: (state, action: PayloadAction<Product[]>) => {
             state.products = action.payload;
         },
         setProductMonthlyData: (state, action: PayloadAction<any[]>) => {

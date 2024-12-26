@@ -8,7 +8,7 @@ import { HiArrowLongRight } from "react-icons/hi2";
 import { TfiLayoutLineSolid } from "react-icons/tfi";
 import { Divider, toast } from 'keep-react';
 import Image from "next/image";
-import profilePic from "@/Assets/Profile.jpg";
+import profilePic from "@/Assets/Men.jpg";
 import { PiCircleFill, PiPhoneCallLight } from "react-icons/pi";
 import { IoMailOutline } from "react-icons/io5";
 import { Timeline, TimelineContent, TimelineItem, TimelinePoint } from "keep-react";

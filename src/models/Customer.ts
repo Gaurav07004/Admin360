@@ -1,3 +1,4 @@
+import { profilePic } from '@/Assets/Profile.jpg';
 import mongoose, { Document, Schema, Model, model } from 'mongoose';
 
 interface IVisit {
@@ -61,6 +62,7 @@ const customerSchema = new Schema<ICustomer>(
         customerID: { type: String, required: true },
         customerName: { type: String, required: true },
         email: { type: String, required: true },
+        profilePic
         location: { type: String, required: true },
         mobileNumber: { type: Number, required: true },
         dateJoined: { type: String, required: true },

@@ -14,14 +14,16 @@ const UploadComponent = () => {
     const { files, imageUrl, accountData } = useSelector((state: RootState) => state.user);
 
     const onDrop = useCallback((acceptedFiles: any) => {
-        const jpgFiles = acceptedFiles.filter((file: File) => file.type === 'image/jpeg')
+        const imageFiles = acceptedFiles.filter((file: File) =>
+            file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/webp'
+        );
 
-        if (jpgFiles.length === 0) {
-            toast.error('Only JPG/JPEG files are allowed.');
+        if (imageFiles.length === 0) {
+            toast.error('Only JPG/JPEG, PNG, or WEBP files are allowed.');
             return;
         }
 
-        const file = jpgFiles[0]
+        const file = imageFiles[0]
         const reader = new FileReader()
 
         reader.onloadend = () => {

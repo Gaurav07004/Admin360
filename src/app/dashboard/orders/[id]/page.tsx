@@ -9,6 +9,7 @@ import { Divider } from 'keep-react';
 import Image from "next/image";
 import { Timeline, TimelineContent, TimelineItem, TimelinePoint } from "keep-react";
 import { PiCheckBold } from "react-icons/pi";
+import empty from "@/Assets/Product_Empty.jpg"
 
 
 const CustomerDetailPage: React.FC = () => {
@@ -123,9 +124,11 @@ const CustomerDetailPage: React.FC = () => {
                     <div className="flex justify-between w-full items-center">
                         <div className="space-x-3 flex items-center w-fit">
                             <Image
-                                src={selectedOrder?.itemImage}
+                                src={selectedOrder?.itemImage || empty}
                                 alt="Profile Picture"
                                 className="w-16 h-16 object-contain rounded-lg border-[2.5px] border-gray-200 p-1 bg-slate-100"
+                                width={0}
+                                height={0}
                             />
                             <div>
                                 <h3 className="text-sm font-semibold text-gray-700">{selectedOrder?.itemName}</h3>
@@ -137,15 +140,17 @@ const CustomerDetailPage: React.FC = () => {
                     </div>
                 </div>
                 <Divider className="border-t-[0.5px] border-gray-200 mt-2" />
-                <div className="flex flex-col text-gray-500 ">
+                <div className="flex flex-col text-gray-500">
                     {data.map((item, index) => {
-                        const statusClasses = {
+                        const statusClasses: Record<string, string> = {
                             Delivered: "bg-green-100 text-green-500 hover:bg-green-200 px-2 py-1 w-fit",
                             Pending: "bg-yellow-100 text-yellow-500 hover:bg-yellow-200 px-2 py-1 w-fit",
                             Cancelled: "bg-red-100 text-red-500 hover:bg-red-200 px-2 py-1 w-fit",
                             Unreachable: "bg-red-100 text-red-500 hover:bg-red-200 px-2 py-1 w-fit",
                             Shipped: "bg-blue-100 text-blue-600 hover:bg-blue-200 px-2 py-1 w-fit",
                         };
+
+                        const statusClass = statusClasses[item.value || "Pending"];
 
                         return (
                             <div
@@ -156,22 +161,20 @@ const CustomerDetailPage: React.FC = () => {
                                     {item.label}
                                 </span>
                                 <span
-                                    className={`text-[0.8rem] font-semibold text-gray-800 rounded-md ${statusClasses[item.value]
-                                        }`}
+                                    className={`text-[0.8rem] font-semibold text-gray-800 rounded-md ${statusClass}`}
                                 >
-                                    {item.value}
+                                    {item.value || "Pending"}
                                 </span>
                             </div>
                         );
                     })}
-
                 </div>
                 <Divider className="border-t-[0.5px] border-gray-200 mt-2" />
                 <div className="flex flex-col text-gray-500 ">
                     {data_customer.map((item, index) => (
                         <div
                             key={index}
-                            className={`flex items-center justify-between w-full py-3 px-4`}
+                            className={`grid grid-cols-2 items-center w-full py-3 px-4 gap-4`}
                         >
                             <span className="w-1/2 text-[0.9rem] font-medium text-slate-500">{item.label}</span>
                             <span className="w-1/2 text-[0.8rem] font-semibold text-gray-800">{item.value}</span>
