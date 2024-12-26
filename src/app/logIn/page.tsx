@@ -2,6 +2,7 @@
 import Image from "next/image";
 import logo from "@/Assets/New_Logo.png";
 import login from "@/Assets/login_1.png";
+import { useRouter } from "next/navigation";
 import { toast } from "keep-react"
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { GoLock } from "react-icons/go";
@@ -15,6 +16,7 @@ import ForgotPasswordModal from "@/components/ForgetPassword";
 
 const Login = () => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{3,}$/;
     const { modal, form, statusMessage, passwordStatus, passwordStatusMessage, emailStatus, showNewPassword } = useSelector((state: RootState) => state.menu);
 
@@ -43,26 +45,29 @@ const Login = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!form.email || !form.password) {
-            dispatch(setPasswordStatus("invalid"))
-            dispatch(setEmailStatus("invalid"))
+        if (!form.email) {
+            dispatch(setEmailStatus("invalid"));
             dispatch(setStatusMessage("Please enter a valid email address."));
-            dispatch(setPasswordStatusMessage("Please enter a valid password."));
-            return;
+        } else {
+            dispatch(setEmailStatus(null));
         }
 
-        if (form.password) {
+        if (!form.password) {
+            dispatch(setPasswordStatus("invalid"));
+            dispatch(setPasswordStatusMessage("Please enter a valid password."));
+        } else {
             dispatch(setPasswordStatus(null));
         }
 
+        if (!form.email || !form.password) {
+            return;
+        }
 
         try {
-            const loginData = {
-                email: form.email,
-                password: form.password,
-            };
+            const loginData = { email: form.email, password: form.password };
+            const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
-            const response = await fetch("http://localhost:3000/api/auth/login", {
+            const response = await fetch(`${BASE_URL}/api/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -75,17 +80,17 @@ const Login = () => {
 
                 if (data.token) {
                     localStorage.setItem("authToken", data.token);
-                    toast.success("Login successfull! Redirecting to dashboard ", { position: "top-right" });
+                    toast.success("Login successful! Redirecting to dashboard", { position: "top-right" });
 
                     setTimeout(() => {
-                        window.location.href = "/dashboard";
-                    }, 2000);
+                        router.push("/dashboard");
+                    }, 500);
                 } else {
                     toast.error("Token not received. Please try again.", { position: "top-right" });
                 }
             } else {
-                const errorData = await response.json();
-                const errorMessage = errorData.message || "Invalid credentials. Please check credentials.";
+                // const errorData = await response.json();
+                const errorMessage = "Invalid credentials. Please try again.";
                 toast.warning(errorMessage, { position: "top-right" });
             }
         } catch (error) {

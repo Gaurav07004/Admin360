@@ -1,38 +1,51 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface AdminData {
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    role?: string;
+    adminID?: string;
+    isActive?: boolean | null;
+    profileImage?: string;
+}
+
 interface UploadState {
-    files: File[];
+    files: { name: string, dataUrl: string }[];
     imageUrl: string | null;
-    adminData: { email: string; firstName: string; lastName: string; role: string; adminID: string };
+    accountData: AdminData | null;
+    adminData: AdminData;
 }
 
 const initialState: UploadState = {
     files: [],
     imageUrl: null,
-    adminData: { email: "", firstName: "", lastName: "", role: "", adminID: "" },
+    accountData: null,
+    adminData: { email: "", firstName: "", lastName: "", role: "", adminID: "", isActive: null, profileImage: "" },
 };
 
 const uploadSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setFiles(state, action: PayloadAction<File[]>) {
+        setFiles: (state, action: PayloadAction<{ name: string, dataUrl: string }[]>) => {
             state.files = action.payload;
-            state.imageUrl = action.payload.length > 0 ? URL.createObjectURL(action.payload[0]) : null;
         },
-        deleteFile(state, action: PayloadAction<string>) {
-            state.files = state.files.filter(file => file.name !== action.payload);
-            if (state.imageUrl && state.files.length === 0) {
-                state.imageUrl = null;
-            } else {
-                state.imageUrl = state.files.length > 0 ? URL.createObjectURL(state.files[0]) : null;
-            }
+        setImageUrl: (state, action: PayloadAction<string | null>) => {
+            state.imageUrl = action.payload;
         },
-        setAdminData: (state, action: PayloadAction<{ email: string; firstName: string; lastName: string; role: string, adminID: string }>) => {
+        deleteFile: (state) => {
+            state.files = [];
+            state.imageUrl = null;
+        },
+        setAccountData(state, action: PayloadAction<AdminData>) {
+            state.accountData = action.payload;
+        },
+        setAdminData(state, action: PayloadAction<AdminData>) {
             state.adminData = action.payload;
         },
     },
 });
 
-export const { setFiles, deleteFile, setAdminData } = uploadSlice.actions;
+export const { setFiles, setImageUrl, deleteFile, setAdminData, setAccountData } = uploadSlice.actions;
 export default uploadSlice.reducer;

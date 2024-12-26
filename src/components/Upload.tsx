@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { Info, Trash } from 'phosphor-react';
 import { useCallback } from 'react';
@@ -5,40 +6,45 @@ import Image from "next/image";
 import { Upload, UploadBody, UploadFooter, UploadIcon, UploadText, toast } from 'keep-react';
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
-import { setFiles, deleteFile } from '../redux/slices/adminSlice';
+import { setFiles, setImageUrl, deleteFile } from '../redux/slices/adminSlice';
 import { RootState } from '../redux/store';
-import profilePic from "../Assets/Profile.jpg";
 
 const UploadComponent = () => {
     const dispatch = useDispatch();
-    const { files, imageUrl } = useSelector((state: RootState) => state.user);
+    const { files, imageUrl, accountData } = useSelector((state: RootState) => state.user);
 
-    const onDrop = useCallback((acceptedFiles: File[]) => {
-        const validFiles = acceptedFiles.filter(file => {
-            const fileType = file.type;
-            return fileType === 'image/png' || fileType === 'image/jpeg';
-        });
+    const onDrop = useCallback((acceptedFiles: any) => {
+        const jpgFiles = acceptedFiles.filter((file: File) => file.type === 'image/jpeg')
 
-        if (validFiles.length === 0) {
-            toast.error('Only PNG and JPG files are allowed.');
+        if (jpgFiles.length === 0) {
+            toast.error('Only JPG/JPEG files are allowed.');
             return;
         }
 
-        dispatch(setFiles(validFiles));
+        const file = jpgFiles[0]
+        const reader = new FileReader()
+
+        reader.onloadend = () => {
+            if (reader.result) {
+                const dataUrl = reader.result as string
+                dispatch(setFiles([{ name: file.name, dataUrl }]));
+                dispatch(setImageUrl(dataUrl));
+            }
+        }
+
+        reader.readAsDataURL(file);
     }, [dispatch]);
 
-    const handleDeleteFile = (fileName: string) => {
-        dispatch(deleteFile(fileName));
-    };
 
-    console.log("Image", imageUrl)
+    const handleDeleteFile = () => {
+        dispatch(deleteFile());
+    };
 
     return (
         <section>
             <div className="flex items-center space-x-3">
-
                 <Image
-                    src={imageUrl || profilePic}
+                    src={imageUrl || accountData?.profileImage}
                     alt="Profile Picture"
                     className="w-10 h-10 object-cover rounded-md shadow-md"
                     width={0}
@@ -77,7 +83,7 @@ const UploadComponent = () => {
                                         size={16}
                                         color="red"
                                         className="cursor-pointer "
-                                        onClick={() => handleDeleteFile(file.name)}
+                                        onClick={() => handleDeleteFile()}
                                     />
                                 </div>
                             </li>

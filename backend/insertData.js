@@ -25,6 +25,7 @@ const MONGO_URI = `mongodb+srv://gauravsingh07004:dyawSUbB9vtfAXnP@admin.ks9jn.m
 
 const mongoose = require("mongoose");
 require('dotenv').config();
+// const Admin = require('./models/Admin');
 
 mongoose.connect(MONGO_URI || "").then(() => {
     console.log('MongoDB connected');
@@ -32,17 +33,35 @@ mongoose.connect(MONGO_URI || "").then(() => {
 }).catch((err) => console.log('MongoDB connection failed:', err));
 
 const unifiedSchema = new mongoose.Schema({
-    timeRange: { type: String, required: true },
-    productView: { type: Number, required: true },
-    addToCart: { type: Number, required: true },
-    checkout: { type: Number, required: true },
-    purchase: { type: Number, required: true },
+    adminID: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    role: { type: String, required: true },
+    isActive: { type: Boolean, required: true },
+    profileImage: {
+        type: String,
+        required: false
+    }
 
 });
 
-const SalesCategory = mongoose.model("SalesCategory", unifiedSchema);
+const Admin = mongoose.model("Admin", unifiedSchema);
 
 const unifiedData = [
+
+    {
+        adminID: "AD82913",
+        email: "gaurav.singh@gmail.com",
+        password: "Gaurav@82913",
+        firstName: "Gaurav",
+        lastName: "Singh",
+        role: "Admin",
+        isActive: true,
+        profileImage: null,
+    }
+
     // { name: "Feb'24", value: 500000 },
     // { name: "Jan'24", value: 500000 },
     // { name: "Mar'24", value: 500000 },
@@ -118,35 +137,35 @@ const unifiedData = [
     // { month: "November", OrderRunning: 110, OnProcess: 130 },
     // { month: "December", OrderRunning: 150, OnProcess: 110 },
 
-    { timeRange: "06:00 AM", productView: 50000, addToCart: 49000, checkout: 48000, purchase: 47000 },
-    { timeRange: "07:00 AM", productView: 50000, addToCart: 49500, checkout: 49000, purchase: 48000 },
-    { timeRange: "08:00 AM", productView: 50000, addToCart: 50500, checkout: 49500, purchase: 49000 },
-    { timeRange: "09:00 AM", productView: 70000, addToCart: 71000, checkout: 70500, purchase: 70000 },
-    { timeRange: "10:00 AM", productView: 65000, addToCart: 66000, checkout: 64000, purchase: 63000 },
-    { timeRange: "11:00 AM", productView: 90000, addToCart: 91000, checkout: 89500, purchase: 88000 },
-    { timeRange: "12:00 PM", productView: 60000, addToCart: 61500, checkout: 59500, purchase: 58000 },
-    { timeRange: "01:00 PM", productView: 55000, addToCart: 56500, checkout: 54000, purchase: 52000 },
-    { timeRange: "02:00 PM", productView: 30000, addToCart: 31000, checkout: 29500, purchase: 28500 },
-    { timeRange: "03:00 PM", productView: 65000, addToCart: 66000, checkout: 64000, purchase: 62000 },
-    { timeRange: "04:00 PM", productView: 75000, addToCart: 76000, checkout: 74000, purchase: 72000 },
-    { timeRange: "05:00 PM", productView: 95000, addToCart: 96500, checkout: 93500, purchase: 91000 },
-    { timeRange: "06:00 PM", productView: 90000, addToCart: 92000, checkout: 88000, purchase: 86000 },
-    { timeRange: "07:00 PM", productView: 85000, addToCart: 86000, checkout: 84000, purchase: 82000 },
-    { timeRange: "08:00 PM", productView: 55000, addToCart: 56000, checkout: 53000, purchase: 51000 },
-    { timeRange: "09:00 PM", productView: 50000, addToCart: 51500, checkout: 48500, purchase: 47500 },
-    { timeRange: "10:00 PM", productView: 70000, addToCart: 71000, checkout: 69000, purchase: 67000 },
-    { timeRange: "11:00 PM", productView: 70000, addToCart: 71000, checkout: 69000, purchase: 67000 },
-    { timeRange: "12:00 AM", productView: 79000, addToCart: 80000, checkout: 78000, purchase: 76000 },
-    { timeRange: "01:00 AM", productView: 70000, addToCart: 70500, checkout: 69500, purchase: 67500 },
-    { timeRange: "02:00 AM", productView: 77000, addToCart: 78000, checkout: 76000, purchase: 74000 },
-    { timeRange: "03:00 AM", productView: 85000, addToCart: 85500, checkout: 84000, purchase: 82000 },
-    { timeRange: "04:00 AM", productView: 90000, addToCart: 91000, checkout: 89000, purchase: 87000 },
-    { timeRange: "05:00 AM", productView: 82000, addToCart: 82500, checkout: 81000, purchase: 79500 },
+    // { timeRange: "06:00 AM", productView: 50000, addToCart: 49000, checkout: 48000, purchase: 47000 },
+    // { timeRange: "07:00 AM", productView: 50000, addToCart: 49500, checkout: 49000, purchase: 48000 },
+    // { timeRange: "08:00 AM", productView: 50000, addToCart: 50500, checkout: 49500, purchase: 49000 },
+    // { timeRange: "09:00 AM", productView: 70000, addToCart: 71000, checkout: 70500, purchase: 70000 },
+    // { timeRange: "10:00 AM", productView: 65000, addToCart: 66000, checkout: 64000, purchase: 63000 },
+    // { timeRange: "11:00 AM", productView: 90000, addToCart: 91000, checkout: 89500, purchase: 88000 },
+    // { timeRange: "12:00 PM", productView: 60000, addToCart: 61500, checkout: 59500, purchase: 58000 },
+    // { timeRange: "01:00 PM", productView: 55000, addToCart: 56500, checkout: 54000, purchase: 52000 },
+    // { timeRange: "02:00 PM", productView: 30000, addToCart: 31000, checkout: 29500, purchase: 28500 },
+    // { timeRange: "03:00 PM", productView: 65000, addToCart: 66000, checkout: 64000, purchase: 62000 },
+    // { timeRange: "04:00 PM", productView: 75000, addToCart: 76000, checkout: 74000, purchase: 72000 },
+    // { timeRange: "05:00 PM", productView: 95000, addToCart: 96500, checkout: 93500, purchase: 91000 },
+    // { timeRange: "06:00 PM", productView: 90000, addToCart: 92000, checkout: 88000, purchase: 86000 },
+    // { timeRange: "07:00 PM", productView: 85000, addToCart: 86000, checkout: 84000, purchase: 82000 },
+    // { timeRange: "08:00 PM", productView: 55000, addToCart: 56000, checkout: 53000, purchase: 51000 },
+    // { timeRange: "09:00 PM", productView: 50000, addToCart: 51500, checkout: 48500, purchase: 47500 },
+    // { timeRange: "10:00 PM", productView: 70000, addToCart: 71000, checkout: 69000, purchase: 67000 },
+    // { timeRange: "11:00 PM", productView: 70000, addToCart: 71000, checkout: 69000, purchase: 67000 },
+    // { timeRange: "12:00 AM", productView: 79000, addToCart: 80000, checkout: 78000, purchase: 76000 },
+    // { timeRange: "01:00 AM", productView: 70000, addToCart: 70500, checkout: 69500, purchase: 67500 },
+    // { timeRange: "02:00 AM", productView: 77000, addToCart: 78000, checkout: 76000, purchase: 74000 },
+    // { timeRange: "03:00 AM", productView: 85000, addToCart: 85500, checkout: 84000, purchase: 82000 },
+    // { timeRange: "04:00 AM", productView: 90000, addToCart: 91000, checkout: 89000, purchase: 87000 },
+    // { timeRange: "05:00 AM", productView: 82000, addToCart: 82500, checkout: 81000, purchase: 79500 },
 ];
 
 async function insertData() {
     try {
-        await SalesCategory.insertMany(unifiedData);
+        await Admin.insertMany(unifiedData);
         console.log("Data inserted successfully into a single collection");
     } catch (error) {
         console.error("Error inserting data:", error);

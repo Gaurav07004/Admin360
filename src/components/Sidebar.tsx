@@ -45,9 +45,9 @@ const menuConfig = [
 ];
 
 const Sidebar: React.FC = () => {
-    const { imageUrl, adminData } = useSelector((state: RootState) => state.user);
+    const { imageUrl, accountData } = useSelector((state: RootState) => state.user);
     const pathname = usePathname();
-    const fullName = `${adminData.firstName} ${adminData.lastName}`;
+    const fullName = `${accountData?.firstName} ${accountData?.lastName}`;
 
     const renderMenuItem = (
         menu: string,
@@ -128,15 +128,15 @@ const Sidebar: React.FC = () => {
                 <Divider className="border-t border-gray-300 mx-[-1rem] mt-4" />
                 <div className="flex items-center space-x-3 mt-4">
                     <Image
-                        src={imageUrl || profilePic}
+                        src={accountData?.profileImage || profilePic}
                         alt="Profile Picture"
-                        className="w-10 h-10 object-cover rounded-full shadow-md hover:opacity-90 transition"
+                        className="w-10 h-10 object-cover rounded-md shadow-md hover:opacity-90 transition"
                         width={0}
                         height={0}
                     />
                     <div>
                         <p className="text-sm font-semibold text-gray-600 truncate">{fullName}</p>
-                        <p className="text-xs text-gray-400">{adminData.role}</p>
+                        <p className="text-xs text-gray-400">{accountData?.role}</p>
                     </div>
                 </div>
             </ul>

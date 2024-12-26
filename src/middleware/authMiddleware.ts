@@ -1,10 +1,25 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
+import Admin from '@/models/Admin'
+
+interface AdminPayload {
+    adminID: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string;
+    isActive: boolean;
+}
 
 type NextFunction = () => void;
 
-const authenticateMiddleware = (
+declare module 'next' {
+    interface NextApiRequest {
+        admin?: AdminPayload;
+    }
+}
+
+const authenticateMiddleware = async (
     req: NextApiRequest,
     res: NextApiResponse,
     next: NextFunction
@@ -16,17 +31,16 @@ const authenticateMiddleware = (
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as {
-            adminID: string;
-            name: string;
-            email: string;
-            role: string;
-            iat: number;
-            exp: number;
-        };
-        (req as any).admin = decoded;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as AdminPayload;
 
-        console.log('Decoded admin:', decoded);
+        const adminID = decoded.adminID;
+        const adminData = await Admin.findOne({ adminID }).select({ password: 0 });
+
+        if (!adminData) {
+            return res.status(401).json({ message: "Unauthorized, User not found" });
+        }
+
+        req.admin = adminData;
 
         next();
     } catch (error) {

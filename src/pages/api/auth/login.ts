@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import Admin from "@/models/Admin";
 import connectDB from "@/utils/dbConnect";
 
@@ -19,7 +19,6 @@ const loginAdmin = async (req: NextApiRequest, res: NextApiResponse) => {
         await connectDB();
 
         const admin = await Admin.findOne({ email });
-
         if (!admin) {
             return res.status(400).json({ error: "Admin not found" });
         }
@@ -29,7 +28,14 @@ const loginAdmin = async (req: NextApiRequest, res: NextApiResponse) => {
             return res.status(400).json({ error: "Invalid credentials" });
         }
 
-        const payload = { adminID: admin.adminID, name: admin.name, email: admin.email, role: admin.role };
+        const payload = {
+            adminID: admin.adminID,
+            firstName: admin.firstName,
+            lastName: admin.lastName,
+            email: admin.email,
+            role: admin.role,
+            isActive: admin.isActive,
+        };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '10h' });
 

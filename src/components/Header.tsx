@@ -10,8 +10,8 @@ import { RootState } from '../redux/store';
 import { TfiLayoutLineSolid } from "react-icons/tfi";
 
 const Header: React.FC = () => {
-    const { imageUrl, adminData } = useSelector((state: RootState) => state.user);
-    const fullName = `${adminData.firstName} ${adminData.lastName}`;
+    const { accountData } = useSelector((state: RootState) => state.user);
+    const fullName = `${accountData?.firstName} ${accountData?.lastName}`;
 
     const currentDate = new Date();
 
@@ -22,7 +22,7 @@ const Header: React.FC = () => {
     return (
         <nav className="flex items-center justify-between py-4 px-6 bg-white rounded-[1rem] w-[100%]">
             <div className="flex flex-col items-start">
-                <p className="text-2xl font-semibold text-[#5e6574]">Hello, {adminData.firstName}</p>
+                <p className="text-2xl font-semibold text-[#5e6574]">Hello, {accountData?.firstName}</p>
                 <p className="text-xs text-gray-400 font-semibold">Track your overall progress here. You're almost there!</p>
             </div>
 
@@ -39,7 +39,7 @@ const Header: React.FC = () => {
                 <TfiLayoutLineSolid className="text-xl text-gray-300 rotate-90" />
                 <div className="flex items-center space-x-2">
                     <Image
-                        src={imageUrl || profilePic}
+                        src={accountData?.profileImage || profilePic}
                         alt="Profile Picture"
                         className="w-10 h-10 object-cover rounded-md shadow-md"
                         width={0}
@@ -47,7 +47,7 @@ const Header: React.FC = () => {
                     />
                     <div>
                         <p className="text-sm font-semibold text-gray-600">{fullName}</p>
-                        <p className="text-xs text-gray-400">{adminData.role}</p>
+                        <p className="text-xs text-gray-400">{accountData?.role}</p>
                     </div>
                 </div>
             </div>
