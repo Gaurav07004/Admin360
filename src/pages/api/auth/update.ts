@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import connectDB from "@/utils/dbConnect";
 import authenticateMiddleware from '@/middleware/authMiddleware';
-import Admin from '@/models/Product';
+import Admin from '@/models/Customer';
 
 const UpdateAccount = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'PUT') {
@@ -9,28 +9,29 @@ const UpdateAccount = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(405).json({ message: 'Method Not Allowed' });
     }
 
-    const { productID, productImage } = req.body;
+    const { customerID, profileImage } = req.body;
 
-    if (!productID || !productImage) {
-        console.log('Missing required fields: ', { productID });
+    if (!customerID || !profileImage) {
+        console.log('Missing required fields: ', { customerID });
         return res.status(400).json({ message: 'All fields are required' });
     }
 
     try {
         await connectDB();
 
-        const admin = await Admin.findOne({ productID });
+        const admin = await Admin.findOne({ customerID });
 
         if (!admin) {
             return res.status(403).json({ message: 'Forbidden: Admin not found' });
         }
 
-        const existingAdmin = await Admin.findOne({ productID });
-        if (existingAdmin && existingAdmin.productID !== productID) {
+        const existingAdmin = await Admin.findOne({ customerID });
+        if (existingAdmin && existingAdmin.customerID !== customerID) {
             return res.status(400).json({ message: 'Email is already in use by another admin' });
         }
 
-        admin.productImage = productImage;
+        // console.log('Profile Image:', profileImage);
+        admin.profileImage = profileImage;
 
         await admin.save();
         return res.status(200).json({ message: 'Admin updated successfully' });

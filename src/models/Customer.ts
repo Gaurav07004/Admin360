@@ -1,4 +1,3 @@
-import { profilePic } from '@/Assets/Profile.jpg';
 import mongoose, { Document, Schema, Model, model } from 'mongoose';
 
 interface IVisit {
@@ -20,6 +19,7 @@ interface IRecentOrder {
 export interface ICustomer extends Document {
     customerID: string;
     customerName: string;
+    profileImage: string;
     email: string;
     location: string;
     mobileNumber: number;
@@ -32,7 +32,6 @@ export interface ICustomer extends Document {
     visit: IVisit[];
     Recent_Orders: IRecentOrder[];
     color: string;
-
 }
 
 const visitSchema = new Schema<IVisit>(
@@ -61,8 +60,8 @@ const customerSchema = new Schema<ICustomer>(
     {
         customerID: { type: String, required: true },
         customerName: { type: String, required: true },
+        profileImage: { type: String, required: true },
         email: { type: String, required: true },
-        profilePic
         location: { type: String, required: true },
         mobileNumber: { type: Number, required: true },
         dateJoined: { type: String, required: true },

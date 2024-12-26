@@ -8,7 +8,7 @@ import { HiArrowLongRight } from "react-icons/hi2";
 import { TfiLayoutLineSolid } from "react-icons/tfi";
 import { Divider, toast } from 'keep-react';
 import Image from "next/image";
-import profilePic from "@/Assets/Men.jpg";
+import profilePic from "@/Assets/profile_empty.jpg";
 import { PiCircleFill, PiPhoneCallLight } from "react-icons/pi";
 import { IoMailOutline } from "react-icons/io5";
 import { Timeline, TimelineContent, TimelineItem, TimelinePoint } from "keep-react";
@@ -171,7 +171,7 @@ const CustomerDetailPage: React.FC = () => {
         <div className="flex flex-col justify-between border border-gray-300 rounded-lg m-5">
             <div className="flex items-center p-4 border-b-[0.5px] border-gray-300">
                 <Image
-                    src={profilePic}
+                    src={selectedCustomer?.profileImage || profilePic}
                     alt="Profile Picture"
                     className="w-16 h-16 object-cover rounded-full shadow-md"
                     width={64}

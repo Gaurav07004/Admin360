@@ -2,38 +2,39 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-// interface Customer {
-//     id: number;
-//     customerID: string;
-//     customerName: string;
-//     email: string;
-//     mobileNumber: number;
-//     location: string;
-//     dateJoined: string;
-//     order: number;
-//     delivered: number,
-//     cancelled: number,
-//     pending: number,
-//     visit: { name: string; price: number }[];
-//     Recent_Orders?: {
-//         title: string;
-//         status: string;
-//         date: string;
-//         time: string;
-//         description: string;
-//         courier?: string;
-//         warehouse?: string;
-//         estimatedDelivery?: string;
-//     }[],
-//     color: string;
-//     customerStatus: 'Active' | 'Inactive';
-// }
+interface Customer {
+    id: number;
+    customerID: string;
+    customerName: string;
+    profileImage: string;
+    email: string;
+    mobileNumber: number;
+    location: string;
+    dateJoined: string;
+    order: number;
+    delivered: number,
+    cancelled: number,
+    pending: number,
+    visit: { name: string; price: number }[];
+    Recent_Orders?: {
+        title: string;
+        status: string;
+        date: string;
+        time: string;
+        description: string;
+        courier?: string;
+        warehouse?: string;
+        estimatedDelivery?: string;
+    }[],
+    color: string;
+    customerStatus: 'Active' | 'Inactive';
+}
 
 interface CustomerState {
-    customers: any[];
+    customers: Customer[];
     sortedTable: string[];
     drawerStatus: boolean;
-    selectedCustomer: string[] | null;
+    selectedCustomer: Customer | null;
 }
 
 const initialState: CustomerState = {
@@ -54,7 +55,7 @@ const CustomerSlice = createSlice({
                 customer.customerStatus = customerStatus;
             }
         },
-        setCustomer(state, action: PayloadAction<string[]>) {
+        setCustomer(state, action: PayloadAction<Customer[]>) {
             state.customers = action.payload;
         },
         setSortedReviews(state, action: PayloadAction<string[]>) {
@@ -63,7 +64,7 @@ const CustomerSlice = createSlice({
         setDrawerStatus(state, action: PayloadAction<boolean>) {
             state.drawerStatus = action.payload;
         },
-        setSelectedCustomer(state, action: PayloadAction<string[]>) {
+        setSelectedCustomer(state, action: PayloadAction<Customer>) {
             state.selectedCustomer = action.payload;
         },
     }

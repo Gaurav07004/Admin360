@@ -104,8 +104,8 @@ function Profile() {
         }
 
         const adminDetails = {
-            productID: "PD82910",
-            productImage: imageUrl,
+            customerID: "CD82920",
+            profileImage: imageUrl,
         };
 
         try {
