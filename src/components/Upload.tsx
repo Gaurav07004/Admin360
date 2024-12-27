@@ -2,7 +2,7 @@
 'use client'
 import { Info, Trash } from 'phosphor-react';
 import { useCallback } from 'react';
-import Image from "next/image";
+// import Image from "next/image";
 import { Upload, UploadBody, UploadFooter, UploadIcon, UploadText, toast } from 'keep-react';
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ import { RootState } from '../redux/store';
 
 const UploadComponent = () => {
     const dispatch = useDispatch();
-    const { files, imageUrl, accountData } = useSelector((state: RootState) => state.user);
+    const { files } = useSelector((state: RootState) => state.user);
 
     const onDrop = useCallback((acceptedFiles: any) => {
         const imageFiles = acceptedFiles.filter((file: File) =>
@@ -45,13 +45,13 @@ const UploadComponent = () => {
     return (
         <section>
             <div className="flex items-center space-x-3">
-                <Image
-                    src={imageUrl || accountData?.profileImage}
+                {/* <Image
+                    src={accountData?.profileImage || }
                     alt="Profile Picture"
                     className="w-10 h-10 object-cover rounded-md shadow-md"
                     width={0}
                     height={0}
-                />
+                /> */}
                 <p className="text-sm font-semibold text-gray-600">Edit Profile Image</p>
             </div>
             <Upload options={{ onDrop, multiple: false }} className='border-none pt-6 pb-2 px-0'>

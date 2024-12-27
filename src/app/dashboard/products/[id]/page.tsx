@@ -1,17 +1,20 @@
 "use client";
 
 import React, { useRef, useMemo } from "react";
+import { Trash } from 'phosphor-react';
 import { useDispatch, useSelector } from "react-redux";
 import { setDrawerStatus } from "@/redux/slices/productsSlice";
 import { RootState } from "@/redux/store";
 import { HiArrowLongRight } from "react-icons/hi2";
 import { PiStarFill, PiStarHalfFill } from "react-icons/pi";
 import { HiOutlineArrowTrendingUp, HiOutlineArrowTrendingDown } from "react-icons/hi2";
-import { Divider } from "keep-react";
+import { Divider, toast } from "keep-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const CustomerDetailPage: React.FC = () => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const { drawerStatus, productDrawerStatus, selectedProduct } = useSelector((state: RootState) => state.product);
     const drawerRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
@@ -38,6 +41,37 @@ const CustomerDetailPage: React.FC = () => {
         return stars;
     }, [selectedProduct]);
 
+    const handleDeleteProduct = async () => {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            toast.error('Token not found. Redirecting to login.');
+            setTimeout(() => router.push('/login'), 2000);
+            return;
+        }
+
+        try {
+            const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
+            const response = await fetch(`${baseURL}/api/auth/deleteProduct/${selectedProduct?.productID}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                toast.success("Product added successfully.", { position: "top-right" });
+                dispatch(setDrawerStatus(!drawerStatus));
+                window.location.reload();
+            } else {
+                const errorData = await response.json();
+                toast.error(`Failed to add product: ${errorData.message || "Unknown error"}`, { position: "top-right" });
+            }
+        } catch (error) {
+            toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+        }
+    };
+
     const renderCustomerPreview = () => (
         <section className="flex items-center justify-between sticky top-0 z-10 bg-white p-4 border-b-[0.5px] border-gray-200">
             <div className="flex flex-col justify-normal items-start">
@@ -54,7 +88,15 @@ const CustomerDetailPage: React.FC = () => {
 
     const renderCustomerInfo = () => (
         <div className="p-4 bg-white rounded-lg space-y-4">
-            <div className="text-[#FF6500] font-bold text-xs uppercase">Overview</div>
+            <div className="flex justify-between items-center">
+                <div className="text-[#FF6500] font-bold text-xs uppercase">Overview</div>
+                <div className="p-2 bg-red-100 rounded-md cursor-pointer" onClick={handleDeleteProduct}>
+                    <Trash
+                        size={16}
+                        color="red"
+                    />
+                </div>
+            </div>
             <div className="flex justify-between items-center gap-4">
                 <div className="flex items-center space-x-3">
                     <Image

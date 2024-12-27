@@ -12,7 +12,6 @@ const Dashboard: React.FC = () => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const { topProductData } = useSelector((state: RootState) => state.menu);
-    const { adminData } = useSelector((state: RootState) => state.user);
 
     useEffect(() => {
         const fetchData = async () => {

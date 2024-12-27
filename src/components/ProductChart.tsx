@@ -22,23 +22,6 @@ const chartConfig: ChartConfig = {
     },
 };
 
-
-// const chartData = [
-//     { month: 'January', sold: 150, returned: 50 },
-//     { month: 'February', sold: 180, returned: 60 },
-//     { month: 'March', sold: 130, returned: 75 },
-//     { month: 'April', sold: 200, returned: 85 },
-//     { month: 'May', sold: 170, returned: 65 },
-//     { month: 'June', sold: 210, returned: 70 },
-//     { month: 'July', sold: 190, returned: 80 },
-//     { month: 'August', sold: 220, returned: 75 },
-//     { month: 'September', sold: 160, returned: 90 },
-//     { month: 'October', sold: 200, returned: 65 },
-//     { month: 'November', sold: 210, returned: 55 },
-//     { month: 'December', sold: 230, returned: 50 },
-// ];
-
-// Custom Tooltip Component
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
@@ -54,7 +37,11 @@ const CustomTooltip = ({ active, payload }) => {
 const BarChartComponent: React.FC = () => {
     const { productMonthlyData } = useSelector((state: RootState) => state.product);
 
-    console.log("productMonthlyData", productMonthlyData)
+    const currentMonthIndex = new Date().getMonth();
+    const reorderedData = [
+        ...productMonthlyData.slice(currentMonthIndex + 1),
+        ...productMonthlyData.slice(0, currentMonthIndex + 1)
+    ];
 
     return (
         <>
@@ -67,7 +54,7 @@ const BarChartComponent: React.FC = () => {
                 <button className="flex items-center py-2 px-5 text-sm text-gray-500 bg-gray-100 rounded-lg hover:bg-gray-100 border border-gray-300">Monthly</button>
             </div>
             <ResponsiveContainer className="mx-auto w-[600px]" height={200}>
-                <BarChart data={productMonthlyData}>
+                <BarChart data={reorderedData}>
                     <CartesianGrid vertical={false} stroke="#E1E5EA" />
                     <XAxis
                         dataKey="month"

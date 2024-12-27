@@ -31,8 +31,8 @@ const menuConfig = [
     {
         title: "Sales",
         items: [
-            { name: "Analytics", icon: PiChartLineUpLight, href: "/dashboard/analytics" },
             { name: "Products", icon: PiCubeLight, href: "/dashboard/products" },
+            { name: "Analytics", icon: PiChartLineUpLight, href: "/dashboard/analytics" },
         ],
     },
     {
@@ -45,7 +45,7 @@ const menuConfig = [
 ];
 
 const Sidebar: React.FC = () => {
-    const { imageUrl, accountData } = useSelector((state: RootState) => state.user);
+    const { accountData } = useSelector((state: RootState) => state.user);
     const pathname = usePathname();
     const fullName = `${accountData?.firstName} ${accountData?.lastName}`;
 

@@ -23,9 +23,9 @@ const CustomerDetailPage: React.FC = () => {
 
     const data = [
         { label: "Total Order", value: selectedCustomer?.order },
-        { label: "Total Delivered", value: selectedCustomer?.delivered },
-        { label: "Total Cancelled", value: selectedCustomer?.cancelled },
-        { label: "Total Pending", value: selectedCustomer?.pending },
+        { label: "Order Delivered", value: selectedCustomer?.delivered },
+        { label: "Order Cancelled", value: selectedCustomer?.cancelled },
+        { label: "Order Pending", value: selectedCustomer?.pending },
     ];
 
     const customerDetails = [
@@ -156,7 +156,7 @@ const CustomerDetailPage: React.FC = () => {
             <div className="flex items-center space-x-2">
                 <div className="text-gray-600 text-[0.9rem] font-semibold tracking-wide uppercase">Customer Preview</div>
                 <TfiLayoutLineSolid className="text-gray-600 text-[0.9rem] font-semibold tracking-wide rotate-90" />
-                <div className="text-gray-600 text-[0.9rem] font-semibold tracking-wide">{selectedCustomer?.id} of 10</div>
+                <div className="text-gray-600 text-[0.9rem] font-semibold tracking-wide">#{selectedCustomer?.customerID}</div>
             </div>
             <div
                 className="flex items-center justify-center w-8 h-8 bg-gray-100 hover:bg-orange-100 rounded-lg transition duration-300"
@@ -182,11 +182,17 @@ const CustomerDetailPage: React.FC = () => {
                         <div className="text-gray-800 text-base font-semibold">{selectedCustomer?.customerName}</div>
                         <div className="ml-4">
                             <span
-                                className={`text-[0.6rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${selectedCustomer?.customerStatus === 'Active' ? "bg-green-100 text-green-500 hover:bg-green-200" : "bg-red-100 text-red-500 hover:bg-red-200"}`}
-                                onClick={() => handleStatusChange(selectedCustomer?.customerID, selectedCustomer?.customerStatus as string)}
+                                className={`text-[0.6rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${selectedCustomer?.customerStatus === 'Active' ? "bg-green-100 text-green-500 hover:bg-green-200" : "bg-red-100 text-red-500 hover:bg-red-200"
+                                    }`}
+                                onClick={() => {
+                                    if (selectedCustomer?.customerID && selectedCustomer?.customerStatus) {
+                                        handleStatusChange(selectedCustomer.customerID, selectedCustomer.customerStatus);
+                                    }
+                                }}
                             >
                                 {selectedCustomer?.customerStatus}
                             </span>
+
                         </div>
                     </div>
                     <div className="flex items-center text-gray-500 mt-1 space-x-3">
@@ -206,7 +212,7 @@ const CustomerDetailPage: React.FC = () => {
                 {data.map((item, index) => (
                     <div
                         key={index}
-                        className={`flex flex-col p-4 ${index !== data.length - 1 ? "border-r-[0.5px] border-gray-300" : ""
+                        className={`flex flex-col p-3 ${index !== data.length - 1 ? "border-r-[0.5px] border-gray-300" : ""
                             } hover:bg-gray-100 transition`}
                     >
                         <span className="text-[0.65rem] font-semibold text-gray-400">{item.label}</span>

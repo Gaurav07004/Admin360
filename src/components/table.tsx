@@ -51,7 +51,7 @@ const renderCellContent = (item: TableRowData, col: TableColumn, getBadgeColor?:
         return (
             <Image
                 src={value.src as string}
-                alt={item['product']}
+                alt="Product"
                 className="object-cover mx-auto"
                 width={40}
                 height={40}
@@ -59,13 +59,20 @@ const renderCellContent = (item: TableRowData, col: TableColumn, getBadgeColor?:
         );
     }
 
-    if (col.id === 'Action') {
+    if (col.id === "Action") {
         return (
             <div className="relative bg-gray-100 px-3 py-2 rounded-md border border-gray-300">
-                {value}
+                {value === null || value === undefined
+                    ? "N/A"
+                    : typeof value === "object"
+                        ? JSON.stringify(value)
+                        : typeof value === "boolean"
+                            ? value ? "True" : "False"
+                            : String(value)}
             </div>
         );
     }
+
 
     if (col.id === 'visit') {
         return <AreaChartComponent data={[item.visit, item.color]} />;

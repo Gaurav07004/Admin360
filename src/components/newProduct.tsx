@@ -1,50 +1,89 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useRef, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setProductDrawerStatus } from "@/redux/slices/productsSlice";
-import { RootState } from "@/redux/store";
+import React, { useRef, useCallback } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { setProductDrawerStatus, setFiles, setImageUrl, deleteFile, setFormData } from "@/redux/slices/productsSlice";
 import { HiArrowLongRight } from "react-icons/hi2";
 import { Divider, Button } from "keep-react";
 import { Upload, UploadBody, UploadFooter, UploadIcon, UploadText, toast } from 'keep-react';
 import { Info, Trash } from 'phosphor-react';
 import { IoCloudUploadOutline } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 const CustomerDetailPage: React.FC = () => {
     const dispatch = useDispatch();
-    const { productDrawerStatus, drawerStatus } = useSelector((state: RootState) => state.product);
+    const router = useRouter();
+    const { productDrawerStatus, drawerStatus, files, formData } = useSelector((state: RootState) => state.product);
     const drawerRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
-    const [formData, setFormData] = useState({
-        productID: "",
-        productName: "",
-        category: "",
-        subcategory: "",
-        price: 0,
-        stockQuantity: 0,
-        stockStatus: "Available",
-        supplierName: "",
-        supplierContact: "",
-        supplierEmail: "",
-        description: "",
-        tags: [],
-        rating: 0,
-        productImage: "/placeholder.png",
-        publishStatus: false,
-    });
-    const [files, setFiles] = useState<File[]>([]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
+
+        if (name.startsWith('supplier')) {
+            const updatedSupplier = { ...formData.supplier, [name.split('.')[1]]: value };
+            dispatch(setFormData({ ...formData, supplier: updatedSupplier }));
+        } else {
+            dispatch(setFormData({ ...formData, [name]: value }));
+        }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log("Product added:", formData);
+    const handleSubmit = async () => {
+        const token = localStorage.getItem("authToken");
+
+        if (!token) {
+            toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+            setTimeout(() => router.push("/"), 2000);
+            return;
+        }
+
+        const isFormValid = Object.values(formData).every(value => {
+            if (typeof value === "string") {
+                return value.trim() !== "";
+            }
+            if (Array.isArray(value)) {
+                return value.length > 0;
+            }
+            if (typeof value === "number") {
+                return value >= 0;
+            }
+            if (typeof value === "boolean") {
+                return true;
+            }
+            return true;
+        });
+
+        if (!isFormValid) {
+            toast.error("Please fill all the required fields.");
+            return;
+        }
+
+        try {
+            const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+
+            const updateResponse = await fetch(`${baseURL}/api/auth/newProduct`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (updateResponse.ok) {
+                toast.success("Product added successfully.", { position: "top-right" });
+                dispatch(deleteFile());
+                dispatch(setProductDrawerStatus(!productDrawerStatus))
+                window.location.reload()
+            } else {
+                const errorData = await updateResponse.json();
+                toast.error(`Failed to add product: ${errorData.message || "Unknown error"}`, { position: "top-right" });
+            }
+        } catch (error) {
+            toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+        }
     };
 
     const headerProductDetail = () => (
@@ -153,8 +192,8 @@ const CustomerDetailPage: React.FC = () => {
                     <input
                         type="text"
                         id="supplierName"
-                        name="supplierName"
-                        value={formData.supplierName}
+                        name="supplier.name"
+                        value={formData.supplier.name}
                         onChange={handleChange}
                         className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Supplier Name"
@@ -167,8 +206,8 @@ const CustomerDetailPage: React.FC = () => {
                         <input
                             type="text"
                             id="supplierContact"
-                            name="supplierContact"
-                            value={formData.supplierContact}
+                            name="supplier.contact"
+                            value={formData.supplier.contact}
                             onChange={handleChange}
                             className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Supplier Contact"
@@ -180,8 +219,8 @@ const CustomerDetailPage: React.FC = () => {
                         <input
                             type="email"
                             id="supplierEmail"
-                            name="supplierEmail"
-                            value={formData.supplierEmail}
+                            name="supplier.email"
+                            value={formData.supplier.email}
                             onChange={handleChange}
                             className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Supplier Email"
@@ -209,47 +248,122 @@ const CustomerDetailPage: React.FC = () => {
                         required
                     />
                 </div>
-                <div className="space-y-2">
-                    <label htmlFor="tags" className="text-[0.75rem] font-medium text-gray-600 uppercase">Product Tags (comma separated)</label>
-                    <input
-                        type="text"
-                        id="tags"
-                        name="tags"
-                        value={formData.tags.join(", ")}
-                        onChange={(e) => setFormData({ ...formData, tags: e.target.value.split(", ") })}
-                        className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
-                        placeholder="Enter Tags"
-                        required
-                    />
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <label htmlFor="tags" className="text-[0.75rem] font-medium text-gray-600 uppercase">Product Tags (comma separated)</label>
+                        <input
+                            type="text"
+                            id="tags"
+                            name="tags"
+                            value={formData.tags.join(", ")}
+                            onChange={(e) => dispatch(setFormData({ ...formData, tags: e.target.value.split(", ") }))}
+                            className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            placeholder="Enter Tags"
+                            required
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label htmlFor="previousCount" className="text-[0.75rem] font-medium text-gray-600 uppercase">Previous Count</label>
+                        <input
+                            type="number"
+                            id="previousCount"
+                            name="previousCount"
+                            value={formData.previousCount}
+                            onChange={handleChange}
+                            className="w-full p-2 border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            placeholder="Enter Previous Count"
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label htmlFor="viewsCount" className="text-[0.75rem] font-medium text-gray-600 uppercase">Views Count</label>
+                        <input
+                            type="number"
+                            id="viewsCount"
+                            name="viewsCount"
+                            value={formData.viewsCount}
+                            onChange={handleChange}
+                            className="w-full p-2 border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            placeholder="Enter Views Count"
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label htmlFor="purchaseCount" className="text-[0.75rem] font-medium text-gray-600 uppercase">Purchase Count</label>
+                        <input
+                            type="number"
+                            id="purchaseCount"
+                            name="purchaseCount"
+                            value={formData.purchaseCount}
+                            onChange={handleChange}
+                            className="w-full p-2 border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            placeholder="Enter Purchase Count"
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label htmlFor="wishlistCount" className="text-[0.75rem] font-medium text-gray-600 uppercase">Wishlist Count</label>
+                        <input
+                            type="number"
+                            id="wishlistCount"
+                            name="wishlistCount"
+                            value={formData.wishlistCount}
+                            onChange={handleChange}
+                            className="w-full p-2 border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            placeholder="Enter Wishlist Count"
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label htmlFor="rating" className="text-[0.75rem] font-medium text-gray-600 uppercase">Rating</label>
+                        <input
+                            type="number"
+                            id="rating"
+                            name="rating"
+                            value={formData.rating}
+                            onChange={handleChange}
+                            className="w-full p-2 border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            placeholder="Enter Rating"
+                            required
+                        />
+                    </div>
                 </div>
             </div>
         );
     };
 
     const ProductImageForm = () => {
-        const onDrop = useCallback((acceptedFiles: File[]) => {
-            const validFiles = acceptedFiles.filter(file => {
-                const fileType = file.type;
-                return fileType === 'image/png' || fileType === 'image/jpeg';
-            });
+        const onDrop = useCallback((acceptedFiles: any) => {
+            const imageFiles = acceptedFiles.filter((file: File) =>
+                file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/webp'
+            );
 
-            if (validFiles.length === 0) {
-                toast.error('Only PNG and JPG files are allowed.');
+            if (imageFiles.length === 0) {
+                toast.error('Only JPG/JPEG, PNG, or WEBP files are allowed.');
                 return;
             }
 
-            const image = new Image();
-            image.onload = () => {
-                const imageURL = URL.createObjectURL(validFiles[0]);
-                setFormData(prev => ({ ...prev, productImage: imageURL }));
-                setFiles(validFiles);
-            };
-            image.src = URL.createObjectURL(validFiles[0]);
-        }, []);
+            const file = imageFiles[0]
+            const reader = new FileReader()
+
+            reader.onloadend = () => {
+                if (reader.result) {
+                    const dataUrl = reader.result as string
+                    dispatch(setFiles([{ name: file.name, dataUrl }]));
+                    dispatch(setImageUrl(dataUrl));
+                }
+            }
+
+            reader.readAsDataURL(file);
+        }, [dispatch]);
+
 
         const handleDeleteFile = () => {
-            setFormData(prev => ({ ...prev, productImage: "/placeholder.png" }));
-            setFiles([]);
+            dispatch(deleteFile());
         };
 
         return (

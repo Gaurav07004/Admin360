@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import { toast } from "keep-react"
 import { CgNotes } from "react-icons/cg";
 import { LuCheckCircle } from "react-icons/lu";
 import { RxTimer } from "react-icons/rx";
@@ -9,50 +7,23 @@ import { RxCrossCircled } from "react-icons/rx";
 import BarChart from "@/components/OrderChart";
 import OrderTable from '@/components/OrderTable'
 import Order from '@/app/dashboard/orders/[id]/page'
-import { useDispatch } from "react-redux";
-import { setOrder, setOrderMonthlyData } from "@/redux/slices/orderSlice";
+import { useSelector } from "react-redux";
+import { RootState } from '@/redux/store';
 
-const statistics = [
-    {
-        id: 1,
-        title: "Total Order",
-        value: "10",
-        bgColor: "bg-gradient-to-r from-blue-500 to-blue-300",
-        icon: <CgNotes className="w-5 h-5 text-white" />,
-    },
-    {
-        id: 2,
-        title: "Completed Order",
-        value: "05",
-        bgColor: "bg-gradient-to-r from-green-500 to-green-400",
-        icon: <LuCheckCircle className="w-5 h-5 text-white" />,
-    },
-    {
-        id: 3,
-        title: "Pending Order",
-        value: "02",
-        bgColor: "bg-gradient-to-br from-orange-500 to-orange-300",
-        icon: <RxTimer className="w-5 h-5 text-white" />,
-    },
-    {
-        id: 4,
-        title: "Cancelled Order",
-        value: "02",
-        bgColor: "bg-gradient-to-r from-red-500 to-red-400",
-        icon: <RxCrossCircled className="w-5 h-5 text-white" />,
-    },
-];
+interface Order {
+    orderStatus: "Delivered" | "Pending" | "Unreachable" | "Cancelled" | "Shipped";
+}
 
 interface StatisticCardProps {
     title: string;
-    value: string;
+    value: string | number;
     bgColor: string;
     icon: React.ReactNode;
 }
 
 const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, bgColor, icon }) => (
-    <div className="bg-white rounded-[1rem] px-6 py-11 flex gap-5 w-[14rem] h-auto">
-        <div className={`${bgColor} rounded-md p-3 flex items-center justify-center`} aria-label={title}>
+    <div className="bg-white rounded-[1rem] px-8 py-12 flex gap-5 w-[15rem] h-auto">
+        <div className={`${bgColor} rounded-md p-[0.8rem] flex items-center justify-center`} aria-label={title}>
             {icon}
         </div>
         <div className="flex-col items-center justify-center">
@@ -63,48 +34,48 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, bgColor, ic
 );
 
 const Page: React.FC = () => {
-    const dispatch = useDispatch();
+    const { orders } = useSelector((state: RootState) => state.order);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const token = localStorage.getItem("authToken");
+    const totalOrders = orders.length;
+    const completedOrders = orders.filter((order: Order) => order.orderStatus === "Delivered").length;
+    const pendingOrders = orders.filter((order: Order) => order.orderStatus === "Pending").length;
+    const cancelledOrders = orders.filter((order: Order) => order.orderStatus === "Cancelled" || order.orderStatus === "Unreachable").length;
 
-            if (!token) {
-                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
-                setTimeout(() => {
-                    window.location.href = "/";
-                }, 2000);
-                return;
-            }
-
-            try {
-                const response = await fetch("http://localhost:3000/api/auth/order", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`,
-                    },
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    dispatch(setOrder(data.orders));
-                    dispatch(setOrderMonthlyData(data.MonthlyOrders));
-                } else {
-                    toast.error("Failed to fetch data.", { position: "top-right" });
-                }
-            } catch (error) {
-                toast.error("Unable to connect. Please check your network.", { position: "top-right" });
-            }
-        };
-
-        fetchData();
-    }, [dispatch]);
+    const statistics = [
+        {
+            id: 1,
+            title: "Total Order",
+            value: totalOrders,
+            bgColor: "bg-gradient-to-r from-blue-500 to-blue-300",
+            icon: <CgNotes className="w-[1.4rem] h-[1.4rem] text-white" />,
+        },
+        {
+            id: 2,
+            title: "Delivered Order",
+            value: completedOrders,
+            bgColor: "bg-gradient-to-r from-green-500 to-green-400",
+            icon: <LuCheckCircle className="w-[1.4rem] h-[1.4rem] text-white" />,
+        },
+        {
+            id: 3,
+            title: "Pending Order",
+            value: pendingOrders,
+            bgColor: "bg-gradient-to-br from-orange-500 to-orange-300",
+            icon: <RxTimer className="w-[1.4rem] h-[1.4rem] text-white" />,
+        },
+        {
+            id: 4,
+            title: "Cancelled Order",
+            value: cancelledOrders,
+            bgColor: "bg-gradient-to-r from-red-500 to-red-400",
+            icon: <RxCrossCircled className="w-[1.4rem] h-[1.4rem] text-white" />,
+        },
+    ];
 
     return (
         <section className="gap-5 flex flex-col justify-between">
             <div className="flex gap-6 w-full">
-                <section className="grid grid-cols-2 gap-5 w-[37%]">
+                <section className="grid grid-cols-2 gap-5 w-[40%]">
                     {statistics.map((stat) => (
                         <StatisticCard
                             key={stat.id}
@@ -115,7 +86,7 @@ const Page: React.FC = () => {
                         />
                     ))}
                 </section>
-                <div className="bg-white rounded-[1rem] px-8 pt-6 pb-2 w-[63%]">
+                <div className="bg-white rounded-[1rem] px-8 pt-6 pb-2 w-[60%]">
                     <BarChart />
                 </div>
             </div>

@@ -1,31 +1,46 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
+import { useSelector } from "react-redux";
+import { RootState } from '../redux/store';
 import TableComponent from '@/components/table';
-// import Image from 'next/image';
 
 const columns = [
-    { id: 'id', label: 'Sr. No' },
-    { id: 'product', label: 'Product' },
-    { id: 'date', label: 'Date' },
-    { id: 'status', label: 'Status' },
-    { id: 'price', label: 'Price' },
-    { id: 'customer', label: 'Customer' },
+    { id: 'orderID', label: 'Order ID' },
+    { id: 'customerName', label: 'Customer Name' },
+    { id: 'orderDate', label: 'Order Date' },
+    { id: 'itemName', label: 'Order Item' },
+    { id: 'cost', label: 'Cost' },
+    { id: 'orderStatus', label: 'Order Status' },
 ];
 
-const data = [
-    { id: '01', product: 'Dell Inspiron 15 Laptop', date: 'Aug 30, 2024', status: 'Delivered', price: 20000, customer: 'Ankit Sharma' },
-    { id: '02', product: 'Sony Headphones', date: 'Sept 10, 2024', status: 'Cancelled', price: 35000, customer: 'Pooja Verma' },
-];
-
-const getBadgeColor = (status: any) => {
+const getBadgeColor = (status: string) => {
     switch (status) {
         case 'Delivered': return 'success';
+        case 'Pending': return 'warning';
+        case 'Unreachable': return 'error';
         case 'Cancelled': return 'error';
-        default: return 'warning';
+        case 'Shipped': return 'primary';
+        case 'Confirmed': return 'success';
+        case 'Refunded': return 'primary';
+        case 'Paid': return 'success';
+        default: return 'primary';
     }
 };
 
-const FurnitureTable = () => {
+const RecentOrder = () => {
+    const { orders } = useSelector((state: RootState) => state.order);
+
+    const data = orders.slice(0, 2).map((order) => ({
+        orderID: order.orderID,
+        customerName: order.customerName,
+        itemName: order.itemName,
+        orderDate: order.orderDate,
+        orderStatus: order.orderStatus,
+        cost: order.cost,
+        paymentMethod: order.paymentMethod,
+        paymentStatus: order.paymentStatus,
+    }));
+
     return (
         <TableComponent
             data={data}
@@ -36,4 +51,4 @@ const FurnitureTable = () => {
     );
 };
 
-export default FurnitureTable;
+export default RecentOrder;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import Sidebar from '@/components/Sidebar';
@@ -9,6 +10,27 @@ import { RootState } from "@/redux/store";
 import { setCustomerTraffic, setLineChartData, setPieChartData } from "@/redux/slices/commonSlice";
 import { setAccountData, setAdminData } from "@/redux/slices/adminSlice";
 import { useRouter } from "next/navigation";
+import { setCustomer } from "@/redux/slices/customerSlice";
+import { setOrder, setOrderMonthlyData } from "@/redux/slices/orderSlice";
+import { setProduct, setProductMonthlyData } from "@/redux/slices/productsSlice";
+
+const fetchData = async (url: string, token: string) => {
+    try {
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+        if (!response.ok) throw new Error("Failed to fetch data.");
+        return await response.json();
+    } catch (error: unknown) {
+        const e = error as any;
+        toast.error(e.message || "An unknown error occurred.", { position: "top-right" });
+        throw error;
+    }
+};
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const dispatch = useDispatch();
@@ -24,39 +46,42 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             setTimeout(() => router.push("/"), 2000);
             return;
         }
-        const fetchDashboardData = async () => {
+
+        const fetchAllData = async () => {
             try {
                 const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
-                const response = await fetch(`${baseURL}/api/auth/dashboard`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`,
-                    },
-                });
+                const [
+                    dashboardData,
+                    customerData,
+                    orderData,
+                    productData,
+                ] = await Promise.all([
+                    fetchData(`${baseURL}/api/auth/dashboard`, token),
+                    fetchData(`${baseURL}/api/auth/customer`, token),
+                    fetchData(`${baseURL}/api/auth/order`, token),
+                    fetchData(`${baseURL}/api/auth/product`, token),
+                    fetchData(`${baseURL}/api/auth/analysis`, token),
+                ]);
 
-                if (response.ok) {
-                    const data = await response.json();
-                    dispatch(setAccountData(data.admin));
-                    dispatch(setLineChartData(data.lineChartData));
-                    dispatch(setPieChartData(data.pieChartData));
-                    dispatch(setCustomerTraffic(data.CustomerTrafficData));
-                } else if (response.status === 401) {
-                    toast.error("Session expired. Please login again.", { position: "top-right" });
-                    setTimeout(() => router.push("/"), 2000);
-                } else {
-                    toast.error("Failed to fetch data.", { position: "top-right" });
-                }
+                dispatch(setAccountData(dashboardData.admin));
+                dispatch(setLineChartData(dashboardData.lineChartData));
+                dispatch(setPieChartData(dashboardData.pieChartData));
+                dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
+                dispatch(setCustomer(customerData));
+                dispatch(setOrder(orderData.orders));
+                dispatch(setOrderMonthlyData(orderData.MonthlyOrders));
+                dispatch(setProduct(productData.products));
+                dispatch(setProductMonthlyData(productData.ProductStats));
+
             } catch (error) {
-                console.error("Fetch error:", error);
-                toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+                console.error("Error fetching data:", error);
             } finally {
                 setIsLoading(false);
             }
         };
 
-        fetchDashboardData();
-    }, [dispatch, router]);
+        fetchAllData();
+    }, [dispatch, router, accountData]);
 
     useEffect(() => {
         if (isData && accountData) {

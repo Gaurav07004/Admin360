@@ -2,7 +2,6 @@
 "use client";
 
 import Image from "next/image";
-//import { FiSearch } from "react-icons/fi";
 import { IoMailOutline, IoCalendarOutline } from "react-icons/io5";
 import profilePic from "../Assets/Men.jpg";
 import { useSelector } from 'react-redux';
@@ -27,16 +26,16 @@ const Header: React.FC = () => {
             </div>
 
             <div className="flex items-center space-x-4">
-                <div className="relative flex items-center space-x-2 bg-gray-100 px-3 py-2 rounded-md border border-gray-300">
-                    <IoCalendarOutline className="w-5 h-5 text-gray-500" />
+                <div className="relative flex items-center space-x-2 bg-orange-50 px-3 py-2 rounded-md border border-orange-300">
+                    <IoCalendarOutline className="w-5 h-5 text-orange-500" />
                     <span className="absolute top-[0.5rem] left-[1.15rem] w-[0.55rem] h-[0.55rem] bg-red-500 rounded-full border-2 border-white"></span>
-                    <span className="text-xs text-gray-500">{formattedDate}</span>
+                    <span className="text-xs text-orange-500">{formattedDate}</span>
                 </div>
-                <div className="relative p-2 bg-gray-100 rounded-md border border-gray-300 cursor-pointer">
-                    <IoMailOutline className="w-5 h-5 text-gray-500" />
+                <div className="relative p-2 bg-orange-50 rounded-md border border-orange-300 cursor-pointer">
+                    <IoMailOutline className="w-5 h-5 text-orange-500" />
                     <span className="absolute top-[0.5rem] left-[1.35rem] w-[0.55rem] h-[0.55rem] bg-red-500 rounded-full border-2 border-white"></span>
                 </div>
-                <TfiLayoutLineSolid className="text-xl text-gray-300 rotate-90" />
+                <TfiLayoutLineSolid className="text-xl text-orange-300 rotate-90" />
                 <div className="flex items-center space-x-2">
                     <Image
                         src={accountData?.profileImage || profilePic}

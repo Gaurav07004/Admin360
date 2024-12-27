@@ -5,20 +5,20 @@ import { PiArrowUpRightBold, PiArrowDownRightBold, PiCircleFill } from "react-ic
 import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { Laptop } from "phosphor-react";
 
 type DataPoint = {
     name: string,
     value: number,
 };
 
-const formatNumberWithCommas = (number: number): string => {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-};
-
-const formatNumberWithL = (number: number): string => {
-    return number >= 100000
-        ? (number / 100000).toFixed(1) + "L"
-        : number.toLocaleString();
+const formatToKOrL = (value: number): string => {
+    if (value >= 100000) {
+        return `${(value / 100000).toFixed(2)}L`;
+    } else if (value >= 1000) {
+        return `${(value / 1000).toFixed(2)}K`;
+    }
+    return value.toString();
 };
 
 const PieChartTooltip: React.FC<{ payload?: any, active?: boolean }> = ({ payload, active }) => {
@@ -26,7 +26,7 @@ const PieChartTooltip: React.FC<{ payload?: any, active?: boolean }> = ({ payloa
         const { name, value } = payload[0];
         return (
             <div className="bg-[#FF9D3D] text-white p-2 rounded text-sm">
-                <p>{`${name}: ${formatNumberWithCommas(value)}`}</p>
+                <p>{`${name}: ${formatToKOrL(value)}`}</p>
             </div>
         );
     }
@@ -38,7 +38,7 @@ const AreaChartTooltip: React.FC<{ payload?: any, label?: string, active?: boole
         return (
             <div className="bg-[#FF9D3D] text-white p-2 rounded text-sm shadow-lg border-[1.5px] border-[#FF6500]">
                 <p>{label}</p>
-                <p>{`Price: ₹${formatNumberWithCommas(payload[0].value)}`}</p>
+                <p>{`Price: ₹${formatToKOrL(payload[0].value)}`}</p>
             </div>
         );
     }
@@ -47,9 +47,21 @@ const AreaChartTooltip: React.FC<{ payload?: any, label?: string, active?: boole
 
 const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
     const { pieChartData } = useSelector((state: RootState) => state.menu);
+    const { orders } = useSelector((state: RootState) => state.order);
+    const { products } = useSelector((state: RootState) => state.product);
 
     const COLORS = ["#00BCD4", "#FF9800", "#9C27B0", "#8BC34A"];
-    const totalValue = pieChartData?.reduce((acc, item) => acc + item.value, 0);
+    type Category = "Smartwatch" | "Laptop Sleeve" | "Smartphones" | "Gaming Laptops";
+
+    const categoryStyles: Record<Category, { bgColor: string; textColor: string, border: string }> = {
+        Smartwatch: { bgColor: '#F1F8E9', textColor: '#8BC34A', border: '#8BC34A' },
+        "Laptop Sleeve": { bgColor: '#F3E5F5', textColor: '#9C27B0', border: '#9C27B0' },
+        Smartphones: { bgColor: '#FFF3E0', textColor: '#FB8C00', border: '#FF9800' },
+        "Gaming Laptops": { bgColor: '#E0F7FA', textColor: '#00BCD4', border: '#00BCD4' },
+    };
+
+    const defaultStyles = { bgColor: '#F0F0F0', textColor: '#757575' };
+    // const totalValue = pieChartData?.reduce((acc, item) => acc + item.value, 0);
     const totalIncome = totalRevenue + 50000 + 50000;
     const lastYearIncome = totalRevenue + 200000;
     const percentageChange = ((totalIncome - lastYearIncome) / lastYearIncome) * 100;
@@ -62,34 +74,83 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
     const badgeBackgroundColor = isPositive ? "bg-green-100" : "bg-red-100";
     const badgeTextColor = isPositive ? "text-green-600" : "text-red-500";
 
+    const productSubCategoryMap = products.reduce((acc, product) => {
+        acc[product.productName] = product.subcategory;
+        return acc;
+    }, {} as Record<string, string>);
+
+    const orderCounts = orders.reduce((acc, order) => {
+        const productName = order.itemName;
+        const subcategory = productSubCategoryMap[productName] || 'Unknown';
+        if (!acc[productName]) {
+            acc[productName] = { count: 1, subcategory };
+        } else {
+            acc[productName].count += 1;
+        }
+
+        return acc;
+    }, {} as Record<string, { count: number; subcategory: string }>);
+
     return (
         <section className="flex justify-start items-center gap-5 w-full">
             <section className="bg-white rounded-[1rem] py-6 px-8 w-full">
-                <div className="flex flex-col justify-between w-1/2 relative">
+                <div className="flex flex-col justify-between w-[60%] relative">
                     <p className="text-lg text-left font-semibold mb-[1.25rem] text-gray-600">Product Sold</p>
-                    <div className="grid grid-cols-2 items-center gap-2">
-                        <Badge className="bg-[#E0F7FA] py-[0.95rem] px-[0.3rem] w-fit rounded-lg gap-2 border-[0.0001rem] border-[#00BCD4]">
-                            <PiCircleFill className="text-[#00BCD4]" /> <span className="text-slate-600 text-[0.9rem]">Laptops</span>
-                        </Badge>
-                        <Badge className="bg-[#FFF3E0] py-[0.95rem] px-[0.3rem] w-fit rounded-lg gap-2 border-[0.0001rem] border-[#FF9800]">
-                            <PiCircleFill className="text-[#FF9800]" /> <span className="text-slate-600 text-[0.9rem]">Smartphones</span>
-                        </Badge>
-                        <Badge className="bg-[#F3E5F5] py-[0.95rem] px-[0.3rem] w-fit rounded-lg gap-2 border-[0.0001rem] border-[#9C27B0]">
-                            <PiCircleFill className="text-[#9C27B0]" /> <span className="text-slate-600 text-[0.9rem]">Tablets</span>
-                        </Badge>
-                        <Badge className="bg-[#F1F8E9] py-[0.95rem] px-[0.3rem] w-fit rounded-lg gap-2 border-[0.0001rem] border-[#8BC34A]">
-                            <PiCircleFill className="text-[#8BC34A]" /> <span className="text-slate-600 text-[0.9rem]">Headphones</span>
-                        </Badge>
+                    <div className="grid grid-cols-2 items-center gap-2 w-full">
+                        {Object.entries(orderCounts).map(([productName, { subcategory }]) => {
+                            const { bgColor, textColor, border } = categoryStyles[subcategory as Category] || defaultStyles;
+
+                            return (
+                                <Badge
+                                    key={productName}
+                                    className={`py-[0.95rem] px-[0.3rem] w-full rounded-lg flex items-center gap-2 border border-[${border}]`}
+                                    style={{
+                                        backgroundColor: bgColor,
+                                    }}
+                                >
+                                    <PiCircleFill
+                                        className="w-[10%]"
+                                        style={{ color: textColor }}
+                                    />
+                                    <span
+                                        className="text-[0.8rem] w-[90%]"
+                                        style={{ color: textColor }}
+                                    >
+                                        {subcategory}
+                                    </span>
+                                </Badge>
+                            );
+                        })}
                     </div>
-                    <ResponsiveContainer width="100%" height={130} className="absolute top-[0rem] left-[13rem]">
+                    <ResponsiveContainer width="100%" height={130} className="absolute top-[0rem] left-[15rem]">
                         <PieChart>
-                            <Pie cx="50%" cy="50%" outerRadius={60} innerRadius={48} paddingAngle={2} data={pieChartData} dataKey="value" nameKey="name" cornerRadius={0}>
-                                {pieChartData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                ))}
+                            <Pie
+                                cx="50%"
+                                cy="50%"
+                                outerRadius={60}
+                                innerRadius={48}
+                                paddingAngle={2}
+                                data={Object.entries(orderCounts).map(([productName, { subcategory, count }]) => ({
+                                    name: subcategory,
+                                    value: count
+                                }))}
+                                dataKey="value"
+                                nameKey="name"
+                                cornerRadius={0}
+                            >
+                                {Object.entries(orderCounts).map(([productName, { subcategory, count }], index) => {
+                                    const { textColor } = categoryStyles[subcategory as Category] || defaultStyles;
+
+                                    return (
+                                        <Cell
+                                            key={`cell-${index}`}
+                                            fill={textColor}
+                                        />
+                                    );
+                                })}
                             </Pie>
                             <text x="50%" y="50%" dy={0} textAnchor="middle" fill="#503C3C" fontSize="16" className="font-medium">
-                                {totalValue}
+                                {Object.values(orderCounts).reduce((acc, { count }) => acc + count, 0)}
                                 <tspan x="50%" dy="1.2em" fill="#475569" fontSize="14">
                                     Product
                                 </tspan>
@@ -97,9 +158,10 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                             <ChartTooltip content={<PieChartTooltip />} />
                         </PieChart>
                     </ResponsiveContainer>
+
                 </div>
             </section>
-            <section className="bg-white rounded-[1rem] py-6 px-8 w-full">
+            <section className="bg-white rounded-[1rem] py-6 px-8 w-[70%]">
                 <div className="text-left text-gray-700">
                     <div className="w-full mb-[1.25rem]">
                         <div className="flex items-center justify-between">
@@ -109,7 +171,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                                 {icon}
                             </span>
                         </div>
-                        <p className="text-2xl text-gray-600">₹{formatNumberWithCommas(parseFloat(totalRevenue.toFixed(2)))}</p>
+                        <p className="text-2xl text-gray-600">₹{formatToKOrL(parseFloat(totalRevenue.toFixed(2)))}</p>
                     </div>
                     <div className="flex gap-4 font-semibold items-center mt-6">
                         <span
@@ -124,6 +186,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
         </section>
     );
 };
+
 
 const AreaChartComponent: React.FC = () => {
     const { lineChartData } = useSelector((state: RootState) => state.menu);
@@ -141,13 +204,19 @@ const AreaChartComponent: React.FC = () => {
     const badgeBackgroundColor = isPositive ? "text-green-500" : "text-red-400";
     const badgeTextColor = isPositive ? "text-green-600" : "text-red-500";
 
+    const currentMonthIndex = new Date().getMonth();
+    const reorderedData = [
+        ...lineChartData.slice(currentMonthIndex + 1),
+        ...lineChartData.slice(0, currentMonthIndex + 1)
+    ];
+
     return (
         <>
             <section className="bg-white rounded-[1rem] py-5 px-7 w-full ">
                 <div className="mb-4 text-left text-gray-600">
                     <p className="text-lg font-semibold mb-2">Total Revenue</p>
                     <div className="flex items-center gap-2">
-                        <p className="text-3xl">₹{formatNumberWithCommas(parseFloat(totalRevenue.toFixed(2)))}</p>
+                        <p className="text-3xl">₹{formatToKOrL(parseFloat(totalRevenue.toFixed(2)))}</p>
                         <Badge
                             variant="border"
                             color={badgeColor}
@@ -156,10 +225,10 @@ const AreaChartComponent: React.FC = () => {
                             {icon} <span>{percentageChange.toFixed(2)}%</span>
                         </Badge>
                     </div>
-                    <p className="text-xs">Gained ₹{formatNumberWithCommas(parseFloat(gainedThisMonth.toFixed(2)))} this month</p>
+                    <p className="text-xs">Gained ₹{formatToKOrL(parseFloat(gainedThisMonth.toFixed(2)))} this month</p>
                 </div>
                 <ResponsiveContainer width="99%" height={250}>
-                    <AreaChart data={lineChartData}>
+                    <AreaChart data={reorderedData}>
                         <defs>
                             <linearGradient id="price" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="10%" stopColor="#FF6500" stopOpacity={0.2} />
@@ -168,7 +237,7 @@ const AreaChartComponent: React.FC = () => {
                         </defs>
                         <Area type="natural" dataKey="value" stroke="#FF6500" fillOpacity={1} fill="url(#price)" strokeWidth={0.8} />
                         <XAxis className="text-xs font-medium text-metal-600" dataKey="name" stroke="#4b5563" strokeWidth={0.5} dy={12} />
-                        <YAxis className="text-xs font-medium text-metal-600" dataKey="value" stroke="#4b5563" strokeWidth={0.5} dx={-10} tickFormatter={formatNumberWithL} />
+                        <YAxis className="text-xs font-medium text-metal-600" dataKey="value" stroke="#4b5563" strokeWidth={0.5} dx={-10} tickFormatter={formatToKOrL} />
                         <ChartTooltip content={<AreaChartTooltip />} />
                     </AreaChart>
                 </ResponsiveContainer>

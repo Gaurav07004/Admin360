@@ -7,7 +7,6 @@ interface ISupplier {
 }
 
 export interface IProduct extends Document {
-    id: number;
     productID: string;
     productName: string;
     category: string;
@@ -16,14 +15,14 @@ export interface IProduct extends Document {
     stockQuantity: number;
     stockStatus: string;
     supplier: ISupplier;
-    previousCount: number;
-    viewsCount: number;
-    purchaseCount: number;
-    wishlistCount: number;
-    rating: number;
+    previousCount?: number;
+    viewsCount?: number;
+    purchaseCount?: number;
+    wishlistCount?: number;
+    rating?: number;
     lastUpdatedBy: string;
     lastUpdatedAt: Date;
-    productImage?: string;
+    productImage: string;
     tags: string[];
     description: string;
 }
@@ -35,7 +34,6 @@ const supplierSchema = new Schema<ISupplier>({
 });
 
 const productSchema = new Schema<IProduct>({
-    id: { type: Number, required: true },
     productID: { type: String, required: true, unique: true },
     productName: { type: String, required: true },
     category: { type: String, required: true },
@@ -51,7 +49,7 @@ const productSchema = new Schema<IProduct>({
     rating: { type: Number, required: true },
     lastUpdatedBy: { type: String, required: true },
     lastUpdatedAt: { type: Date, default: Date.now },
-    productImage: { type: String, default: "" },
+    productImage: { type: String, required: true },
     tags: { type: [String], required: true },
     description: { type: String, required: true },
 });

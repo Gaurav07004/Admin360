@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import { toast } from "keep-react"
 import { LuCheckCircle } from "react-icons/lu";
 import { RxCube } from "react-icons/rx";
 import { PiWarning, PiCloudArrowDown } from "react-icons/pi";
@@ -9,44 +7,16 @@ import BarChart from "@/components/ProductChart";
 import ProductTable from '@/components/ProductTable'
 import Product from '@/app/dashboard/products/[id]/page'
 import NewProduct from '@/components/newProduct'
-import { useDispatch } from "react-redux";
-import { setProduct, setProductMonthlyData } from "@/redux/slices/productsSlice";
+import { useSelector } from "react-redux";
+import { RootState } from '@/redux/store';
 
-const statistics = [
-    {
-        id: 1,
-        title: "Total Products",
-        value: "10",
-        bgColor: "bg-gradient-to-br from-blue-500 to-blue-300",
-        icon: <RxCube className="w-[1.4rem] h-[1.4rem] text-white" />,
-    },
-    {
-        id: 2,
-        title: "In Stock",
-        value: "04",
-        bgColor: "bg-gradient-to-br from-green-500 to-green-300",
-        icon: <LuCheckCircle className="w-[1.4rem] h-[1.4rem] text-white" />,
-    },
-    {
-        id: 3,
-        title: "Out of Stock",
-        value: "03",
-        bgColor: "bg-gradient-to-br from-red-500 to-red-300",
-        icon: <PiWarning className="w-[1.4rem] h-[1.4rem] text-white" />,
-    },
-    {
-        id: 4,
-        title: "Low Stock",
-        value: "03",
-        bgColor: "bg-gradient-to-br from-orange-500 to-orange-300",
-        icon: <PiCloudArrowDown className="w-[1.4rem] h-[1.4rem] text-white" />,
-    },
-];
-
+interface Product {
+    stockStatus: "Available" | "Out of Stock" | "Low Stock";
+}
 
 interface StatisticCardProps {
     title: string;
-    value: string;
+    value: string | number;
     bgColor: string;
     icon: React.ReactNode;
 }
@@ -64,43 +34,44 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, bgColor, ic
 );
 
 const Page: React.FC = () => {
-    const dispatch = useDispatch();
+    const { products } = useSelector((state: RootState) => state.product);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const token = localStorage.getItem("authToken");
+    const totalProducts = products.length;
+    const productAvailable = products.filter((product: Product) => product.stockStatus === "Available").length;
+    const productOutofStock = products.filter((product: Product) => product.stockStatus === "Out of Stock").length;
+    const productLowStock = products.filter((product: Product) => product.stockStatus === "Low Stock").length;
 
-            if (!token) {
-                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
-                setTimeout(() => {
-                    window.location.href = "/";
-                }, 2000);
-                return;
-            }
+    const statistics = [
+        {
+            id: 1,
+            title: "Total Products",
+            value: totalProducts,
+            bgColor: "bg-gradient-to-br from-blue-500 to-blue-300",
+            icon: <RxCube className="w-[1.4rem] h-[1.4rem] text-white" />,
+        },
+        {
+            id: 2,
+            title: "In Stock",
+            value: productAvailable,
+            bgColor: "bg-gradient-to-br from-green-500 to-green-300",
+            icon: <LuCheckCircle className="w-[1.4rem] h-[1.4rem] text-white" />,
+        },
+        {
+            id: 3,
+            title: "Out of Stock",
+            value: productOutofStock,
+            bgColor: "bg-gradient-to-br from-red-500 to-red-300",
+            icon: <PiWarning className="w-[1.4rem] h-[1.4rem] text-white" />,
+        },
+        {
+            id: 4,
+            title: "Low Stock",
+            value: productLowStock,
+            bgColor: "bg-gradient-to-br from-orange-500 to-orange-300",
+            icon: <PiCloudArrowDown className="w-[1.4rem] h-[1.4rem] text-white" />,
+        },
+    ];
 
-            try {
-                const response = await fetch("http://localhost:3000/api/auth/product", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`,
-                    },
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    dispatch(setProduct(data.products));
-                    dispatch(setProductMonthlyData(data.ProductStats));
-                } else {
-                    toast.error("Failed to fetch data.", { position: "top-right" });
-                }
-            } catch (error) {
-                toast.error("Unable to connect. Please check your network.", { position: "top-right" });
-            }
-        };
-
-        fetchData();
-    }, [dispatch]);
 
     return (
         <section className="gap-5 flex flex-col justify-between">

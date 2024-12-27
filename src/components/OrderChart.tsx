@@ -4,7 +4,6 @@ import { FaCircle } from "react-icons/fa";
 import { RootState } from '../redux/store';
 import { useSelector } from "react-redux";
 
-
 type ChartConfig = {
     [key: string]: {
         label: string;
@@ -37,8 +36,12 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 const BarChartComponent: React.FC = () => {
-    // const dispatch = useDispatch();
     const { orderMonthlyData } = useSelector((state: RootState) => state.order);
+    const currentMonthIndex = new Date().getMonth();
+    const reorderedData = [
+        ...orderMonthlyData.slice(currentMonthIndex + 1),
+        ...orderMonthlyData.slice(0, currentMonthIndex + 1)
+    ];
 
     return (
         <>
@@ -51,14 +54,14 @@ const BarChartComponent: React.FC = () => {
                 <button className="flex items-center py-2 px-5 text-sm text-gray-500 bg-gray-100 rounded-lg hover:bg-gray-100 border border-gray-300">Monthly</button>
             </div>
             <ResponsiveContainer className="mx-auto w-[600px]" height={200}>
-                <BarChart data={orderMonthlyData}>
+                <BarChart data={reorderedData}>
                     <CartesianGrid vertical={false} stroke="#E1E5EA" />
                     <XAxis
                         dataKey="month"
                         tickLine={false}
                         tickMargin={10}
                         axisLine={false}
-                        tickFormatter={(value) => value.slice(0, 3)}
+                        tickFormatter={(value) => value.slice(0, 3)} // Abbreviated month names (e.g., Jan, Feb)
                     />
                     <YAxis tickLine={false} tickMargin={24} axisLine={false} />
                     <Tooltip content={<CustomTooltip active={undefined} payload={undefined} />} />
@@ -66,7 +69,6 @@ const BarChartComponent: React.FC = () => {
                     <Bar radius={[8, 8, 0, 0]} barSize={10} dataKey="OnProcess" stackId="a" fill={chartConfig.OnProcess.color} />
                 </BarChart>
             </ResponsiveContainer>
-
         </>
     );
 };

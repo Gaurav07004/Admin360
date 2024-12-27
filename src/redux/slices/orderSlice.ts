@@ -76,7 +76,7 @@ const OrderSlice = createSlice({
         setDrawerStatus: (state, action: PayloadAction<boolean>) => {
             state.drawerStatus = action.payload;
         },
-        setSelectedOrder: (state, action: PayloadAction<string[]>) => {
+        setSelectedOrder: (state, action: PayloadAction<Order>) => {
             state.selectedOrder = action.payload;
         },
     },

@@ -8,72 +8,31 @@ import { RxCube } from "react-icons/rx";
 import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import LineChart from "@/components/CustomerActivity";
 import OrderStat from "@/components/OrderStatistics";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
-interface Statistic {
-    id: number;
-    title: string;
-    value: string;
-    previousValue: string;
-    bgColor: string;
-    icon1: React.ReactNode;
-}
-
-const statistics: Statistic[] = [
-    {
-        id: 1,
-        title: "Total Sales",
-        value: "25.3K",
-        previousValue: "17.9K",
-        bgColor: "bg-gradient-to-br from-blue-500 to-blue-300",
-        icon1: <LuBarChart2 className="w-[1.2rem] h-[1.2rem] text-white" />,
-    },
-    {
-        id: 2,
-        title: "Total Orders",
-        value: "15",
-        previousValue: "16",
-        bgColor: "bg-gradient-to-br from-green-500 to-green-300",
-        icon1: <RxCube className="w-[1.2rem] h-[1.2rem] text-white" />,
-    },
-    {
-        id: 3,
-        title: "Total Products",
-        value: "10",
-        previousValue: "08",
-        bgColor: "bg-gradient-to-br from-orange-500 to-orange-300",
-        icon1: <CgNotes className="w-[1.2rem] h-[1.2rem] text-white" />,
-    },
-    {
-        id: 4,
-        title: "New Customers",
-        value: "10",
-        previousValue: "9",
-        bgColor: "bg-gradient-to-br from-red-500 to-red-300",
-        icon1: <FiUsers className="w-[1.2rem] h-[1.2rem] text-white" />,
-    },
-];
-
-interface StatisticCardProps {
-    title: string;
-    value: string;
-    previousValue: string;
-    bgColor: string;
-    icon1: React.ReactNode;
-}
-
-const calculatePercentageChange = (currentValue: string, previousValue: string): string => {
-    const current = parseFloat(currentValue.replace("K", "")) * 1000;
-    const previous = parseFloat(previousValue.replace("K", "")) * 1000;
+const calculatePercentageChange = (currentValue: string | number, previousValue: string | number): string => {
+    const current = typeof currentValue === "string" ? parseFloat(currentValue.replace("K", "")) * 1000 : currentValue;
+    const previous = typeof previousValue === "string" ? parseFloat(previousValue.replace("K", "")) * 1000 : previousValue;
+    if (previous === 0) return "0";
     const change = ((current - previous) / previous) * 100;
     return change.toFixed(2);
 };
+
+interface StatisticCardProps {
+    title: string;
+    value: string | number;
+    previousValue: string | number;
+    bgColor: string;
+    icon1: React.ReactNode;
+}
 
 const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousValue, bgColor, icon1 }) => {
     const percentageChange = calculatePercentageChange(value, previousValue);
     const isPositive = parseFloat(percentageChange) > 0;
 
     return (
-        <div className="bg-white rounded-[1rem] px-6 py-6 flex flex-col gap-4 w-full">
+        <div className="bg-white rounded-[1rem] px-6 py-6 flex flex-col gap-4 w-full shadow-xs">
             <div className="flex justify-between items-center">
                 <div className="flex items-center gap-4">
                     <div className={`${bgColor} rounded-md p-3 flex items-center justify-center`} aria-label={title}>
@@ -96,6 +55,58 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
 };
 
 const Page: React.FC = () => {
+    const { orders } = useSelector((state: RootState) => state.order);
+    const { products } = useSelector((state: RootState) => state.product);
+    const { customers } = useSelector((state: RootState) => state.customer);
+
+    const totalProducts = products.length;
+    const totalCustomers = customers.length;
+    const totalOrders = orders.length;
+    const formatToKOrL = (value: number): string => {
+        if (value >= 100000) {
+            return `${(value / 100000).toFixed(2)}L`;
+        } else if (value >= 1000) {
+            return `${(value / 1000).toFixed(2)}K`;
+        }
+        return value.toString();
+    };
+    const totalsales = orders.reduce((total, order) => total + order.cost, 0);
+    const formattedTotalSales = formatToKOrL(totalsales);
+
+    const statistics = [
+        {
+            id: 1,
+            title: "Total Sales",
+            value: formattedTotalSales,
+            previousValue: formatToKOrL(250000),
+            bgColor: "bg-gradient-to-br from-blue-500 to-blue-300",
+            icon1: <LuBarChart2 className="w-[1.2rem] h-[1.2rem] text-white" />,
+        },
+        {
+            id: 2,
+            title: "Total Orders",
+            value: totalOrders,
+            previousValue: 16,
+            bgColor: "bg-gradient-to-br from-green-500 to-green-300",
+            icon1: <RxCube className="w-[1.2rem] h-[1.2rem] text-white" />,
+        },
+        {
+            id: 3,
+            title: "Total Products",
+            value: totalProducts,
+            previousValue: 8,
+            bgColor: "bg-gradient-to-br from-orange-500 to-orange-300",
+            icon1: <CgNotes className="w-[1.2rem] h-[1.2rem] text-white" />,
+        },
+        {
+            id: 4,
+            title: "New Customers",
+            value: totalCustomers,
+            previousValue: 9,
+            bgColor: "bg-gradient-to-br from-red-500 to-red-300",
+            icon1: <FiUsers className="w-[1.2rem] h-[1.2rem] text-white" />,
+        },
+    ];
     return (
         <section className="gap-5 flex flex-col">
             <section className="grid grid-cols-4 gap-5 w-full">

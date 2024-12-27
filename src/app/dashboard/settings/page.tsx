@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setEmailStatus, setModal } from "@/redux/slices/commonSlice";
 import { setAdminData, setAccountData, deleteFile } from "@/redux/slices/adminSlice";
-import { setTopProduct } from "@/redux/slices/commonSlice";
+// import { setTopProduct } from "@/redux/slices/commonSlice";
 import { useRouter } from "next/navigation";
 
 function Profile() {
@@ -29,71 +29,6 @@ function Profile() {
         dispatch(setAdminData({ ...adminData, [name]: value }));
     };
 
-    // const handleUpdate = async () => {
-    //     const token = localStorage.getItem("authToken");
-
-    //     if (!token) {
-    //         toast.error("Token not received. Redirecting to login.", { position: "top-right" });
-    //         setTimeout(() => router.push("/"), 2000);
-    //         return;
-    //     }
-
-    //     const emailIsValid = emailRegex.test(adminData.email || "");
-    //     if (!emailIsValid) {
-    //         toast.error("Please enter a valid email address.", { position: "top-right" });
-    //         return;
-    //     }
-
-    //     const adminDetails = {
-    //         email: adminData.email,
-    //         adminID: adminData.adminID,
-    //         firstName: adminData.firstName,
-    //         lastName: adminData.lastName,
-    //         role: adminData.role,
-    //         profileImage: imageUrl,
-    //     };
-
-    //     try {
-    //         const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
-
-    //         const updateResponse = await fetch(`${baseURL}/api/auth/updateAccount`, {
-    //             method: "PUT",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //             body: JSON.stringify(adminDetails),
-    //         });
-
-    //         if (updateResponse.ok) {
-    //             toast.success("Account updated successfully.", { position: "top-right" });
-    //             dispatch(deleteFile());
-
-    //             const fetchResponse = await fetch(`${baseURL}/api/auth/dashboard`, {
-    //                 method: "GET",
-    //                 headers: {
-    //                     Authorization: `Bearer ${token}`,
-    //                 },
-    //             });
-
-    //             if (fetchResponse.ok) {
-    //                 const updatedData = await fetchResponse.json();
-    //                 dispatch(setAccountData(updatedData.admin));
-    //             } else {
-    //                 const fetchError = await fetchResponse.json();
-    //                 toast.error(`Failed to fetch updated data: ${fetchError.message || "Unknown error"}`, { position: "top-right" });
-    //             }
-
-
-    //         } else {
-    //             const errorData = await updateResponse.json();
-    //             toast.error(`Failed to update account: ${errorData.message || "Unknown error"}`, { position: "top-right" });
-    //         }
-    //     } catch (error) {
-    //         toast.error("Unable to connect. Please check your network.", { position: "top-right" });
-    //     }
-    // };
-
     const handleUpdate = async () => {
         const token = localStorage.getItem("authToken");
 
@@ -103,15 +38,25 @@ function Profile() {
             return;
         }
 
+        const emailIsValid = emailRegex.test(adminData.email || "");
+        if (!emailIsValid) {
+            toast.error("Please enter a valid email address.", { position: "top-right" });
+            return;
+        }
+
         const adminDetails = {
-            customerID: "CD82920",
+            email: adminData.email,
+            adminID: adminData.adminID,
+            firstName: adminData.firstName,
+            lastName: adminData.lastName,
+            role: adminData.role,
             profileImage: imageUrl,
         };
 
         try {
             const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
 
-            const updateResponse = await fetch(`${baseURL}/api/auth/update`, {
+            const updateResponse = await fetch(`${baseURL}/api/auth/updateAccount`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -133,8 +78,7 @@ function Profile() {
 
                 if (fetchResponse.ok) {
                     const updatedData = await fetchResponse.json();
-                    // dispatch(setAccountData(updatedData.admin));
-                    dispatch(setTopProduct(updatedData.topProductData));
+                    dispatch(setAccountData(updatedData.admin));
                 } else {
                     const fetchError = await fetchResponse.json();
                     toast.error(`Failed to fetch updated data: ${fetchError.message || "Unknown error"}`, { position: "top-right" });
@@ -149,6 +93,62 @@ function Profile() {
             toast.error("Unable to connect. Please check your network.", { position: "top-right" });
         }
     };
+
+    // const handleUpdate = async () => {
+    //     const token = localStorage.getItem("authToken");
+
+    //     if (!token) {
+    //         toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+    //         setTimeout(() => router.push("/"), 2000);
+    //         return;
+    //     }
+
+    //     const adminDetails = {
+    //         customerID: "CD82920",
+    //         profileImage: imageUrl,
+    //     };
+
+    //     try {
+    //         const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+
+    //         const updateResponse = await fetch(`${baseURL}/api/auth/update`, {
+    //             method: "PUT",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 Authorization: `Bearer ${token}`,
+    //             },
+    //             body: JSON.stringify(adminDetails),
+    //         });
+
+    //         if (updateResponse.ok) {
+    //             toast.success("Account updated successfully.", { position: "top-right" });
+    //             dispatch(deleteFile());
+
+    //             const fetchResponse = await fetch(`${baseURL}/api/auth/dashboard`, {
+    //                 method: "GET",
+    //                 headers: {
+    //                     Authorization: `Bearer ${token}`,
+    //                 },
+    //             });
+
+    //             if (fetchResponse.ok) {
+    //                 const updatedData = await fetchResponse.json();
+    //                 // dispatch(setAccountData(updatedData.admin));
+    //                 dispatch(setTopProduct(updatedData.topProductData));
+    //             } else {
+    //                 const fetchError = await fetchResponse.json();
+    //                 toast.error(`Failed to fetch updated data: ${fetchError.message || "Unknown error"}`, { position: "top-right" });
+    //             }
+
+
+    //         } else {
+    //             const errorData = await updateResponse.json();
+    //             toast.error(`Failed to update account: ${errorData.message || "Unknown error"}`, { position: "top-right" });
+    //         }
+    //     } catch (error) {
+    //         toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+    //     }
+    // };
 
     const toggleModal = () => {
         dispatch(setModal(!modal));
