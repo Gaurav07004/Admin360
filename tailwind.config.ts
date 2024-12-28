@@ -54,6 +54,13 @@ const config: Config = {
           },
         },
       },
+      screens: {
+        'sm-320': '320px',
+        'sm-480': '480px',
+        'sm-767': '767px',
+        'sm-991': '991px',
+        'sm-992': '1025px',
+      },
     },
   },
   plugins: [],

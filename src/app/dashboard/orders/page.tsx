@@ -16,9 +16,14 @@ interface Order {
 
 interface StatisticCardProps {
     title: string;
-    value: string | number;
+    value: number;
     bgColor: string;
     icon: React.ReactNode;
+}
+
+
+function addLeadingZero(num: number): string {
+    return num < 10 ? `0${num}` : `${num}`;
 }
 
 const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, bgColor, icon }) => (
@@ -27,7 +32,7 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, bgColor, ic
             {icon}
         </div>
         <div className="flex-col items-center justify-center">
-            <div className="text-[#5e6574] font-bold text-2xl">{value}</div>
+            <div className="text-[#5e6574] font-bold text-2xl">{addLeadingZero(value)}</div>
             <div className="text-gray-400 text-sm font-semibold">{title}</div>
         </div>
     </div>

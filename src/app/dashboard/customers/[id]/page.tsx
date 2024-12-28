@@ -179,20 +179,24 @@ const CustomerDetailPage: React.FC = () => {
                 />
                 <div className="ml-4">
                     <div className="flex items-center justify-between w-fit">
-                        <div className="text-gray-800 text-base font-semibold">{selectedCustomer?.customerName}</div>
+                        <div className=" text-gray-600 text-base font-semibold">{selectedCustomer?.customerName}</div>
                         <div className="ml-4">
                             <span
-                                className={`text-[0.6rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${selectedCustomer?.customerStatus === 'Active' ? "bg-green-100 text-green-500 hover:bg-green-200" : "bg-red-100 text-red-500 hover:bg-red-200"
+                                className={`relative text-[0.6rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${selectedCustomer?.customerStatus === "Active"
+                                    ? "bg-green-100 text-green-500 hover:bg-green-200"
+                                    : "bg-red-100 text-red-500 hover:bg-red-200"
                                     }`}
-                                onClick={() => {
-                                    if (selectedCustomer?.customerID && selectedCustomer?.customerStatus) {
-                                        handleStatusChange(selectedCustomer.customerID, selectedCustomer.customerStatus);
-                                    }
-                                }}
+                                onClick={() =>
+                                    selectedCustomer?.customerID &&
+                                    selectedCustomer?.customerStatus &&
+                                    handleStatusChange(
+                                        selectedCustomer.customerID,
+                                        selectedCustomer.customerStatus
+                                    )
+                                }
                             >
                                 {selectedCustomer?.customerStatus}
                             </span>
-
                         </div>
                     </div>
                     <div className="flex items-center text-gray-500 mt-1 space-x-3">
@@ -215,7 +219,7 @@ const CustomerDetailPage: React.FC = () => {
                         className={`flex flex-col p-3 ${index !== data.length - 1 ? "border-r-[0.5px] border-gray-300" : ""
                             } hover:bg-gray-100 transition`}
                     >
-                        <span className="text-[0.65rem] font-semibold text-gray-400">{item.label}</span>
+                        <span className="text-[0.65rem] font-semibold text-gray-600">{item.label}</span>
                         <span className="text-sm font-semibold mt-2">{item.value}</span>
                     </div>
                 ))}
@@ -231,8 +235,8 @@ const CustomerDetailPage: React.FC = () => {
                     {customerDetails.map((detail, index) => (
                         <div key={index}>
                             <div className="flex items-center justify-between">
-                                <span className="font-semibold text-gray-400 uppercase text-[0.65rem]">{detail.label}</span>
-                                <div className={`text-xs ${detail.label === "Email" || detail.label === "Phone" ? 'text-orange-400' : ""}`}>
+                                <span className="w-1/2 text-[0.75rem] font-semibold text-gray-600">{detail.label}</span>
+                                <div className={`text-xs font-semibold text-gray-600 ${detail.label === "Email" || detail.label === "Phone" ? 'text-orange-400' : ""}`}>
                                     <span>{detail.value || 'N/A'}</span>
                                 </div>
                             </div>

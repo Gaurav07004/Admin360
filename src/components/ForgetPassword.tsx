@@ -56,11 +56,27 @@ const ForgotPasswordModal = () => {
         dispatch(setStatusMessage(""));
 
         try {
-            dispatch(setStatusMessage("Reset link sent successfully! Check your email."));
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-            dispatch(setEmailStatus("valid"));
-            dispatch(setCurrentSection(2));
-        } catch {
+            const response = await fetch("http://localhost:3000/api/auth/forgotPassword/sendOTPMail", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            if (response.ok) {
+                // const data = await response.json();
+                dispatch(setStatusMessage("Reset link sent successfully! Check your email."));
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+                dispatch(setEmailStatus("valid"));
+                dispatch(setCurrentSection(2));
+            } else {
+                const data = await response.json();
+                dispatch(setStatusMessage(data.error || "Failed to send reset link. Please try again."));
+                dispatch(setEmailStatus("invalid"));
+            }
+        } catch (error) {
+            console.error("Error sending reset link:", error);
             dispatch(setStatusMessage("Failed to send reset link. Please try again."));
             dispatch(setEmailStatus("invalid"));
         } finally {
@@ -89,30 +105,86 @@ const ForgotPasswordModal = () => {
             return;
         }
 
-        const correctOtp = "11111111";
         dispatch(setIsLoading(true));
+        dispatch(setOTPStatusMessage(""));
 
-        if (otpString === correctOtp) {
-            dispatch(setOTPStatus("valid"));
-            dispatch(setOTPStatusMessage("OTP entered successfully. You can now reset your password."));
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-            dispatch(setCurrentSection(3));
-        } else {
+        try {
+            const response = await fetch("http://localhost:3000/api/auth/forgotPassword/verifyOTP", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    otp: otpString,
+                }),
+            });
+
+            if (response.ok) {
+                // const data = await response.json();
+                dispatch(setOTPStatus("valid"));
+                dispatch(setOTPStatusMessage("OTP successfully verified. You can now reset your password."));
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+                dispatch(setCurrentSection(3));
+            } else {
+                const data = await response.json();
+                dispatch(setOTPStatus("invalid"));
+                dispatch(setOTPStatusMessage(data.error || "Incorrect OTP. Please try again."));
+            }
+        } catch (error) {
+            console.error("Error verifying OTP:", error);
             dispatch(setOTPStatus("invalid"));
-            dispatch(setOTPStatusMessage("Incorrect OTP. Please try again."));
+            dispatch(setOTPStatusMessage("An error occurred while verifying the OTP. Please try again."));
+        } finally {
+            dispatch(setIsLoading(false));
         }
-
-        dispatch(setIsLoading(false));
     };
 
-    const handlePasswordChange = () => {
-        if (newPassword === confirmPassword && newPassword.length >= 6) {
-            dispatch(setPasswordStatusMessage("Password reset successfully."));
-            dispatch(setPasswordStatus("valid"));
-            dispatch(setCurrentSection(4));
-        } else {
-            dispatch(setPasswordStatusMessage("Passwords do not match or are too short (min 6 characters)."));
+    const handlePasswordChange = async () => {
+        if (newPassword !== confirmPassword) {
+            dispatch(setPasswordStatusMessage("Passwords do not match."));
             dispatch(setPasswordStatus("invalid"));
+            return;
+        }
+
+        if (newPassword.length < 6) {
+            dispatch(setPasswordStatusMessage("Password is too short. Minimum length is 6 characters."));
+            dispatch(setPasswordStatus("invalid"));
+            return;
+        }
+
+        dispatch(setIsLoading(true));
+        dispatch(setPasswordStatusMessage(""));
+
+        try {
+            const response = await fetch("http://localhost:3000/api/auth/forgotPassword/resetPassword", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    newPassword,
+                }),
+            });
+
+            if (response.ok) {
+                // const data = await response.json();
+                dispatch(setPasswordStatusMessage("Password reset successfully."));
+                dispatch(setPasswordStatus("valid"));
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+                dispatch(setCurrentSection(4));
+            } else {
+                const data = await response.json();
+                dispatch(setPasswordStatusMessage(data.error || "Failed to reset password. Please try again."));
+                dispatch(setPasswordStatus("invalid"));
+            }
+        } catch (error) {
+            console.error("Error resetting password:", error);
+            dispatch(setPasswordStatusMessage("An error occurred while resetting your password. Please try again."));
+            dispatch(setPasswordStatus("invalid"));
+        } finally {
+            dispatch(setIsLoading(false));
         }
     };
 

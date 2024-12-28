@@ -187,20 +187,28 @@ const CustomerDetailPage: React.FC = () => {
 
     const renderPaymentInfo = () => {
         const shiping = 100.25;
-        const subTotal = selectedOrder?.cost || 0 - shiping;
+        const subTotal = selectedOrder?.cost ? selectedOrder.cost - shiping : 0;
 
         return (
             <>
                 <div className="p-4 bg-white rounded-lg">
                     <div className="text-[#FF6500] font-bold text-xs mb-4 uppercase">Payment</div>
                     <div className="flex flex-col">
-                        {[{ title: 'Sub Total', value: subTotal }, { title: 'Shiping Charge', value: shiping }, { title: 'Total', value: selectedOrder?.cost }].map((item, index) => (
+                        {[
+                            { title: 'Sub Total', value: subTotal },
+                            { title: 'Shipping Charge', value: shiping },
+                            { title: 'Total', value: selectedOrder?.cost || 0 },
+                        ].map((item, index) => (
                             <div
                                 key={index}
                                 className={`flex items-center justify-between w-full py-2`}
                             >
-                                <span className="w-1/2 text-[0.9rem] font-medium text-slate-500">{item.title}</span>
-                                <span className="w-1/2 text-[0.8rem] font-semibold text-gray-800">₹{item.value}</span>
+                                <span className="w-1/2 text-[0.9rem] font-medium text-slate-500">
+                                    {item.title}
+                                </span>
+                                <span className="w-1/2 text-[0.8rem] font-semibold text-gray-800">
+                                    ₹{item.value.toFixed(2)}
+                                </span>
                             </div>
                         ))}
                     </div>
@@ -208,6 +216,7 @@ const CustomerDetailPage: React.FC = () => {
             </>
         );
     };
+
 
     const renderPreview = () => (
         <section className="sticky bottom-0 z-10 bg-white w-full h-7"></section>

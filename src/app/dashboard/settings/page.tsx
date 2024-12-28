@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setEmailStatus, setModal } from "@/redux/slices/commonSlice";
 import { setAdminData, setAccountData, deleteFile } from "@/redux/slices/adminSlice";
-// import { setTopProduct } from "@/redux/slices/commonSlice";
 import { useRouter } from "next/navigation";
 
 function Profile() {
@@ -104,8 +103,8 @@ function Profile() {
     //     }
 
     //     const adminDetails = {
-    //         customerID: "CD82920",
-    //         profileImage: imageUrl,
+    //         productID: "PD82910",
+    //         productImage: imageUrl,
     //     };
 
     //     try {
@@ -124,21 +123,21 @@ function Profile() {
     //             toast.success("Account updated successfully.", { position: "top-right" });
     //             dispatch(deleteFile());
 
-    //             const fetchResponse = await fetch(`${baseURL}/api/auth/dashboard`, {
-    //                 method: "GET",
-    //                 headers: {
-    //                     Authorization: `Bearer ${token}`,
-    //                 },
-    //             });
+    //             // const fetchResponse = await fetch(`${baseURL}/api/auth/dashboard`, {
+    //             //     method: "GET",
+    //             //     headers: {
+    //             //         Authorization: `Bearer ${token}`,
+    //             //     },
+    //             // });
 
-    //             if (fetchResponse.ok) {
-    //                 const updatedData = await fetchResponse.json();
-    //                 // dispatch(setAccountData(updatedData.admin));
-    //                 dispatch(setTopProduct(updatedData.topProductData));
-    //             } else {
-    //                 const fetchError = await fetchResponse.json();
-    //                 toast.error(`Failed to fetch updated data: ${fetchError.message || "Unknown error"}`, { position: "top-right" });
-    //             }
+    //             // if (fetchResponse.ok) {
+    //             //     const updatedData = await fetchResponse.json();
+    //             //     // dispatch(setAccountData(updatedData.admin));
+    //             //     dispatch(setTopProduct(updatedData.topProductData));
+    //             // } else {
+    //             //     const fetchError = await fetchResponse.json();
+    //             //     toast.error(`Failed to fetch updated data: ${fetchError.message || "Unknown error"}`, { position: "top-right" });
+    //             // }
 
 
     //         } else {

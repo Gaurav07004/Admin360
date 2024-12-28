@@ -103,7 +103,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                             return (
                                 <Badge
                                     key={productName}
-                                    className={`py-[0.95rem] px-[0.3rem] w-full rounded-lg flex items-center gap-2 border border-[${border}]`}
+                                    className={`py-[0.95rem] px-[0.3rem] w-full rounded-md flex items-center gap-2 border border-[${border}]`}
                                     style={{
                                         backgroundColor: bgColor,
                                     }}

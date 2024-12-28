@@ -13,7 +13,7 @@ interface Statistic {
     id: number;
     iconType: "customers" | "orders" | "visits";
     title: string;
-    value: string | number;
+    value: number;
     currentCount: number;
     previousCount: number;
     bgColor: string;
@@ -39,6 +39,10 @@ const StatisticCard: React.FC<{
         ? "Compared to the previous month, reflecting a steady rise in visits."
         : "Compared to last month, indicating steady growth.";
 
+    function addLeadingZero(num: number): string {
+        return num < 10 ? `0${num}` : `${num}`;
+    }
+
     return (
         <section className="bg-white rounded-[1rem] py-5 px-6 w-full">
             <div className="flex justify-between items-center mb-6">
@@ -48,7 +52,7 @@ const StatisticCard: React.FC<{
                     </div>
                     <div className="text-gray-700 font-semibold text-lg">{title}</div>
                 </div>
-                <div className="text-gray-800 font-bold text-2xl">{value}</div>
+                <div className="text-gray-800 font-bold text-2xl">{addLeadingZero(value)}</div>
             </div>
             <div className="flex gap-4 font-semibold">
                 <span className={`text-xs flex items-center rounded-md px-2 cursor-pointer py-1 ${isPositive ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}>

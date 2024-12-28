@@ -50,6 +50,10 @@ const Dashboard: React.FC = () => {
         fetchData();
     }, [dispatch]);
 
+    function addLeadingZero(num: number): string {
+        return num < 10 ? `0${num}` : `${num}`;
+    }
+
     return (
         <div className="flex flex-col items-center gap-5 w-full">
             <div className="w-full py-4 px-5 bg-white rounded-[1rem]">
@@ -81,7 +85,7 @@ const Dashboard: React.FC = () => {
                                             <p className="text-sm font-semibold text-gray-700">{product.name}</p>
                                             <span className="text-sm font-medium text-slate-700">{product.value}</span>
                                         </div>
-                                        <p className="text-[0.8rem] font-medium text-slate-500">{product.sold} sold</p>
+                                        <p className="text-[0.8rem] font-medium text-slate-500">{addLeadingZero(product.sold)} sold</p>
                                     </div>
                                 </div>
                             </li>

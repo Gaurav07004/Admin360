@@ -21,10 +21,14 @@ const calculatePercentageChange = (currentValue: string | number, previousValue:
 
 interface StatisticCardProps {
     title: string;
-    value: string | number;
+    value: number;
     previousValue: string | number;
     bgColor: string;
     icon1: React.ReactNode;
+}
+
+function addLeadingZero(num: number): string {
+    return num < 10 ? `0${num}` : `${num}`;
 }
 
 const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousValue, bgColor, icon1 }) => {
@@ -40,7 +44,7 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
                     </div>
                     <div className="text-gray-700 font-semibold text-lg">{title}</div>
                 </div>
-                <div className="text-gray-800 font-bold text-xl">{value}</div>
+                <div className="text-gray-800 font-bold text-xl">{addLeadingZero(value)}</div>
             </div>
             <div className="text-gray-600 text-xs font-semibold mt-3 flex items-center gap-2">
                 <span className={`text-xs flex items-center rounded-md px-2 py-1 ${isPositive ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}>
@@ -72,6 +76,8 @@ const Page: React.FC = () => {
     };
     const totalsales = orders.reduce((total, order) => total + order.cost, 0);
     const formattedTotalSales = formatToKOrL(totalsales);
+
+
 
     const statistics = [
         {

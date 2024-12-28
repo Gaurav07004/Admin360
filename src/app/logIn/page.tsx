@@ -89,7 +89,6 @@ const Login = () => {
                     toast.error("Token not received. Please try again.", { position: "top-right" });
                 }
             } else {
-                // const errorData = await response.json();
                 const errorMessage = "Invalid credentials. Please try again.";
                 toast.warning(errorMessage, { position: "top-right" });
             }
