@@ -32,11 +32,11 @@ const Dashboard: React.FC = () => {
     ];
 
     return (
-        <div className="flex flex-col items-center gap-5 w-full">
+        <div className="flex flex-col items-center gap-4 w-full">
             <OrderStat />
             <div className="w-full py-4 px-5 bg-white rounded-[1rem]">
-                <div className="flex justify-between items-center mb-8">
-                    <p className="text-lg font-semibold text-gray-600">Customer Traffic</p>
+                <div className="flex justify-between items-center mb-6">
+                    <p className="font-semibold text-gray-600 text-[1.1rem]">Customer Traffic</p>
                     <button className="flex items-center py-2 px-5 text-sm text-gray-500 bg-gray-100 rounded-lg hover:bg-gray-100 border border-gray-300">All Time</button>
                 </div>
                 <section className="flex w-full">

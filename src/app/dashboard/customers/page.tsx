@@ -50,9 +50,9 @@ const StatisticCard: React.FC<{
                     <div className={`${bgColor} rounded-md p-3 flex items-center justify-center`} aria-label={title}>
                         {icon1}
                     </div>
-                    <div className="text-gray-700 font-semibold text-lg">{title}</div>
+                    <div className="text-gray-600 font-semibold text-lg">{title}</div>
                 </div>
-                <div className="text-gray-800 font-bold text-2xl">{addLeadingZero(value)}</div>
+                <div className="text-gray-600 font-bold text-2xl">{addLeadingZero(value)}</div>
             </div>
             <div className="flex gap-4 font-semibold">
                 <span className={`text-xs flex items-center rounded-md px-2 cursor-pointer py-1 ${isPositive ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}>
@@ -102,8 +102,8 @@ const Page: React.FC = () => {
 
 
     return (
-        <section className="gap-5 flex flex-col justify-between">
-            <section className="flex justify-start items-center gap-5 w-full">
+        <section className="gap-4 flex flex-col justify-between">
+            <section className="flex justify-start items-center gap-4 w-full">
                 {statistics.map((stat) => (
                     <StatisticCard key={stat.id} stat={stat} />
                 ))}

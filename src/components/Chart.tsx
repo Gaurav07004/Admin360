@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, ChartTooltip, Badge, Pie, PieChart, Cell } from "keep-react";
@@ -5,7 +6,6 @@ import { PiArrowUpRightBold, PiArrowDownRightBold, PiCircleFill } from "react-ic
 import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { Laptop } from "phosphor-react";
 
 type DataPoint = {
     name: string,
@@ -46,11 +46,11 @@ const AreaChartTooltip: React.FC<{ payload?: any, label?: string, active?: boole
 };
 
 const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
-    const { pieChartData } = useSelector((state: RootState) => state.menu);
+    // const { pieChartData } = useSelector((state: RootState) => state.menu);
     const { orders } = useSelector((state: RootState) => state.order);
     const { products } = useSelector((state: RootState) => state.product);
 
-    const COLORS = ["#00BCD4", "#FF9800", "#9C27B0", "#8BC34A"];
+    // const COLORS = ["#00BCD4", "#FF9800", "#9C27B0", "#8BC34A"];
     type Category = "Smartwatch" | "Laptop Sleeve" | "Smartphones" | "Gaming Laptops";
 
     const categoryStyles: Record<Category, { bgColor: string; textColor: string, border: string }> = {
@@ -62,7 +62,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
 
     const defaultStyles = { bgColor: '#F0F0F0', textColor: '#757575' };
     // const totalValue = pieChartData?.reduce((acc, item) => acc + item.value, 0);
-    const totalIncome = totalRevenue + 50000 + 50000;
+    const totalIncome = totalRevenue + 500000 + 500000;
     const lastYearIncome = totalRevenue + 200000;
     const percentageChange = ((totalIncome - lastYearIncome) / lastYearIncome) * 100;
     const isPositive = percentageChange >= 0;
@@ -164,14 +164,14 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
             <section className="bg-white rounded-[1rem] py-6 px-8 w-[70%]">
                 <div className="text-left text-gray-700">
                     <div className="w-full mb-[1.25rem]">
-                        <div className="flex items-center justify-between">
-                            <p className="text-lg font-semibold text-gray-600">Total Income</p>
+                        <div className="flex justify-between">
+                            <p className="text-[1.1rem] font-semibold text-gray-600">Total Income</p>
                             <span
                                 className={`text-xs flex items-center rounded-md px-2 py-2 ${badgeBackgroundColor} ${badgeTextColor}`}>
                                 {icon}
                             </span>
                         </div>
-                        <p className="text-2xl text-gray-600">₹{formatToKOrL(parseFloat(totalRevenue.toFixed(2)))}</p>
+                        <p className="text-2xl text-gray-600">₹{formatToKOrL(parseFloat(totalIncome.toFixed(2)))}</p>
                     </div>
                     <div className="flex gap-4 font-semibold items-center mt-6">
                         <span
@@ -214,9 +214,9 @@ const AreaChartComponent: React.FC = () => {
         <>
             <section className="bg-white rounded-[1rem] py-5 px-7 w-full ">
                 <div className="mb-4 text-left text-gray-600">
-                    <p className="text-lg font-semibold mb-2">Total Revenue</p>
+                    <p className="text-[1.1rem] font-semibold mb-2">Total Revenue</p>
                     <div className="flex items-center gap-2">
-                        <p className="text-3xl">₹{formatToKOrL(parseFloat(totalRevenue.toFixed(2)))}</p>
+                        <p className="text-3xl text-gray-600">₹{formatToKOrL(parseFloat(totalRevenue.toFixed(2)))}</p>
                         <Badge
                             variant="border"
                             color={badgeColor}

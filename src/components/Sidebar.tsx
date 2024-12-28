@@ -136,7 +136,7 @@ const Sidebar: React.FC = () => {
                     />
                     <div>
                         <p className="text-sm font-semibold text-gray-600 truncate">{fullName}</p>
-                        <p className="text-xs text-gray-400">{accountData?.role}</p>
+                        <p className="text-xs text-gray-500 font-semibold">{accountData?.role}</p>
                     </div>
                 </div>
             </ul>

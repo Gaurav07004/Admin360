@@ -14,17 +14,15 @@ const Header: React.FC = () => {
 
     const currentDate = new Date();
 
-    // Format the date as "September 11. 2024"
     const options = { day: 'numeric', month: 'short', year: 'numeric' };
     const formattedDate = currentDate.toLocaleDateString('en-IN', options);
 
     return (
         <nav className="flex items-center justify-between py-4 px-6 bg-white rounded-[1rem] w-[100%]">
             <div className="flex flex-col items-start">
-                <p className="text-2xl font-semibold text-[#5e6574]">Hello, {accountData?.firstName}</p>
-                <p className="text-xs text-gray-400 font-semibold">Track your overall progress here. You're almost there!</p>
+                <p className="text-xl text-gray-600 font-semibold">Welcome, {accountData?.firstName}</p>
+                <p className="text-xs text-gray-500 font-medium">Monitor your progress and stay on track towards achieving your goals.</p>
             </div>
-
             <div className="flex items-center space-x-4">
                 <div className="relative flex items-center space-x-2 bg-orange-50 px-3 py-2 rounded-md border border-orange-300">
                     <IoCalendarOutline className="w-5 h-5 text-orange-500" />
@@ -46,7 +44,7 @@ const Header: React.FC = () => {
                     />
                     <div>
                         <p className="text-sm font-semibold text-gray-600">{fullName}</p>
-                        <p className="text-xs text-gray-400">{accountData?.role}</p>
+                        <p className="text-xs text-gray-500 font-semibold">{accountData?.role}</p>
                     </div>
                 </div>
             </div>

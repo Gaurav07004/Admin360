@@ -179,7 +179,7 @@ const CustomerDetailPage: React.FC = () => {
                 />
                 <div className="ml-4">
                     <div className="flex items-center justify-between w-fit">
-                        <div className=" text-gray-600 text-base font-semibold">{selectedCustomer?.customerName}</div>
+                        <div className="text-gray-600 text-base font-semibold">{selectedCustomer?.customerName}</div>
                         <div className="ml-4">
                             <span
                                 className={`relative text-[0.6rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${selectedCustomer?.customerStatus === "Active"

@@ -112,7 +112,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption,
             <Table className="!bg-white w-full overflow-auto">
                 <TableCaption className="border border-gray-300 !px-3">
                     <section className="flex items-center justify-between">
-                        <p className="text-lg font-semibold text-gray-600">{caption}</p>
+                        <p className="text-[1.1rem] font-semibold text-gray-600">{caption}</p>
                         <div className="flex items-center justify-between gap-8">
                             <div className="relative flex items-center rounded-md">
                                 <input
