@@ -36,17 +36,17 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
     const isPositive = parseFloat(percentageChange) > 0;
 
     return (
-        <div className="bg-white rounded-[1rem] px-6 py-6 flex flex-col gap-4 w-full shadow-xs">
+        <div className="bg-white dark:bg-[#263445] rounded-[1rem] px-6 py-6 flex flex-col gap-4 w-full shadow-xs">
             <div className="flex justify-between items-center">
                 <div className="flex items-center gap-4">
                     <div className={`${bgColor} rounded-md p-3 flex items-center justify-center`} aria-label={title}>
                         {icon1}
                     </div>
-                    <div className="text-gray-700 font-semibold text-lg">{title}</div>
+                    <div className="text-gray-700 font-semibold text-lg dark:text-gray-300">{title}</div>
                 </div>
-                <div className="text-gray-800 font-bold text-xl">{addLeadingZero(value)}</div>
+                <div className="text-gray-800 font-bold text-xl dark:text-gray-400">{addLeadingZero(value)}</div>
             </div>
-            <div className="text-gray-600 text-xs font-semibold mt-3 flex items-center gap-2">
+            <div className="text-gray-600 dark:text-gray-300 text-xs font-semibold mt-3 flex items-center gap-2">
                 <span className={`text-xs flex items-center rounded-md px-2 py-1 ${isPositive ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}>
                     {isPositive ? <TbArrowBadgeUpFilled className="w-5 h-5 text-green-500" /> : <TbArrowBadgeDownFilled className="w-5 h-5 text-red-500" />}
                     {isPositive && "+"}

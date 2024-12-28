@@ -108,11 +108,11 @@ const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption,
     }, [data, searchQuery]);
 
     return (
-        <section className="p-4 bg-white rounded-[1rem]">
-            <Table className="!bg-white w-full overflow-auto">
-                <TableCaption className="border border-gray-300 !px-3">
+        <section className="p-4 bg-white rounded-[1rem] dark:bg-[#263445]">
+            <Table className="!bg-white w-full overflow-auto dark:text-gray-300">
+                <TableCaption className="border border-gray-300 dark:border-gray-500 !px-3 dark:bg-[#263445]">
                     <section className="flex items-center justify-between">
-                        <p className="text-[1.1rem] font-semibold text-gray-600">{caption}</p>
+                        <p className="text-[1.1rem] font-semibold text-gray-600 dark:text-gray-300 ">{caption}</p>
                         <div className="flex items-center justify-between gap-8">
                             <div className="relative flex items-center rounded-md">
                                 <input
@@ -120,7 +120,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption,
                                     value={searchQuery}
                                     onChange={(e) => handleSearch(e.target.value)}
                                     placeholder="Search"
-                                    className="outline-none p-2 text-gray-400 border border-gray-300 rounded-md placeholder:text-[0.9rem] w-[15rem] shadow-sm"
+                                    className="outline-none p-2 dark:bg-[#263445] text-gray-400 border border-gray-300 dark:border-gray-500 rounded-md placeholder:text-[0.9rem] w-[15rem] shadow-sm"
                                 />
                                 <div className="absolute right-1 p-[0.4rem] bg-orange-400 rounded-md text-white">
                                     <FiSearch className="w-5 h-5" />
@@ -135,26 +135,26 @@ const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption,
                         </div>
                     </section>
                 </TableCaption>
-                <TableHeader className="border border-gray-300 bg-[#f0f0f0]">
+                <TableHeader className="border border-gray-300 dark:border-gray-500 bg-[#f0f0f0]">
                     <TableRow>
                         {columns.map((col) => (
-                            <TableHead key={col.id} className="border border-gray-300">
-                                <p className="text-center text-stone-400 font-semibold">
+                            <TableHead key={col.id} className="border border-gray-300 dark:border-gray-500 dark:bg-[#263445]">
+                                <p className="text-center text-stone-400 font-semibold dark:text-gray-300 ">
                                     {col.label}
                                 </p>
                             </TableHead>
                         ))}
                     </TableRow>
                 </TableHeader>
-                <TableBody className="border border-gray-300">
+                <TableBody className="border border-gray-300 dark:border-gray-500">
                     {filteredData.length > 0 ? (
                         filteredData.map((item, index) => (
                             <TableRow
                                 key={index}
-                                className={`text-center border border-gray-300 hover:bg-[#FFF2F2] transition-colors duration-300 `}
+                                className={`text-center border border-gray-300 dark:border-gray-500 hover:bg-[#FFF2F2] transition-colors duration-300`}
                             >
                                 {columns.map((col) => (
-                                    <TableCell key={col.id} className="text-gray-500 font-semibold border border-gray-300">
+                                    <TableCell key={col.id} className="text-gray-500 font-semibold border border-gray-300 dark:border-gray-500 dark:text-gray-300 dark:bg-[#263445]">
                                         {renderCellContent(item, col, getBadgeColor)}
                                     </TableCell>
                                 ))}

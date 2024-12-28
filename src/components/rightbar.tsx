@@ -34,10 +34,10 @@ const Dashboard: React.FC = () => {
     return (
         <div className="flex flex-col items-center gap-4 w-full">
             <OrderStat />
-            <div className="w-full py-4 px-5 bg-white rounded-[1rem]">
+            <div className="w-full py-4 px-5 bg-white rounded-[1rem] dark:bg-[#263445]">
                 <div className="flex justify-between items-center mb-6">
-                    <p className="font-semibold text-gray-600 text-[1.1rem]">Customer Traffic</p>
-                    <button className="flex items-center py-2 px-5 text-sm text-gray-500 bg-gray-100 rounded-lg hover:bg-gray-100 border border-gray-300">All Time</button>
+                    <p className="font-semibold text-gray-600 text-[1.1rem] dark:text-gray-300">Customer Traffic</p>
+                    <button className="flex items-center py-2 px-5 text-sm text-gray-500 dark:text-gray-300 bg-gray-100 rounded-lg hover:bg-gray-100 border border-gray-300 dark:border-gray-500 dark:bg-[#263445] hover:dark:bg-[#263445]">All Time</button>
                 </div>
                 <section className="flex w-full">
                     <div className="flex flex-col items-start w-1/3 gap-[1.6rem]">

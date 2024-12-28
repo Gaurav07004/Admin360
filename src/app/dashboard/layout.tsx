@@ -99,8 +99,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }, [isData, accountData, dispatch]);
 
     return isLoading ? (
-        <div className="fixed inset-0 flex justify-center items-center bg-white z-50">
-            <div className="w-12 h-12 rounded-full border-[0.2rem] border-gray-300 border-t-orange-500 animate-spin"></div>
+        <div className="fixed inset-0 flex justify-center items-center bg-white dark:bg-[#263445] z-50">
+            <div className="w-12 h-12 rounded-full border-[0.2rem] border-gray-300  border-t-orange-500 animate-spin"></div>
         </div>
     ) : (
         <div className="flex h-full p-4">

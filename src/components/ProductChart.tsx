@@ -25,7 +25,7 @@ const chartConfig: ChartConfig = {
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-[#333] text-white p-2 rounded text-sm shadow-lg">
+            <div className="bg-[#333] text-white dark:text-gray-300 p-2 rounded text-sm shadow-lg">
                 <h4 className="font-bold">{payload[0].payload.month}</h4>
                 <p>{`${chartConfig.sold.label}: ${payload[0].payload.sold}`}</p>
                 <p>{`${chartConfig.returned.label}: ${payload[1].payload.returned}`}</p>
@@ -46,16 +46,16 @@ const BarChartComponent: React.FC = () => {
     return (
         <>
             <div className='flex items-center justify-between mb-8'>
-                <div className="text-[#5e6574] font-bold text-2xl">Product Sales Overview</div>
+                <div className="text-[#5e6574] dark:text-gray-300 font-bold text-2xl">Product Sales Overview</div>
                 <div className="flex items-center gap-5">
                     <span className='text-sm text-[#384B70] flex items-center gap-2'><FaCircle /> Sold</span>
                     <span className='text-sm text-[#D8A25E] flex items-center gap-2'><FaCircle /> Returned</span>
                 </div>
-                <button className="flex items-center py-2 px-5 text-sm text-gray-500 bg-gray-100 rounded-lg hover:bg-gray-100 border border-gray-300">Monthly</button>
+                <button className="flex items-center py-2 px-5 text-sm text-gray-500 dark:bg-[#263445] dark:text-gray-300 bg-gray-100 rounded-lg hover:bg-gray-100 dark:hover:bg-[#263445] border border-gray-500">Monthly</button>
             </div>
             <ResponsiveContainer className="mx-auto w-[600px]" height={200}>
                 <BarChart data={reorderedData}>
-                    <CartesianGrid vertical={false} stroke="#E1E5EA" />
+                    <CartesianGrid vertical={false} stroke="#E1E5EA" strokeWidth={0.5} />
                     <XAxis
                         dataKey="month"
                         tickLine={false}

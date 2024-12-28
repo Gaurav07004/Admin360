@@ -27,13 +27,13 @@ function addLeadingZero(num: number): string {
 }
 
 const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, bgColor, icon }) => (
-    <div className="bg-white rounded-[1rem] px-8 py-12 flex gap-5 w-[15rem] h-auto">
+    <div className="bg-white dark:bg-[#263445] rounded-[1rem] px-8 py-12 flex gap-5 w-[15rem] h-auto">
         <div className={`${bgColor} rounded-md p-[0.8rem] flex items-center justify-center`} aria-label={title}>
             {icon}
         </div>
         <div className="flex-col items-center justify-center">
-            <div className="text-[#5e6574] font-bold text-2xl">{addLeadingZero(value)}</div>
-            <div className="text-gray-400 text-sm font-semibold">{title}</div>
+            <div className="text-[#5e6574] dark:text-gray-300 font-bold text-2xl">{addLeadingZero(value)}</div>
+            <div className="text-gray-400 dark:text-gray-400 text-sm font-semibold">{title}</div>
         </div>
     </div>
 );
@@ -91,7 +91,7 @@ const Page: React.FC = () => {
                         />
                     ))}
                 </section>
-                <div className="bg-white rounded-[1rem] px-8 pt-6 pb-2 w-[60%]">
+                <div className="bg-white dark:text-gray-300 dark:bg-[#263445] rounded-[1rem] px-8 pt-6 pb-2 w-[60%]">
                     <BarChart />
                 </div>
             </div>

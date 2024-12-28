@@ -120,8 +120,8 @@ const SalesFunnelChart = () => {
     const getColor = (dataKey: ChartDataKey) => {
         const colors = {
             productView: { stroke: "#FF6500", stopColor: "#FF6500" },
-            addToCart: { stroke: "#500073", stopColor: "#500073" },
-            checkout: { stroke: "#47663B", stopColor: "#47663B" },
+            addToCart: { stroke: "#AE445A", stopColor: "#AE445A" },
+            checkout: { stroke: "#006A67", stopColor: "#006A67" },
             purchase: { stroke: "#C62300", stopColor: "#C62300" },
         };
 
@@ -129,8 +129,8 @@ const SalesFunnelChart = () => {
     };
 
     return (
-        <section className="bg-white rounded-[1rem] py-5 px-7 w-full">
-            <div className="mb-4 text-left text-gray-600">
+        <section className="bg-white dark:bg-[#263445] rounded-[1rem] py-5 px-7 w-full">
+            <div className="mb-4 text-left text-gray-600 dark:text-gray-300">
                 <p className="text-lg font-semibold mb-2">Sales Funnel</p>
             </div>
             {isLoading || selectedChartData.length === 0 ? (
@@ -151,7 +151,7 @@ const SalesFunnelChart = () => {
                                     <stop offset="80%" stopColor={getColor(activeButton).stopColor} stopOpacity={0} />
                                 </linearGradient>
                             </defs>
-                            <CartesianGrid vertical={false} stroke="#E1E5EA" strokeWidth={0.8} />
+                            <CartesianGrid vertical={false} stroke="#E1E5EA" strokeWidth={0} />
                             <XAxis className="text-xs font-medium text-metal-400" dataKey="timeRange" stroke="#8897ae" strokeWidth={0.5} ticks={["08:00 AM", "12:00 PM", "04:00 PM", "08:00 PM", "12:00 AM", "04:00 AM"]} dy={12} />
                             <YAxis className="text-xs font-medium text-metal-600" dataKey="price" stroke="#8897ae" strokeWidth={0.5} dx={-10} tick={{ fontSize: 12, fill: "#8897ae" }} tickFormatter={formatNumberWithK} />
                             <ChartTooltip content={<CustomTooltip active={false} payload={[]} />} />
@@ -161,7 +161,7 @@ const SalesFunnelChart = () => {
                     </ResponsiveContainer>
                     <section className="flex flex-wrap items-center justify-between mt-[3rem] gap-4">
                         {buttonConfig.map((data, index) => (
-                            <div key={index} className={`relative flex items-center gap-3 rounded-lg transition-all ${activeButton === data.dataKey ? "bg-[#FF660021] text-[#FF6500]" : "bg-gray-100 text-orange-400"}`}>
+                            <div key={index} className={`relative flex items-center gap-3 rounded-lg transition-all ${activeButton === data.dataKey ? "bg-[#FF660021] text-[#FF6500]" : "bg-gray-100 dark:bg-slate-700 text-orange-400"}`}>
                                 <data.icon className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-base transition-all ${activeButton === data.dataKey ? "text-[#FF6500]" : "text-orange-400"}`} />
                                 <button
                                     onClick={() => handleButtonClick(data.dataKey)}

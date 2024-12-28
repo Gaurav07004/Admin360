@@ -87,13 +87,15 @@ const CustomerDetailPage: React.FC = () => {
     };
 
     const headerProductDetail = () => (
-        <section className="flex items-center justify-between sticky top-0 z-10 bg-white p-4 border-b-[0.5px] border-gray-200">
+        <section className="flex items-center justify-between sticky top-0 z-10 bg-white dark:bg-[#263445] p-4 border-b-[0.5px] border-gray-200 dark:border-gray-500">
             <div className="flex flex-col justify-normal items-start">
                 <div className="text-[#FF6500] font-bold text-sm uppercase">Add New Product</div>
             </div>
             <div className="flex items-center space-x-2">
-                <div className="flex items-center justify-center w-8 h-8 bg-gray-100 hover:bg-orange-100 rounded-lg transition duration-300" onClick={() => dispatch(setProductDrawerStatus(!productDrawerStatus))}>
-                    <HiArrowLongRight className="w-5 h-5 text-gray-500" />
+                <div
+                    className="flex items-center justify-center w-8 h-8 bg-gray-100 dark:bg-gray-500 hover:bg-orange-100 dark:hover:bg-gray-400 rounded-lg transition duration-300"
+                    onClick={() => dispatch(setProductDrawerStatus(!productDrawerStatus))}>
+                    <HiArrowLongRight className="w-5 h-5 text-gray-500 dark:text-gray-900" />
                 </div>
             </div>
         </section>
@@ -103,79 +105,79 @@ const CustomerDetailPage: React.FC = () => {
         return (
             <div className="grid grid-cols-2 gap-4 p-4">
                 <div className="space-y-2">
-                    <label htmlFor="productID" className="text-[0.75rem] font-medium text-gray-600 uppercase">Product ID</label>
+                    <label htmlFor="productID" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Product ID</label>
                     <input
                         type="text"
                         id="productID"
                         name="productID"
                         value={formData.productID}
                         onChange={handleChange}
-                        className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                        className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Product ID"
                         required
                     />
                 </div>
                 <div className="space-y-2">
-                    <label htmlFor="productName" className="text-[0.75rem] font-medium text-gray-600 uppercase">Product Name</label>
+                    <label htmlFor="productName" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Product Name</label>
                     <input
                         type="text"
                         id="productName"
                         name="productName"
                         value={formData.productName}
                         onChange={handleChange}
-                        className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                        className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Product Name"
                         required
                     />
                 </div>
                 <div className="space-y-2">
-                    <label htmlFor="category" className="text-[0.75rem] font-medium text-gray-600 uppercase">Category</label>
+                    <label htmlFor="category" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Category</label>
                     <input
                         type="text"
                         id="category"
                         name="category"
                         value={formData.category}
                         onChange={handleChange}
-                        className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                        className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Category"
                         required
                     />
                 </div>
                 <div className="space-y-2">
-                    <label htmlFor="subcategory" className="text-[0.75rem] font-medium text-gray-600 uppercase">Subcategory</label>
+                    <label htmlFor="subcategory" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Subcategory</label>
                     <input
                         type="text"
                         id="subcategory"
                         name="subcategory"
                         value={formData.subcategory}
                         onChange={handleChange}
-                        className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                        className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Subcategory"
                         required
                     />
                 </div>
                 <div className="space-y-2">
-                    <label htmlFor="price" className="text-[0.75rem] font-medium text-gray-600 uppercase">Price (₹)</label>
+                    <label htmlFor="price" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Price (₹)</label>
                     <input
                         type="number"
                         id="price"
                         name="price"
                         value={formData.price}
                         onChange={handleChange}
-                        className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                        className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Price"
                         required
                     />
                 </div>
                 <div className="space-y-2">
-                    <label htmlFor="stockQuantity" className="text-[0.75rem] font-medium text-gray-600 uppercase">Stock Quantity</label>
+                    <label htmlFor="stockQuantity" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Stock Quantity</label>
                     <input
                         type="number"
                         id="stockQuantity"
                         name="stockQuantity"
                         value={formData.stockQuantity}
                         onChange={handleChange}
-                        className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                        className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Stock Quantity"
                         required
                     />
@@ -188,41 +190,41 @@ const CustomerDetailPage: React.FC = () => {
         return (
             <div className="p-4 space-y-4">
                 <div className="space-y-2">
-                    <label htmlFor="supplierName" className="text-[0.75rem] font-medium text-gray-600 uppercase">Supplier Name</label>
+                    <label htmlFor="supplierName" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Supplier Name</label>
                     <input
                         type="text"
                         id="supplierName"
                         name="supplier.name"
                         value={formData.supplier.name}
                         onChange={handleChange}
-                        className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                        className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Supplier Name"
                         required
                     />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                        <label htmlFor="supplierContact" className="text-[0.75rem] font-medium text-gray-600 uppercase">Supplier Contact</label>
+                        <label htmlFor="supplierContact" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Supplier Contact</label>
                         <input
                             type="text"
                             id="supplierContact"
                             name="supplier.contact"
                             value={formData.supplier.contact}
                             onChange={handleChange}
-                            className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Supplier Contact"
                             required
                         />
                     </div>
                     <div className="space-y-2">
-                        <label htmlFor="supplierEmail" className="text-[0.75rem] font-medium text-gray-600 uppercase">Supplier Email</label>
+                        <label htmlFor="supplierEmail" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Supplier Email</label>
                         <input
                             type="email"
                             id="supplierEmail"
                             name="supplier.email"
                             value={formData.supplier.email}
                             onChange={handleChange}
-                            className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Supplier Email"
                             required
                         />
@@ -236,13 +238,13 @@ const CustomerDetailPage: React.FC = () => {
         return (
             <div className="p-4 space-y-4">
                 <div className="space-y-2">
-                    <label htmlFor="description" className="text-[0.75rem] font-medium text-gray-600 uppercase">Product Description</label>
+                    <label htmlFor="description" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Product Description</label>
                     <textarea
                         id="description"
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
-                        className="w-full p-2 max-h-24 border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                        className="w-full p-2 max-h-24 border-2 dark:border dark:border-gray-500  border-gray-300 dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Product Description"
                         rows={4}
                         required
@@ -250,83 +252,83 @@ const CustomerDetailPage: React.FC = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                        <label htmlFor="tags" className="text-[0.75rem] font-medium text-gray-600 uppercase">Product Tags (comma separated)</label>
+                        <label htmlFor="tags" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Product Tags (comma separated)</label>
                         <input
                             type="text"
                             id="tags"
                             name="tags"
                             value={formData.tags.join(", ")}
                             onChange={(e) => dispatch(setFormData({ ...formData, tags: e.target.value.split(", ") }))}
-                            className="w-full p-2  border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Tags"
                             required
                         />
                     </div>
                     <div className="space-y-2">
-                        <label htmlFor="previousCount" className="text-[0.75rem] font-medium text-gray-600 uppercase">Previous Count</label>
+                        <label htmlFor="previousCount" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Previous Count</label>
                         <input
                             type="number"
                             id="previousCount"
                             name="previousCount"
                             value={formData.previousCount}
                             onChange={handleChange}
-                            className="w-full p-2 border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            className="w-full p-2 border-2 dark:border dark:border-gray-500  border-gray-300 dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Previous Count"
                             required
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <label htmlFor="viewsCount" className="text-[0.75rem] font-medium text-gray-600 uppercase">Views Count</label>
+                        <label htmlFor="viewsCount" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Views Count</label>
                         <input
                             type="number"
                             id="viewsCount"
                             name="viewsCount"
                             value={formData.viewsCount}
                             onChange={handleChange}
-                            className="w-full p-2 border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            className="w-full p-2 border-2 dark:border dark:border-gray-500  border-gray-300 dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Views Count"
                             required
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <label htmlFor="purchaseCount" className="text-[0.75rem] font-medium text-gray-600 uppercase">Purchase Count</label>
+                        <label htmlFor="purchaseCount" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Purchase Count</label>
                         <input
                             type="number"
                             id="purchaseCount"
                             name="purchaseCount"
                             value={formData.purchaseCount}
                             onChange={handleChange}
-                            className="w-full p-2 border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            className="w-full p-2 border-2 dark:border dark:border-gray-500  border-gray-300 dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Purchase Count"
                             required
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <label htmlFor="wishlistCount" className="text-[0.75rem] font-medium text-gray-600 uppercase">Wishlist Count</label>
+                        <label htmlFor="wishlistCount" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Wishlist Count</label>
                         <input
                             type="number"
                             id="wishlistCount"
                             name="wishlistCount"
                             value={formData.wishlistCount}
                             onChange={handleChange}
-                            className="w-full p-2 border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            className="w-full p-2 border-2 dark:border dark:border-gray-500  border-gray-300 dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Wishlist Count"
                             required
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <label htmlFor="rating" className="text-[0.75rem] font-medium text-gray-600 uppercase">Rating</label>
+                        <label htmlFor="rating" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Rating</label>
                         <input
                             type="number"
                             id="rating"
                             name="rating"
                             value={formData.rating}
                             onChange={handleChange}
-                            className="w-full p-2 border-2 border-gray-300 rounded-[0.4rem] text-gray-500 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
+                            className="w-full p-2 border-2 dark:border dark:border-gray-500  border-gray-300 dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Rating"
                             required
                         />
@@ -367,18 +369,18 @@ const CustomerDetailPage: React.FC = () => {
         };
 
         return (
-            <Upload options={{ onDrop, multiple: false }} className='border-none p-4 space-y-2'>
-                <label htmlFor="productImage" className="text-[0.75rem] font-medium text-gray-600 uppercase">Product Image</label>
-                <UploadBody className="border-dashed border-2 border-gray-300 rounded-md py-6 text-center cursor-pointer">
+            <Upload options={{ onDrop, multiple: false }} className='border-none p-4 space-y-2 dark:bg-[#263445]'>
+                <label htmlFor="productImage" className="text-[0.75rem] font-medium text-gray-600 dark:text-gray-300 uppercase">Product Image</label>
+                <UploadBody className="border-dashed border-2 border-gray-300 dark:border-gray-500 rounded-md py-6 text-center cursor-pointer dark:bg-gray-700 hover:dark:bg-gray-700">
                     <UploadIcon className='w-14 h-14'>
-                        <IoCloudUploadOutline className="w-6 h-6 text-gray-500" />
+                        <IoCloudUploadOutline className="w-6 h-6 text-gray-500 dark:text-gray-400" />
                     </UploadIcon>
                     <UploadText>
-                        <p className="!text-sm font-medium text-metal-600 dark:text-white">
+                        <p className="!text-sm font-medium text-metal-600 dark:text-gray-400">
                             <span className="text-[#FF6F20]">Choose File to Upload</span> or Drag & Drop
                         </p>
                         <div>
-                            <p className="!text-xs font-normal text-metal-400 dark:text-metal-300">PNG and JPG formats</p>
+                            <p className="!text-xs font-normal text-metal-400  dark:text-metal-300">PNG and JPG formats</p>
                             <p className="!text-xs font-normal text-metal-400 dark:text-metal-300">(max. 800x400px)</p>
                         </div>
                     </UploadText>
@@ -392,7 +394,7 @@ const CustomerDetailPage: React.FC = () => {
                         {files.map((file) => (
                             <li
                                 key={file.name}
-                                className="flex items-center justify-between border-l-4 border-l-[#FF6F20] bg-metal-25 px-4 py-2.5 text-left text-xs font-normal capitalize text-metal-600">
+                                className="flex items-center justify-between border-l-4 border-l-[#FF6F20] bg-metal-25 dark:bg-gray-700 dark:text-gray-400 px-4 py-2.5 text-left text-xs font-normal capitalize text-metal-600">
                                 <span className='w-[80%]'>{file.name}</span>
                                 <div className="p-2 bg-red-100 rounded-md cursor-pointer">
                                     <Trash
@@ -410,28 +412,28 @@ const CustomerDetailPage: React.FC = () => {
         );
     };
 
-    const footerProductDetail = () => <section className="sticky bottom-0 z-10 bg-white w-full h-7"></section>;
+    const footerProductDetail = () => <section className="sticky bottom-0 z-10 bg-white dark:bg-[#263445] w-full h-7"></section>;
 
     return (
         <>
             {productDrawerStatus && <div ref={overlayRef} className="fixed inset-0 bg-black bg-opacity-20 z-10" />}
             <div
                 ref={drawerRef}
-                className={`fixed top-3 bottom-3 ${drawerStatus === true ? 'right-0' : 'right-3'} w-full max-w-[30rem] rounded-xl bg-white shadow-md text-black transform overflow-auto ${productDrawerStatus ? "translate-x-0" : "translate-x-full"
+                className={`fixed top-3 bottom-3 ${drawerStatus === true ? 'right-0' : 'right-3'} w-full max-w-[30rem] rounded-xl bg-white dark:bg-[#263445] shadow-md text-black transform overflow-auto ${productDrawerStatus ? "translate-x-0" : "translate-x-full"
                     } transition-transform duration-500 ease-in-out z-20`}
             >
                 {headerProductDetail()}
                 <div className="overflow-auto">
                     {ProductDetailsForm()}
-                    <Divider className="border-t-[0.5px] border-gray-200 mt-2" />
+                    <Divider className="border-t-[0.5px] border-gray-200 dark:border-gray-500 mt-2" />
                     {SupplierDetailsForm()}
-                    <Divider className="border-t-[0.5px] border-gray-200 mt-2" />
+                    <Divider className="border-t-[0.5px] border-gray-200 dark:border-gray-500 mt-2" />
                     {ProductDescriptionForm()}
-                    <Divider className="border-t-[0.5px] border-gray-200 mt-2" />
+                    <Divider className="border-t-[0.5px] border-gray-200 dark:border-gray-500 mt-2" />
                     {ProductImageForm()}
-                    <Divider className="border-t-[0.5px] border-gray-200 mt-2" />
+                    <Divider className="border-t-[0.5px] border-gray-200 dark:border-gray-500 mt-2" />
                     <div className='flex items-center justify-between w-full p-4'>
-                        <Button onClick={() => dispatch(setProductDrawerStatus(false))} className="w-[55%] py-3 px-6 rounded-[0.6rem] border bg-white border-[#FF6F20] text-[#FF6F20] hover:bg-white hover:text-[#FF6F20] transition duration-200 ease-in-out focus:outline-none">
+                        <Button onClick={() => dispatch(setProductDrawerStatus(false))} className="w-[55%] py-3 px-6 rounded-[0.6rem] border bg-white dark:bg-[#263445] border-[#FF6F20] text-[#FF6F20] hover:bg-white hover:dark:bg-[#263445] hover:text-[#FF6F20] transition duration-200 ease-in-out focus:outline-none">
                             Cancel
                         </Button>
                         <Button onClick={handleSubmit} className="w-[40%] py-4 px-6 bg-[#ff660021] text-[#FF6500] hover:bg-[#ff660021] transition duration-200 ease-in-out focus:outline-none">

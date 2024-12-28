@@ -27,7 +27,11 @@ interface MenuState {
     addToCart: any[];
     checkout: any[];
     purchase: any[];
+    mode: 'light' | 'dark';
 }
+
+const savedTheme = (typeof window !== "undefined" && localStorage.getItem("theme")) as "light" | "dark";
+
 
 const initialState: MenuState = {
     token: null,
@@ -55,6 +59,8 @@ const initialState: MenuState = {
     addToCart: [],
     checkout: [],
     purchase: [],
+    mode: savedTheme || "light",
+
 };
 
 const menuSlice = createSlice({
@@ -136,6 +142,18 @@ const menuSlice = createSlice({
         setPurchase: (state, action: PayloadAction<any[]>) => {
             state.purchase = action.payload;
         },
+        toggleTheme(state) {
+            state.mode = state.mode === "light" ? "dark" : "light";
+            if (typeof window !== "undefined") {
+                localStorage.setItem("theme", state.mode);
+            }
+        },
+        setTheme(state, action: PayloadAction<"light" | "dark">) {
+            state.mode = action.payload;
+            if (typeof window !== "undefined") {
+                localStorage.setItem("theme", action.payload);
+            }
+        },
     },
 });
 
@@ -165,6 +183,7 @@ export const {
     setAddToCart,
     setProductView,
     setCheckout,
+    toggleTheme, setTheme
 } = menuSlice.actions;
 
 export default menuSlice.reducer;

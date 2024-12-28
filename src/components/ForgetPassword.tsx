@@ -210,11 +210,11 @@ const ForgotPasswordModal = () => {
     const renderEmailSection = () => {
         return (
             <div className="mb-8">
-                <label htmlFor="email" className="text-sm font-semibold text-gray-600 mb-2 block">
+                <label htmlFor="email" className="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2 block">
                     Email Address
                 </label>
                 <div className="relative">
-                    <FiAtSign className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    <FiAtSign className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-300" />
                     <input
                         type="email"
                         id="email-input"
@@ -223,7 +223,7 @@ const ForgotPasswordModal = () => {
                         placeholder="Enter your email address"
                         autoComplete="off"
                         aria-describedby="email-status-message"
-                        className="w-full p-3 pl-12 border border-gray-300 rounded-lg text-gray-600 text-sm placeholder:text-gray-400 focus:outline-none"
+                        className="w-full p-3 pl-12 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 focus:outline-none"
                     />
                     {emailStatus === "invalid" ? (
                         <MdErrorOutline className="text-lg absolute right-3 top-1/2 transform -translate-y-1/2 text-red-500 " />
@@ -247,7 +247,7 @@ const ForgotPasswordModal = () => {
     const renderOTPSection = () => {
         return (
             <div className="mb-8">
-                <label className="text-sm font-semibold text-gray-600 mb-4 block">Enter One Time Password</label>
+                <label className="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-4 block">Enter One Time Password</label>
                 <div className="flex items-center justify-between w-full space-x-2">
                     {otp.map((digit, index) => (
                         <input
@@ -258,11 +258,11 @@ const ForgotPasswordModal = () => {
                             onChange={(e) => handleOtpChange(index, e.target.value)}
                             maxLength={1}
                             autoComplete="off"
-                            className="w-12 h-12 p-3 border border-gray-300 rounded-lg text-gray-600 text-sm placeholder:text-gray-400 focus:outline-none text-center"
+                            className="w-12 h-12 p-3 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 focus:outline-none text-center"
                         />
                     ))}
                 </div>
-                <div className="text-sm text-center text-gray-600 my-4">
+                <div className="text-sm text-center text-gray-600 dark:text-gray-300 my-4">
                     Didn't get a code?{" "}
                     <span className="font-semibold text-[#FF6F20] cursor-pointer" onClick={() => dispatch(setStatusMessage("OTP resent! Please check your email."))}>
                         Resend
@@ -284,11 +284,11 @@ const ForgotPasswordModal = () => {
     const renderPasswordSection = () => {
         return (
             <div className="mb-8">
-                <label htmlFor="new-password" className="text-sm font-semibold text-gray-600 mb-2 block">
+                <label htmlFor="new-password" className="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2 block">
                     New Password
                 </label>
                 <div className="relative">
-                    <FiLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    <FiLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-300" />
                     <input
                         type={showNewPassword ? "text" : "password"}
                         id="new-password"
@@ -296,10 +296,10 @@ const ForgotPasswordModal = () => {
                         onChange={(e) => dispatch(setNewPassword(e.target.value))}
                         placeholder="Enter new password"
                         autoComplete="off"
-                        className="w-full p-3 pl-12 border border-gray-300 rounded-lg text-gray-600 text-sm placeholder:text-gray-400 focus:outline-none"
+                        className="w-full p-3 pl-12 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 text-sm placeholder:text-gray-400 focus:outline-none"
                     />
                     <div className="text-lg absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400" onClick={toggleShowPassword}>
-                        {showNewPassword ? <FiEyeOff /> : <FiEye />}
+                        {showNewPassword ? <FiEyeOff className="dark:text-gray-300" /> : <FiEye className="dark:text-gray-300" />}
                     </div>
                 </div>
                 {passwordStatusMessage && (
@@ -311,11 +311,11 @@ const ForgotPasswordModal = () => {
                     </div>
                 )}
 
-                <label htmlFor="confirm-password" className="text-sm font-semibold text-gray-600 my-3 block">
+                <label htmlFor="confirm-password" className="text-sm font-semibold text-gray-600 dark:text-gray-300 my-3 block">
                     Confirm Password
                 </label>
                 <div className="relative">
-                    <FiLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    <FiLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-300" />
                     <input
                         type={showNewPassword ? "text" : "password"}
                         id="confirm-password"
@@ -323,10 +323,10 @@ const ForgotPasswordModal = () => {
                         onChange={(e) => dispatch(setConfirmPassword(e.target.value))}
                         autoComplete="off"
                         placeholder="Confirm new password"
-                        className="w-full p-3 pl-12 border border-gray-300 rounded-lg text-gray-600 text-sm placeholder:text-gray-400 focus:outline-none"
+                        className="w-full p-3 pl-12 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 focus:outline-none"
                     />
-                    <div className="text-lg absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400" onClick={toggleShowPassword}>
-                        {showNewPassword ? <FiEyeOff /> : <FiEye />}
+                    <div className="text-lg absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400 dark:text-gray-300" onClick={toggleShowPassword}>
+                        {showNewPassword ? <FiEyeOff className="dark:text-gray-300" /> : <FiEye className="dark:text-gray-300" />}
                     </div>
                 </div>
                 {passwordStatusMessage && (
@@ -345,8 +345,8 @@ const ForgotPasswordModal = () => {
         return (
             <div className="text-center">
                 <PiSealCheckLight className="text-green-500 text-[5.5rem] mx-auto mb-6" />
-                <p className="text-lg font-semibold text-gray-700">Password changed successfully!</p>
-                <p className="text-gray-500">Your password has been updated successfully.</p>
+                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">Password changed successfully!</p>
+                <p className="text-gray-500 dark:text-gray-500">Your password has been updated successfully.</p>
             </div>
         );
     };
@@ -380,7 +380,7 @@ const ForgotPasswordModal = () => {
     const getFooterCancelButton = () => {
         if (currentSection === 1) {
             return (
-                <Button variant="outline" className="p-6 w-[40%] text-gray-600 border border-gray-300 hover:bg-gray-100 hover:text-gray-600" onClick={toggleModal}>
+                <Button variant="outline" className="p-6 w-[40%] text-gray-600 dark:text-gray-300  border border-gray-300 hover:bg-gray-100 hover:text-gray-600" onClick={toggleModal}>
                     Cancel
                 </Button>
             );
@@ -388,7 +388,7 @@ const ForgotPasswordModal = () => {
 
         if (currentSection === 4) {
             return (
-                <Button className="p-6 w-[100%] bg-[#FF6F20] text-white hover:bg-[#FF6F20CC] transition duration-200" onClick={toggleModal}>
+                <Button className="p-6 w-[100%] bg-[#FF6F20] text-white dark:text-gray-300 hover:bg-[#FF6F20CC] transition duration-200" onClick={toggleModal}>
                     Close
                 </Button>
             );
@@ -437,12 +437,12 @@ const ForgotPasswordModal = () => {
         <Modal isOpen={modal}>
             <ModalContent className="w-[40%] max-w-[600px] mx-auto p-6 rounded-xl shadow-lg">
                 <ModalHeader className="mb-8 flex flex-col items-center justify-center space-y-4">
-                    <div className="flex h-[8.5rem] w-[8.5rem] items-center justify-center rounded-full border border-gray-200 bg-gray-50">
+                    <div className="flex h-[8.5rem] w-[8.5rem] items-center justify-center rounded-full border border-gray-200 bg-gray-50 ">
                         <Image src={logo} alt="logo" width={120} height={60} objectFit="cover" />
                     </div>
                     <div className="space-y-1 text-center">
-                        <ModalTitle className="text-lg font-semibold text-gray-700">{getModalTitle()}</ModalTitle>
-                        <ModalDescription className="text-gray-500">{getModalDescription()}</ModalDescription>
+                        <ModalTitle className="text-lg font-semibold text-gray-700 dark:text-gray-300">{getModalTitle()}</ModalTitle>
+                        <ModalDescription className="text-gray-500 dark:text-gray-400">{getModalDescription()}</ModalDescription>
                     </div>
                 </ModalHeader>
 

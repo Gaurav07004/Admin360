@@ -93,9 +93,9 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
 
     return (
         <section className="flex justify-start items-center gap-5 w-full">
-            <section className="bg-white rounded-[1rem] py-6 px-8 w-full">
+            <section className="bg-white dark:bg-[#263445] rounded-[1rem] py-6 px-8 w-full">
                 <div className="flex flex-col justify-between w-[60%] relative">
-                    <p className="text-lg text-left font-semibold mb-[1.25rem] text-gray-600">Product Sold</p>
+                    <p className="text-lg text-left font-semibold mb-[1.25rem] text-gray-600 dark:text-gray-300">Product Sold</p>
                     <div className="grid grid-cols-2 items-center gap-2 w-full">
                         {Object.entries(orderCounts).map(([productName, { subcategory }]) => {
                             const { bgColor, textColor, border } = categoryStyles[subcategory as Category] || defaultStyles;
@@ -161,24 +161,24 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
 
                 </div>
             </section>
-            <section className="bg-white rounded-[1rem] py-6 px-8 w-[70%]">
-                <div className="text-left text-gray-700">
+            <section className="bg-white rounded-[1rem] py-6 px-8 w-[70%] dark:bg-[#263445]">
+                <div className="text-left">
                     <div className="w-full mb-[1.25rem]">
                         <div className="flex justify-between">
-                            <p className="text-[1.1rem] font-semibold text-gray-600">Total Income</p>
+                            <p className="text-[1.1rem] font-semibold text-gray-600 dark:text-gray-300">Total Income</p>
                             <span
                                 className={`text-xs flex items-center rounded-md px-2 py-2 ${badgeBackgroundColor} ${badgeTextColor}`}>
                                 {icon}
                             </span>
                         </div>
-                        <p className="text-2xl text-gray-600">₹{formatToKOrL(parseFloat(totalIncome.toFixed(2)))}</p>
+                        <p className="text-2xl text-gray-600 dark:text-gray-300">₹{formatToKOrL(parseFloat(totalIncome.toFixed(2)))}</p>
                     </div>
                     <div className="flex gap-4 font-semibold items-center mt-6">
                         <span
                             className={`text-xs flex items-center rounded-md px-2 py-1 ${badgeBackgroundColor} ${badgeTextColor}`}>
                             {icon} {isPositive ? "+" : "-"}{Math.abs(percentageChange).toFixed(2)}%
                         </span>
-                        <span className="text-gray-600 text-xs">{isPositive ? "Increase compared to last year" : "Decrease compared to last year"}</span>
+                        <span className="text-gray-600 dark:text-gray-300 text-xs">{isPositive ? "Increase compared to last year" : "Decrease compared to last year"}</span>
                     </div>
                 </div>
             </section>
@@ -212,11 +212,11 @@ const AreaChartComponent: React.FC = () => {
 
     return (
         <>
-            <section className="bg-white rounded-[1rem] py-5 px-7 w-full ">
-                <div className="mb-4 text-left text-gray-600">
-                    <p className="text-[1.1rem] font-semibold mb-2">Total Revenue</p>
+            <section className="bg-white rounded-[1rem] py-5 px-7 w-full dark:bg-[#263445]">
+                <div className="mb-4 text-left text-gray-600 dark:text-gray-300">
+                    <p className="text-[1.1rem] font-semibold mb-2 ">Total Revenue</p>
                     <div className="flex items-center gap-2">
-                        <p className="text-3xl text-gray-600">₹{formatToKOrL(parseFloat(totalRevenue.toFixed(2)))}</p>
+                        <p className="text-3xl">₹{formatToKOrL(parseFloat(totalRevenue.toFixed(2)))}</p>
                         <Badge
                             variant="border"
                             color={badgeColor}
@@ -236,8 +236,8 @@ const AreaChartComponent: React.FC = () => {
                             </linearGradient>
                         </defs>
                         <Area type="natural" dataKey="value" stroke="#FF6500" fillOpacity={1} fill="url(#price)" strokeWidth={0.8} />
-                        <XAxis className="text-xs font-medium text-metal-600" dataKey="name" stroke="#4b5563" strokeWidth={0.5} dy={12} />
-                        <YAxis className="text-xs font-medium text-metal-600" dataKey="value" stroke="#4b5563" strokeWidth={0.5} dx={-10} tickFormatter={formatToKOrL} />
+                        <XAxis className="text-xs font-medium" dataKey="name" strokeWidth={0.5} dy={12} />
+                        <YAxis className="text-xs font-medium" dataKey="value" strokeWidth={0.5} dx={-10} tickFormatter={formatToKOrL} />
                         <ChartTooltip content={<AreaChartTooltip />} />
                     </AreaChart>
                 </ResponsiveContainer>

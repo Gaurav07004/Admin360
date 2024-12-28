@@ -50,7 +50,7 @@ export default function RootLayout({
 
     return (
         <html lang="en">
-            <body className={`font-sans antialiased h-screen overflow-hidden`}>
+            <body className={`font-sans antialiased h-screen overflow-hidden dark:bg-slate-800`}>
                 <StoreProvider>
                     <ToastWrapper
                         toastOptions={{

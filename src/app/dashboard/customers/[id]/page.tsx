@@ -66,7 +66,7 @@ const CustomerDetailPage: React.FC = () => {
             <section className="p-4">
                 <div className="text-[#FF6500] font-semibold text-xs mb-4 uppercase">Recent Orders</div>
                 {selectedCustomer?.customerStatus !== 'Inactive' ?
-                    <Timeline className="border-dashed border-l-[2px] m-4 border-orange-300">
+                    <Timeline className="border-dashed border-l-[2px] m-4 border-orange-300 dark:border-orange-300">
                         {recentOrder.map((event, index) => {
                             const isTodayOrPast = new Date(`${event.date} ${event.time}`) < new Date(`${currentDate} ${currentTime}`);
                             const isToday = event.date <= currentDate;
@@ -75,14 +75,14 @@ const CustomerDetailPage: React.FC = () => {
                                 <TimelineItem key={index} className="mb-6 relative">
                                     <TimelinePoint
                                         className={`border-2
-                                            ${isToday ? "border-green-500 bg-green-200" : "border-orange-400 bg-orange-100"}
+                                            ${isToday ? "border-green-500 dark:border-green-500  bg-green-200 dark:bg-green-200" : "border-orange-400 dark:border-orange-400 bg-orange-100 dark:bg-orange-100"}
                                             w-[1.05rem] h-[1.05rem] rounded-full shadow-lg flex items-center justify-center`}
                                     />
                                     {isToday &&
                                         <PiCheckBold className="text-[0.6rem] text-green-600 absolute top-[0.2rem] -left-[0.3rem]" />
                                     }
                                     <TimelineContent>
-                                        <div className="text-[0.9rem] font-semibold text-gray-600 dark:text-white flex items-center gap-2">
+                                        <div className="text-[0.9rem] font-semibold text-gray-600  dark:text-gray-300 flex items-center gap-2">
                                             <span>{event.title}</span>
                                             <span
                                                 className={`text-[0.65rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${isTodayOrPast
@@ -95,22 +95,22 @@ const CustomerDetailPage: React.FC = () => {
                                                 {isTodayOrPast ? event.status : "Pending"}
                                             </span>
                                         </div>
-                                        <p className="text-[0.65rem] font-normal text-gray-500 uppercase">
+                                        <p className="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 uppercase">
                                             {isTodayOrPast
                                                 ? `${formatDate(event.date)} at ${event.time}`
                                                 : "Expected on " +
                                                 `${formatDate(event.date)} at ${event.time}`}
                                         </p>
 
-                                        {isTodayOrPast && <p className="text-[0.8rem] font-normal text-gray-600 dark:text-gray-300">{event.description}</p>}
+                                        {isTodayOrPast && <p className="text-[0.8rem] font-normal text-gray-600  dark:text-gray-400">{event.description}</p>}
 
                                         {event.courier && isTodayOrPast && (
-                                            <p className="text-xs text-gray-500">
+                                            <p className="text-xs text-gray-500 dark:text-gray-400">
                                                 <strong>Courier:</strong> {event.courier}
                                             </p>
                                         )}
                                         {event.warehouse && isTodayOrPast && (
-                                            <p className="text-xs text-gray-500">
+                                            <p className="text-xs text-gray-500 dark:text-gray-400">
                                                 <strong>Warehouse:</strong> {event.warehouse}
                                             </p>
                                         )}
@@ -152,24 +152,24 @@ const CustomerDetailPage: React.FC = () => {
     };
 
     const renderCustomerPreview = () => (
-        <section className="flex items-center justify-between sticky top-0 z-10 bg-white p-4 border-b-[0.5px] border-gray-200">
+        <section className="flex items-center justify-between sticky top-0 z-10 bg-white p-4 border-b-[0.5px] border-gray-200 dark:border-gray-500 dark:bg-[#263445]">
             <div className="flex items-center space-x-2">
-                <div className="text-gray-600 text-[0.9rem] font-semibold tracking-wide uppercase">Customer Preview</div>
-                <TfiLayoutLineSolid className="text-gray-600 text-[0.9rem] font-semibold tracking-wide rotate-90" />
-                <div className="text-gray-600 text-[0.9rem] font-semibold tracking-wide">#{selectedCustomer?.customerID}</div>
+                <div className="text-gray-600  dark:text-gray-300 text-[0.9rem] font-semibold tracking-wide uppercase">Customer Preview</div>
+                <TfiLayoutLineSolid className="text-gray-600  dark:text-gray-300 text-[0.9rem] font-semibold tracking-wide rotate-90" />
+                <div className="text-gray-600  dark:text-gray-300 text-[0.9rem] font-semibold tracking-wide">#{selectedCustomer?.customerID}</div>
             </div>
             <div
-                className="flex items-center justify-center w-8 h-8 bg-gray-100 hover:bg-orange-100 rounded-lg transition duration-300"
+                className="flex items-center justify-center w-8 h-8 bg-gray-100 dark:bg-gray-500 hover:bg-orange-100 dark:hover:bg-gray-400 rounded-lg transition duration-300"
                 onClick={handleToggle}
             >
-                <HiArrowLongRight className="w-5 h-5 text-gray-500" />
+                <HiArrowLongRight className="w-5 h-5 text-gray-500 dark:text-gray-900" />
             </div>
         </section>
     );
 
     const renderCustomerInfo = () => (
-        <div className="flex flex-col justify-between border border-gray-300 rounded-lg m-5">
-            <div className="flex items-center p-4 border-b-[0.5px] border-gray-300">
+        <div className="flex flex-col justify-between border border-gray-300 dark:border-gray-500 rounded-lg m-5">
+            <div className="flex items-center p-4 border-b-[0.5px] border-gray-300 dark:border-gray-500">
                 <Image
                     src={selectedCustomer?.profileImage || profilePic}
                     alt="Profile Picture"
@@ -179,7 +179,7 @@ const CustomerDetailPage: React.FC = () => {
                 />
                 <div className="ml-4">
                     <div className="flex items-center justify-between w-fit">
-                        <div className="text-gray-600 text-base font-semibold">{selectedCustomer?.customerName}</div>
+                        <div className="text-gray-600  dark:text-gray-300 text-base font-semibold">{selectedCustomer?.customerName}</div>
                         <div className="ml-4">
                             <span
                                 className={`relative text-[0.6rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${selectedCustomer?.customerStatus === "Active"
@@ -199,14 +199,14 @@ const CustomerDetailPage: React.FC = () => {
                             </span>
                         </div>
                     </div>
-                    <div className="flex items-center text-gray-500 mt-1 space-x-3">
+                    <div className="flex items-center text-gray-500 dark:text-gray-300 mt-1 space-x-3">
                         <div className="flex items-center space-x-2">
                             <IoMailOutline className="w-5 h-5 text-gray-400" />
                             <span className="text-sm">{selectedCustomer?.email}</span>
                         </div>
-                        <PiCircleFill className="w-1 h-1 text-gray-400" />
+                        <PiCircleFill className="w-1 h-1 text-gray-400 dark:text-gray-300" />
                         <div className="flex items-center space-x-2">
-                            <PiPhoneCallLight className="w-5 h-5 text-gray-400" />
+                            <PiPhoneCallLight className="w-5 h-5 text-gray-400 dark:text-gray-300" />
                             <span className="text-sm">{selectedCustomer?.mobileNumber}</span>
                         </div>
                     </div>
@@ -216,11 +216,11 @@ const CustomerDetailPage: React.FC = () => {
                 {data.map((item, index) => (
                     <div
                         key={index}
-                        className={`flex flex-col p-3 ${index !== data.length - 1 ? "border-r-[0.5px] border-gray-300" : ""
-                            } hover:bg-gray-100 transition`}
+                        className={`flex flex-col p-3 ${index !== data.length - 1 ? "border-r-[0.5px] border-gray-300 dark:border-gray-500" : ""
+                            } hover:bg-gray-100 dark:hover:bg-gray-600 transition`}
                     >
-                        <span className="text-[0.65rem] font-semibold text-gray-600">{item.label}</span>
-                        <span className="text-sm font-semibold mt-2">{item.value}</span>
+                        <span className="text-[0.65rem] font-semibold text-gray-600 dark:text-gray-300">{item.label}</span>
+                        <span className="text-sm font-semibold mt-2 dark:text-gray-300">{item.value}</span>
                     </div>
                 ))}
             </div>
@@ -235,8 +235,8 @@ const CustomerDetailPage: React.FC = () => {
                     {customerDetails.map((detail, index) => (
                         <div key={index}>
                             <div className="flex items-center justify-between">
-                                <span className="w-1/2 text-[0.75rem] font-semibold text-gray-600">{detail.label}</span>
-                                <div className={`text-xs font-semibold text-gray-600 ${detail.label === "Email" || detail.label === "Phone" ? 'text-orange-400' : ""}`}>
+                                <span className="w-1/2 text-[0.75rem] font-semibold text-gray-600  dark:text-gray-300">{detail.label}</span>
+                                <div className={`text-xs font-semibold text-gray-600  dark:text-gray-300 ${detail.label === "Email" || detail.label === "Phone" ? 'text-orange-400' : ""}`}>
                                     <span>{detail.value || 'N/A'}</span>
                                 </div>
                             </div>
@@ -248,7 +248,7 @@ const CustomerDetailPage: React.FC = () => {
     };
 
     const renderPreview = () => (
-        <section className="sticky bottom-0 z-10 bg-white w-full h-7"></section>
+        <section className="sticky bottom-0 z-10 bg-white w-full h-7 dark:bg-[#263445]"></section>
     );
 
     useEffect(() => {
@@ -264,15 +264,15 @@ const CustomerDetailPage: React.FC = () => {
             )}
             <div
                 ref={drawerRef}
-                className={`fixed top-3 bottom-3 right-3 w-full max-w-[32rem] rounded-xl bg-white shadow-md text-black transform overflow-auto ${drawerStatus ? 'translate-x-0' : 'translate-x-full'
+                className={`fixed top-3 bottom-3 right-3 w-full max-w-[32rem] rounded-xl bg-white dark:bg-[#263445] text-black transform overflow-auto ${drawerStatus ? 'translate-x-0' : 'translate-x-full'
                     } transition-transform duration-500 ease-in-out z-20`}
             >
                 {renderCustomerPreview()}
                 <div className="overflow-auto ">
                     {renderCustomerInfo()}
-                    <Divider className="border-t-[0.5px] border-gray-200 mt-4" />
+                    <Divider className="border-t-[0.5px] border-gray-200 dark:border-gray-500 mt-4" />
                     {renderCustomerDetails()}
-                    <Divider className="border-t-[0.5px] border-gray-200 mt-4" />
+                    <Divider className="border-t-[0.5px] border-gray-200 dark:border-gray-500 mt-4" />
                     {TimelineComponent()}
                 </div>
                 {renderPreview()}

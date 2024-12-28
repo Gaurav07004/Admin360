@@ -62,10 +62,10 @@ const Sidebar: React.FC = () => {
                 <Link href={href}>
                     <div
                         className={`p-[0.70rem] w-full text-left rounded-lg flex items-center justify-between transition text-sm ${isActive
-                            ? "bg-[#ff66002b] text-[#FF6500] border border-[#FF6500]"
+                            ? "bg-[#ff66002b] text-[#FF6500] border border-[#FF6500] dark:text-orange-400 dark:border-orange-400"
                             : menu === "Log out"
-                                ? "text-[#FF6500]"
-                                : "hover:bg-[#ff66002b] text-gray-800"
+                                ? "text-[#FF6500] dark:text-orange-400"
+                                : "hover:bg-[#ff66002b] text-gray-800 dark:text-gray-300"
                             }`}
                         aria-current={isActive ? "page" : undefined}
                         onClick={menu === "Log out" ? handleLogout : undefined}
@@ -114,14 +114,14 @@ const Sidebar: React.FC = () => {
 
 
     return (
-        <nav className="bg-white w-60 h-auto py-7 px-4 rounded-[1rem]" role="navigation">
+        <nav className="bg-white w-60 h-auto py-7 px-4 rounded-[1rem] dark:bg-[#263445]" role="navigation">
             <ul className="space-y-6">
                 <div className="mb-5">
                     <Image src={logo} alt="logo" width={0} height={0} className="w-[11rem] h-auto" />
                 </div>
                 {menuConfig.map((section, index) => (
                     <section key={index} className="flex flex-col gap-2">
-                        {section.title && <div className="text-[0.68rem] text-gray-500 uppercase font-medium">{section.title}</div>}
+                        {section.title && <div className="text-[0.68rem] text-gray-500 uppercase font-medium dark:text-gray-300">{section.title}</div>}
                         {section.items.map(({ name, icon, href }) => renderMenuItem(name, icon, href))}
                     </section>
                 ))}
@@ -130,13 +130,13 @@ const Sidebar: React.FC = () => {
                     <Image
                         src={accountData?.profileImage || profilePic}
                         alt="Profile Picture"
-                        className="w-10 h-10 object-cover rounded-md shadow-md hover:opacity-90 transition"
+                        className="w-10 h-10 object-cover rounded-md shadow-md hover:opacity-90 transition border border-gray-300 dark:border-gray-500"
                         width={0}
                         height={0}
                     />
                     <div>
-                        <p className="text-sm font-semibold text-gray-600 truncate">{fullName}</p>
-                        <p className="text-xs text-gray-500 font-semibold">{accountData?.role}</p>
+                        <p className="text-sm font-semibold text-gray-600 truncate dark:text-gray-300">{fullName}</p>
+                        <p className="text-xs text-gray-500 font-semibold dark:text-gray-300">{accountData?.role}</p>
                     </div>
                 </div>
             </ul>

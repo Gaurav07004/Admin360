@@ -52,19 +52,19 @@ const UploadComponent = () => {
                     width={0}
                     height={0}
                 /> */}
-                <p className="text-sm font-semibold text-gray-600">Edit Profile Image</p>
+                <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">Edit Profile Image</p>
             </div>
-            <Upload options={{ onDrop, multiple: false }} className='border-none pt-6 pb-2 px-0'>
-                <UploadBody className="border-dashed border-2 border-gray-300 rounded-md py-6 text-center cursor-pointer">
+            <Upload options={{ onDrop, multiple: false }} className='border-none pt-6 pb-2 px-0 dark:bg-[#263445]'>
+                <UploadBody className="border-dashed border-2 border-gray-300 dark:border-gray-500 rounded-md py-6 text-center cursor-pointer dark:bg-gray-700 hover:dark:bg-gray-700">
                     <UploadIcon className='w-14 h-14'>
-                        <IoCloudUploadOutline className="w-6 h-6 text-gray-500" />
+                        <IoCloudUploadOutline className="w-6 h-6 text-gray-500 dark:text-gray-400" />
                     </UploadIcon>
                     <UploadText>
-                        <p className="!text-sm font-medium text-metal-600 dark:text-white">
+                        <p className="!text-sm font-medium text-metal-600 dark:text-gray-400">
                             <span className="text-[#FF6F20]">Choose File to Upload</span> or Drag & Drop
                         </p>
                         <div>
-                            <p className="!text-xs font-normal text-metal-400 dark:text-metal-300">PNG and JPG formats</p>
+                            <p className="!text-xs font-normal text-metal-400  dark:text-metal-300">PNG and JPG formats</p>
                             <p className="!text-xs font-normal text-metal-400 dark:text-metal-300">(max. 800x400px)</p>
                         </div>
                     </UploadText>
@@ -75,17 +75,17 @@ const UploadComponent = () => {
                         Uploaded File
                     </p>
                     <ul className="space-y-1">
-                        {files?.map((file) => (
+                        {files.map((file) => (
                             <li
-                                key={file?.name}
-                                className="flex items-center justify-between border-l-4 border-l-[#FF6F20] bg-metal-25 px-4 py-2.5 text-left text-xs font-normal capitalize text-metal-600">
-                                <span className='w-[80%]'>{file?.name}</span>
+                                key={file.name}
+                                className="flex items-center justify-between border-l-4 border-l-[#FF6F20] bg-metal-25 dark:bg-gray-700 dark:text-gray-400 px-4 py-2.5 text-left text-xs font-normal capitalize text-metal-600">
+                                <span className='w-[80%]'>{file.name}</span>
                                 <div className="p-2 bg-red-100 rounded-md cursor-pointer">
                                     <Trash
                                         size={16}
                                         color="red"
-                                        className="cursor-pointer "
-                                        onClick={() => handleDeleteFile()}
+                                        className="cursor-pointer"
+                                        onClick={handleDeleteFile}
                                     />
                                 </div>
                             </li>
