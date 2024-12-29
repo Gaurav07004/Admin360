@@ -36,7 +36,8 @@
     "src/components/RecentOrder.tsx",
     "src/redux/slices/customerSlice.ts",
     "src/app/dashboard/page.tsx",
-    "backend/insertData.js",
+    "uploadData/insertData.js",
+    "uploadData/insert.js",
   ],
   "exclude": [
     "node_modules"
