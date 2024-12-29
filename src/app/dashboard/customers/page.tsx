@@ -70,7 +70,6 @@ const StatisticCard: React.FC<{
                     {isPositive && "+"}
                     {percentageChange}%
                 </span>
-
                 <span className="text-gray-600 text-xs dark:text-gray-300">{description}</span>
             </div>
         </section>

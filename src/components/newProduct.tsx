@@ -376,17 +376,17 @@ const CustomerDetailPage: React.FC = () => {
                         <IoCloudUploadOutline className="w-6 h-6 text-gray-500 dark:text-gray-400" />
                     </UploadIcon>
                     <UploadText>
-                        <p className="!text-sm font-medium text-metal-600 dark:text-gray-400">
+                        <p className="!text-sm font-medium text-metal-600 dark:text-gray-300">
                             <span className="text-[#FF6F20]">Choose File to Upload</span> or Drag & Drop
                         </p>
                         <div>
-                            <p className="!text-xs font-normal text-metal-400  dark:text-metal-300">PNG and JPG formats</p>
-                            <p className="!text-xs font-normal text-metal-400 dark:text-metal-300">(max. 800x400px)</p>
+                            <p className="!text-xs font-normal text-metal-400  dark:text-gray-300">PNG and JPG formats</p>
+                            <p className="!text-xs font-normal text-metal-400 dark:text-gray-300">(max. 800x400px)</p>
                         </div>
                     </UploadText>
                 </UploadBody>
                 <UploadFooter isFileExists={files.length > 0}>
-                    <p className="my-2 flex items-center gap-1 text-body-4 font-normal text-metal-600">
+                    <p className="my-2 flex items-center gap-1 text-body-4 font-normal text-metal-600 dark:text-gray-300">
                         <Info size={16} />
                         Uploaded File
                     </p>
@@ -395,7 +395,7 @@ const CustomerDetailPage: React.FC = () => {
                             <li
                                 key={file.name}
                                 className="flex items-center justify-between border-l-4 border-l-[#FF6F20] bg-metal-25 dark:bg-gray-700 dark:text-gray-400 px-4 py-2.5 text-left text-xs font-normal capitalize text-metal-600">
-                                <span className='w-[80%]'>{file.name}</span>
+                                <span className='w-[80%] dark:text-gray-300'>{file.name}</span>
                                 <div className="p-2 bg-red-100 rounded-md cursor-pointer">
                                     <Trash
                                         size={16}

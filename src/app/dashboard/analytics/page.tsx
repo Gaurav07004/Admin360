@@ -47,8 +47,18 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
                 <div className="text-gray-800 font-bold text-xl dark:text-gray-400">{addLeadingZero(value)}</div>
             </div>
             <div className="text-gray-600 dark:text-gray-300 text-xs font-semibold mt-3 flex items-center gap-2">
-                <span className={`text-xs flex items-center rounded-md px-2 py-1 ${isPositive ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}>
-                    {isPositive ? <TbArrowBadgeUpFilled className="w-5 h-5 text-green-500" /> : <TbArrowBadgeDownFilled className="w-5 h-5 text-red-500" />}
+                <span
+                    className={`text-xs flex items-center rounded-md px-2 cursor-pointer py-1 
+                    ${isPositive
+                            ? "bg-green-100 text-green-500 dark:bg-green-900 dark:text-green-400"
+                            : "bg-red-100 text-red-500 dark:bg-red-900 dark:text-red-400"
+                        }`}
+                >
+                    {isPositive ? (
+                        <TbArrowBadgeUpFilled className="w-5 h-5 text-green-500 dark:text-green-400" />
+                    ) : (
+                        <TbArrowBadgeDownFilled className="w-5 h-5 text-red-500 dark:text-red-400" />
+                    )}
                     {isPositive && "+"}
                     {percentageChange}%
                 </span>

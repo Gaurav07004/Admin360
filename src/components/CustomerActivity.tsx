@@ -35,17 +35,6 @@ const buttonConfig: ButtonConfig[] = [
     { label: "Purchase", icon: FiCheckCircle, dataKey: "purchase" },
 ];
 
-const CustomTooltip = ({ active, payload }: { active: boolean, payload: any[] }) => {
-    if (active && payload && payload.length) {
-        return (
-            <div className="bg-[#ff6600a9] text-white p-2 rounded text-xs shadow-lg">
-                <p>{`${formatNumberWithK(payload[0].payload.price)}`}</p>
-            </div>
-        );
-    }
-    return null;
-};
-
 const formatNumberWithK = (number: number) => {
     return number >= 1000 ? (number / 1000).toFixed(1) + "K" : number.toString();
 };
@@ -119,13 +108,39 @@ const SalesFunnelChart = () => {
 
     const getColor = (dataKey: ChartDataKey) => {
         const colors = {
-            productView: { stroke: "#FF6500", stopColor: "#FF6500" },
-            addToCart: { stroke: "#AE445A", stopColor: "#AE445A" },
-            checkout: { stroke: "#006A67", stopColor: "#006A67" },
-            purchase: { stroke: "#C62300", stopColor: "#C62300" },
+            productView: {
+                stroke: "#FF9800",
+                stopColor: "#FF9800",
+            },
+            addToCart: {
+                stroke: "#00BFAE",
+                stopColor: "#00BFAE",
+            },
+            checkout: {
+                stroke: "#3D5AFE",
+                stopColor: "#3D5AFE",
+            },
+            purchase: {
+                stroke: "#FF4081",
+                stopColor: "#FF4081",
+            },
         };
 
-        return colors[dataKey] || { stroke: "#CCCCCC", stopColor: "#CCCCCC" };
+        return colors[dataKey] || {
+            stroke: "#757575",
+            stopColor: "#757575",
+        };
+    };
+
+    const CustomTooltip = ({ active, payload }: { active: boolean, payload: any[] }) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className={`bg-[#ff6600a9] text-white p-2 rounded text-xs shadow-lg`}>
+                    <p>{`${formatNumberWithK(payload[0].payload.price)}`}</p>
+                </div>
+            );
+        }
+        return null;
     };
 
     return (

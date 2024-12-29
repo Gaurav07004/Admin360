@@ -172,10 +172,10 @@ function Profile() {
                     </div>
                 </section>
                 <div className="flex items-center justify-between gap-4">
-                    <Button className="w-fit py-4 px-6 bg-[#ff660021] text-[#FF6500] hover:bg-orange-300 transition duration-200 ease-in-out focus:outline-none" onClick={toggleModal}>
+                    <Button className="w-fit py-4 px-6 bg-[#ff660021] text-[#FF6500] hover:bg-orange-300 dark:hover:bg-[#ff660021] transition duration-200 ease-in-out focus:outline-none" onClick={toggleModal}>
                         Change Password
                     </Button>
-                    <Button onClick={handleUpdate} className="py-4 px-6 bg-[#ff660021] text-[#FF6500] hover:bg-orange-300 transition duration-200 ease-in-out focus:outline-none">
+                    <Button onClick={handleUpdate} className="py-4 px-6 bg-[#ff660021] dark:hover:bg-[#ff660021] text-[#FF6500] hover:bg-orange-300 transition duration-200 ease-in-out focus:outline-none">
                         Update
                     </Button>
                 </div>
