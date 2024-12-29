@@ -55,11 +55,22 @@ const StatisticCard: React.FC<{
                 <div className="text-gray-600 font-bold text-2xl dark:text-gray-300">{addLeadingZero(value)}</div>
             </div>
             <div className="flex gap-4 font-semibold">
-                <span className={`text-xs flex items-center rounded-md px-2 cursor-pointer py-1 ${isPositive ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}>
-                    {isPositive ? <TbArrowBadgeUpFilled className="w-5 h-5 text-green-500" /> : <TbArrowBadgeDownFilled className="w-5 h-5 text-red-500" />}
+                <span
+                    className={`text-xs flex items-center rounded-md px-2 cursor-pointer py-1 
+                    ${isPositive
+                            ? "bg-green-100 text-green-500 dark:bg-green-900 dark:text-green-400"
+                            : "bg-red-100 text-red-500 dark:bg-red-900 dark:text-red-400"
+                        }`}
+                >
+                    {isPositive ? (
+                        <TbArrowBadgeUpFilled className="w-5 h-5 text-green-500 dark:text-green-400" />
+                    ) : (
+                        <TbArrowBadgeDownFilled className="w-5 h-5 text-red-500 dark:text-red-400" />
+                    )}
                     {isPositive && "+"}
                     {percentageChange}%
                 </span>
+
                 <span className="text-gray-600 text-xs dark:text-gray-300">{description}</span>
             </div>
         </section>

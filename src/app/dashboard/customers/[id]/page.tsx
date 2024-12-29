@@ -87,9 +87,9 @@ const CustomerDetailPage: React.FC = () => {
                                             <span
                                                 className={`text-[0.65rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${isTodayOrPast
                                                     ? event.status === "Completed"
-                                                        ? "bg-green-100 text-green-500 hover:bg-green-200"
-                                                        : "bg-red-100 text-red-500 hover:bg-red-200"
-                                                    : "bg-red-100 text-red-500 hover:bg-red-200 cursor-not-allowed"
+                                                        ? "bg-green-100 text-green-500 hover:bg-green-200 over:bg-green-200 dark:bg-green-900 dark:text-green-400 dark:hover:bg-green-800"
+                                                        : "bg-red-100 text-red-500 hover:bg-red-200 over:bg-red-200 dark:bg-red-900 dark:text-red-400 dark:hover:bg-red-800"
+                                                    : "bg-red-100 text-red-500 hover:bg-red-200 cursor-not-allowed over:bg-red-200 dark:bg-red-900 dark:text-red-400 dark:hover:bg-red-800"
                                                     }`}
                                             >
                                                 {isTodayOrPast ? event.status : "Pending"}
@@ -182,9 +182,10 @@ const CustomerDetailPage: React.FC = () => {
                         <div className="text-gray-600  dark:text-gray-300 text-base font-semibold">{selectedCustomer?.customerName}</div>
                         <div className="ml-4">
                             <span
-                                className={`relative text-[0.6rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors ${selectedCustomer?.customerStatus === "Active"
-                                    ? "bg-green-100 text-green-500 hover:bg-green-200"
-                                    : "bg-red-100 text-red-500 hover:bg-red-200"
+                                className={`relative text-[0.6rem] w-fit uppercase flex items-center justify-center rounded-md px-2 py-1 cursor-pointer transition-colors 
+                                ${selectedCustomer?.customerStatus === "Active"
+                                        ? "bg-green-100 text-green-500 hover:bg-green-200 dark:bg-green-900 dark:text-green-400 dark:hover:bg-green-800"
+                                        : "bg-red-100 text-red-500 hover:bg-red-200 dark:bg-red-900 dark:text-red-400 dark:hover:bg-red-800"
                                     }`}
                                 onClick={() =>
                                     selectedCustomer?.customerID &&
@@ -197,6 +198,7 @@ const CustomerDetailPage: React.FC = () => {
                             >
                                 {selectedCustomer?.customerStatus}
                             </span>
+
                         </div>
                     </div>
                     <div className="flex items-center text-gray-500 dark:text-gray-300 mt-1 space-x-3">

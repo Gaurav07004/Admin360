@@ -50,29 +50,79 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
     const { orders } = useSelector((state: RootState) => state.order);
     const { products } = useSelector((state: RootState) => state.product);
 
-    // const COLORS = ["#00BCD4", "#FF9800", "#9C27B0", "#8BC34A"];
     type Category = "Smartwatch" | "Laptop Sleeve" | "Smartphones" | "Gaming Laptops";
 
-    const categoryStyles: Record<Category, { bgColor: string; textColor: string, border: string }> = {
-        Smartwatch: { bgColor: '#F1F8E9', textColor: '#8BC34A', border: '#8BC34A' },
-        "Laptop Sleeve": { bgColor: '#F3E5F5', textColor: '#9C27B0', border: '#9C27B0' },
-        Smartphones: { bgColor: '#FFF3E0', textColor: '#FB8C00', border: '#FF9800' },
-        "Gaming Laptops": { bgColor: '#E0F7FA', textColor: '#00BCD4', border: '#00BCD4' },
+    // const categoryStyles: Record<Category, { bgColor: string; darkBgColor: string; darkTextColor: string; darkBorder: string; textColor: string, border: string }> = {
+    //     Smartwatch: {
+    //         bgColor: '#F1F8E9',
+    //         textColor: '#8BC34A',
+    //         border: '#8BC34A',
+    //         darkBgColor: '#1B5E20', // Dark mode background color
+    //         darkTextColor: '#A5D6A7', // Dark mode text color
+    //         darkBorder: '#66BB6A', // Dark mode border color
+    //     },
+    //     "Laptop Sleeve": {
+    //         bgColor: '#F3E5F5',
+    //         textColor: '#9C27B0',
+    //         border: '#9C27B0',
+    //         darkBgColor: '#4A148C',
+    //         darkTextColor: '#CE93D8',
+    //         darkBorder: '#AB47BC',
+    //     },
+    //     Smartphones: {
+    //         bgColor: '#FFF3E0',
+    //         textColor: '#FB8C00',
+    //         border: '#FF9800',
+    //         darkBgColor: '#FF6F00',
+    //         darkTextColor: '#FFB74D',
+    //         darkBorder: '#FF7043',
+    //     },
+    //     "Gaming Laptops": {
+    //         bgColor: '#E0F7FA',
+    //         textColor: '#00BCD4',
+    //         border: '#00BCD4',
+    //         darkBgColor: '#006064',
+    //         darkTextColor: '#4DD0E1',
+    //         darkBorder: '#26C6DA',
+    //     },
+    // };
+
+    // const defaultStyles = {
+    //     bgColor: '#F0F0F0',
+    //     textColor: '#757575',
+    //     darkBgColor: '#424242', // Default dark mode background
+    //     darkTextColor: '#BDBDBD', // Default dark mode text color
+    //     darkBorder: '#BDBDBD', // Default dark mode border color
+    // };
+
+    const getBadgeColor = (subcategory: string) => {
+        switch (subcategory) {
+            case 'Smartwatch':
+                return "#8BC34A";
+            case 'Laptop Sleeve':
+                return "#9C27B0";
+            case 'Gaming Laptops':
+                return "#00BCD4";
+            case 'Smartphones':
+                return "#FB8C00";
+            default:
+                return "#757575";
+        }
     };
 
-    const defaultStyles = { bgColor: '#F0F0F0', textColor: '#757575' };
+
     // const totalValue = pieChartData?.reduce((acc, item) => acc + item.value, 0);
     const totalIncome = totalRevenue + 500000 + 500000;
     const lastYearIncome = totalRevenue + 200000;
     const percentageChange = ((totalIncome - lastYearIncome) / lastYearIncome) * 100;
     const isPositive = percentageChange >= 0;
     const icon = isPositive ? (
-        <TbArrowBadgeUpFilled className="w-5 h-5 text-green-500" />
+        <TbArrowBadgeUpFilled className="w-5 h-5 text-green-500 dark:text-green-400" />
     ) : (
-        <TbArrowBadgeDownFilled className="w-5 h-5 text-red-500" />
+        <TbArrowBadgeDownFilled className="w-5 h-5 text-red-500 dark:text-red-400" />
     );
-    const badgeBackgroundColor = isPositive ? "bg-green-100" : "bg-red-100";
-    const badgeTextColor = isPositive ? "text-green-600" : "text-red-500";
+    const badgeBackgroundColor = isPositive ? "bg-green-100 dark:bg-green-800" : "bg-red-100 dark:bg-red-800";
+    const badgeTextColor = isPositive ? "text-green-600 dark:text-green-400" : "text-red-500 dark:text-red-400";
 
     const productSubCategoryMap = products.reduce((acc, product) => {
         acc[product.productName] = product.subcategory;
@@ -98,31 +148,38 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                     <p className="text-lg text-left font-semibold mb-[1.25rem] text-gray-600 dark:text-gray-300">Product Sold</p>
                     <div className="grid grid-cols-2 items-center gap-2 w-full">
                         {Object.entries(orderCounts).map(([productName, { subcategory }]) => {
-                            const { bgColor, textColor, border } = categoryStyles[subcategory as Category] || defaultStyles;
+                            const badgeColor = getBadgeColor(subcategory);
+
+                            const getBadgeClasses = () => {
+                                switch (badgeColor) {
+                                    case '#8BC34A':
+                                        return 'border-green-300 dark:border-green-600 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200';
+                                    case '#9C27B0':
+                                        return 'border-purple-300 dark:border-purple-600 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200';
+                                    case '#00BCD4':
+                                        return 'border-cyan-300 dark:border-cyan-600 bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-200';
+                                    case '#FB8C00':
+                                        return 'border-orange-300 dark:border-orange-600 bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-200';
+                                    default:
+                                        return 'border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-200';
+                                }
+                            };
 
                             return (
-                                <Badge
+                                <div
                                     key={productName}
-                                    className={`py-[0.95rem] px-[0.3rem] w-full rounded-md flex items-center gap-2 border border-[${border}]`}
-                                    style={{
-                                        backgroundColor: bgColor,
-                                    }}
+                                    className={`text-[0.73rem] py-[0.44rem] rounded-md flex items-center gap-2 border font-medium px-2 ${getBadgeClasses()}`}
                                 >
                                     <PiCircleFill
-                                        className="w-[10%]"
-                                        style={{ color: textColor }}
+                                        className={`w-[10%] text-[0.7rem] ${getBadgeColor(subcategory)}`}
                                     />
-                                    <span
-                                        className="text-[0.8rem] w-[90%]"
-                                        style={{ color: textColor }}
-                                    >
-                                        {subcategory}
-                                    </span>
-                                </Badge>
+                                    {subcategory}
+                                </div>
                             );
+
                         })}
                     </div>
-                    <ResponsiveContainer width="100%" height={130} className="absolute top-[0rem] left-[15rem]">
+                    <ResponsiveContainer width="100%" height="100%" className="absolute top-0 left-60">
                         <PieChart>
                             <Pie
                                 cx="50%"
@@ -139,26 +196,27 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                                 cornerRadius={0}
                             >
                                 {Object.entries(orderCounts).map(([productName, { subcategory, count }], index) => {
-                                    const { textColor } = categoryStyles[subcategory as Category] || defaultStyles;
+                                    const badgeColor = getBadgeColor(subcategory);
 
                                     return (
                                         <Cell
                                             key={`cell-${index}`}
-                                            fill={textColor}
+                                            fill={badgeColor}
                                         />
                                     );
                                 })}
                             </Pie>
-                            <text x="50%" y="50%" dy={0} textAnchor="middle" fill="#503C3C" fontSize="16" className="font-medium">
-                                {Object.values(orderCounts).reduce((acc, { count }) => acc + count, 0)}
-                                <tspan x="50%" dy="1.2em" fill="#475569" fontSize="14">
-                                    Product
-                                </tspan>
-                            </text>
                             <ChartTooltip content={<PieChartTooltip />} />
                         </PieChart>
                     </ResponsiveContainer>
-
+                    <div className="absolute top-[3.7rem] left-[23rem] transform -translate-x-1/2 -translate-y-1/2 text-center">
+                        <div className="font-medium text-[16px] text-gray-600 dark:text-gray-300">
+                            {Object.values(orderCounts).reduce((acc, { count }) => acc + count, 0)}
+                        </div>
+                        <div className="text-[14px] font-medium text-gray-600 dark:text-gray-300">
+                            Product
+                        </div>
+                    </div>
                 </div>
             </section>
             <section className="bg-white rounded-[1rem] py-6 px-8 w-[70%] dark:bg-[#263445]">
@@ -183,7 +241,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                 </div>
             </section>
 
-        </section>
+        </section >
     );
 };
 

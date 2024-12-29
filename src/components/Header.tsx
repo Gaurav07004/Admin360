@@ -9,6 +9,7 @@ import { RootState } from '../redux/store';
 import { TfiLayoutLineSolid } from "react-icons/tfi";
 import { toggleTheme } from '@/redux/slices/commonSlice';
 import { PiSunFill, PiMoonFill } from "react-icons/pi";
+import { motion } from "framer-motion";
 
 const Header: React.FC = () => {
     const dispatch = useDispatch();
@@ -40,10 +41,17 @@ const Header: React.FC = () => {
                     <span className="absolute top-[0.5rem] left-[1.15rem] w-[0.55rem] h-[0.55rem] bg-red-500 rounded-full border-2 border-white"></span>
                     <span className="text-xs text-gray-500 dark:text-gray-300">{formattedDate}</span>
                 </div>
-                <div onClick={handleToggle} className="relative p-2 bg-gray-50 rounded-md border border-gray-300 dark:border-gray-500 cursor-pointer dark:bg-[#263445]">
-                    {mode === 'light' ? <PiSunFill className="w-5 h-5 text-yellow-500" /> : <PiMoonFill className="w-5 h-5 text-yellow-500" />}
+                <div
+                    onClick={handleToggle}
+                    className="relative p-2 bg-gray-50 rounded-md border border-gray-300 dark:border-gray-500 cursor-pointer dark:bg-[#263445]"
+                >
+                    {mode === "light" ? (
+                        <PiSunFill className="w-5 h-5 text-yellow-500 animate-icon" />
+                    ) : (
+                        <PiMoonFill className="w-5 h-5 text-white animate-icon" />
+                    )}
                 </div>
-                <TfiLayoutLineSolid className="text-xl text-orange-300 rotate-90" />
+                <TfiLayoutLineSolid className="text-xl text-orange-300 rotate-90 dark:text-gray-300" />
                 <div className="flex items-center space-x-2">
                     <Image
                         src={accountData?.profileImage || profilePic}

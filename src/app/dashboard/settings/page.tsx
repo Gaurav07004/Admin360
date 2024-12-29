@@ -249,7 +249,12 @@ function Profile() {
                         <section className="mt-4">
                             <h3 className="text-sm font-semibold text-[#5e6574] dark:text-gray-300 mb-3">Account Status</h3>
                             <div className="flex items-center gap-4 py-1">
-                                <span className={`py-1 px-4 rounded-md text-sm ${adminData.isActive ? "text-green-600 bg-green-100 border-[#86efac]" : "text-red-500 bg-red-100 border-red-200"}`}>
+                                <span
+                                    className={`py-1 px-4 rounded-md text-sm border transition-colors ${adminData.isActive
+                                        ? "text-green-600 bg-green-100 border-green-300 dark:text-green-400 dark:bg-green-900 dark:border-green-800"
+                                        : "text-red-500 bg-red-100 border-red-200 dark:text-red-400 dark:bg-red-900 dark:border-red-800"
+                                        }`}
+                                >
                                     {adminData.isActive ? "Active" : "Inactive"}
                                 </span>
                                 <p className="text-sm text-gray-500 dark:text-gray-300">{adminData.isActive ? "Your account is currently active and in good standing." : "Your account is inactive. Please contact support."}</p>

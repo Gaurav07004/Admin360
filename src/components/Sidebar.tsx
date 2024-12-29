@@ -65,7 +65,7 @@ const Sidebar: React.FC = () => {
                             ? "bg-[#ff66002b] text-[#FF6500] border border-[#FF6500] dark:text-orange-400 dark:border-orange-400"
                             : menu === "Log out"
                                 ? "text-[#FF6500] dark:text-orange-400"
-                                : "hover:bg-[#ff66002b] text-gray-800 dark:text-gray-300"
+                                : "hover:bg-[#ff66002b] text-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                             }`}
                         aria-current={isActive ? "page" : undefined}
                         onClick={menu === "Log out" ? handleLogout : undefined}

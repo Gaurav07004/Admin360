@@ -6,7 +6,7 @@ import empty from '@/Assets/Empty.png';
 import { useDispatch, useSelector } from "react-redux";
 import { setProductDrawerStatus } from "@/redux/slices/productsSlice";
 import { RootState } from "@/redux/store";
-import { Badge, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, Button } from 'keep-react';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, Button } from 'keep-react';
 
 interface TableColumn {
     id: string;
@@ -30,18 +30,24 @@ const renderCellContent = (item: TableRowData, col: TableColumn, getBadgeColor?:
     if (typeof value === 'string' || typeof value === 'number') {
         if ((col.id === 'customerStatus' || col.id === 'status' || col.id === 'paymentStatus' || col.id === 'stockStatus' || col.id === 'orderStatus') && getBadgeColor) {
             return (
-                <Badge
-                    variant="base"
+                <div
                     color={getBadgeColor(value.toString())}
-                    className={`text-[0.85rem] rounded-md border font-medium !p-2 ${getBadgeColor(value.toString()) === 'success' ? 'border-green-300' :
-                        getBadgeColor(value.toString()) === 'warning' ? 'border-yellow-300' :
-                            getBadgeColor(value.toString()) === 'error' ? 'border-red-300' :
-                                getBadgeColor(value.toString()) === 'primary' ? 'border-blue-300' :
-                                    'border-gray-300'
+                    className={`text-[0.85rem] rounded-md border font-medium px-2
+    ${getBadgeColor(value.toString()) === 'success' ? 'border-green-300 dark:border-green-600' :
+                            getBadgeColor(value.toString()) === 'warning' ? 'border-yellow-300 dark:border-yellow-600' :
+                                getBadgeColor(value.toString()) === 'error' ? 'border-red-300 dark:border-red-600' :
+                                    getBadgeColor(value.toString()) === 'primary' ? 'border-blue-300 dark:border-blue-600' :
+                                        'border-gray-300 dark:border-gray-600'
+                        } 
+    ${getBadgeColor(value.toString()) === 'success' ? 'bg-green-50 dark:bg-green-900 text-green-700 dark:text-green-200' :
+                            getBadgeColor(value.toString()) === 'warning' ? 'bg-yellow-50 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200' :
+                                getBadgeColor(value.toString()) === 'error' ? 'bg-red-50 dark:bg-red-900 text-red-700 dark:text-red-200' :
+                                    getBadgeColor(value.toString()) === 'primary' ? 'bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200' :
+                                        'bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-200'
                         }`}
                 >
                     {value}
-                </Badge>
+                </div>
             );
         }
         return <span>{value}</span>;
@@ -127,11 +133,22 @@ const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption,
                                 </div>
                             </div>
                             {caption === 'Product Information' && (
-                                <div className="relative flex items-center gap-3 bg-gray-50 rounded-lg" onClick={() => { dispatch(setProductDrawerStatus(!productDrawerStatus)) }}>
-                                    <FiPlus className="absolute left-3 top-[0.72rem] text-[#FF6500] w-[1.1rem] h-[1.1rem]" />
-                                    <Button className="py-2 pl-9 pr-4 bg-[#ff660021] text-[#FF6500] hover:bg-orange-200">New Product</Button>
+                                <div
+                                    className="relative flex items-center gap-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
+                                    onClick={() => { dispatch(setProductDrawerStatus(!productDrawerStatus)) }}
+                                >
+                                    <FiPlus
+                                        className="absolute left-3 top-[0.72rem] text-[#FF6500] w-[1.1rem] h-[1.1rem]"
+                                    />
+                                    <Button
+                                        className="py-2 pl-9 pr-4 bg-orange-200 text-[#FF6500] hover:bg-orange-200 dark:text-[#FF6500] dark:bg-opacity-20 dark:hover:bg-opacity-20" // Button styles for both light and dark modes
+                                    >
+                                        New Product
+                                    </Button>
                                 </div>
                             )}
+
+
                         </div>
                     </section>
                 </TableCaption>

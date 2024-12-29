@@ -17,6 +17,7 @@
     "dotenv": "^16.4.7",
     "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-reactive-utils": "^8.5.1",
+    "framer-motion": "^11.15.0",
     "jsonwebtoken": "^9.0.2",
     "keep-react": "^1.5.0",
     "lodash.debounce": "^4.0.8",

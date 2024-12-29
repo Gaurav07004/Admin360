@@ -31,15 +31,31 @@ const CustomerDetailPage: React.FC = () => {
 
         for (let i = 1; i <= 5; i++) {
             if (i <= Math.floor(ratingValue)) {
-                stars.push(<PiStarFill key={i} className="text-[#ff8127d0] dark:text-yellow-600 text-lg" />);
+                stars.push(
+                    <PiStarFill
+                        key={i}
+                        className="text-[#ff8127d0] dark:text-yellow-400 text-lg"
+                    />
+                );
             } else if (i - 0.5 <= ratingValue) {
-                stars.push(<PiStarHalfFill key={i} className="text-[#ff8127d0] dark:text-yellow-600 text-lg" />);
+                stars.push(
+                    <PiStarHalfFill
+                        key={i}
+                        className="text-[#ff8127d0] dark:text-yellow-400 text-lg"
+                    />
+                );
             } else {
-                stars.push(<PiStarFill key={i} className="text-gray-300 text-lg" />);
+                stars.push(
+                    <PiStarFill
+                        key={i}
+                        className="text-gray-300 dark:text-gray-600 text-lg"
+                    />
+                );
             }
         }
         return stars;
     }, [selectedProduct]);
+
 
     const handleDeleteProduct = async () => {
         const token = localStorage.getItem('authToken');
@@ -117,12 +133,14 @@ const CustomerDetailPage: React.FC = () => {
             </div>
             <div className="flex items-center justify-between gap-1">
                 <span
-                    className={`text-sm font-semibold text-gray-500 px-3 py-1 rounded-md ${selectedProduct?.stockStatus === "Available"
-                        ? "bg-green-100 text-green-500 hover:bg-green-200 px-2 py-1 w-fit"
-                        : selectedProduct?.stockStatus === "Out of Stock"
-                            ? "bg-red-100 text-red-500 hover:bg-red-200 px-2 py-1 w-fit"
-                            : "bg-yellow-100 text-yellow-500 hover:bg-yellow-200 px-2 py-1 w-fit"
-                        }`}
+                    className={`text-sm font-semibold text-gray-500 px-3 py-1 rounded-md
+                    ${selectedProduct?.stockStatus === "Available"
+                            ? "bg-green-100 text-green-500 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-700"
+                            : selectedProduct?.stockStatus === "Out of Stock"
+                                ? "bg-red-100 text-red-500 hover:bg-red-200 dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-700"
+                                : "bg-yellow-100 text-yellow-500 hover:bg-yellow-200 dark:bg-yellow-900 dark:text-yellow-300 dark:hover:bg-yellow-700"
+                        }
+                    `}
                 >
                     {selectedProduct?.stockStatus}
                 </span>
@@ -132,7 +150,7 @@ const CustomerDetailPage: React.FC = () => {
                 </div>
             </div>
             <div className="grid grid-cols-3 gap-3">
-                <div className="flex items-center bg-gray-100 dark:bg-slate-600 hover:dark:bg-slate-600 hover:bg-gray-200 rounded-md px-3 py-2 space-x-2">
+                <div className="flex items-center bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-md px-3 py-2 space-x-2">
                     <span className="text-[0.8rem] font-semibold text-gray-700 dark:text-gray-300">{selectedProduct?.purchaseCount || 0} Sold</span>
                     <div className={`flex items-center ${isProfit ? 'text-green-500' : 'text-red-500'}`}>
                         {isProfit ? (
@@ -145,17 +163,28 @@ const CustomerDetailPage: React.FC = () => {
                         </span>
                     </div>
                 </div>
-                <div className="flex items-center  bg-gray-100 dark:bg-slate-600 hover:dark:bg-slate-600 hover:bg-gray-200 rounded-md px-3 py-2">
-                    <span className="text-[0.8rem] font-semibold text-gray-700 dark:text-gray-300">{selectedProduct?.stockQuantity || 0} Remaining</span>
+                <div className="flex items-center bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-md px-3 py-2">
+                    <span className="text-[0.8rem] font-semibold text-gray-700 dark:text-gray-300">
+                        {selectedProduct?.stockQuantity || 0} Remaining
+                    </span>
                 </div>
-                <div className="flex items-center bg-gray-100 dark:bg-slate-600 hover:dark:bg-slate-600 hover:bg-gray-200 rounded-md px-3 py-2">
-                    <span className="text-[0.8rem] font-semibold text-gray-700 hover:dark:bg-slate-600 dark:text-gray-300">{selectedProduct?.viewsCount || 0} Total View</span>
+
+                <div className="flex items-center bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-md px-3 py-2">
+                    <span className="text-[0.8rem] font-semibold text-gray-700 dark:text-gray-300">
+                        {selectedProduct?.viewsCount || 0} Total View
+                    </span>
                 </div>
-                <div className="flex items-center bg-gray-100 dark:bg-slate-600 hover:dark:bg-slate-600 hover:bg-gray-200 rounded-md px-3 py-2">
-                    <span className="text-[0.8rem] font-semibold text-gray-700 dark:text-gray-300">{selectedProduct?.wishlistCount || 0} Wishlist</span>
+
+                <div className="flex items-center bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-md px-3 py-2">
+                    <span className="text-[0.8rem] font-semibold text-gray-700 dark:text-gray-300">
+                        {selectedProduct?.wishlistCount || 0} Wishlist
+                    </span>
                 </div>
-                <div className="flex items-center bg-gray-100 dark:bg-slate-600 hover:dark:bg-slate-600 hover:bg-gray-200 rounded-md px-3 py-2">
-                    <span className="text-[0.8rem] font-semibold text-gray-700  dark:text-gray-300">{selectedProduct?.subcategory || 0}</span>
+
+                <div className="flex items-center bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-md px-3 py-2">
+                    <span className="text-[0.8rem] font-semibold text-gray-700 dark:text-gray-300">
+                        {selectedProduct?.subcategory || 0}
+                    </span>
                 </div>
             </div>
         </div>
@@ -169,9 +198,14 @@ const CustomerDetailPage: React.FC = () => {
                     <p className="text-[0.85rem] font-semibold text-gray-700 dark:text-gray-300">{selectedProduct?.description}</p>
                     <div className="flex items-center gap-4">
                         {selectedProduct?.tags.map((tag, index) => (
-                            <span key={index} className="rounded-md px-3 py-2 bg-orange-50 text-orange-500 text-[0.8rem] font-semibold">
+                            <span
+                                key={index}
+                                className="rounded-md px-3 py-2 bg-orange-50 text-orange-500 text-[0.8rem] font-semibold
+                                    dark:bg-orange-900 dark:text-orange-300"
+                            >
                                 {tag}
                             </span>
+
                         ))}
                     </div>
                 </div>

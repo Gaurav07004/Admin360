@@ -30,7 +30,7 @@ interface MenuState {
     mode: 'light' | 'dark';
 }
 
-const savedTheme = (typeof window !== "undefined" && localStorage.getItem("theme")) as "light" | "dark";
+// const savedTheme = (typeof window !== "undefined" && localStorage.getItem("theme")) as "light" | "dark";
 
 
 const initialState: MenuState = {
@@ -59,7 +59,7 @@ const initialState: MenuState = {
     addToCart: [],
     checkout: [],
     purchase: [],
-    mode: savedTheme || "light",
+    mode: "light",
 
 };
 

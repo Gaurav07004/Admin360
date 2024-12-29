@@ -17,6 +17,7 @@ const config: Config = {
         scaleout: 'scaleout 2s infinite ease-in-out',
         fadeIn: "fadeIn 0.5s ease-in-out",
         pingSlow: 'pingSlow 2.5s ease-out infinite',
+        icon: "rotateIcon 1s ease-in-out",
       },
       keyframes: {
         scaleout: {
@@ -52,6 +53,10 @@ const config: Config = {
             transform: 'scale(2)',
             opacity: '0',
           },
+        },
+        rotateIcon: {
+          "0%": { transform: "rotate(0deg) scale(0.5)", opacity: "0" },
+          "100%": { transform: "rotate(360deg) scale(1)", opacity: "1" },
         },
       },
       screens: {

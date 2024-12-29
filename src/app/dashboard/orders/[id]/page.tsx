@@ -143,11 +143,16 @@ const CustomerDetailPage: React.FC = () => {
                 <div className="flex flex-col text-gray-500">
                     {data.map((item, index) => {
                         const statusClasses: Record<string, string> = {
-                            Delivered: "bg-green-100 dark:bg-green-200 text-green-500 dark:text-green-500 hover:bg-green-200 px-2 py-1 w-fit",
-                            Pending: "bg-yellow-100 dark:bg-yellow-200 text-yellow-500 dark:text-yellow-500 hover:bg-yellow-200 px-2 py-1 w-fit",
-                            Cancelled: "bg-red-100 dark:bg-red-200 text-red-500 dark:text-red-500 hover:bg-red-200 px-2 py-1 w-fit",
-                            Unreachable: "bg-red-100 dark:bg-red-200 text-red-500 dark:text-red-500 hover:bg-red-200 px-2 py-1 w-fit",
-                            Shipped: "bg-blue-100 dark:bg-blue-200 text-blue-600 dark:text-blue-500 hover:bg-blue-200 px-2 py-1 w-fit",
+                            Delivered:
+                                "bg-green-100 dark:bg-green-900 text-green-500 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-800 px-2 py-1 w-fit",
+                            Pending:
+                                "bg-yellow-100 dark:bg-yellow-900 text-yellow-500 dark:text-yellow-400 hover:bg-yellow-200 dark:hover:bg-yellow-800 px-2 py-1 w-fit",
+                            Cancelled:
+                                "bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-800 px-2 py-1 w-fit",
+                            Unreachable:
+                                "bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-800 px-2 py-1 w-fit",
+                            Shipped:
+                                "bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800 px-2 py-1 w-fit",
                         };
 
                         const statusClass = statusClasses[item.value || "Pending"];
