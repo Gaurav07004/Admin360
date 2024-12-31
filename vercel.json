@@ -1,22 +1,22 @@
 {
     "functions": {
-        "/pages/api/auth/dashboard.ts": {
+        "api/auth/dashboard.ts": {
             "maxDuration": 60,
             "memory": 1024
         },
-        "/pages/api/auth/customer.ts": {
+        "api/auth/customer.ts": {
             "maxDuration": 60,
             "memory": 1024
         },
-        "/pages/api/auth/order.ts": {
+        "api/auth/order.ts": {
             "maxDuration": 60,
             "memory": 1024
         },
-        "/pages/api/auth/product.ts": {
+        "api/auth/product.ts": {
             "maxDuration": 60,
             "memory": 1024
         },
-        "/pages/api/auth/analysis.ts": {
+        "api/auth/analysis.ts": {
             "maxDuration": 60,
             "memory": 1024
         }
