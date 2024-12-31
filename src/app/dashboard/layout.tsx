@@ -10,9 +10,8 @@ import { RootState } from "@/redux/store";
 import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
 import { setAccountData, setAdminData } from "@/redux/slices/adminSlice";
 import { useRouter } from "next/navigation";
-import { setCustomer } from "@/redux/slices/customerSlice";
-// import { setOrder, setOrderMonthlyData } from "@/redux/slices/orderSlice";
-// import { setProduct, setProductMonthlyData } from "@/redux/slices/productsSlice";
+import { setOrder } from "@/redux/slices/orderSlice";
+import { setProduct } from "@/redux/slices/productsSlice";
 
 const fetchData = async (url: string, token: string) => {
     try {
@@ -56,31 +55,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             return;
         }
 
-        const fetchAllData = async () => {
+        const fetchDashboardData = async () => {
             try {
-                // const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
-                const [
-                    dashboardData,
-                    customerData,
-                    // orderData,
-                    // productData,
-                ] = await Promise.all([
-                    fetchData(`/api/auth/dashboard`, token),
-                    fetchData(`/api/auth/customer`, token),
-                    // fetchData(`/api/auth/order`, token),
-                    // fetchData(`/api/auth/product`, token),
-                    // fetchData(`/api/auth/analysis`, token),
-                ]);
-
+                const dashboardData = await fetchData(`/api/auth/dashboard`, token);
                 dispatch(setAccountData(dashboardData.admin));
                 dispatch(setLineChartData(dashboardData.lineChartData));
                 dispatch(setTopProduct(dashboardData.topProductData));
                 dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
-                dispatch(setCustomer(customerData));
-                // dispatch(setOrder(orderData.orders));
-                // dispatch(setOrderMonthlyData(orderData.MonthlyOrders));
-                // dispatch(setProduct(productData.products));
-                // dispatch(setProductMonthlyData(productData.ProductStats));
+
+                const orderData = await fetchData(`/api/auth/order`, token);
+                dispatch(setOrder(orderData.orders));
+
+                const productData = await fetchData(`/api/auth/product`, token);
+                dispatch(setProduct(productData.products));
 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -89,7 +76,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             }
         };
 
-        fetchAllData();
+        fetchDashboardData();
     }, [dispatch, router, accountData]);
 
     useEffect(() => {
@@ -109,7 +96,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     return isLoading ? (
         <div className="fixed inset-0 flex justify-center items-center bg-white dark:bg-[#263445] z-50">
-            <div className="w-12 h-12 rounded-full border-[0.2rem] border-gray-300  border-t-orange-500 animate-spin"></div>
+            <div className="w-12 h-12 rounded-full border-[0.2rem] border-gray-300 border-t-orange-500 animate-spin"></div>
         </div>
     ) : (
         <div className="flex h-full p-4">
