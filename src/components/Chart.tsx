@@ -26,7 +26,7 @@ const PieChartTooltip: React.FC<{ payload?: any, active?: boolean }> = ({ payloa
     if (active && payload && payload.length) {
         const { name, value } = payload[0];
         return (
-            <div className="bg-[#FF9D3D] text-white p-2 rounded text-sm">
+            <div className="bg-[#FF9D3D] text-white p-2 rounded text-sm z-50">
                 <p>{`${name}: ${formatToKOrL(value)}`}</p>
             </div>
         );
@@ -100,8 +100,8 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
 
     return (
         <section className="flex justify-start items-center gap-5 w-full">
-            <section className="bg-white dark:bg-[#263445] rounded-[1rem] py-6 px-8 w-full">
-                <div className="flex flex-col justify-between w-[60%] relative">
+            <section className="bg-white dark:bg-[#263445] rounded-[1rem] py-6 px-8 w-full h-auto min-h-[7.6rem]">
+                <div className="flex flex-col justify-between w-[60%] relative  h-auto min-h-[7.6rem]">
                     <p className="text-lg text-left font-semibold mb-[1.25rem] text-gray-600 dark:text-gray-300">Product Sold</p>
                     <div className="grid grid-cols-2 items-center gap-2 w-full">
                         {Object.entries(orderCounts).map(([productName, { subcategory }]) => {
@@ -166,7 +166,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                             <ChartTooltip content={<PieChartTooltip />} />
                         </PieChart>
                     </ResponsiveContainer>
-                    <div className="absolute top-[3.7rem] left-[23rem] transform -translate-x-1/2 -translate-y-1/2 text-center">
+                    <div className="absolute z-0 top-[3.7rem] left-[23rem] transform -translate-x-1/2 -translate-y-1/2 text-center">
                         <div className="font-medium text-[16px] text-gray-600 dark:text-gray-300">
                             {Object.values(orderCounts).reduce((acc, { count }) => acc + count, 0)}
                         </div>

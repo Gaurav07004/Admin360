@@ -10,6 +10,8 @@ import { RootState } from "@/redux/store";
 import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
 import { setAccountData, setAdminData } from "@/redux/slices/adminSlice";
 import { useRouter } from "next/navigation";
+import { setOrder } from "@/redux/slices/orderSlice";
+import { setProduct } from "@/redux/slices/productsSlice";
 
 const fetchData = async (url: string, token: string) => {
     try {
@@ -60,6 +62,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 dispatch(setLineChartData(dashboardData.lineChartData));
                 dispatch(setTopProduct(dashboardData.topProductData));
                 dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
+
+                const orderData = await fetchData(`/api/auth/order`, token);
+                dispatch(setOrder(orderData.orders.slice(0, 2)));
+
+                const productData = await fetchData(`/api/auth/product`, token);
+                dispatch(setProduct(productData.products.slice(0, 2)));
 
             } catch (error) {
                 console.error("Error fetching data:", error);
