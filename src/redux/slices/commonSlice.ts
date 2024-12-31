@@ -1,5 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+type DataPoint = {
+    name: string,
+    value: number,
+};
+
+type productDataPoint = {
+    name: string,
+    value: string,
+    sold: number,
+    TopProductImage: string
+};
+
+type ChartData = {
+    timeRange: string;
+    price: number;
+    productView: number;
+    addToCart: number;
+    checkout: number;
+    purchase: number;
+};
+
 interface MenuState {
     token: string | null;
     modal: boolean;
@@ -18,19 +39,15 @@ interface MenuState {
     currentSection: number;
     form: { email: string; password: string; firstName: string; lastName: string; role: string; adminID: string };
     usernameStatus: "valid" | "invalid" | null;
-    lineChartData: string[];
-    pieChartData: string[];
-    topProductData: string[];
+    lineChartData: DataPoint[];
+    topProductData: productDataPoint[];
     CustomerTrafficData: string[];
-    productView: string[];
-    addToCart: string[];
-    checkout: string[];
-    purchase: string[];
+    productView: ChartData[];
+    addToCart: ChartData[];
+    checkout: ChartData[];
+    purchase: ChartData[];
     mode: 'light' | 'dark';
 }
-
-// const savedTheme = (typeof window !== "undefined" && localStorage.getItem("theme")) as "light" | "dark";
-
 
 const initialState: MenuState = {
     token: null,
@@ -51,7 +68,6 @@ const initialState: MenuState = {
     form: { email: "", password: "", firstName: "", lastName: "", role: "", adminID: "" },
     usernameStatus: null,
     lineChartData: [],
-    pieChartData: [],
     topProductData: [],
     CustomerTrafficData: [],
     productView: [],
@@ -117,28 +133,25 @@ const menuSlice = createSlice({
         setUsernameStatus: (state, action: PayloadAction<"valid" | "invalid" | null>) => {
             state.usernameStatus = action.payload;
         },
-        setLineChartData: (state, action: PayloadAction<string[]>) => {
+        setLineChartData: (state, action: PayloadAction<DataPoint[]>) => {
             state.lineChartData = action.payload;
         },
-        setPieChartData: (state, action: PayloadAction<string[]>) => {
-            state.pieChartData = action.payload;
-        },
-        setTopProduct: (state, action: PayloadAction<string[]>) => {
+        setTopProduct: (state, action: PayloadAction<productDataPoint[]>) => {
             state.topProductData = action.payload;
         },
         setCustomerTraffic: (state, action: PayloadAction<string[]>) => {
             state.CustomerTrafficData = action.payload;
         },
-        setProductView: (state, action: PayloadAction<string[]>) => {
+        setProductView: (state, action: PayloadAction<ChartData[]>) => {
             state.productView = action.payload;
         },
-        setAddToCart: (state, action: PayloadAction<string[]>) => {
+        setAddToCart: (state, action: PayloadAction<ChartData[]>) => {
             state.addToCart = action.payload;
         },
-        setCheckout: (state, action: PayloadAction<string[]>) => {
+        setCheckout: (state, action: PayloadAction<ChartData[]>) => {
             state.checkout = action.payload;
         },
-        setPurchase: (state, action: PayloadAction<string[]>) => {
+        setPurchase: (state, action: PayloadAction<ChartData[]>) => {
             state.purchase = action.payload;
         },
         toggleTheme(state) {
@@ -176,7 +189,6 @@ export const {
     setUsernameStatus,
     setCustomerTraffic,
     setLineChartData,
-    setPieChartData,
     setTopProduct,
     setPurchase,
     setAddToCart,

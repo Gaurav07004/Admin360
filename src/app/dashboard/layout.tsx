@@ -7,30 +7,13 @@ import { toast } from "keep-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { setCustomerTraffic, setLineChartData, setPieChartData, setTopProduct } from "@/redux/slices/commonSlice";
+import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
 import { setAccountData, setAdminData } from "@/redux/slices/adminSlice";
 import { useRouter } from "next/navigation";
 import { setCustomer } from "@/redux/slices/customerSlice";
 import { setOrder, setOrderMonthlyData } from "@/redux/slices/orderSlice";
 import { setProduct, setProductMonthlyData } from "@/redux/slices/productsSlice";
 
-// const fetchData = async (url: string, token: string) => {
-//     try {
-//         const response = await fetch(url, {
-//             method: "GET",
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 "Authorization": `Bearer ${token}`,
-//             },
-//         });
-//         if (!response.ok) throw new Error("Failed to fetch data.");
-//         return await response.json();
-//     } catch (error: unknown) {
-//         const e = error as any;
-//         toast.error(e.message || "An unknown error occurred.", { position: "top-right" });
-//         throw error;
-//     }
-// };
 const fetchData = async (url: string, token: string) => {
     try {
         const response = await fetch(url, {
@@ -91,7 +74,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
                 dispatch(setAccountData(dashboardData.admin));
                 dispatch(setLineChartData(dashboardData.lineChartData));
-                dispatch(setPieChartData(dashboardData.pieChartData));
+                // dispatch(setPieChartData(dashboardData.pieChartData));
                 dispatch(setTopProduct(dashboardData.topProductData));
                 dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
                 dispatch(setCustomer(customerData));

@@ -24,7 +24,7 @@ interface ChartData {
 
 interface ButtonConfig {
     label: string;
-    icon: React.ComponentType;
+    icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     dataKey: ChartDataKey;
 }
 
