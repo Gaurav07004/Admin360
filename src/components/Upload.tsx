@@ -11,8 +11,8 @@ const UploadComponent = () => {
     const dispatch = useDispatch();
     const { files } = useSelector((state: RootState) => state.user);
 
-    const onDrop = useCallback((acceptedFiles: any) => {
-        const imageFiles = acceptedFiles.filter((file: File) =>
+    const onDrop = useCallback((acceptedFiles: File[]) => {
+        const imageFiles = acceptedFiles.filter((file) =>
             file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/webp'
         );
 
@@ -21,16 +21,16 @@ const UploadComponent = () => {
             return;
         }
 
-        const file = imageFiles[0]
-        const reader = new FileReader()
+        const file = imageFiles[0];
+        const reader = new FileReader();
 
         reader.onloadend = () => {
             if (reader.result) {
-                const dataUrl = reader.result as string
+                const dataUrl = reader.result as string;
                 dispatch(setFiles([{ name: file.name, dataUrl }]));
                 dispatch(setImageUrl(dataUrl));
             }
-        }
+        };
 
         reader.readAsDataURL(file);
     }, [dispatch]);

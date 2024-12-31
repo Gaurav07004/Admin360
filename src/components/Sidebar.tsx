@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
@@ -50,7 +48,7 @@ const Sidebar: React.FC = () => {
 
     const renderMenuItem = (
         menu: string,
-        MenuIcon: React.ComponentType<{ className?: string }> | any,
+        MenuIcon: React.ComponentType<{ className?: string }>,
         href: string,
         notification?: number
     ) => {
@@ -110,7 +108,6 @@ const Sidebar: React.FC = () => {
             toast.error("Unable to connect. Please check your network.", { position: "top-right" });
         }
     };
-
 
     return (
         <nav className="bg-white w-60 h-auto py-7 px-4 rounded-[1rem] dark:bg-[#263445]" role="navigation">
