@@ -21,6 +21,11 @@ type ChartData = {
     purchase: number;
 };
 
+type BarProps = {
+    Female: number;
+    Male: number;
+}
+
 interface MenuState {
     token: string | null;
     modal: boolean;
@@ -41,7 +46,7 @@ interface MenuState {
     usernameStatus: "valid" | "invalid" | null;
     lineChartData: DataPoint[];
     topProductData: productDataPoint[];
-    CustomerTrafficData: string[];
+    CustomerTrafficData: BarProps[];
     productView: ChartData[];
     addToCart: ChartData[];
     checkout: ChartData[];
@@ -139,7 +144,7 @@ const menuSlice = createSlice({
         setTopProduct: (state, action: PayloadAction<productDataPoint[]>) => {
             state.topProductData = action.payload;
         },
-        setCustomerTraffic: (state, action: PayloadAction<string[]>) => {
+        setCustomerTraffic: (state, action: PayloadAction<BarProps[]>) => {
             state.CustomerTrafficData = action.payload;
         },
         setProductView: (state, action: PayloadAction<ChartData[]>) => {
