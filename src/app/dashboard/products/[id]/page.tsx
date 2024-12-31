@@ -66,8 +66,7 @@ const CustomerDetailPage: React.FC = () => {
         }
 
         try {
-            const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
-            const response = await fetch(`${baseURL}/api/auth/deleteProduct/${selectedProduct?.productID}`, {
+            const response = await fetch(`/api/auth/${selectedProduct?.productID}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
