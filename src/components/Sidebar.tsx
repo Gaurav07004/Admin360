@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { Divider, toast } from "keep-react";
 import Image from "next/image";
@@ -16,7 +17,9 @@ import {
     PiUsersThreeLight,
 } from "react-icons/pi";
 import { CiSettings, CiLogout } from "react-icons/ci";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { setOrder } from "@/redux/slices/orderSlice";
+import { setProduct } from "@/redux/slices/productsSlice";
 
 const menuConfig = [
     {
@@ -43,10 +46,64 @@ const menuConfig = [
     },
 ];
 
+const fetchData = async (url: string, token: string) => {
+    try {
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch data: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        if (!data) {
+            throw new Error("No data received from API");
+        }
+
+        return data;
+    } catch (error: unknown) {
+        const e = error as any;
+        toast.error(e.message || "An unknown error occurred.", { position: "top-right" });
+        throw error;
+    }
+};
+
+
 const Sidebar: React.FC = () => {
+    const dispatch = useDispatch();
+    const router = useRouter();
     const { accountData } = useSelector((state: RootState) => state.user);
     const pathname = usePathname();
     const fullName = `${accountData?.firstName} ${accountData?.lastName}`;
+
+    useEffect(() => {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+            setTimeout(() => router.push("/"), 2000);
+            return;
+        }
+
+        const fetchDashboardData = async () => {
+            try {
+                const orderData = await fetchData(`/api/auth/order`, token);
+                dispatch(setOrder(orderData.orders));
+
+                const productData = await fetchData(`/api/auth/product`, token);
+                dispatch(setProduct(productData.products));
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchDashboardData();
+    }, [dispatch, router]);
 
     const renderMenuItem = (
         menu: string,
