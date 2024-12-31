@@ -1,0 +1,19 @@
+{
+    "functions": {
+        "api/auth/dashboard.ts": {
+            "maxDuration": 60
+        },
+        "api/auth/customer.ts": {
+            "maxDuration": 60
+        },
+        "api/auth/order.ts": {
+            "maxDuration": 60
+        },
+        "api/auth/product.ts": {
+            "maxDuration": 60
+        },
+        "api/auth/analysis.ts": {
+            "maxDuration": 60
+        }
+    }
+}
