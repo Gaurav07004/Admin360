@@ -1,24 +1,7 @@
 {
     "functions": {
-        "api/auth/dashboard.ts": {
-            "maxDuration": 60,
-            "memory": 1024
-        },
-        "api/auth/customer.ts": {
-            "maxDuration": 60,
-            "memory": 1024
-        },
-        "api/auth/order.ts": {
-            "maxDuration": 60,
-            "memory": 1024
-        },
-        "api/auth/product.ts": {
-            "maxDuration": 60,
-            "memory": 1024
-        },
-        "api/auth/analysis.ts": {
-            "maxDuration": 60,
-            "memory": 1024
+        "api/**/*.ts": {
+            "maxDuration": 60
         }
     }
 }
