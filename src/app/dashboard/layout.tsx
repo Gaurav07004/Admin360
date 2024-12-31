@@ -7,10 +7,10 @@ import { toast } from "keep-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
-import { setAccountData, setAdminData } from "@/redux/slices/adminSlice";
+// import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
+import { setAdminData } from "@/redux/slices/adminSlice";
 import { useRouter } from "next/navigation";
-import { setOrder } from "@/redux/slices/orderSlice";
+// import { setOrder } from "@/redux/slices/orderSlice";
 import { setProduct } from "@/redux/slices/productsSlice";
 
 const fetchData = async (url: string, token: string) => {
@@ -57,14 +57,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         const fetchDashboardData = async () => {
             try {
-                const dashboardData = await fetchData(`/api/auth/dashboard`, token);
-                dispatch(setAccountData(dashboardData.admin));
-                dispatch(setLineChartData(dashboardData.lineChartData));
-                dispatch(setTopProduct(dashboardData.topProductData));
-                dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
+                // const dashboardData = await fetchData(`/api/auth/dashboard`, token);
+                // dispatch(setAccountData(dashboardData.admin));
+                // dispatch(setLineChartData(dashboardData.lineChartData));
+                // dispatch(setTopProduct(dashboardData.topProductData));
+                // dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
 
-                const orderData = await fetchData(`/api/auth/order`, token);
-                dispatch(setOrder(orderData.orders.slice(0, 2)));
+                // const orderData = await fetchData(`/api/auth/order`, token);
+                // dispatch(setOrder(orderData.orders.slice(0, 2)));
 
                 const productData = await fetchData(`/api/auth/product`, token);
                 dispatch(setProduct(productData.products.slice(0, 2)));
