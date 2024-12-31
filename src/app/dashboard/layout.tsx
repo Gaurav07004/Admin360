@@ -10,7 +10,7 @@ import { RootState } from "@/redux/store";
 import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
 import { setAccountData, setAdminData } from "@/redux/slices/adminSlice";
 import { useRouter } from "next/navigation";
-// import { setCustomer } from "@/redux/slices/customerSlice";
+import { setCustomer } from "@/redux/slices/customerSlice";
 // import { setOrder, setOrderMonthlyData } from "@/redux/slices/orderSlice";
 // import { setProduct, setProductMonthlyData } from "@/redux/slices/productsSlice";
 
@@ -61,7 +61,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 // const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
                 const [
                     dashboardData,
-                    // customerData,
+                    customerData,
                     // orderData,
                     // productData,
                 ] = await Promise.all([
@@ -76,7 +76,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 dispatch(setLineChartData(dashboardData.lineChartData));
                 dispatch(setTopProduct(dashboardData.topProductData));
                 dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
-                // dispatch(setCustomer(customerData));
+                dispatch(setCustomer(customerData));
                 // dispatch(setOrder(orderData.orders));
                 // dispatch(setOrderMonthlyData(orderData.MonthlyOrders));
                 // dispatch(setProduct(productData.products));
