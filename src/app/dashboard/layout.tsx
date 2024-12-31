@@ -10,9 +10,9 @@ import { RootState } from "@/redux/store";
 import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
 import { setAccountData, setAdminData } from "@/redux/slices/adminSlice";
 import { useRouter } from "next/navigation";
-import { setCustomer } from "@/redux/slices/customerSlice";
-import { setOrder, setOrderMonthlyData } from "@/redux/slices/orderSlice";
-import { setProduct, setProductMonthlyData } from "@/redux/slices/productsSlice";
+// import { setCustomer } from "@/redux/slices/customerSlice";
+// import { setOrder, setOrderMonthlyData } from "@/redux/slices/orderSlice";
+// import { setProduct, setProductMonthlyData } from "@/redux/slices/productsSlice";
 
 const fetchData = async (url: string, token: string) => {
     try {
@@ -61,27 +61,26 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 // const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
                 const [
                     dashboardData,
-                    customerData,
-                    orderData,
-                    productData,
+                    // customerData,
+                    // orderData,
+                    // productData,
                 ] = await Promise.all([
                     fetchData(`/api/auth/dashboard`, token),
-                    fetchData(`/api/auth/customer`, token),
-                    fetchData(`/api/auth/order`, token),
-                    fetchData(`/api/auth/product`, token),
-                    fetchData(`/api/auth/analysis`, token),
+                    // fetchData(`/api/auth/customer`, token),
+                    // fetchData(`/api/auth/order`, token),
+                    // fetchData(`/api/auth/product`, token),
+                    // fetchData(`/api/auth/analysis`, token),
                 ]);
 
                 dispatch(setAccountData(dashboardData.admin));
                 dispatch(setLineChartData(dashboardData.lineChartData));
-                // dispatch(setPieChartData(dashboardData.pieChartData));
                 dispatch(setTopProduct(dashboardData.topProductData));
                 dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
-                dispatch(setCustomer(customerData));
-                dispatch(setOrder(orderData.orders));
-                dispatch(setOrderMonthlyData(orderData.MonthlyOrders));
-                dispatch(setProduct(productData.products));
-                dispatch(setProductMonthlyData(productData.ProductStats));
+                // dispatch(setCustomer(customerData));
+                // dispatch(setOrder(orderData.orders));
+                // dispatch(setOrderMonthlyData(orderData.MonthlyOrders));
+                // dispatch(setProduct(productData.products));
+                // dispatch(setProductMonthlyData(productData.ProductStats));
 
             } catch (error) {
                 console.error("Error fetching data:", error);
