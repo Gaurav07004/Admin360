@@ -109,8 +109,8 @@ const Login = () => {
                         <div className="flex flex-col items-center justify-center mb-8">
                             <Image src={logo} alt="logo" width={180} height={200} className="mb-6" />
                             <div className="text-center">
-                                <p className="text-3xl font-semibold text-gray-500">Welcome Back!</p>
-                                <p className="text-sm text-[#5e6574] mt-2">Please login to your account</p>
+                                <p className="text-2xl font-semibold text-gray-500">Administrator Login</p>
+                                <p className="text-sm text-[#5e6574] mt-2">Please sign in to access the management dashboard</p>
                             </div>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-6">
@@ -172,7 +172,7 @@ const Login = () => {
                             </div>
 
                             <button type="submit" className="w-full py-3 mt-4 bg-orange-500 text-white font-semibold rounded-md hover:bg-orange-600 focus:outline-none">
-                                Login
+                                Admin Sign In
                             </button>
                         </form>
                     </div>

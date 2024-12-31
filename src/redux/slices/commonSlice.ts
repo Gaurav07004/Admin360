@@ -41,7 +41,7 @@ const initialState: MenuState = {
     statusMessage: "",
     passwordStatusMessage: "",
     emailStatus: null,
-    otp: ["", "", "", "", "", "", "", ""],
+    otp: ["", "", "", "", "", "",],
     OTPStatusMessage: "",
     OTPStatus: null,
     newPassword: "",

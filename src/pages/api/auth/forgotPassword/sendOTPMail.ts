@@ -26,7 +26,7 @@ const forgotPassword = async (req: NextApiRequest, res: NextApiResponse) => {
             return res.status(404).json({ error: "Admin not found" });
         }
 
-        const otp = crypto.randomInt(10000000, 99999999).toString();
+        const otp = crypto.randomInt(100000, 999999).toString();
 
         await OTP.create({
             email,
@@ -35,14 +35,18 @@ const forgotPassword = async (req: NextApiRequest, res: NextApiResponse) => {
         });
 
         const subject = 'Password Reset Request';
-        const emailContent = `<div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffebde; border-radius: 1rem;">
-            <h2 style="font-size: 24px; font-weight: bold; line-height: 28px;">Action Required: One-Time Verification Code</h2>
-            <p style="font-size: 14px;">You are receiving this email because a one-time verification code is required for your Admin 360 account.</p>
-            <p style="font-size: 14px;">Please use the following code to complete the verification process: <strong style="font-weight: bold; color: #ff6515;">${otp}</strong></p>
-            <p style="font-size: 14px;">If you did not request this verification code, please ignore this email.</p>
-            <p style="font-size: 14px;">If you need any assistance or have questions, feel free to contact our support team at <a href="mailto:${process.env.EMAIL_USER}" style="color: #ff6515; text-decoration: none;">Admin 360 Team</a>.</p>
-            <p style="font-size: 14px;">Thank you,<br>Admin 360 Team</p>
-        </div>`;
+        const emailContent = `<body style="font-family: Arial, sans-serif; background-color: #f6f6f6; margin: 0; padding: 1rem;">
+            <div class="email-container" style="max-width: 600px; margin: 40px auto; padding: 20px; background-color: #ffffff; border-radius: 10px;">
+                <h2 class="email-title" style="font-size: 22px; font-weight: bold; color: #3d4f58;">Action Required: One-Time Verification Code</h2>
+                <p class="email-body" style="font-size: 16px; color: #555555; margin: 20px 0;">You are receiving this email because a request was made for a one-time code that can be used for authentication.</p>
+                <p class="email-body" style="font-size: 16px; color: #555555; margin: 20px 0;">Please enter the following code for verification:</p>
+                <p class="verification-code" style="font-size: 16px; font-weight: bold; color: #ff6515; margin: 20px 0; text-align: center;">${otp}</p>
+                <p class="email-body" style="font-size: 16px; color: #555555; margin: 20px 0;">If you need any assistance or have questions, feel free to contact our support team at <a href="mailto:${process.env.EMAIL_USER}" style="color: #ff6515; text-decoration: none;">Admin 360 Team</a>.</p>
+                <div class="email-footer" style="font-size: 12px; color: #999999; margin-top: 20px;">
+                    <p>Thank you,<br>The Admin 360 Team</p>
+                </div>
+            </div>
+        </body>`;
 
         await sendEmail({ to: email, subject, text: "", html: emailContent });
 

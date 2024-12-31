@@ -97,6 +97,33 @@ const ForgotPasswordModal = () => {
         }
     };
 
+    const handleOtpPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        const pastedData = e.clipboardData.getData("text").replace(/[^0-9]/g, "");
+        const updatedOtp = [...otp];
+
+        for (let i = 0; i < pastedData.length && i < otp.length; i++) {
+            updatedOtp[i] = pastedData[i];
+        }
+
+        dispatch(setOtp(updatedOtp));
+    };
+
+    const handleOtpKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+        const key = e.key;
+
+        if (key === "ArrowRight") {
+            if (index < otp.length - 1) {
+                document.getElementById(`otp-input-${index + 1}`)?.focus();
+            }
+        } else if (key === "ArrowLeft") {
+            if (index > 0) {
+                document.getElementById(`otp-input-${index - 1}`)?.focus();
+            }
+        }
+    };
+
+
     const handleOTPValidation = async () => {
         const otpString = otp.join("");
 
@@ -223,7 +250,7 @@ const ForgotPasswordModal = () => {
                         placeholder="Enter your email address"
                         autoComplete="off"
                         aria-describedby="email-status-message"
-                        className="w-full p-3 pl-12 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 focus:outline-none"
+                        className="w-full p-3 pl-12 border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 focus:outline-none"
                     />
                     {emailStatus === "invalid" ? (
                         <MdErrorOutline className="text-lg absolute right-3 top-1/2 transform -translate-y-1/2 text-red-500 " />
@@ -256,9 +283,11 @@ const ForgotPasswordModal = () => {
                             value={digit}
                             id={`otp-input-${index}`}
                             onChange={(e) => handleOtpChange(index, e.target.value)}
+                            onPaste={handleOtpPaste}
+                            onKeyDown={(e) => handleOtpKeyDown(e, index)}
                             maxLength={1}
                             autoComplete="off"
-                            className="w-12 h-12 p-3 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 focus:outline-none text-center"
+                            className="w-12 h-12 p-3 border border-gray-300 dark:border-gray-500 dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 focus:outline-none text-center"
                         />
                     ))}
                 </div>
@@ -296,7 +325,7 @@ const ForgotPasswordModal = () => {
                         onChange={(e) => dispatch(setNewPassword(e.target.value))}
                         placeholder="Enter new password"
                         autoComplete="off"
-                        className="w-full p-3 pl-12 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 text-sm placeholder:text-gray-400 focus:outline-none"
+                        className="w-full p-3 pl-12 border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 text-sm placeholder:text-gray-400 focus:outline-none"
                     />
                     <div className="text-lg absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400" onClick={toggleShowPassword}>
                         {showNewPassword ? <FiEyeOff className="dark:text-gray-300" /> : <FiEye className="dark:text-gray-300" />}
@@ -323,7 +352,7 @@ const ForgotPasswordModal = () => {
                         onChange={(e) => dispatch(setConfirmPassword(e.target.value))}
                         autoComplete="off"
                         placeholder="Confirm new password"
-                        className="w-full p-3 pl-12 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 focus:outline-none"
+                        className="w-full p-3 pl-12 border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 focus:outline-none"
                     />
                     <div className="text-lg absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400 dark:text-gray-300" onClick={toggleShowPassword}>
                         {showNewPassword ? <FiEyeOff className="dark:text-gray-300" /> : <FiEye className="dark:text-gray-300" />}
@@ -435,7 +464,7 @@ const ForgotPasswordModal = () => {
 
     return (
         <Modal isOpen={modal}>
-            <ModalContent className="w-[40%] max-w-[600px] mx-auto p-6 rounded-xl shadow-lg">
+            <ModalContent className="w-[35%] max-w-[600px] mx-auto p-6 rounded-xl shadow-lg">
                 <ModalHeader className="mb-8 flex flex-col items-center justify-center space-y-4">
                     <div className="flex h-[8.5rem] w-[8.5rem] items-center justify-center rounded-full border border-gray-200 bg-gray-50 ">
                         <Image src={logo} alt="logo" width={120} height={60} objectFit="cover" />
