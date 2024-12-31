@@ -6,7 +6,7 @@ import { Button, Divider, Modal, ModalContent, ModalDescription, ModalFooter, Mo
 import { FiAtSign, FiLock, FiEyeOff, FiEye } from "react-icons/fi";
 import { MdErrorOutline } from "react-icons/md";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import { PiSealCheckLight } from "react-icons/pi";
+import { PiCheck } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import {
@@ -167,6 +167,11 @@ const ForgotPasswordModal = () => {
         }
     };
 
+    const handleResendOTP = () => {
+        dispatch(setStatusMessage("OTP resent! Please check your email."));
+        handleSendResetLink();
+    }
+
     const handlePasswordChange = async () => {
         if (newPassword !== confirmPassword) {
             dispatch(setPasswordStatusMessage("Passwords do not match."));
@@ -293,7 +298,7 @@ const ForgotPasswordModal = () => {
                 </div>
                 <div className="text-sm text-center text-gray-600 dark:text-gray-300 my-4">
                     Didn't get a code?{" "}
-                    <span className="font-semibold text-[#FF6F20] cursor-pointer" onClick={() => dispatch(setStatusMessage("OTP resent! Please check your email."))}>
+                    <span className="font-semibold text-[#FF6F20] cursor-pointer" onClick={handleResendOTP}>
                         Resend
                     </span>
                 </div>
@@ -373,7 +378,9 @@ const ForgotPasswordModal = () => {
     const renderSuccessSection = () => {
         return (
             <div className="text-center">
-                <PiSealCheckLight className="text-green-500 text-[5.5rem] mx-auto mb-6" />
+                <div className="flex h-20 w-20 items-center justify-center mx-auto mb-12 rounded-full border border-green-100 bg-green-200 text-green-600 dark:border-green-800 dark:bg-green-800 dark:text-green">
+                    <PiCheck size={55} className="bg-green-500 text-white p-2 rounded-full" />
+                </div>
                 <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">Password changed successfully!</p>
                 <p className="text-gray-500 dark:text-gray-500">Your password has been updated successfully.</p>
             </div>
@@ -463,9 +470,10 @@ const ForgotPasswordModal = () => {
     };
 
     return (
-        <Modal isOpen={modal}>
+        <Modal open={modal}>
             <ModalContent className="w-[35%] max-w-[600px] mx-auto p-6 rounded-xl shadow-lg">
-                <ModalHeader className="mb-8 flex flex-col items-center justify-center space-y-4">
+                <ModalHeader className="relative mb-8 flex flex-col items-center justify-center space-y-4">
+                    <div className="w-5 h-5 bg-white z-50 absolute -top-2 -right-2"></div>
                     <div className="flex h-[8.5rem] w-[8.5rem] items-center justify-center rounded-full border border-gray-200 bg-gray-50 ">
                         <Image src={logo} alt="logo" width={120} height={60} objectFit="cover" />
                     </div>

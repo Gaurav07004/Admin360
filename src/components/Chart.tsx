@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, ChartTooltip, Badge, Pie, PieChart, Cell } from "keep-react";
+import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, Pie, PieChart, Cell } from "recharts";
+import { ChartTooltip, Badge } from "keep-react";
 import { PiArrowUpRightBold, PiArrowDownRightBold, PiCircleFill } from "react-icons/pi";
 import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import { useSelector } from "react-redux";
@@ -215,7 +216,7 @@ const AreaChartComponent: React.FC = () => {
     const isPositive = percentageChange >= 0;
     const badgeColor = isPositive ? "success" : "error";
     const icon = isPositive ? <PiArrowUpRightBold /> : <PiArrowDownRightBold />;
-    const badgeBackgroundColor = isPositive ? "text-green-500" : "text-red-400";
+    const badgeBackgroundColor = isPositive ? "bg-green-100" : "bg-red-100";
     const badgeTextColor = isPositive ? "text-green-600" : "text-red-500";
 
     const currentMonthIndex = new Date().getMonth();
@@ -234,10 +235,14 @@ const AreaChartComponent: React.FC = () => {
                         <Badge
                             variant="border"
                             color={badgeColor}
-                            className={`!py-3 !px-2 flex items-center gap-2 text-sm ${badgeBackgroundColor} ${badgeTextColor}`}
+                            className={`text-xs flex items-center rounded-md px-2 py-1  ${badgeBackgroundColor} ${badgeTextColor}`}
                         >
-                            {icon} <span>{percentageChange.toFixed(2)}%</span>
+                            {icon}
+                            <span className="text-xs font-medium">
+                                {percentageChange.toFixed(2)}%
+                            </span>
                         </Badge>
+
                     </div>
                     <p className="text-xs">Gained ₹{formatToKOrL(parseFloat(gainedThisMonth.toFixed(2)))} this month</p>
                 </div>
@@ -250,7 +255,7 @@ const AreaChartComponent: React.FC = () => {
                             </linearGradient>
                         </defs>
                         <Area type="natural" dataKey="value" stroke="#FF6500" fillOpacity={1} fill="url(#price)" strokeWidth={0.8} />
-                        <XAxis className="text-xs font-medium" dataKey="name" strokeWidth={0.5} dy={12} />
+                        <XAxis className="text-xs font-medium" dataKey="name" strokeWidth={0.5} tickFormatter={(value) => value.slice(0, 3)} dy={12} />
                         <YAxis className="text-xs font-medium" dataKey="value" strokeWidth={0.5} dx={-10} tickFormatter={formatToKOrL} />
                         <ChartTooltip content={<AreaChartTooltip />} />
                     </AreaChart>

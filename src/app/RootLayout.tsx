@@ -53,6 +53,7 @@ export default function RootLayout({
             <body className={`font-sans antialiased h-screen overflow-hidden dark:bg-slate-800`}>
                 <StoreProvider>
                     <ToastWrapper
+                        richColors={false}
                         toastOptions={{
                             classNames: {
                                 toast: 'dark:bg-metal-900 border dark:border-metal-800 bg-white py-5 px-6',

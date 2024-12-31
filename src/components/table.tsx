@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { FiSearch, FiPlus } from 'react-icons/fi';
 import Image from 'next/image';

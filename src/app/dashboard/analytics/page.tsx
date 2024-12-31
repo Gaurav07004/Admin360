@@ -29,7 +29,6 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
     const percentageChange = calculatePercentageChange(value, previousValue);
     const isPositive = parseFloat(percentageChange) > 0;
 
-    // Format value for display
     const formatToKOrL = (value: number): string => {
         if (value >= 100000) {
             return `${(value / 100000).toFixed(2)}L`;

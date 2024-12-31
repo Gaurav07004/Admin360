@@ -5,7 +5,6 @@ import ProductModel from '@/models/Product';
 
 const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'DELETE') {
-        console.log('Invalid method received: ', req.method);
         return res.status(405).json({ message: 'Method Not Allowed' });
     }
 
@@ -31,7 +30,6 @@ const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
             data: product,
         });
     } catch (error) {
-        console.error('Error deleting product:', error);
         return res.status(500).json({ message: 'Internal Server Error' });
     }
 };

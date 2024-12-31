@@ -12,6 +12,12 @@ interface RecentOrder {
     estimatedDelivery: string,
 }
 
+type OrderData = {
+    month: string,
+    OrderRunning: number,
+    OnProcess: number
+};
+
 interface Order {
     id: number;
     orderID: string;
@@ -32,7 +38,7 @@ interface Order {
 
 interface OrderState {
     orders: Order[];
-    orderMonthlyData: string[];
+    orderMonthlyData: OrderData[];
     sortedTable: string[];
     drawerStatus: boolean;
     selectedOrder: Order | null;
@@ -67,10 +73,23 @@ const OrderSlice = createSlice({
             state.sortedTable = action.payload;
         },
         setOrder: (state, action: PayloadAction<Order[]>) => {
-            state.orders = action.payload;
+            state.orders = action.payload.sort((a, b) => {
+                if (a.orderID < b.orderID) return -1;
+                if (a.orderID > b.orderID) return 1;
+                return 0;
+            });
         },
-        setOrderMonthlyData: (state, action: PayloadAction<string[]>) => {
-            state.orderMonthlyData = action.payload;
+        setOrderMonthlyData: (state, action: PayloadAction<OrderData[]>) => {
+            const sortedData = action.payload.sort((a, b) => {
+                const monthOrder = [
+                    "January", "February", "March", "April", "May", "June", "July",
+                    "August", "September", "October", "November", "December"
+                ];
+
+                return monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month);
+            });
+
+            state.orderMonthlyData = sortedData;
         },
         setDrawerStatus: (state, action: PayloadAction<boolean>) => {
             state.drawerStatus = action.payload;

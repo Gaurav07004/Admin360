@@ -51,12 +51,18 @@ interface FormData {
     description: string;
 }
 
+type productData = {
+    month: string,
+    sold: number,
+    returned: number
+};
+
 interface ProductState {
     products: Product[];
     drawerStatus: boolean;
     productDrawerStatus: boolean;
     selectedProduct: Product | null;
-    productMonthlyData: string[];
+    productMonthlyData: productData[];
     formData: FormData;
     files: { name: string, dataUrl: string }[];
     imageUrl: string | null;
@@ -163,10 +169,22 @@ const productSlice = createSlice({
             state.selectedProduct = action.payload;
         },
         setProduct: (state, action: PayloadAction<Product[]>) => {
-            state.products = action.payload;
+            state.products = action.payload.sort((a, b) => {
+                if (a.productID < b.productID) return -1;
+                if (a.productID > b.productID) return 1;
+                return 0;
+            });
         },
-        setProductMonthlyData: (state, action: PayloadAction<string[]>) => {
-            state.productMonthlyData = action.payload;
+        setProductMonthlyData: (state, action: PayloadAction<productData[]>) => {
+            const sortedData = action.payload.sort((a, b) => {
+                const monthOrder = [
+                    "January", "February", "March", "April", "May", "June", "July",
+                    "August", "September", "October", "November", "December"
+                ];
+
+                return monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month);
+            });
+            state.productMonthlyData = sortedData;
         },
     },
 });

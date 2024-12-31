@@ -47,10 +47,7 @@ interface MenuState {
     lineChartData: DataPoint[];
     topProductData: productDataPoint[];
     CustomerTrafficData: BarProps[];
-    productView: ChartData[];
     addToCart: ChartData[];
-    checkout: ChartData[];
-    purchase: ChartData[];
     mode: 'light' | 'dark';
 }
 
@@ -75,12 +72,25 @@ const initialState: MenuState = {
     lineChartData: [],
     topProductData: [],
     CustomerTrafficData: [],
-    productView: [],
     addToCart: [],
-    checkout: [],
-    purchase: [],
     mode: "light",
 
+};
+
+const timeTo24Hour = (time: string) => {
+    const [timePart, modifier] = time.split(" ");
+    const [hours, minutes] = timePart.split(":").map(Number);
+
+    let adjustedHours = hours;
+
+    if (modifier === "PM" && adjustedHours !== 12) {
+        adjustedHours += 12;
+    }
+    if (modifier === "AM" && adjustedHours === 12) {
+        adjustedHours = 0;
+    }
+
+    return adjustedHours * 60 + minutes;
 };
 
 const menuSlice = createSlice({
@@ -139,7 +149,16 @@ const menuSlice = createSlice({
             state.usernameStatus = action.payload;
         },
         setLineChartData: (state, action: PayloadAction<DataPoint[]>) => {
-            state.lineChartData = action.payload;
+            const sortedData = action.payload.sort((a, b) => {
+                const monthOrder = [
+                    "January", "February", "March", "April", "May", "June", "July",
+                    "August", "September", "October", "November", "December"
+                ];
+
+                return monthOrder.indexOf(a.name) - monthOrder.indexOf(b.name);
+            });
+
+            state.lineChartData = sortedData;
         },
         setTopProduct: (state, action: PayloadAction<productDataPoint[]>) => {
             state.topProductData = action.payload;
@@ -147,17 +166,16 @@ const menuSlice = createSlice({
         setCustomerTraffic: (state, action: PayloadAction<BarProps[]>) => {
             state.CustomerTrafficData = action.payload;
         },
-        setProductView: (state, action: PayloadAction<ChartData[]>) => {
-            state.productView = action.payload;
-        },
         setAddToCart: (state, action: PayloadAction<ChartData[]>) => {
-            state.addToCart = action.payload;
-        },
-        setCheckout: (state, action: PayloadAction<ChartData[]>) => {
-            state.checkout = action.payload;
-        },
-        setPurchase: (state, action: PayloadAction<ChartData[]>) => {
-            state.purchase = action.payload;
+            const sortedData = action.payload.sort((a, b) => {
+                const timeA = timeTo24Hour(a.timeRange);
+                const timeB = timeTo24Hour(b.timeRange);
+
+                return timeA - timeB;
+            });
+
+            state.addToCart = sortedData;
+
         },
         toggleTheme(state) {
             state.mode = state.mode === "light" ? "dark" : "light";
@@ -195,10 +213,7 @@ export const {
     setCustomerTraffic,
     setLineChartData,
     setTopProduct,
-    setPurchase,
     setAddToCart,
-    setProductView,
-    setCheckout,
     toggleTheme, setTheme
 } = menuSlice.actions;
 

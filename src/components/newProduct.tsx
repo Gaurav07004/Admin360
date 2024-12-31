@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useRef, useCallback } from "react";
@@ -339,8 +338,8 @@ const CustomerDetailPage: React.FC = () => {
     };
 
     const ProductImageForm = () => {
-        const onDrop = useCallback((acceptedFiles: any) => {
-            const imageFiles = acceptedFiles.filter((file: File) =>
+        const onDrop = useCallback((acceptedFiles: File[]) => {
+            const imageFiles = acceptedFiles.filter((file) =>
                 file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/webp'
             );
 
@@ -349,16 +348,16 @@ const CustomerDetailPage: React.FC = () => {
                 return;
             }
 
-            const file = imageFiles[0]
-            const reader = new FileReader()
+            const file = imageFiles[0];
+            const reader = new FileReader();
 
             reader.onloadend = () => {
                 if (reader.result) {
-                    const dataUrl = reader.result as string
+                    const dataUrl = reader.result as string;
                     dispatch(setFiles([{ name: file.name, dataUrl }]));
                     dispatch(setImageUrl(dataUrl));
                 }
-            }
+            };
 
             reader.readAsDataURL(file);
         }, []);

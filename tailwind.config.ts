@@ -1,5 +1,5 @@
-import type { Config } from 'tailwindcss';
-import { keepTheme } from 'keep-react/keepTheme';
+import type { Config } from 'tailwindcss'
+import { keepTheme } from "keep-react/keepTheme";
 
 const config: Config = {
   content: [
@@ -71,5 +71,5 @@ const config: Config = {
   plugins: [],
 };
 
-// Make sure to use the correct way to export the theme config
+// Wrap the config with keepTheme if that's the expected behavior
 export default keepTheme(config);

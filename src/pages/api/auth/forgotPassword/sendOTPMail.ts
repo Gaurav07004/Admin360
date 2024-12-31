@@ -13,7 +13,6 @@ const forgotPassword = async (req: NextApiRequest, res: NextApiResponse) => {
     const { email } = req.body;
 
     if (!email) {
-        console.log("Email is missing in the request body");
         return res.status(400).json({ error: "Email is required" });
     }
 
@@ -52,7 +51,6 @@ const forgotPassword = async (req: NextApiRequest, res: NextApiResponse) => {
 
         return res.status(200).json({ message: "OTP sent to your email." });
     } catch (error) {
-        console.error("Error in forgotPassword API:", error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };

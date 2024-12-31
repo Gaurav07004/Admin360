@@ -55,7 +55,11 @@ const CustomerSlice = createSlice({
             }
         },
         setCustomer(state, action: PayloadAction<Customer[]>) {
-            state.customers = action.payload;
+            state.customers = action.payload.sort((a, b) => {
+                if (a.customerID < b.customerID) return -1;
+                if (a.customerID > b.customerID) return 1;
+                return 0;
+            });
         },
         setSortedReviews(state, action: PayloadAction<string[]>) {
             state.sortedTable = action.payload;

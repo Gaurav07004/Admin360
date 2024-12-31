@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Area, AreaChart, ResponsiveContainer } from 'keep-react';
+import { Area, AreaChart, ResponsiveContainer } from 'recharts';
 
 interface AreaChartComponentProps {
     data: [number[], string];
