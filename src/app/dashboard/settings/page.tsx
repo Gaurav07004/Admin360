@@ -53,9 +53,7 @@ function Profile() {
         };
 
         try {
-            const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
-
-            const updateResponse = await fetch(`${baseURL}/api/auth/updateAccount`, {
+            const updateResponse = await fetch(`/api/auth/updateAccount`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -68,7 +66,7 @@ function Profile() {
                 toast.success("Account updated successfully.", { position: "top-right" });
                 dispatch(deleteFile());
 
-                const fetchResponse = await fetch(`${baseURL}/api/auth/dashboard`, {
+                const fetchResponse = await fetch(`/api/auth/dashboard`, {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
