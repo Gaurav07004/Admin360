@@ -58,18 +58,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         const fetchAllData = async () => {
             try {
-                const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+                // const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
                 const [
                     dashboardData,
                     customerData,
                     orderData,
                     productData,
                 ] = await Promise.all([
-                    fetchData(`${baseURL}/api/auth/dashboard`, token),
-                    fetchData(`${baseURL}/api/auth/customer`, token),
-                    fetchData(`${baseURL}/api/auth/order`, token),
-                    fetchData(`${baseURL}/api/auth/product`, token),
-                    fetchData(`${baseURL}/api/auth/analysis`, token),
+                    fetchData(`/api/auth/dashboard`, token),
+                    fetchData(`/api/auth/customer`, token),
+                    fetchData(`/api/auth/order`, token),
+                    fetchData(`/api/auth/product`, token),
+                    fetchData(`/api/auth/analysis`, token),
                 ]);
 
                 dispatch(setAccountData(dashboardData.admin));

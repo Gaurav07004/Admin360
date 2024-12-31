@@ -56,7 +56,7 @@ const ForgotPasswordModal = () => {
         dispatch(setStatusMessage(""));
 
         try {
-            const response = await fetch("http://localhost:3000/api/auth/forgotPassword/sendOTPMail", {
+            const response = await fetch("/api/auth/forgotPassword/sendOTPMail", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -123,7 +123,6 @@ const ForgotPasswordModal = () => {
         }
     };
 
-
     const handleOTPValidation = async () => {
         const otpString = otp.join("");
 
@@ -136,7 +135,7 @@ const ForgotPasswordModal = () => {
         dispatch(setOTPStatusMessage(""));
 
         try {
-            const response = await fetch("http://localhost:3000/api/auth/forgotPassword/verifyOTP", {
+            const response = await fetch("/api/auth/forgotPassword/verifyOTP", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -189,7 +188,7 @@ const ForgotPasswordModal = () => {
         dispatch(setPasswordStatusMessage(""));
 
         try {
-            const response = await fetch("http://localhost:3000/api/auth/forgotPassword/resetPassword", {
+            const response = await fetch("/api/auth/forgotPassword/resetPassword", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

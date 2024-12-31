@@ -65,9 +65,9 @@ const Login = () => {
 
         try {
             const loginData = { email: form.email, password: form.password };
-            const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+            // const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
-            const response = await fetch(`${BASE_URL}/api/auth/login`, {
+            const response = await fetch(`/api/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -93,7 +93,6 @@ const Login = () => {
                 toast.warning(errorMessage, { position: "top-right" });
             }
         } catch (error) {
-            console.error("An error occurred during login:", error);
             toast.error("Unable to connect. Please check your network.", { position: "top-right" });
         }
     };

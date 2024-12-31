@@ -59,7 +59,7 @@ const SalesFunnelChart = () => {
             }
 
             try {
-                const response = await fetch("http://localhost:3000/api/auth/analysis", {
+                const response = await fetch("/api/auth/analysis", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
