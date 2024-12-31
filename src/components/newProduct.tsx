@@ -361,7 +361,7 @@ const CustomerDetailPage: React.FC = () => {
             }
 
             reader.readAsDataURL(file);
-        }, [dispatch]);
+        }, []);
 
 
         const handleDeleteFile = () => {

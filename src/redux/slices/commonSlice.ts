@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface MenuState {
@@ -19,14 +18,14 @@ interface MenuState {
     currentSection: number;
     form: { email: string; password: string; firstName: string; lastName: string; role: string; adminID: string };
     usernameStatus: "valid" | "invalid" | null;
-    lineChartData: any[];
-    pieChartData: any[];
-    topProductData: any[];
-    CustomerTrafficData: any[];
-    productView: any[];
-    addToCart: any[];
-    checkout: any[];
-    purchase: any[];
+    lineChartData: string[];
+    pieChartData: string[];
+    topProductData: string[];
+    CustomerTrafficData: string[];
+    productView: string[];
+    addToCart: string[];
+    checkout: string[];
+    purchase: string[];
     mode: 'light' | 'dark';
 }
 
@@ -118,28 +117,28 @@ const menuSlice = createSlice({
         setUsernameStatus: (state, action: PayloadAction<"valid" | "invalid" | null>) => {
             state.usernameStatus = action.payload;
         },
-        setLineChartData: (state, action: PayloadAction<any[]>) => {
+        setLineChartData: (state, action: PayloadAction<string[]>) => {
             state.lineChartData = action.payload;
         },
-        setPieChartData: (state, action: PayloadAction<any[]>) => {
+        setPieChartData: (state, action: PayloadAction<string[]>) => {
             state.pieChartData = action.payload;
         },
-        setTopProduct: (state, action: PayloadAction<any[]>) => {
+        setTopProduct: (state, action: PayloadAction<string[]>) => {
             state.topProductData = action.payload;
         },
-        setCustomerTraffic: (state, action: PayloadAction<any[]>) => {
+        setCustomerTraffic: (state, action: PayloadAction<string[]>) => {
             state.CustomerTrafficData = action.payload;
         },
-        setProductView: (state, action: PayloadAction<any[]>) => {
+        setProductView: (state, action: PayloadAction<string[]>) => {
             state.productView = action.payload;
         },
-        setAddToCart: (state, action: PayloadAction<any[]>) => {
+        setAddToCart: (state, action: PayloadAction<string[]>) => {
             state.addToCart = action.payload;
         },
-        setCheckout: (state, action: PayloadAction<any[]>) => {
+        setCheckout: (state, action: PayloadAction<string[]>) => {
             state.checkout = action.payload;
         },
-        setPurchase: (state, action: PayloadAction<any[]>) => {
+        setPurchase: (state, action: PayloadAction<string[]>) => {
             state.purchase = action.payload;
         },
         toggleTheme(state) {

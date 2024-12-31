@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 'use client';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +31,6 @@ const CustomerTable = () => {
     const dispatch = useDispatch();
     const { customers, drawerStatus } = useSelector((state: RootState) => state.customer);
     const [mounted, setMounted] = useState(false);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
     const handleCustomer = (customerID: string) => {
         const selectedCustomer = customers.find((customer) => customer.customerID === customerID);

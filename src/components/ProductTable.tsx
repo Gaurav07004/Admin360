@@ -2,23 +2,19 @@
 'use client';
 import { useDispatch, useSelector } from 'react-redux';
 import { PiDotsThreeOutlineLight } from 'react-icons/pi';
-// import { toast } from 'keep-react';
 import { RootState } from '../redux/store';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { updateProductStatus, updateProductStock, setSelectedProduct, setDrawerStatus } from '../redux/slices/productsSlice';
+import { setSelectedProduct, setDrawerStatus } from '../redux/slices/productsSlice';
 import TableComponent from './table';
 
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface Product {
-    id: number;
-    productID: string;
-    productName: string;
-    category: string;
-    price: number;
-    stockStatus: 'Available' | 'Out of Stock' | 'Low Stock';
-    stockQuantity: number;
-}
+// interface Product {
+//     id: number;
+//     productID: string;
+//     productName: string;
+//     category: string;
+//     price: number;
+//     stockStatus: 'Available' | 'Out of Stock' | 'Low Stock';
+//     stockQuantity: number;
+// }
 
 const columns = [
     { id: 'productID', label: 'Product ID' },

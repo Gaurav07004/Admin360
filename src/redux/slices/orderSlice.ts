@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
@@ -33,7 +32,7 @@ interface Order {
 
 interface OrderState {
     orders: Order[];
-    orderMonthlyData: any[];
+    orderMonthlyData: string[];
     sortedTable: string[];
     drawerStatus: boolean;
     selectedOrder: Order | null;
@@ -70,7 +69,7 @@ const OrderSlice = createSlice({
         setOrder: (state, action: PayloadAction<Order[]>) => {
             state.orders = action.payload;
         },
-        setOrderMonthlyData: (state, action: PayloadAction<any[]>) => {
+        setOrderMonthlyData: (state, action: PayloadAction<string[]>) => {
             state.orderMonthlyData = action.payload;
         },
         setDrawerStatus: (state, action: PayloadAction<boolean>) => {

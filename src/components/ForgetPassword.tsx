@@ -325,7 +325,7 @@ const ForgotPasswordModal = () => {
                         onChange={(e) => dispatch(setNewPassword(e.target.value))}
                         placeholder="Enter new password"
                         autoComplete="off"
-                        className="w-full p-3 pl-12 border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 text-sm placeholder:text-gray-400 focus:outline-none"
+                        className="w-full p-3 pl-12 border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 focus:outline-none"
                     />
                     <div className="text-lg absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400" onClick={toggleShowPassword}>
                         {showNewPassword ? <FiEyeOff className="dark:text-gray-300" /> : <FiEye className="dark:text-gray-300" />}

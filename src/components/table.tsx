@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FiSearch, FiPlus } from 'react-icons/fi';
 import Image from 'next/image';
 import AreaChartComponent from '@/components/SmallCharts';
@@ -81,8 +81,9 @@ const renderCellContent = (item: TableRowData, col: TableColumn, getBadgeColor?:
 
 
     if (col.id === 'visit') {
-        return <AreaChartComponent data={[item.visit, item.color]} />;
+        return <AreaChartComponent data={[item.visit as number[], item.color as string]} />;
     }
+
 
     if (React.isValidElement(value)) {
         return value;
@@ -97,7 +98,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption,
     const dispatch = useDispatch();
     const { productDrawerStatus } = useSelector((state: RootState) => state.product);
 
-    const handleSearch = (query: string) => {
+    const handleSearch = useCallback((query: string) => {
         setSearchQuery(query);
         const newFilteredData = data.filter((item) =>
             columns.some((col) => {
@@ -106,12 +107,11 @@ const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption,
             })
         );
         setFilteredData(newFilteredData);
-    };
+    }, [data, columns]);
 
     useEffect(() => {
         handleSearch(searchQuery);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data, searchQuery]);
+    }, [data, searchQuery, handleSearch]);
 
     return (
         <section className="p-4 bg-white rounded-[1rem] dark:bg-[#263445]">
@@ -179,7 +179,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption,
                         ))
                     ) : (
                         <TableRow>
-                            <TableCell colSpan={columns.length} className="text-center text-gray-500">
+                            <TableCell colSpan={columns.length} className="text-center text-gray-500 dark:bg-[#263445]">
                                 <div className="flex flex-col items-center justify-center py-10">
                                     <div className="mb-4">
                                         <Image

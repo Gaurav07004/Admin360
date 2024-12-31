@@ -1,9 +1,8 @@
 'use client';
 import { useEffect, useState } from "react";
-import { updateOrderStatus, setSelectedOrder, setDrawerStatus } from "../redux/slices/orderSlice";
+import { setSelectedOrder, setDrawerStatus } from "../redux/slices/orderSlice";
 import { PiDotsThreeOutlineLight } from "react-icons/pi";
 import TableComponent from "./table";
-import { toast } from 'keep-react';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../redux/store';
 
@@ -41,35 +40,35 @@ const OrderTable = () => {
         setMounted(true);
     }, []);
 
-    const handleMenuClick = (orderID: string, orderStatus: string) => {
-        try {
-            const newStatus = (() => {
-                switch (orderStatus) {
-                    case 'Pending':
-                        return 'Shipped';
-                    case 'Shipped':
-                        return 'Delivered';
-                    case 'Delivered':
-                        return orderStatus;
-                    case 'Unreachable':
-                        return orderStatus;
-                    case 'Cancelled':
-                        return orderStatus;
-                    default:
-                        return 'Pending';
-                }
-            })();
+    // const handleMenuClick = (orderID: string, orderStatus: string) => {
+    //     try {
+    //         const newStatus = (() => {
+    //             switch (orderStatus) {
+    //                 case 'Pending':
+    //                     return 'Shipped';
+    //                 case 'Shipped':
+    //                     return 'Delivered';
+    //                 case 'Delivered':
+    //                     return orderStatus;
+    //                 case 'Unreachable':
+    //                     return orderStatus;
+    //                 case 'Cancelled':
+    //                     return orderStatus;
+    //                 default:
+    //                     return 'Pending';
+    //             }
+    //         })();
 
-            if (newStatus !== orderStatus) {
-                dispatch(updateOrderStatus({ orderID, orderStatus: newStatus }));
-                toast.success(`Order ID ${orderID} status changed to ${newStatus}.`);
-            } else {
-                toast.info(`Order ID ${orderID} is already in the ${orderStatus} state.`);
-            }
-        } catch (error) {
-            toast.error('Failed to update status.');
-        }
-    };
+    //         if (newStatus !== orderStatus) {
+    //             dispatch(updateOrderStatus({ orderID, orderStatus: newStatus }));
+    //             toast.success(`Order ID ${orderID} status changed to ${newStatus}.`);
+    //         } else {
+    //             toast.info(`Order ID ${orderID} is already in the ${orderStatus} state.`);
+    //         }
+    //     } catch (error) {
+    //         toast.error('Failed to update status.');
+    //     }
+    // };
 
     const handleOrder = (orderID: string) => {
         const selectedOrder = orders.find((order) => order.orderID === orderID);

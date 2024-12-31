@@ -2,7 +2,7 @@ import React from 'react';
 import { Area, AreaChart, ResponsiveContainer } from 'keep-react';
 
 interface AreaChartComponentProps {
-    data: [unknown[], string];
+    data: [number[], string];
 }
 
 const AreaChartComponent: React.FC<AreaChartComponentProps> = ({ data }) => {

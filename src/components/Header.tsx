@@ -9,7 +9,6 @@ import { RootState } from '../redux/store';
 import { TfiLayoutLineSolid } from "react-icons/tfi";
 import { toggleTheme } from '@/redux/slices/commonSlice';
 import { PiSunFill, PiMoonFill } from "react-icons/pi";
-import { motion } from "framer-motion";
 
 const Header: React.FC = () => {
     const dispatch = useDispatch();
@@ -19,8 +18,12 @@ const Header: React.FC = () => {
 
     const currentDate = new Date();
 
-    const options = { day: 'numeric', month: 'short', year: 'numeric' };
-    const formattedDate = currentDate.toLocaleDateString('en-IN', options);
+    const formattedDate = currentDate.toLocaleDateString('en-IN', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+    });
+
 
     const handleToggle = () => {
         dispatch(toggleTheme());

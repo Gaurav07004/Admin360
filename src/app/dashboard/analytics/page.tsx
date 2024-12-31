@@ -11,29 +11,33 @@ import OrderStat from "@/components/OrderStatistics";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
-const calculatePercentageChange = (currentValue: string | number, previousValue: string | number): string => {
-    const current = typeof currentValue === "string" ? parseFloat(currentValue.replace("K", "")) * 1000 : currentValue;
-    const previous = typeof previousValue === "string" ? parseFloat(previousValue.replace("K", "")) * 1000 : previousValue;
-    if (previous === 0) return "0";
-    const change = ((current - previous) / previous) * 100;
+const calculatePercentageChange = (currentValue: number, previousValue: number): string => {
+    if (previousValue === 0) return "0";
+    const change = ((currentValue - previousValue) / previousValue) * 100;
     return change.toFixed(2);
 };
 
 interface StatisticCardProps {
     title: string;
     value: number;
-    previousValue: string | number;
+    previousValue: number;
     bgColor: string;
     icon1: React.ReactNode;
-}
-
-function addLeadingZero(num: number): string {
-    return num < 10 ? `0${num}` : `${num}`;
 }
 
 const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousValue, bgColor, icon1 }) => {
     const percentageChange = calculatePercentageChange(value, previousValue);
     const isPositive = parseFloat(percentageChange) > 0;
+
+    // Format value for display
+    const formatToKOrL = (value: number): string => {
+        if (value >= 100000) {
+            return `${(value / 100000).toFixed(2)}L`;
+        } else if (value >= 1000) {
+            return `${(value / 1000).toFixed(2)}K`;
+        }
+        return value.toString();
+    };
 
     return (
         <div className="bg-white dark:bg-[#263445] rounded-[1rem] px-6 py-6 flex flex-col gap-4 w-full shadow-xs">
@@ -44,7 +48,7 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
                     </div>
                     <div className="text-gray-700 font-semibold text-lg dark:text-gray-300">{title}</div>
                 </div>
-                <div className="text-gray-800 font-bold text-xl dark:text-gray-400">{addLeadingZero(value)}</div>
+                <div className="text-gray-800 font-bold text-xl dark:text-gray-400">{formatToKOrL(value)}</div>
             </div>
             <div className="text-gray-600 dark:text-gray-300 text-xs font-semibold mt-3 flex items-center gap-2">
                 <span
@@ -68,6 +72,7 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
     );
 };
 
+
 const Page: React.FC = () => {
     const { orders } = useSelector((state: RootState) => state.order);
     const { products } = useSelector((state: RootState) => state.product);
@@ -76,25 +81,14 @@ const Page: React.FC = () => {
     const totalProducts = products.length;
     const totalCustomers = customers.length;
     const totalOrders = orders.length;
-    const formatToKOrL = (value: number): string => {
-        if (value >= 100000) {
-            return `${(value / 100000).toFixed(2)}L`;
-        } else if (value >= 1000) {
-            return `${(value / 1000).toFixed(2)}K`;
-        }
-        return value.toString();
-    };
     const totalsales = orders.reduce((total, order) => total + order.cost, 0);
-    const formattedTotalSales = formatToKOrL(totalsales);
-
-
 
     const statistics = [
         {
             id: 1,
             title: "Total Sales",
-            value: formattedTotalSales,
-            previousValue: formatToKOrL(250000),
+            value: totalsales,
+            previousValue: 250000,
             bgColor: "bg-gradient-to-br from-blue-500 to-blue-300",
             icon1: <LuBarChart2 className="w-[1.2rem] h-[1.2rem] text-white" />,
         },
@@ -123,6 +117,7 @@ const Page: React.FC = () => {
             icon1: <FiUsers className="w-[1.2rem] h-[1.2rem] text-white" />,
         },
     ];
+
     return (
         <section className="gap-5 flex flex-col">
             <section className="grid grid-cols-4 gap-5 w-full">
@@ -141,5 +136,6 @@ const Page: React.FC = () => {
         </section>
     );
 };
+
 
 export default Page;

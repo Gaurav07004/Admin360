@@ -52,49 +52,6 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
 
     type Category = "Smartwatch" | "Laptop Sleeve" | "Smartphones" | "Gaming Laptops";
 
-    // const categoryStyles: Record<Category, { bgColor: string; darkBgColor: string; darkTextColor: string; darkBorder: string; textColor: string, border: string }> = {
-    //     Smartwatch: {
-    //         bgColor: '#F1F8E9',
-    //         textColor: '#8BC34A',
-    //         border: '#8BC34A',
-    //         darkBgColor: '#1B5E20', // Dark mode background color
-    //         darkTextColor: '#A5D6A7', // Dark mode text color
-    //         darkBorder: '#66BB6A', // Dark mode border color
-    //     },
-    //     "Laptop Sleeve": {
-    //         bgColor: '#F3E5F5',
-    //         textColor: '#9C27B0',
-    //         border: '#9C27B0',
-    //         darkBgColor: '#4A148C',
-    //         darkTextColor: '#CE93D8',
-    //         darkBorder: '#AB47BC',
-    //     },
-    //     Smartphones: {
-    //         bgColor: '#FFF3E0',
-    //         textColor: '#FB8C00',
-    //         border: '#FF9800',
-    //         darkBgColor: '#FF6F00',
-    //         darkTextColor: '#FFB74D',
-    //         darkBorder: '#FF7043',
-    //     },
-    //     "Gaming Laptops": {
-    //         bgColor: '#E0F7FA',
-    //         textColor: '#00BCD4',
-    //         border: '#00BCD4',
-    //         darkBgColor: '#006064',
-    //         darkTextColor: '#4DD0E1',
-    //         darkBorder: '#26C6DA',
-    //     },
-    // };
-
-    // const defaultStyles = {
-    //     bgColor: '#F0F0F0',
-    //     textColor: '#757575',
-    //     darkBgColor: '#424242', // Default dark mode background
-    //     darkTextColor: '#BDBDBD', // Default dark mode text color
-    //     darkBorder: '#BDBDBD', // Default dark mode border color
-    // };
-
     const getBadgeColor = (subcategory: string) => {
         switch (subcategory) {
             case 'Smartwatch':
@@ -109,7 +66,6 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                 return "#757575";
         }
     };
-
 
     // const totalValue = pieChartData?.reduce((acc, item) => acc + item.value, 0);
     const totalIncome = totalRevenue + 500000 + 500000;

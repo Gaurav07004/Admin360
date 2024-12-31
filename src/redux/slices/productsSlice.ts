@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Product {
@@ -22,7 +21,7 @@ interface Product {
     lastUpdatedBy?: string;
     lastUpdatedAt?: string;
     rating?: number;
-    productImage: any;
+    productImage: string;
     tags: string[];
     description: string;
 }
@@ -57,7 +56,7 @@ interface ProductState {
     drawerStatus: boolean;
     productDrawerStatus: boolean;
     selectedProduct: Product | null;
-    productMonthlyData: any[];
+    productMonthlyData: string[];
     formData: FormData;
     files: { name: string, dataUrl: string }[];
     imageUrl: string | null;
@@ -166,7 +165,7 @@ const productSlice = createSlice({
         setProduct: (state, action: PayloadAction<Product[]>) => {
             state.products = action.payload;
         },
-        setProductMonthlyData: (state, action: PayloadAction<any[]>) => {
+        setProductMonthlyData: (state, action: PayloadAction<string[]>) => {
             state.productMonthlyData = action.payload;
         },
     },

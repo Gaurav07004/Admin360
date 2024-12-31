@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { Info, Trash } from 'phosphor-react';
 import { useCallback } from 'react';
-// import Image from "next/image";
 import { Upload, UploadBody, UploadFooter, UploadIcon, UploadText, toast } from 'keep-react';
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';

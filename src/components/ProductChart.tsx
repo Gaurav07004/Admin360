@@ -22,7 +22,13 @@ const chartConfig: ChartConfig = {
     },
 };
 
-const CustomTooltip = ({ active, payload }) => {
+const CustomTooltip = ({
+    active,
+    payload,
+}: {
+    active?: boolean;
+    payload?: { payload: { month: string; sold: number; returned: number } }[];
+}) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-[#333] text-white dark:text-gray-300 p-2 rounded text-sm shadow-lg">

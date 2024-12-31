@@ -9,7 +9,7 @@ import { Divider } from 'keep-react';
 import Image from "next/image";
 import { Timeline, TimelineContent, TimelineItem, TimelinePoint } from "keep-react";
 import { PiCheckBold } from "react-icons/pi";
-import empty from "@/Assets/Product_Empty.jpg"
+import emptyProfile from "@/Assets/Empty.png"
 
 
 const CustomerDetailPage: React.FC = () => {
@@ -27,8 +27,8 @@ const CustomerDetailPage: React.FC = () => {
 
     const data_customer = [
         { label: "Customer Name", value: selectedOrder?.customerName },
-        { label: "Email", value: selectedOrder?.courier },
         { label: "Phone Number", value: selectedOrder?.customerPhone },
+        { label: "Delivery Address", value: selectedOrder?.deliveryAddress },
     ];
 
     const recentOrder = selectedOrder?.Recent_Orders?.map(order => ({
@@ -124,7 +124,7 @@ const CustomerDetailPage: React.FC = () => {
                     <div className="flex justify-between w-full items-center">
                         <div className="space-x-3 flex items-center w-fit">
                             <Image
-                                src={selectedOrder?.itemImage || empty}
+                                src={selectedOrder?.itemImage || emptyProfile}
                                 alt="Profile Picture"
                                 className="w-16 h-16 object-contain rounded-lg border-[2.5px] border-gray-200  p-1 bg-slate-100 dark:bg-slate-200"
                                 width={0}
@@ -132,7 +132,6 @@ const CustomerDetailPage: React.FC = () => {
                             />
                             <div>
                                 <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">{selectedOrder?.itemName}</h3>
-                                <p className="text-[0.8rem] font-medium text-slate-500 dark:text-gray-400">Fashion</p>
                             </div>
                         </div>
                         <p className="text-[0.8rem] font-medium text-slate-500 dark:text-gray-400 w-[3rem]">1 pcs</p>
@@ -181,8 +180,8 @@ const CustomerDetailPage: React.FC = () => {
                             key={index}
                             className={`grid grid-cols-2 items-center w-full py-3 px-4 gap-4`}
                         >
-                            <span className="w-1/2 text-[0.9rem] font-medium text-slate-500 dark:text-gray-300">{item.label}</span>
-                            <span className="w-1/2 text-[0.8rem] font-semibold text-gray-800 dark:text-gray-400">{item.value}</span>
+                            <span className="w-fit text-[0.9rem] font-medium text-slate-500 dark:text-gray-300">{item.label}</span>
+                            <span className="w-fit text-[0.8rem] font-semibold text-gray-800 dark:text-gray-400">{item.value}</span>
                         </div>
                     ))}
                 </div>

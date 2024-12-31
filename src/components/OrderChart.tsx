@@ -22,13 +22,19 @@ const chartConfig: ChartConfig = {
     },
 };
 
-const CustomTooltip = ({ active, payload }) => {
+const CustomTooltip = ({
+    active,
+    payload,
+}: {
+    active?: boolean;
+    payload?: { payload: { month: string; OrderRunning: number; OnProcess: number } }[];
+}) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-[#006989] text-white p-2 rounded text-sm shadow-lg">
                 <h4 className="font-bold">{payload[0].payload.month}</h4>
-                <p className="text-white">{`${chartConfig.OrderRunning.label}: ${payload[0].payload.OrderRunning}`}</p>
-                <p className="text-white">{`${chartConfig.OnProcess.label}: ${payload[1].payload.OnProcess}`}</p>
+                <p className="text-white">{`Order Running: ${payload[0].payload.OrderRunning}`}</p>
+                <p className="text-white">{`On Process: ${payload[1].payload.OnProcess}`}</p>
             </div>
         );
     }
