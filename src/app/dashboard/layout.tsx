@@ -66,7 +66,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     // productData,
                 ] = await Promise.all([
                     fetchData(`/api/auth/dashboard`, token),
-                    // fetchData(`/api/auth/customer`, token),
+                    fetchData(`/api/auth/customer`, token),
                     // fetchData(`/api/auth/order`, token),
                     // fetchData(`/api/auth/product`, token),
                     // fetchData(`/api/auth/analysis`, token),
