@@ -12,7 +12,7 @@ import Order from '@/app/dashboard/orders/[id]/page'
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from '@/redux/store';
 import { useRouter } from "next/navigation";
-import { setOrder } from "@/redux/slices/orderSlice";
+import { setOrder, setOrderMonthlyData } from "@/redux/slices/orderSlice";
 
 interface Order {
     orderStatus: "Delivered" | "Pending" | "Unreachable" | "Cancelled" | "Shipped";
@@ -109,6 +109,7 @@ const Page: React.FC = () => {
 
                 const orderdata = await response.json();
                 dispatch(setOrder(orderdata.orders));
+                dispatch(setOrderMonthlyData(orderdata.MonthlyOrders))
             } catch (error: any) {
                 toast.error(error.message || "An unknown error occurred.", { position: "top-right" });
                 console.error("Error fetching data:", error);
