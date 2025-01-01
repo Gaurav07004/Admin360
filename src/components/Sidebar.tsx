@@ -25,13 +25,13 @@ const menuConfig = [
         items: [
             { name: "Dashboard", icon: PiBoundingBoxLight, href: "/dashboard" },
             { name: "Customers", icon: PiUsersThreeLight, href: "/dashboard/customers" },
-            { name: "Orders", icon: PiShoppingCartSimpleLight, href: "/dashboard/orders" },
+            { name: "Products", icon: PiCubeLight, href: "/dashboard/products" },
         ],
     },
     {
         title: "Sales",
         items: [
-            { name: "Products", icon: PiCubeLight, href: "/dashboard/products" },
+            { name: "Orders", icon: PiShoppingCartSimpleLight, href: "/dashboard/orders" },
             { name: "Analytics", icon: PiChartLineUpLight, href: "/dashboard/analytics" },
         ],
     },
