@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import authenticateMiddleware from '@/middleware/authMiddleware';
-import { fetchCustomers } from '@/services/customerService';
+import Customer from '@/models/Customer';
 
 const customersHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const customers = await fetchCustomers();
+        const customers = await Customer.find();
 
         res.status(200).json(customers);
     } catch (error) {

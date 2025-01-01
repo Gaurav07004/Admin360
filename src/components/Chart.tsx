@@ -47,28 +47,23 @@ const AreaChartTooltip: React.FC<{ payload?: any, label?: string, active?: boole
 };
 
 const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
-    // const { pieChartData } = useSelector((state: RootState) => state.menu);
     const { orders } = useSelector((state: RootState) => state.order);
-    const { products } = useSelector((state: RootState) => state.product);
-
-    type Category = "Smartwatch" | "Laptop Sleeve" | "Smartphones" | "Gaming Laptops";
 
     const getBadgeColor = (subcategory: string) => {
         switch (subcategory) {
-            case 'Smartwatch':
+            case 'Dell Inspiron 15':
                 return "#8BC34A";
-            case 'Laptop Sleeve':
-                return "#9C27B0";
-            case 'Gaming Laptops':
-                return "#00BCD4";
-            case 'Smartphones':
+            case 'Apple IPhone 15':
                 return "#FB8C00";
+            case 'Targus Laptop Sleeve':
+                return "#00BCD4";
+            case 'Samsung Galaxy Watch 5':
+                return "#9C27B0";
             default:
                 return "#757575";
         }
     };
 
-    // const totalValue = pieChartData?.reduce((acc, item) => acc + item.value, 0);
     const totalIncome = totalRevenue + 500000 + 500000;
     const lastYearIncome = totalRevenue + 200000;
     const percentageChange = ((totalIncome - lastYearIncome) / lastYearIncome) * 100;
@@ -81,42 +76,35 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
     const badgeBackgroundColor = isPositive ? "bg-green-100 dark:bg-green-800" : "bg-red-100 dark:bg-red-800";
     const badgeTextColor = isPositive ? "text-green-600 dark:text-green-400" : "text-red-500 dark:text-red-400";
 
-    const productSubCategoryMap = products.reduce((acc, product) => {
-        acc[product.productName] = product.subcategory;
-        return acc;
-    }, {} as Record<string, string>);
-
-    const orderCounts = orders.reduce((acc, order) => {
-        const productName = order.itemName;
-        const subcategory = productSubCategoryMap[productName] || 'Unknown';
-        if (!acc[productName]) {
-            acc[productName] = { count: 1, subcategory };
+    const itemCountMap = orders.reduce((acc, product) => {
+        if (acc[product.itemName]) {
+            acc[product.itemName]++;
         } else {
-            acc[productName].count += 1;
+            acc[product.itemName] = 1;
         }
 
         return acc;
-    }, {} as Record<string, { count: number; subcategory: string }>);
+    }, {} as Record<string, number>);
 
     return (
         <section className="flex justify-start items-center gap-5 w-full">
             <section className="bg-white dark:bg-[#263445] rounded-[1rem] py-6 px-8 w-full h-auto min-h-[7.6rem]">
-                <div className="flex flex-col justify-between w-[60%] relative  h-auto min-h-[7.6rem]">
+                <div className="flex flex-col justify-between w-[75%] relative h-auto min-h-[7.6rem]">
                     <p className="text-lg text-left font-semibold mb-[1.25rem] text-gray-600 dark:text-gray-300">Product Sold</p>
-                    <div className="grid grid-cols-2 items-center gap-2 w-full">
-                        {Object.entries(orderCounts).map(([productName, { subcategory }]) => {
-                            const badgeColor = getBadgeColor(subcategory);
+                    <div className="flex flex-wrap items-center gap-2 w-full">
+                        {Object.entries(itemCountMap).map(([itemName]) => {
+                            const badgeColor = getBadgeColor(itemName);
 
                             const getBadgeClasses = () => {
                                 switch (badgeColor) {
                                     case '#8BC34A':
                                         return 'border-green-300 dark:border-green-600 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200';
-                                    case '#9C27B0':
-                                        return 'border-purple-300 dark:border-purple-600 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200';
-                                    case '#00BCD4':
-                                        return 'border-cyan-300 dark:border-cyan-600 bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-200';
                                     case '#FB8C00':
                                         return 'border-orange-300 dark:border-orange-600 bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-200';
+                                    case '#00BCD4':
+                                        return 'border-cyan-300 dark:border-cyan-600 bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-200';
+                                    case '#9C27B0':
+                                        return 'border-purple-300 dark:border-purple-600 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200';
                                     default:
                                         return 'border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-200';
                                 }
@@ -124,19 +112,18 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
 
                             return (
                                 <div
-                                    key={productName}
-                                    className={`text-[0.73rem] py-[0.44rem] rounded-md flex items-center gap-2 border font-medium px-2 ${getBadgeClasses()}`}
+                                    key={itemName}
+                                    className={`text-[0.73rem] py-[0.44rem] rounded-md flex w-[10.5rem] items-center gap-2 border font-medium px-2 ${getBadgeClasses()}`}
                                 >
                                     <PiCircleFill
-                                        className={`w-[10%] text-[0.7rem] ${getBadgeColor(subcategory)}`}
+                                        className={`text-[0.4rem] ${badgeColor}`}
                                     />
-                                    {subcategory}
+                                    {itemName}
                                 </div>
                             );
-
                         })}
                     </div>
-                    <ResponsiveContainer width="100%" height="100%" className="absolute top-0 left-60">
+                    <ResponsiveContainer width="100%" height="100%" className="absolute top-2 left-60 flex justify-center items-center">
                         <PieChart>
                             <Pie
                                 cx="50%"
@@ -144,16 +131,16 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                                 outerRadius={60}
                                 innerRadius={48}
                                 paddingAngle={2}
-                                data={Object.entries(orderCounts).map(([productName, { subcategory, count }]) => ({
-                                    name: subcategory,
+                                data={Object.entries(itemCountMap).map(([itemName, count]) => ({
+                                    name: itemName,
                                     value: count
                                 }))}
                                 dataKey="value"
                                 nameKey="name"
                                 cornerRadius={0}
                             >
-                                {Object.entries(orderCounts).map(([productName, { subcategory, count }], index) => {
-                                    const badgeColor = getBadgeColor(subcategory);
+                                {Object.entries(itemCountMap).map(([itemName], index) => {
+                                    const badgeColor = getBadgeColor(itemName);
 
                                     return (
                                         <Cell
@@ -166,9 +153,9 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                             <ChartTooltip content={<PieChartTooltip />} />
                         </PieChart>
                     </ResponsiveContainer>
-                    <div className="absolute z-0 top-[3.7rem] left-[23rem] transform -translate-x-1/2 -translate-y-1/2 text-center">
+                    <div className="absolute z-0 text-center top-[4.2rem] left-[25.8rem] transform -translate-x-1/2 -translate-y-1/2">
                         <div className="font-medium text-[16px] text-gray-600 dark:text-gray-300">
-                            {Object.values(orderCounts).reduce((acc, { count }) => acc + count, 0)}
+                            {Object.values(itemCountMap).reduce((acc, count) => acc + count, 0)}
                         </div>
                         <div className="text-[14px] font-medium text-gray-600 dark:text-gray-300">
                             Product
@@ -176,7 +163,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                     </div>
                 </div>
             </section>
-            <section className="bg-white rounded-[1rem] py-6 px-8 w-[70%] dark:bg-[#263445]">
+            <section className="bg-white rounded-[1rem] py-6 px-6 w-[60%] dark:bg-[#263445]">
                 <div className="text-left">
                     <div className="w-full mb-[1.25rem]">
                         <div className="flex justify-between">
@@ -197,7 +184,6 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                     </div>
                 </div>
             </section>
-
         </section >
     );
 };
