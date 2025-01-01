@@ -5,7 +5,7 @@ import salesCategory from '@/models/subModels/SalesCategory';
 const dashboardHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
 
-        const salesData = await salesCategory.find().limit(8);
+        const salesData = await salesCategory.find().limit(12);
 
         res.status(200).json(salesData);
     } catch (error) {

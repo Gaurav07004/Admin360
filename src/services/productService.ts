@@ -3,7 +3,7 @@ import ProductStat from '@/models/subModels/ProductStat';
 
 export const fetchProducts = async () => {
     try {
-        const products = await Product.find().limit(3);
+        const products = await Product.find().limit(2);
         return products;
     } catch (error) {
         throw new Error('Failed to fetch products');
