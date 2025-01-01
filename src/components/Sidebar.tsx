@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { Divider, toast } from "keep-react";
 import Image from "next/image";
@@ -17,6 +17,7 @@ import {
 } from "react-icons/pi";
 import { CiSettings, CiLogout } from "react-icons/ci";
 import { usePathname } from "next/navigation";
+import { setForm } from "@/redux/slices/commonSlice";
 
 const menuConfig = [
     {
@@ -44,6 +45,7 @@ const menuConfig = [
 ];
 
 const Sidebar: React.FC = () => {
+    const dispatch = useDispatch();
     const { accountData } = useSelector((state: RootState) => state.user);
     const pathname = usePathname();
     const fullName = `${accountData?.firstName} ${accountData?.lastName}`;
@@ -93,6 +95,14 @@ const Sidebar: React.FC = () => {
             });
 
             if (response.ok) {
+                dispatch(setForm({
+                    email: "",
+                    password: "",
+                    firstName: "",
+                    lastName: "",
+                    role: "",
+                    adminID: ""
+                }))
                 localStorage.removeItem("authToken");
 
                 toast.success("Logout successful! Redirecting to login.", { position: "top-right" });
