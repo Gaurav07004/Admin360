@@ -192,13 +192,13 @@ const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption,
                                             className="opacity-75"
                                         />
                                     </div>
-                                    <h2 className="text-xl font-semibold mb-2 text-gray-700">No Data Available</h2>
-                                    <p className="text-gray-500 mb-6">
+                                    <h2 className="text-xl font-semibold mb-2 text-gray-700 dark:text-gray-300">No Data Available</h2>
+                                    <p className="text-gray-500 dark:text-gray-300 mb-6">
                                         It looks like there is nothing here yet. Try adjusting your filters or search terms, or refresh the page to see if new data has become available.
                                     </p>
                                     <button
                                         onClick={() => window.location.reload()}
-                                        className="px-4 py-2 bg-[#698474] text-white rounded-md shadow-sm hover:bg-[#698474b6] transition duration-300"
+                                        className="px-4 py-2 bg-[#698474] text-white dark:text-gray-300 rounded-md shadow-sm hover:bg-[#698474b6] transition duration-300"
                                     >
                                         Refresh Page
                                     </button>

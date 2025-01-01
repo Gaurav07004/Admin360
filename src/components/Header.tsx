@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import { IoCalendarOutline } from "react-icons/io5";
 import profilePic from "../Assets/Men.jpg";
@@ -24,11 +25,14 @@ const Header: React.FC = () => {
     });
 
 
+    useEffect(() => {
+        document.documentElement.classList.remove(mode === 'light' ? 'dark' : 'light');
+        document.documentElement.classList.add(mode);
+        localStorage.setItem("theme", mode);
+    }, [mode]);
+
     const handleToggle = () => {
         dispatch(toggleTheme());
-        document.documentElement.classList.remove(mode);
-        document.documentElement.classList.add(mode === 'light' ? 'dark' : 'light');
-        localStorage.setItem('mode', mode === 'light' ? 'dark' : 'light');
     };
 
     return (

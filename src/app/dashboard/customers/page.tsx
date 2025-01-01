@@ -1,13 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import CustomerTable from '@/components/CustomerTable';
 import { FiUsers, FiEye } from "react-icons/fi";
 import { LuCheckCircle } from "react-icons/lu";
 import Customer from '@/app/dashboard/customers/[id]/page';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from '@/redux/store';
+import { toast } from "keep-react";
+import { useRouter } from "next/navigation";
+import { setCustomer } from "@/redux/slices/customerSlice";
 
 interface Statistic {
     id: number;
@@ -77,7 +81,8 @@ const StatisticCard: React.FC<{
 };
 
 const Page: React.FC = () => {
-
+    const dispatch = useDispatch();
+    const router = useRouter();
     const { customers } = useSelector((state: RootState) => state.customer);
     const totalOrders = customers.reduce((total, customer) => total + customer.order, 0);
     const statistics: Statistic[] = [
@@ -109,9 +114,49 @@ const Page: React.FC = () => {
             bgColor: "bg-gradient-to-l from-green-300 to-green-400",
         },
     ];
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+                setTimeout(() => router.push("/"), 2000);
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/auth/customer`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data: ${response.statusText}`);
+                }
+
+                const customerData = await response.json();
+                dispatch(setCustomer(customerData));
+            } catch (error: any) {
+                toast.error(error.message || "An unknown error occurred.", { position: "top-right" });
+                console.error("Error fetching data:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [dispatch, router]);
 
 
-    return (
+    return isLoading ? (
+        <div className="fixed inset-0 flex justify-center items-center bg-white dark:bg-[#263445] z-50">
+            <div className="w-12 h-12 rounded-full border-[0.2rem] border-gray-300 border-t-orange-500 animate-spin"></div>
+        </div>
+    ) : (
         <section className="gap-4 flex flex-col justify-between">
             <section className="flex justify-start items-center gap-4 w-full">
                 {statistics.map((stat) => (

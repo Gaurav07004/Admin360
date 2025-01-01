@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { LuBarChart2 } from "react-icons/lu";
 import { CgNotes } from "react-icons/cg";
 import { FiUsers } from "react-icons/fi";
@@ -8,8 +8,10 @@ import { RxCube } from "react-icons/rx";
 import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import LineChart from "@/components/CustomerActivity";
 import OrderStat from "@/components/OrderStatistics";
-import { useSelector } from "react-redux";
+import { toast } from "keep-react";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { setAddToCart, setLoading } from "@/redux/slices/commonSlice";
 
 const calculatePercentageChange = (currentValue: number, previousValue: number): string => {
     if (previousValue === 0) return "0";
@@ -73,6 +75,8 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
 
 
 const Page: React.FC = () => {
+    const dispatch = useDispatch();
+    const { loading } = useSelector((state: RootState) => state.menu);
     const { orders } = useSelector((state: RootState) => state.order);
     const { products } = useSelector((state: RootState) => state.product);
     const { customers } = useSelector((state: RootState) => state.customer);
@@ -117,7 +121,48 @@ const Page: React.FC = () => {
         },
     ];
 
-    return (
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = localStorage.getItem("authToken");
+
+            if (!token) {
+                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 2000);
+                return;
+            }
+
+            try {
+                const response = await fetch("/api/auth/analysis", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    dispatch(setAddToCart(data));
+                } else {
+                    toast.error("Failed to fetch data.", { position: "top-right" });
+                }
+            } catch (error) {
+                toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+            } finally {
+                dispatch(setLoading(false));
+            }
+        };
+
+        fetchData();
+    }, [dispatch]);
+
+    return loading ? (
+        <div className="fixed inset-0 flex justify-center items-center bg-white dark:bg-[#263445] z-50">
+            <div className="w-12 h-12 rounded-full border-[0.2rem] border-gray-300 border-t-orange-500 animate-spin"></div>
+        </div>
+    ) : (
         <section className="gap-5 flex flex-col">
             <section className="grid grid-cols-4 gap-5 w-full">
                 {statistics.map((stat) => (

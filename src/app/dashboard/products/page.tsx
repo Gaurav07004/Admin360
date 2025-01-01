@@ -1,14 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { toast } from "keep-react";
+import { useEffect, useState } from 'react';
 import { LuCheckCircle } from "react-icons/lu";
 import { RxCube } from "react-icons/rx";
 import { PiWarning, PiCloudArrowDown } from "react-icons/pi";
-import BarChart from "@/components/ProductChart";
+// import BarChart from "@/components/ProductChart";
 import ProductTable from '@/components/ProductTable'
 import Product from '@/app/dashboard/products/[id]/page'
 import NewProduct from '@/components/newProduct'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from '@/redux/store';
+import { useRouter } from "next/navigation";
+import { setProduct } from "@/redux/slices/productsSlice";
 
 interface Product {
     stockStatus: "Available" | "Out of Stock" | "Low Stock";
@@ -38,6 +43,8 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, bgColor, ic
 );
 
 const Page: React.FC = () => {
+    const dispatch = useDispatch();
+    const router = useRouter();
     const { products } = useSelector((state: RootState) => state.product);
 
     const totalProducts = products.length;
@@ -76,8 +83,48 @@ const Page: React.FC = () => {
         },
     ];
 
+    const [isLoading, setIsLoading] = useState(true);
 
-    return (
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+                setTimeout(() => router.push("/"), 2000);
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/auth/product`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data: ${response.statusText}`);
+                }
+
+                const orderdata = await response.json();
+                dispatch(setProduct(orderdata.products));
+            } catch (error: any) {
+                toast.error(error.message || "An unknown error occurred.", { position: "top-right" });
+                console.error("Error fetching data:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [dispatch, router]);
+
+    return isLoading ? (
+        <div className="fixed inset-0 flex justify-center items-center bg-white dark:bg-[#263445] z-50">
+            <div className="w-12 h-12 rounded-full border-[0.2rem] border-gray-300 border-t-orange-500 animate-spin"></div>
+        </div>
+    ) : (
         <section className="gap-5 flex flex-col justify-between">
             <div className="flex gap-6 w-full">
                 <section className="grid grid-cols-2 gap-5 w-[40%]">
@@ -91,9 +138,9 @@ const Page: React.FC = () => {
                         />
                     ))}
                 </section>
-                <div className="bg-white dark:bg-[#263445] rounded-[1rem] px-8 pt-6 pb-2 w-[60%]">
+                {/* <div className="bg-white dark:bg-[#263445] rounded-[1rem] px-8 pt-6 pb-2 w-[60%]">
                     <BarChart />
-                </div>
+                </div> */}
             </div>
             <ProductTable />
             <Product />

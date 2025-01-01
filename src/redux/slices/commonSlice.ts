@@ -49,7 +49,18 @@ interface MenuState {
     CustomerTrafficData: BarProps[];
     addToCart: ChartData[];
     mode: 'light' | 'dark';
+    loading: boolean;
 }
+
+const getStoredTheme = (): "light" | "dark" => {
+    if (typeof window !== "undefined") {
+        const theme = localStorage.getItem("theme");
+        if (theme === "light" || theme === "dark") {
+            return theme;
+        }
+    }
+    return "light";
+};
 
 const initialState: MenuState = {
     token: null,
@@ -73,7 +84,8 @@ const initialState: MenuState = {
     topProductData: [],
     CustomerTrafficData: [],
     addToCart: [],
-    mode: "light",
+    mode: getStoredTheme(),
+    loading: true
 
 };
 
@@ -102,6 +114,9 @@ const menuSlice = createSlice({
         },
         setModal: (state, action: PayloadAction<boolean>) => {
             state.modal = action.payload;
+        },
+        setLoading: (state, action: PayloadAction<boolean>) => {
+            state.loading = action.payload;
         },
         setEmail: (state, action: PayloadAction<string>) => {
             state.email = action.payload;
@@ -178,9 +193,10 @@ const menuSlice = createSlice({
 
         },
         toggleTheme(state) {
-            state.mode = state.mode === "light" ? "dark" : "light";
+            const newMode = state.mode === "light" ? "dark" : "light";
+            state.mode = newMode;
             if (typeof window !== "undefined") {
-                localStorage.setItem("theme", state.mode);
+                localStorage.setItem("theme", newMode);
             }
         },
         setTheme(state, action: PayloadAction<"light" | "dark">) {
@@ -209,6 +225,7 @@ export const {
     setShowNewPassword,
     setCurrentSection,
     setForm,
+    setLoading,
     setUsernameStatus,
     setCustomerTraffic,
     setLineChartData,
