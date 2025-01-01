@@ -67,7 +67,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 // dispatch(setOrder(orderData.orders.slice(0, 2)));
 
                 const productData = await fetchData(`/api/auth/product`, token);
-                dispatch(setProduct(productData.products.slice(0, 2)));
+                dispatch(setProduct(productData.products));
 
             } catch (error) {
                 console.error("Error fetching data:", error);
