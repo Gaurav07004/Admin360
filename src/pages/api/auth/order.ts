@@ -1,14 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import authenticateMiddleware from '@/middleware/authMiddleware';
-import { fetchOrders, fetchMonthlyOrdersData } from '@/services/orderService';
+import { fetchMonthlyOrdersData } from '@/services/orderService';
 
 const ordersHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const orders = await fetchOrders();
+        // const orders = await fetchOrders();
         const MonthlyOrders = await fetchMonthlyOrdersData();
 
         res.status(200).json({
-            orders,
             MonthlyOrders,
         });
     } catch (error) {

@@ -4,14 +4,14 @@
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
 import { toast } from "keep-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-// import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
-import { setAdminData } from "@/redux/slices/adminSlice";
+import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
+import { setAdminData, setAccountData } from "@/redux/slices/adminSlice";
 import { useRouter } from "next/navigation";
-// import { setOrder } from "@/redux/slices/orderSlice";
-import { setProduct } from "@/redux/slices/productsSlice";
+import { setOrderMonthlyData } from "@/redux/slices/orderSlice";
+import { setProductMonthlyData } from "@/redux/slices/productsSlice";
 
 const fetchData = async (url: string, token: string) => {
     try {
@@ -27,15 +27,9 @@ const fetchData = async (url: string, token: string) => {
             throw new Error(`Failed to fetch data: ${response.statusText}`);
         }
 
-        const data = await response.json();
-        if (!data) {
-            throw new Error("No data received from API");
-        }
-
-        return data;
-    } catch (error: unknown) {
-        const e = error as any;
-        toast.error(e.message || "An unknown error occurred.", { position: "top-right" });
+        return await response.json();
+    } catch (error: any) {
+        toast.error(error.message || "An unknown error occurred.", { position: "top-right" });
         throw error;
     }
 };
@@ -44,8 +38,28 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const dispatch = useDispatch();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
-    const [isData, setIsData] = useState(true);
     const { accountData } = useSelector((state: RootState) => state.user);
+
+    const fetchDashboardData = useCallback(async (token: string) => {
+        try {
+            const [dashboardData, orderData, productData] = await Promise.all([
+                fetchData(`/api/auth/dashboard`, token),
+                fetchData(`/api/auth/order`, token),
+                fetchData(`/api/auth/product`, token),
+            ]);
+
+            dispatch(setAccountData(dashboardData.admin));
+            dispatch(setLineChartData(dashboardData.lineChartData));
+            dispatch(setTopProduct(dashboardData.topProductData));
+            dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
+            dispatch(setOrderMonthlyData(orderData.MonthlyOrders));
+            dispatch(setProductMonthlyData(productData.products));
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [dispatch]);
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
@@ -55,32 +69,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             return;
         }
 
-        const fetchDashboardData = async () => {
-            try {
-                // const dashboardData = await fetchData(`/api/auth/dashboard`, token);
-                // dispatch(setAccountData(dashboardData.admin));
-                // dispatch(setLineChartData(dashboardData.lineChartData));
-                // dispatch(setTopProduct(dashboardData.topProductData));
-                // dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
-
-                // const orderData = await fetchData(`/api/auth/order`, token);
-                // dispatch(setOrder(orderData.orders.slice(0, 2)));
-
-                const productData = await fetchData(`/api/auth/product`, token);
-                dispatch(setProduct(productData.products));
-
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchDashboardData();
-    }, [dispatch, router, accountData]);
+        fetchDashboardData(token);
+    }, [fetchDashboardData, router]);
 
     useEffect(() => {
-        if (isData && accountData) {
+        if (accountData) {
             dispatch(setAdminData({
                 adminID: accountData.adminID,
                 email: accountData.email,
@@ -90,9 +83,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 isActive: accountData.isActive,
                 profileImage: accountData.profileImage,
             }));
-            setIsData(false);
         }
-    }, [isData, accountData, dispatch]);
+    }, [accountData, dispatch]);
 
     return isLoading ? (
         <div className="fixed inset-0 flex justify-center items-center bg-white dark:bg-[#263445] z-50">
@@ -100,9 +92,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
     ) : (
         <div className="flex h-full p-4">
-            <div className="w-64 fixed h-screen">
+            <aside className="w-64 fixed h-screen">
                 <Sidebar />
-            </div>
+            </aside>
             <div className="ml-64 flex-1 flex flex-col overflow-hidden h-full">
                 <Header />
                 <main className="overflow-y-auto flex-1 gap-4 mt-4">{children}</main>
