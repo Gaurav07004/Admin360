@@ -84,7 +84,9 @@ const Page: React.FC = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const { customers } = useSelector((state: RootState) => state.customer);
+
     const totalOrders = customers.reduce((total, customer) => total + customer.order, 0);
+
     const statistics: Statistic[] = [
         {
             id: 1,
@@ -114,6 +116,7 @@ const Page: React.FC = () => {
             bgColor: "bg-gradient-to-l from-green-300 to-green-400",
         },
     ];
+
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -150,7 +153,6 @@ const Page: React.FC = () => {
 
         fetchData();
     }, [dispatch, router]);
-
 
     return isLoading ? (
         <div className="fixed inset-0 flex justify-center items-center bg-white dark:bg-[#263445] z-50">

@@ -10,7 +10,6 @@ import { RootState } from "@/redux/store";
 import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
 import { setAdminData, setAccountData } from "@/redux/slices/adminSlice";
 import { useRouter } from "next/navigation";
-// import { setOrder } from "@/redux/slices/orderSlice";
 
 const fetchData = async (url: string, token: string) => {
     try {
@@ -37,23 +36,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const dispatch = useDispatch();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
+
     const { accountData } = useSelector((state: RootState) => state.user);
 
     const fetchDashboardData = useCallback(async (token: string) => {
         try {
-            const [dashboardData] = await Promise.all([
-                fetchData(`/api/auth/dashboard`, token),
-                // fetchData(`/api/auth/order`, token),
-            ]);
+            const dashboardData = await fetchData(`/api/auth/dashboard`, token);
 
             dispatch(setAccountData(dashboardData.admin));
             dispatch(setLineChartData(dashboardData.lineChartData));
             dispatch(setTopProduct(dashboardData.topProductData));
             dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
-            // const firstTwoOrders = orderData.orders.slice(0, 5);
-            // dispatch(setOrder(firstTwoOrders));
         } catch (error) {
-            console.error("Error fetching data:", error);
+            console.error("Error fetching dashboard data:", error);
         } finally {
             setIsLoading(false);
         }
@@ -61,6 +56,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
+
         if (!token) {
             toast.error("Token not received. Redirecting to login.", { position: "top-right" });
             setTimeout(() => router.push("/"), 2000);
@@ -72,15 +68,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     useEffect(() => {
         if (accountData) {
-            dispatch(setAdminData({
-                adminID: accountData.adminID,
-                email: accountData.email,
-                firstName: accountData.firstName,
-                lastName: accountData.lastName,
-                role: accountData.role,
-                isActive: accountData.isActive,
-                profileImage: accountData.profileImage,
-            }));
+            dispatch(
+                setAdminData({
+                    adminID: accountData.adminID,
+                    email: accountData.email,
+                    firstName: accountData.firstName,
+                    lastName: accountData.lastName,
+                    role: accountData.role,
+                    isActive: accountData.isActive,
+                    profileImage: accountData.profileImage,
+                })
+            );
         }
     }, [accountData, dispatch]);
 
