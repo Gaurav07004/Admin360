@@ -50,7 +50,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             dispatch(setLineChartData(dashboardData.lineChartData));
             dispatch(setTopProduct(dashboardData.topProductData));
             dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
-            dispatch(setOrder(orderData.orders));
+            const firstTwoOrders = orderData.orders.slice(0, 2);
+            dispatch(setOrder(firstTwoOrders));
         } catch (error) {
             console.error("Error fetching data:", error);
         } finally {
