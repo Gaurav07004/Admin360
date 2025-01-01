@@ -13,7 +13,7 @@ import NewProduct from '@/components/newProduct'
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from '@/redux/store';
 import { useRouter } from "next/navigation";
-import { setProduct, setProductMonthlyData } from "@/redux/slices/productsSlice";
+import { setProduct } from "@/redux/slices/productsSlice";
 
 interface Product {
     stockStatus: "Available" | "Out of Stock" | "Low Stock";
@@ -109,7 +109,6 @@ const Page: React.FC = () => {
 
                 const orderdata = await response.json();
                 dispatch(setProduct(orderdata.products));
-                dispatch(setProductMonthlyData(orderdata.ProductStats))
             } catch (error: any) {
                 toast.error(error.message || "An unknown error occurred.", { position: "top-right" });
                 console.error("Error fetching data:", error);
