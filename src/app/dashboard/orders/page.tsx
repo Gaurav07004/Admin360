@@ -6,13 +6,13 @@ import { CgNotes } from "react-icons/cg";
 import { LuCheckCircle } from "react-icons/lu";
 import { RxTimer } from "react-icons/rx";
 import { RxCrossCircled } from "react-icons/rx";
-// import BarChart from "@/components/OrderChart";
+import BarChart from "@/components/OrderChart";
 import OrderTable from '@/components/OrderTable'
 import Order from '@/app/dashboard/orders/[id]/page'
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from '@/redux/store';
 import { useRouter } from "next/navigation";
-import { setOrder } from "@/redux/slices/orderSlice";
+import { setOrder, setOrderMonthlyData } from "@/redux/slices/orderSlice";
 
 interface Order {
     orderStatus: "Delivered" | "Pending" | "Unreachable" | "Cancelled" | "Shipped";
@@ -109,6 +109,7 @@ const Page: React.FC = () => {
 
                 const orderdata = await response.json();
                 dispatch(setOrder(orderdata.orders));
+                dispatch(setOrderMonthlyData(orderdata.MonthlyOrders))
             } catch (error: any) {
                 toast.error(error.message || "An unknown error occurred.", { position: "top-right" });
                 console.error("Error fetching data:", error);
@@ -138,9 +139,9 @@ const Page: React.FC = () => {
                         />
                     ))}
                 </section>
-                {/* <div className="bg-white dark:text-gray-300 dark:bg-[#263445] rounded-[1rem] px-8 pt-6 pb-2 w-[60%]">
+                <div className="bg-white dark:text-gray-300 dark:bg-[#263445] rounded-[1rem] px-8 pt-6 pb-2 w-[60%]">
                     <BarChart />
-                </div> */}
+                </div>
             </div>
             <OrderTable />
             <Order />
