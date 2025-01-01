@@ -6,14 +6,14 @@ import { useEffect, useState } from 'react';
 import { LuCheckCircle } from "react-icons/lu";
 import { RxCube } from "react-icons/rx";
 import { PiWarning, PiCloudArrowDown } from "react-icons/pi";
-// import BarChart from "@/components/ProductChart";
+import BarChart from "@/components/ProductChart";
 import ProductTable from '@/components/ProductTable'
 import Product from '@/app/dashboard/products/[id]/page'
 import NewProduct from '@/components/newProduct'
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from '@/redux/store';
 import { useRouter } from "next/navigation";
-import { setProduct } from "@/redux/slices/productsSlice";
+import { setProduct, setProductMonthlyData } from "@/redux/slices/productsSlice";
 
 interface Product {
     stockStatus: "Available" | "Out of Stock" | "Low Stock";
@@ -109,6 +109,7 @@ const Page: React.FC = () => {
 
                 const orderdata = await response.json();
                 dispatch(setProduct(orderdata.products));
+                dispatch(setProductMonthlyData(orderdata.ProductStats))
             } catch (error: any) {
                 toast.error(error.message || "An unknown error occurred.", { position: "top-right" });
                 console.error("Error fetching data:", error);
@@ -138,9 +139,9 @@ const Page: React.FC = () => {
                         />
                     ))}
                 </section>
-                {/* <div className="bg-white dark:bg-[#263445] rounded-[1rem] px-8 pt-6 pb-2 w-[60%]">
+                <div className="bg-white dark:bg-[#263445] rounded-[1rem] px-8 pt-6 pb-2 w-[60%]">
                     <BarChart />
-                </div> */}
+                </div>
             </div>
             <ProductTable />
             <Product />
