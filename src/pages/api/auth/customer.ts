@@ -4,7 +4,7 @@ import Customer from '@/models/Customer';
 
 const customersHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const customers = await Customer.find().limit(3);
+        const customers = await Customer.find().limit(2);
         res.status(200).json(customers);
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
