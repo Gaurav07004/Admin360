@@ -3,7 +3,7 @@ import MonthlyData from '@/models/subModels/orderProcess';
 
 export const fetchOrders = async () => {
     try {
-        const orders = await Order.find().limit(8);
+        const orders = await Order.find().limit(5);
         return orders;
     } catch (error) {
         throw new Error('Failed to fetch orders');
