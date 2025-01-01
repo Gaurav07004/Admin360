@@ -202,8 +202,8 @@ const AreaChartComponent: React.FC = () => {
     const isPositive = percentageChange >= 0;
     const badgeColor = isPositive ? "success" : "error";
     const icon = isPositive ? <PiArrowUpRightBold /> : <PiArrowDownRightBold />;
-    const badgeBackgroundColor = isPositive ? "bg-green-100" : "bg-red-100";
-    const badgeTextColor = isPositive ? "text-green-600" : "text-red-500";
+    const badgeBackgroundColor = isPositive ? "bg-green-100 dark:bg-green-800" : "bg-red-100 dark:bg-red-800";
+    const badgeTextColor = isPositive ? "text-green-600 dark:text-green-400" : "text-red-500 dark:text-red-400";
 
     const currentMonthIndex = new Date().getMonth();
     const reorderedData = [
