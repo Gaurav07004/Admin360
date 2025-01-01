@@ -117,7 +117,7 @@ const SalesFunnelChart = () => {
                         </linearGradient>
                     </defs>
                     <CartesianGrid vertical={false} stroke="#E1E5EA" strokeWidth={0} />
-                    <XAxis className="text-xs font-medium text-metal-400" dataKey="timeRange" stroke="#8897ae" strokeWidth={0.5} interval={2} dy={12} />
+                    <XAxis className="text-xs font-medium text-metal-400" dataKey="timeRange" stroke="#8897ae" strokeWidth={0.5} interval={1} dy={12} />
                     <YAxis className="text-xs font-medium text-metal-600" dataKey="price" stroke="#8897ae" strokeWidth={0.5} dx={-10} tick={{ fontSize: 12, fill: "#8897ae" }} tickFormatter={formatNumberWithK} />
                     <ChartTooltip content={<CustomTooltip active={false} payload={[]} />} />
                     <Area dataKey="price" type="natural" stroke={getColor(activeButton).stroke} strokeWidth={0.8} dot={false} fillOpacity={0.5} fill="url(#price)" isAnimationActive={true} />
