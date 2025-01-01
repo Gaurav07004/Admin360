@@ -1,15 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import authenticateMiddleware from '@/middleware/authMiddleware';
-import { fetchOrders, fetchMonthlyOrdersData } from '@/services/orderService';
+import { fetchOrders } from '@/services/orderService';
 
 const ordersHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const orders = await fetchOrders();
-        const MonthlyOrders = await fetchMonthlyOrdersData();
+        // const MonthlyOrders = await fetchMonthlyOrdersData();
 
         res.status(200).json({
             orders,
-            MonthlyOrders,
+            // MonthlyOrders,
         });
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
