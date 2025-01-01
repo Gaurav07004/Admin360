@@ -7,8 +7,8 @@ import { toast } from "keep-react";
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-// import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
-import { setAdminData } from "@/redux/slices/adminSlice";
+import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
+import { setAdminData, setAccountData } from "@/redux/slices/adminSlice";
 import { useRouter } from "next/navigation";
 import { setOrder } from "@/redux/slices/orderSlice";
 
@@ -41,15 +41,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     const fetchDashboardData = useCallback(async (token: string) => {
         try {
-            const [orderData] = await Promise.all([
-                // fetchData(`/api/auth/dashboard`, token),
+            const [dashboardData, orderData] = await Promise.all([
+                fetchData(`/api/auth/dashboard`, token),
                 fetchData(`/api/auth/order`, token),
             ]);
 
-            // dispatch(setAccountData(dashboardData.admin));
-            // dispatch(setLineChartData(dashboardData.lineChartData));
-            // dispatch(setTopProduct(dashboardData.topProductData));
-            // dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
+            dispatch(setAccountData(dashboardData.admin));
+            dispatch(setLineChartData(dashboardData.lineChartData));
+            dispatch(setTopProduct(dashboardData.topProductData));
+            dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
             dispatch(setOrder(orderData.orders));
         } catch (error) {
             console.error("Error fetching data:", error);
