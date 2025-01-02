@@ -4,33 +4,12 @@
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
 import { toast } from "keep-react";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setCustomerTraffic, setLineChartData, setTopProduct } from "@/redux/slices/commonSlice";
 import { setAdminData, setAccountData } from "@/redux/slices/adminSlice";
 import { useRouter } from "next/navigation";
-
-const fetchData = async (url: string, token: string) => {
-    try {
-        const response = await fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch data: ${response.statusText}`);
-        }
-
-        return await response.json();
-    } catch (error: any) {
-        toast.error(error.message || "An unknown error occurred.", { position: "top-right" });
-        throw error;
-    }
-};
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const dispatch = useDispatch();
@@ -39,32 +18,46 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     const { accountData } = useSelector((state: RootState) => state.user);
 
-    const fetchDashboardData = useCallback(async (token: string) => {
-        try {
-            const dashboardData = await fetchData(`/api/auth/dashboard`, token);
-
-            dispatch(setAccountData(dashboardData.admin));
-            dispatch(setLineChartData(dashboardData.lineChartData));
-            dispatch(setTopProduct(dashboardData.topProductData));
-            dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
-        } catch (error) {
-            console.error("Error fetching dashboard data:", error);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [dispatch]);
-
     useEffect(() => {
-        const token = localStorage.getItem("authToken");
+        const fetchData = async () => {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+                setTimeout(() => router.push("/"), 2000);
+                return;
+            }
 
-        if (!token) {
-            toast.error("Token not received. Redirecting to login.", { position: "top-right" });
-            setTimeout(() => router.push("/"), 2000);
-            return;
-        }
+            try {
+                const response = await fetch(`/api/auth/dashboard`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                });
 
-        fetchDashboardData(token);
-    }, [fetchDashboardData, router]);
+                if (!response.ok) {
+                    setTimeout(() => router.push("/"), 1000);
+                    throw new Error(`Failed to fetch data: ${response.statusText}`);
+                }
+
+                const dashboardData = await response.json();
+
+                dispatch(setAccountData(dashboardData.admin));
+                dispatch(setLineChartData(dashboardData.lineChartData));
+                dispatch(setTopProduct(dashboardData.topProductData));
+                dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
+            } catch (error: any) {
+                toast.error(error.message || "An unknown error occurred.", { position: "top-right" });
+                setTimeout(() => router.push("/"), 1000);
+                console.error("Error fetching data:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [dispatch, router]);
 
     useEffect(() => {
         if (accountData) {

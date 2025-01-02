@@ -138,6 +138,7 @@ const Page: React.FC = () => {
                 });
 
                 if (!response.ok) {
+                    setTimeout(() => router.push("/"), 1000);
                     throw new Error(`Failed to fetch data: ${response.statusText}`);
                 }
 
@@ -145,6 +146,7 @@ const Page: React.FC = () => {
                 dispatch(setCustomer(customerData));
             } catch (error: any) {
                 toast.error(error.message || "An unknown error occurred.", { position: "top-right" });
+                setTimeout(() => router.push("/"), 1000);
                 console.error("Error fetching data:", error);
             } finally {
                 setIsLoading(false);
