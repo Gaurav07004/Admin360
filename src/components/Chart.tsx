@@ -93,6 +93,9 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
         return acc;
     }, {} as Record<string, number>);
 
+
+    const totalOrder = Object.values(itemCountMap).reduce((acc, count) => acc + count, 0)
+
     return (
         <section className="flex justify-start items-center gap-5 w-full">
             <section className="bg-white dark:bg-[#263445] rounded-[1rem] py-6 px-8 w-full h-auto min-h-[7.6rem]">
@@ -162,7 +165,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                     </ResponsiveContainer>
                     <div className="absolute z-0 text-center top-[4.2rem] left-[25.8rem] transform -translate-x-1/2 -translate-y-1/2">
                         <div className="font-medium text-[16px] text-gray-600 dark:text-gray-300">
-                            {Object.values(itemCountMap).reduce((acc, count) => acc + count, 0)}
+                            {addLeadingZero(totalOrder)}
                         </div>
                         <div className="text-[14px] font-medium text-gray-600 dark:text-gray-300">
                             Product
