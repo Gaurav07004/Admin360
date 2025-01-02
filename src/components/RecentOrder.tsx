@@ -3,6 +3,7 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import { RootState } from '../redux/store';
+import demo from "../../demo.json"
 import TableComponent from '@/components/table';
 
 const columns = [
@@ -31,16 +32,16 @@ const getBadgeColor = (status: string) => {
 const RecentOrder = () => {
     const { orders } = useSelector((state: RootState) => state.order);
 
-    const data = orders.slice(0, 2).map((order) => ({
-        orderID: order.orderID,
-        customerName: order.customerName,
-        itemName: order.itemName,
-        orderDate: order.orderDate,
-        orderStatus: order.orderStatus,
-        cost: order.cost,
-        paymentMethod: order.paymentMethod,
-        paymentStatus: order.paymentStatus,
-    }));
+    const data = (orders && orders.length > 0 ? orders : demo)
+        .slice(0, 2)
+        .map((order) => ({
+            orderID: order.orderID,
+            customerName: order.customerName,
+            itemName: order.itemName,
+            orderDate: order.orderDate,
+            orderStatus: order.orderStatus,
+            cost: order.cost,
+        }));
 
     return (
         <TableComponent

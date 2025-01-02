@@ -66,9 +66,9 @@ function Profile() {
                 const errorMessage =
                     updateResponse.status === 401
                         ? "Session expired. Please log in again."
-                        : `Failed to update account: ${updateResponse.statusText}`;
+                        : `"Unable to connect. Please try again in a few moments"`;
                 toast.error(errorMessage, { position: "top-right" });
-                setTimeout(() => router.push("/"), 2000);
+                setTimeout(() => router.push("/"), 1000);
                 return;
             }
 
@@ -86,17 +86,17 @@ function Profile() {
                 const fetchErrorMessage =
                     fetchResponse.status === 401
                         ? "Session expired. Please log in again."
-                        : `Failed to fetch updated data: ${fetchResponse.statusText}`;
+                        : "Unable to connect. Please try again in a few moments";
                 toast.error(fetchErrorMessage, { position: "top-right" });
-                setTimeout(() => router.push("/"), 2000);
+                setTimeout(() => router.push("/"), 1000);
                 return;
             }
 
             const updatedData = await fetchResponse.json();
             dispatch(setAccountData(updatedData.admin));
         } catch (error: any) {
-            toast.error(error.message || "An unexpected error occurred. Redirecting to login.", { position: "top-right" });
-            setTimeout(() => router.push("/"), 2000);
+            toast.error("Unable to connect. Please check your network", { position: "top-right" });
+            setTimeout(() => router.push("/"), 1000);
             console.error("Error fetching customer data:", error);
         }
     };

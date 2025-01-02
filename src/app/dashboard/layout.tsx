@@ -26,7 +26,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 toast.error("Authentication is missing. Redirecting to login.", {
                     position: "top-right",
                 });
-                setTimeout(() => router.push("/"), 2000);
+                setTimeout(() => router.push("/"), 1000);
                 return;
             }
 
@@ -43,10 +43,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     const errorMessage =
                         response.status === 401
                             ? "Session expired. Please log in again."
-                            : `Failed to fetch data: ${response.statusText}`;
+                            : `Unable to connect. Please try again in a few moments`;
 
                     toast.error(errorMessage, { position: "top-right" });
-                    setTimeout(() => router.push("/"), 2000);
+                    setTimeout(() => router.push("/"), 1000);
                     throw new Error(errorMessage);
                 }
 
@@ -59,7 +59,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             } catch (error: any) {
                 console.error("Error fetching dashboard data:", error);
                 toast.error(
-                    error.message || "An unknown error occurred. Please try again later.",
+                    "Unable to connect. Please check your network.",
                     { position: "top-right" }
                 );
                 setTimeout(() => router.push("/"), 1000);
@@ -93,10 +93,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
     ) : (
         <div className="flex h-full p-4">
-            <aside className="w-64 fixed h-screen">
+            <aside className="w-64">
                 <Sidebar />
             </aside>
-            <div className="ml-64 flex-1 flex flex-col overflow-hidden h-full">
+            <div className="flex-1 flex flex-col overflow-hidden h-full">
                 <Header />
                 <main className="overflow-y-auto flex-1 gap-4 mt-4">{children}</main>
             </div>

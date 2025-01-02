@@ -61,7 +61,7 @@ const CustomerDetailPage: React.FC = () => {
         const token = localStorage.getItem('authToken');
         if (!token) {
             toast.error('Token not found. Redirecting to login.');
-            setTimeout(() => router.push('/login'), 2000);
+            setTimeout(() => router.push('/login'), 1000);
             return;
         }
 
@@ -79,11 +79,17 @@ const CustomerDetailPage: React.FC = () => {
                 dispatch(setDrawerStatus(!drawerStatus));
                 window.location.reload();
             } else {
-                const errorData = await response.json();
-                toast.error(`Failed to add product: ${errorData.message || "Unknown error"}`, { position: "top-right" });
+                const errorMessage =
+                    response.status === 401
+                        ? "Session expired. Please log in again."
+                        : `Unable to connect. Please try again in a few moments`;
+
+                toast.error(errorMessage, { position: "top-right" });
+                setTimeout(() => router.push("/"), 1000);
             }
         } catch (error) {
             toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+            setTimeout(() => router.push("/"), 1000);
         }
     };
 

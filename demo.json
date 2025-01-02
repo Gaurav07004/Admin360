@@ -1,0 +1,66 @@
+[
+    {
+        "orderID": "AT82913",
+        "customerName": "Amit Kumar",
+        "orderDate": "Dec 01, 2024",
+        "itemName": "Dell Inspiron 15",
+        "cost": 60000,
+        "orderStatus": "Delivered"
+    },
+    {
+        "orderID": "AT82914",
+        "customerName": "Neha Patel",
+        "orderDate": "Dec 02, 2024",
+        "itemName": "Targus Laptop Sleeve",
+        "cost": 700,
+        "orderStatus": "Delivered"
+    },
+    {
+        "orderID": "AT82915",
+        "customerName": "Rohan Sharma",
+        "orderDate": "Dec 03, 2024",
+        "itemName": "Apple IPhone 15",
+        "cost": 55000,
+        "orderStatus": "Pending"
+    },
+    {
+        "orderID": "AT82916",
+        "customerName": "Priya Mehta",
+        "orderDate": "Dec 04, 2024",
+        "itemName": "Samsung Galaxy Watch 5",
+        "cost": 1200,
+        "orderStatus": "Shipped"
+    },
+    {
+        "orderID": "AT82917",
+        "customerName": "Vikram Singh",
+        "orderDate": "Dec 05, 2024",
+        "itemName": "Dell Inspiron 15",
+        "cost": 95000,
+        "orderStatus": "Delivered"
+    },
+    {
+        "orderID": "AT82918",
+        "customerName": "Anjali Desai",
+        "orderDate": "Dec 06, 2024",
+        "itemName": "Dell Inspiron 15",
+        "cost": 2000,
+        "orderStatus": "Delivered"
+    },
+    {
+        "orderID": "AT82919",
+        "customerName": "Rahul Verma",
+        "orderDate": "Dec 07, 2024",
+        "itemName": "Targus Laptop Sleeve",
+        "cost": 45000,
+        "orderStatus": "Pending"
+    },
+    {
+        "orderID": "AT82920",
+        "customerName": "Kavita Joshi",
+        "orderDate": "Dec 08, 2024",
+        "itemName": "Dell Inspiron 15",
+        "cost": 88000,
+        "orderStatus": "Shipped"
+    }
+]

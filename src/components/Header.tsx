@@ -52,9 +52,9 @@ const Header: React.FC = () => {
                     className="relative p-2 bg-gray-50 rounded-md border border-gray-300 dark:border-gray-500 cursor-pointer dark:bg-[#263445]"
                 >
                     {mode === "light" ? (
-                        <PiSunFill className="w-5 h-5 text-yellow-500 animate-icon" />
+                        <PiSunFill className="w-5 h-5 text-yellow-500 animate-zoomIn transition-all" />
                     ) : (
-                        <PiMoonFill className="w-5 h-5 text-white animate-icon" />
+                        <PiMoonFill className="w-5 h-5 text-white animate-zoomIn transition-all" />
                     )}
                 </div>
                 <TfiLayoutLineSolid className="text-xl text-orange-300 rotate-90 dark:text-gray-300" />

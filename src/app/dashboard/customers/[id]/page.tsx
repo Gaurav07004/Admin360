@@ -63,7 +63,7 @@ const CustomerDetailPage: React.FC = () => {
 
         if (!token) {
             toast.error("Authentication is missing. Redirecting to login.", { position: "top-right" });
-            setTimeout(() => router.push("/"), 2000);
+            setTimeout(() => router.push("/"), 1000);
             return;
         }
 
@@ -85,7 +85,7 @@ const CustomerDetailPage: React.FC = () => {
                         ? "Session expired. Please log in again."
                         : `Failed to update status: ${response.statusText}`;
                 toast.error(errorMessage, { position: "top-right" });
-                setTimeout(() => router.push("/"), 2000);
+                setTimeout(() => router.push("/"), 1000);
                 throw new Error(errorMessage);
             }
 
@@ -104,10 +104,10 @@ const CustomerDetailPage: React.FC = () => {
                 const errorMessage =
                     customerResponse.status === 401
                         ? "Session expired. Please log in again."
-                        : `Failed to fetch data: ${customerResponse.statusText}`;
+                        : `Unable to connect. Please try again in a few moments`;
 
                 toast.error(errorMessage, { position: "top-right" });
-                setTimeout(() => router.push("/"), 2000);
+                setTimeout(() => router.push("/"), 1000);
                 throw new Error(errorMessage);
             }
 
@@ -116,8 +116,8 @@ const CustomerDetailPage: React.FC = () => {
             dispatch(setDrawerStatus(false));
 
         } catch (error: any) {
-            toast.error(error.message || "An unexpected error occurred. Redirecting to login.", { position: "top-right" });
-            setTimeout(() => router.push("/"), 2000);
+            toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+            setTimeout(() => router.push("/"), 1000);
             console.error("Error in handleStatusChange:", error);
         }
     };

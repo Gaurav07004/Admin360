@@ -3,6 +3,7 @@
 import React from "react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, Pie, PieChart, Cell } from "recharts";
 import { ChartTooltip, Badge } from "keep-react";
+import json from "../../demo.json"
 import { PiArrowUpRightBold, PiArrowDownRightBold, PiCircleFill } from "react-icons/pi";
 import { TbArrowBadgeUpFilled, TbArrowBadgeDownFilled } from "react-icons/tb";
 import { useSelector } from "react-redux";
@@ -76,7 +77,8 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
     const badgeBackgroundColor = isPositive ? "bg-green-100 dark:bg-green-800" : "bg-red-100 dark:bg-red-800";
     const badgeTextColor = isPositive ? "text-green-600 dark:text-green-400" : "text-red-500 dark:text-red-400";
 
-    const itemCountMap = orders.reduce((acc, product) => {
+    const currentOrders = json;
+    const itemCountMap = currentOrders.reduce((acc, product) => {
         if (acc[product.itemName]) {
             acc[product.itemName]++;
         } else {

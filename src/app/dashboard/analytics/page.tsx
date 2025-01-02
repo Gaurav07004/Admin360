@@ -130,7 +130,7 @@ const Page: React.FC = () => {
 
             if (!token) {
                 toast.error("Authentication is missing. Redirecting to login", { position: "top-right" });
-                setTimeout(() => router.push("/"), 2000);
+                setTimeout(() => router.push("/"), 1000);
                 return;
             }
 
@@ -147,16 +147,17 @@ const Page: React.FC = () => {
                     const errorMessage =
                         response.status === 401
                             ? "Session expired. Please log in again."
-                            : `Failed to fetch data: ${response.statusText}`;
+                            : "Unable to connect. Please try again in a few moments.";
                     toast.error(errorMessage, { position: "top-right" });
+                    setTimeout(() => router.push("/"), 1000);
                     return;
                 }
 
                 const data = await response.json();
                 dispatch(setAddToCart(data));
             } catch (error: any) {
-                toast.error(error.message || "An unexpected error occurred. Redirecting to login.", { position: "top-right" });
-                setTimeout(() => router.push("/"), 2000);
+                toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+                setTimeout(() => router.push("/"), 1000);
                 console.error("Error fetching customer data:", error);
             } finally {
                 dispatch(setLoading(false));

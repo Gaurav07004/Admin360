@@ -5,7 +5,7 @@ const EmptyComponent = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-50">
             <div className="hidden sm-320:block sm-480:block sm-767:block sm-991:block sm-992:hidden text-center">
-                <div className="bg-white rounded-lg p-8">
+                <div className="rounded-lg p-8">
                     <div className="flex justify-center">
                         <Image
                             src="https://staticmania.cdn.prismic.io/staticmania/aa469681-b2d1-4384-a990-91906711a24d_Property+1%3DNight+sky_+Property+2%3DSm.svg"
