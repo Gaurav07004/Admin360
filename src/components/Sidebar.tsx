@@ -18,6 +18,7 @@ import {
 import { CiSettings, CiLogout } from "react-icons/ci";
 import { usePathname } from "next/navigation";
 import { setForm } from "@/redux/slices/commonSlice";
+import { useRouter } from "next/navigation";
 
 const menuConfig = [
     {
@@ -46,6 +47,7 @@ const menuConfig = [
 
 const Sidebar: React.FC = () => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const { accountData } = useSelector((state: RootState) => state.user);
     const pathname = usePathname();
     const fullName = `${accountData?.firstName} ${accountData?.lastName}`;
@@ -107,9 +109,7 @@ const Sidebar: React.FC = () => {
 
                 toast.success("Logout successful! Redirecting to login.", { position: "top-right" });
 
-                setTimeout(() => {
-                    window.location.href = "/";
-                }, 500);
+                setTimeout(() => router.push("/"), 1000);
             } else {
                 const errorData = await response.json();
                 const errorMessage = errorData.message || "Something went wrong. Please try again.";
