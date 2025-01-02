@@ -191,7 +191,7 @@ const productSlice = createSlice({
             state.productMonthlyData = sortedData;
         },
         clearProducts: (state) => {
-            state.products = [];
+            state.formData = initialState.formData;
         },
     },
 });

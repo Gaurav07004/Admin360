@@ -3,7 +3,7 @@
 import React, { useRef, useCallback } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { setProductDrawerStatus, setFiles, setImageUrl, deleteFile, setFormData } from "@/redux/slices/productsSlice";
+import { setProductDrawerStatus, setFiles, setImageUrl, deleteFile, setFormData, clearProducts } from "@/redux/slices/productsSlice";
 import { HiArrowLongRight } from "react-icons/hi2";
 import { Divider, Button } from "keep-react";
 import { Upload, UploadBody, UploadFooter, UploadIcon, UploadText, toast } from 'keep-react';
@@ -76,6 +76,7 @@ const CustomerDetailPage: React.FC = () => {
                 dispatch(deleteFile());
                 dispatch(setProductDrawerStatus(!productDrawerStatus))
                 window.location.reload()
+                dispatch(clearProducts());
             } else {
                 const errorData = await updateResponse.json();
                 toast.error(`Failed to add product: ${errorData.message || "Unknown error"}`, { position: "top-right" });
@@ -111,6 +112,7 @@ const CustomerDetailPage: React.FC = () => {
                         name="productID"
                         value={formData.productID}
                         onChange={handleChange}
+                        autoComplete="off"
                         className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Product ID"
                         required
@@ -124,6 +126,7 @@ const CustomerDetailPage: React.FC = () => {
                         name="productName"
                         value={formData.productName}
                         onChange={handleChange}
+                        autoComplete="off"
                         className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Product Name"
                         required
@@ -137,6 +140,7 @@ const CustomerDetailPage: React.FC = () => {
                         name="category"
                         value={formData.category}
                         onChange={handleChange}
+                        autoComplete="off"
                         className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Category"
                         required
@@ -150,6 +154,7 @@ const CustomerDetailPage: React.FC = () => {
                         name="subcategory"
                         value={formData.subcategory}
                         onChange={handleChange}
+                        autoComplete="off"
                         className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Subcategory"
                         required
@@ -163,6 +168,7 @@ const CustomerDetailPage: React.FC = () => {
                         name="price"
                         value={formData.price}
                         onChange={handleChange}
+                        autoComplete="off"
                         className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Price"
                         required
@@ -176,6 +182,7 @@ const CustomerDetailPage: React.FC = () => {
                         name="stockQuantity"
                         value={formData.stockQuantity}
                         onChange={handleChange}
+                        autoComplete="off"
                         className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Stock Quantity"
                         required
@@ -196,6 +203,7 @@ const CustomerDetailPage: React.FC = () => {
                         name="supplier.name"
                         value={formData.supplier.name}
                         onChange={handleChange}
+                        autoComplete="off"
                         className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Supplier Name"
                         required
@@ -210,6 +218,7 @@ const CustomerDetailPage: React.FC = () => {
                             name="supplier.contact"
                             value={formData.supplier.contact}
                             onChange={handleChange}
+                            autoComplete="off"
                             className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Supplier Contact"
                             required
@@ -223,6 +232,7 @@ const CustomerDetailPage: React.FC = () => {
                             name="supplier.email"
                             value={formData.supplier.email}
                             onChange={handleChange}
+                            autoComplete="off"
                             className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Supplier Email"
                             required
@@ -243,6 +253,7 @@ const CustomerDetailPage: React.FC = () => {
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
+                        autoComplete="off"
                         className="w-full p-2 max-h-24 border-2 dark:border dark:border-gray-500  border-gray-300 dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                         placeholder="Enter Product Description"
                         rows={4}
@@ -258,6 +269,7 @@ const CustomerDetailPage: React.FC = () => {
                             name="tags"
                             value={formData.tags.join(", ")}
                             onChange={(e) => dispatch(setFormData({ ...formData, tags: e.target.value.split(", ") }))}
+                            autoComplete="off"
                             className="w-full p-2  border-2 dark:border border-gray-300 dark:border-gray-500  dark:bg-gray-700  rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Tags"
                             required
@@ -271,6 +283,7 @@ const CustomerDetailPage: React.FC = () => {
                             name="previousCount"
                             value={formData.previousCount}
                             onChange={handleChange}
+                            autoComplete="off"
                             className="w-full p-2 border-2 dark:border dark:border-gray-500  border-gray-300 dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Previous Count"
                             required
@@ -285,6 +298,7 @@ const CustomerDetailPage: React.FC = () => {
                             name="viewsCount"
                             value={formData.viewsCount}
                             onChange={handleChange}
+                            autoComplete="off"
                             className="w-full p-2 border-2 dark:border dark:border-gray-500  border-gray-300 dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Views Count"
                             required
@@ -299,6 +313,7 @@ const CustomerDetailPage: React.FC = () => {
                             name="purchaseCount"
                             value={formData.purchaseCount}
                             onChange={handleChange}
+                            autoComplete="off"
                             className="w-full p-2 border-2 dark:border dark:border-gray-500  border-gray-300 dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Purchase Count"
                             required
@@ -313,6 +328,7 @@ const CustomerDetailPage: React.FC = () => {
                             name="wishlistCount"
                             value={formData.wishlistCount}
                             onChange={handleChange}
+                            autoComplete="off"
                             className="w-full p-2 border-2 dark:border dark:border-gray-500  border-gray-300 dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Wishlist Count"
                             required
@@ -327,6 +343,7 @@ const CustomerDetailPage: React.FC = () => {
                             name="rating"
                             value={formData.rating}
                             onChange={handleChange}
+                            autoComplete="off"
                             className="w-full p-2 border-2 dark:border dark:border-gray-500  border-gray-300 dark:bg-gray-700 rounded-[0.4rem] text-gray-500 dark:text-gray-400 text-[0.75rem] placeholder:text-[0.75rem] focus:outline-none"
                             placeholder="Enter Rating"
                             required

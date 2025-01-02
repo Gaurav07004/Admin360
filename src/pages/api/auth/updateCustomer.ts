@@ -9,6 +9,7 @@ const UpdateAccount = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const { customerID, customerStatus } = req.body;
+    console.log('Request body:', { customerID, customerStatus });
 
     if (!customerID || !customerStatus) {
         return res.status(400).json({ message: 'All fields are required' });
@@ -17,23 +18,20 @@ const UpdateAccount = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         await connectDB();
 
-        const admin = await Customer.findOne({ customerID });
+        const customer = await Customer.findOne({ customerID });
+        console.log('Customer found:', customer);
 
-        if (!admin) {
-            return res.status(403).json({ message: 'Forbidden: Admin not found' });
+        if (!customer) {
+            return res.status(403).json({ message: 'Forbidden: customer not found' });
         }
 
-        const existingCustomer = await Customer.findOne({ customerID });
-        if (existingCustomer && existingCustomer.customerID !== customerID) {
-            return res.status(400).json({ message: 'Email is already in use by another admin' });
-        }
+        customer.customerStatus = customerStatus;
+        await customer.save();
+        console.log('Customer status updated:', customer);
 
-        admin.customerID = customerID;
-        admin.customerStatus = customerStatus;
-
-        await admin.save();
         return res.status(200).json({ message: 'Customer updated successfully' });
     } catch (error) {
+        console.error('Error updating customer status:', error);
         return res.status(500).json({ message: 'Internal Server Error' });
     }
 };

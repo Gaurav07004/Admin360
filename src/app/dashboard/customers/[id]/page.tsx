@@ -3,7 +3,7 @@
 
 import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDrawerStatus, updateCustomerStatus } from "@/redux/slices/customerSlice";
+import { setDrawerStatus, updateCustomerStatus, setCustomer } from "@/redux/slices/customerSlice";
 import { RootState } from "@/redux/store";
 import { HiArrowLongRight } from "react-icons/hi2";
 import { TfiLayoutLineSolid } from "react-icons/tfi";
@@ -58,13 +58,6 @@ const CustomerDetailPage: React.FC = () => {
         dispatch(setDrawerStatus(false));
     };
 
-    // const handleStatusChange = (customerID: string, customerStatus: string) => {
-    //     const newStatus = customerStatus === 'Active' ? 'Inactive' : 'Active';
-    //     dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
-    //     toast.success(`Customer status updated to ${newStatus}.`);
-    //     dispatch(setDrawerStatus(false));
-    // };
-
     const handleStatusChange = async (customerID: string, customerStatus: string) => {
         const token = localStorage.getItem("authToken");
 
@@ -74,6 +67,8 @@ const CustomerDetailPage: React.FC = () => {
             return;
         }
 
+        const newStatus = customerStatus === "Active" ? "Inactive" : "Active";
+
         try {
             const response = await fetch(`/api/auth/updateCustomer`, {
                 method: "PUT",
@@ -81,7 +76,7 @@ const CustomerDetailPage: React.FC = () => {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ customerID, customerStatus }),
+                body: JSON.stringify({ customerID, customerStatus: newStatus }),
             });
 
             if (!response.ok) {
@@ -94,20 +89,39 @@ const CustomerDetailPage: React.FC = () => {
                 throw new Error(errorMessage);
             }
 
-            const newStatus = customerStatus === "Active" ? "Inactive" : "Active";
             dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
             toast.success(`Customer status updated to ${newStatus}.`, { position: "top-right" });
 
+            const customerResponse = await fetch(`/api/auth/customer`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!customerResponse.ok) {
+                const errorMessage =
+                    customerResponse.status === 401
+                        ? "Session expired. Please log in again."
+                        : `Failed to fetch data: ${customerResponse.statusText}`;
+
+                toast.error(errorMessage, { position: "top-right" });
+                setTimeout(() => router.push("/"), 2000);
+                throw new Error(errorMessage);
+            }
+
+            const customerData = await customerResponse.json();
+            dispatch(setCustomer(customerData));
             dispatch(setDrawerStatus(false));
+
         } catch (error: any) {
-            toast.error(
-                error.message || "An unexpected error occurred. Redirecting to login.",
-                { position: "top-right" }
-            );
+            toast.error(error.message || "An unexpected error occurred. Redirecting to login.", { position: "top-right" });
             setTimeout(() => router.push("/"), 2000);
-            console.error("Error updating customer status:", error);
+            console.error("Error in handleStatusChange:", error);
         }
     };
+
 
     const TimelineComponent = () => {
         const currentDateTime = new Date();

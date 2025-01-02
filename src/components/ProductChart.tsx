@@ -59,7 +59,9 @@ const BarChartComponent: React.FC = () => {
                     <span className='text-sm text-[#384B70] flex items-center gap-2'><FaCircle /> Sold</span>
                     <span className='text-sm text-[#D8A25E] flex items-center gap-2'><FaCircle /> Returned</span>
                 </div>
-                <button className="flex items-center py-2 px-5 text-sm text-gray-500 dark:bg-[#263445] dark:text-gray-300 bg-gray-100 rounded-lg hover:bg-gray-100 dark:hover:bg-[#263445] border border-gray-500">Monthly</button>
+                <button className="flex items-center py-2 px-5 text-sm text-gray-500 dark:text-gray-300 bg-gray-100 dark:bg-[#263445] rounded-lg border border-gray-300 dark:border-[#4b5d6a]">
+                    Monthly
+                </button>
             </div>
             <ResponsiveContainer className="mx-auto w-[600px]" height={200}>
                 <BarChart data={reorderedData}>

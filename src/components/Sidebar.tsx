@@ -18,7 +18,6 @@ import {
 import { CiSettings, CiLogout } from "react-icons/ci";
 import { usePathname } from "next/navigation";
 import { setForm } from "@/redux/slices/commonSlice";
-import { clearProducts } from "@/redux/slices/productsSlice";
 
 const menuConfig = [
     {
@@ -104,7 +103,6 @@ const Sidebar: React.FC = () => {
                     role: "",
                     adminID: ""
                 }))
-                dispatch(clearProducts());
                 localStorage.removeItem("authToken");
 
                 toast.success("Logout successful! Redirecting to login.", { position: "top-right" });
