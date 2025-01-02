@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button, Divider, toast } from "keep-react";
@@ -32,13 +33,12 @@ function Profile() {
         const token = localStorage.getItem("authToken");
 
         if (!token) {
-            toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+            toast.error("Authentication is missing. Redirecting to login", { position: "top-right" });
             setTimeout(() => router.push("/"), 2000);
             return;
         }
 
-        const emailIsValid = emailRegex.test(adminData.email || "");
-        if (!emailIsValid) {
+        if (!emailRegex.test(adminData.email || "")) {
             toast.error("Please enter a valid email address.", { position: "top-right" });
             return;
         }
@@ -62,34 +62,45 @@ function Profile() {
                 body: JSON.stringify(adminDetails),
             });
 
-            if (updateResponse.ok) {
-                toast.success("Account updated successfully.", { position: "top-right" });
-                dispatch(deleteFile());
-
-                const fetchResponse = await fetch(`/api/auth/dashboard`, {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
-                if (fetchResponse.ok) {
-                    const updatedData = await fetchResponse.json();
-                    dispatch(setAccountData(updatedData.admin));
-                } else {
-                    const fetchError = await fetchResponse.json();
-                    toast.error(`Failed to fetch updated data: ${fetchError.message || "Unknown error"}`, { position: "top-right" });
-                }
-
-
-            } else {
-                const errorData = await updateResponse.json();
-                toast.error(`Failed to update account: ${errorData.message || "Unknown error"}`, { position: "top-right" });
+            if (!updateResponse.ok) {
+                const errorMessage =
+                    updateResponse.status === 401
+                        ? "Session expired. Please log in again."
+                        : `Failed to update account: ${updateResponse.statusText}`;
+                toast.error(errorMessage, { position: "top-right" });
+                setTimeout(() => router.push("/"), 2000);
+                return;
             }
-        } catch (error) {
-            toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+
+            toast.success("Account updated successfully.", { position: "top-right" });
+            dispatch(deleteFile());
+
+            const fetchResponse = await fetch(`/api/auth/dashboard`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!fetchResponse.ok) {
+                const fetchErrorMessage =
+                    fetchResponse.status === 401
+                        ? "Session expired. Please log in again."
+                        : `Failed to fetch updated data: ${fetchResponse.statusText}`;
+                toast.error(fetchErrorMessage, { position: "top-right" });
+                setTimeout(() => router.push("/"), 2000);
+                return;
+            }
+
+            const updatedData = await fetchResponse.json();
+            dispatch(setAccountData(updatedData.admin));
+        } catch (error: any) {
+            toast.error(error.message || "An unexpected error occurred. Redirecting to login.", { position: "top-right" });
+            setTimeout(() => router.push("/"), 2000);
+            console.error("Error fetching customer data:", error);
         }
     };
+
 
     // const handleUpdate = async () => {
     //     const token = localStorage.getItem("authToken");

@@ -3,7 +3,7 @@ import Image from "next/image";
 import logo from "@/Assets/New_Logo.png";
 import login from "@/Assets/login_1.png";
 import { useRouter } from "next/navigation";
-import { toast } from "keep-react"
+import { toast } from "keep-react";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { GoLock } from "react-icons/go";
 import { IoMailOutline } from "react-icons/io5";
@@ -11,14 +11,23 @@ import { MdErrorOutline } from "react-icons/md";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { setModal, setForm, setEmailStatus, setPasswordStatus, setShowNewPassword, setStatusMessage, setPasswordStatusMessage } from "@/redux/slices/commonSlice";
+import {
+    setModal,
+    setForm,
+    setEmailStatus,
+    setPasswordStatus,
+    setShowNewPassword,
+    setStatusMessage,
+    setPasswordStatusMessage,
+} from "@/redux/slices/commonSlice";
 import ForgotPasswordModal from "@/components/ForgetPassword";
 
 const Login = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{3,}$/;
-    const { modal, form, statusMessage, passwordStatus, passwordStatusMessage, emailStatus, showNewPassword } = useSelector((state: RootState) => state.menu);
+    const { modal, form, statusMessage, passwordStatus, passwordStatusMessage, emailStatus, showNewPassword } =
+        useSelector((state: RootState) => state.menu);
 
     const toggleModal = () => {
         dispatch(setModal(!modal));
@@ -31,25 +40,19 @@ const Login = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
-        if (name === "email") {
-            if (value.trim() === "") {
-                dispatch(setEmailStatus(null));
-            } else {
-                dispatch(setEmailStatus(emailRegex.test(value) ? "valid" : "invalid"));
-            }
-        }
-
         dispatch(setForm({ ...form, [name]: value }));
     };
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!form.email) {
+        if (!form.email || !emailRegex.test(form.email)) {
             dispatch(setEmailStatus("invalid"));
             dispatch(setStatusMessage("Please enter a valid email address."));
         } else {
-            dispatch(setEmailStatus(null));
+            dispatch(setEmailStatus("valid"));
+            dispatch(setStatusMessage(""));
         }
 
         if (!form.password) {
@@ -59,14 +62,12 @@ const Login = () => {
             dispatch(setPasswordStatus(null));
         }
 
-        if (!form.email || !form.password) {
+        if (!form.email || !form.password || !emailRegex.test(form.email)) {
             return;
         }
 
         try {
             const loginData = { email: form.email, password: form.password };
-            // const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
             const response = await fetch(`/api/auth/login`, {
                 method: "POST",
                 headers: {
@@ -96,6 +97,7 @@ const Login = () => {
             toast.error("Unable to connect. Please check your network.", { position: "top-right" });
         }
     };
+
 
     return (
         <>
@@ -131,11 +133,11 @@ const Login = () => {
                                     {emailStatus === "invalid" && <MdErrorOutline className="absolute right-3 top-1/2 transform -translate-y-1/2 text-red-500 w-5 h-5" />}
                                     {emailStatus === "valid" && <AiOutlineCheckCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 text-green-500 w-5 h-5" />}
                                 </div>
-                                {emailStatus === "invalid" ? (
+                                {emailStatus === "invalid" && (
                                     <div className="mt-1 text-[0.8rem] font-medium text-red-500">
                                         {statusMessage}
                                     </div>
-                                ) : null}
+                                )}
                             </section>
 
                             <section className="space-y-2">
@@ -153,15 +155,14 @@ const Login = () => {
                                         autoComplete="off"
                                         className="w-full py-3 pl-10 pr-12 border border-gray-300 rounded-md text-gray-600 placeholder-gray-400 text-sm focus:outline-none"
                                     />
-                                    <div className="text-lg absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700 transition" onClick={toggleShowPassword}>
+                                    <div
+                                        className="text-lg absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700 transition"
+                                        onClick={toggleShowPassword}
+                                    >
                                         {showNewPassword ? <VscEyeClosed className="text-gray-500 text-lg transition ease-in-out" /> : <VscEye className="text-gray-500 text-lg transition ease-in-out" />}
                                     </div>
                                 </div>
-                                {passwordStatus === "invalid" ? (
-                                    <div className="mt-1 text-[0.8rem] font-medium text-red-600">
-                                        {passwordStatusMessage}
-                                    </div>
-                                ) : ""}
+                                {passwordStatus === "invalid" && <div className="mt-1 text-[0.8rem] font-medium text-red-600">{passwordStatusMessage}</div>}
                             </section>
                             <div
                                 className="text-right text-sm text-orange-500 font-medium cursor-pointer mt-2 hover:underline hover:text-orange-600 transition duration-200 ease-in-out"

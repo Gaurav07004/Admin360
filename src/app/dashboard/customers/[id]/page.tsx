@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useRef, useEffect } from "react";
@@ -14,8 +15,11 @@ import { IoMailOutline } from "react-icons/io5";
 import { Timeline, TimelineContent, TimelineItem, TimelinePoint } from "keep-react";
 import empty from '@/Assets/Empty.png';
 import { PiCheckBold } from "react-icons/pi";
+import { useRouter } from "next/navigation";
+
 
 const CustomerDetailPage: React.FC = () => {
+    const router = useRouter();
     const dispatch = useDispatch();
     const { drawerStatus, selectedCustomer } = useSelector((state: RootState) => state.customer);
     const drawerRef = useRef<HTMLDivElement>(null);
@@ -50,6 +54,60 @@ const CustomerDetailPage: React.FC = () => {
         estimatedDelivery: order?.estimatedDelivery,
     })) || [];
 
+    const handleToggle = () => {
+        dispatch(setDrawerStatus(false));
+    };
+
+    // const handleStatusChange = (customerID: string, customerStatus: string) => {
+    //     const newStatus = customerStatus === 'Active' ? 'Inactive' : 'Active';
+    //     dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
+    //     toast.success(`Customer status updated to ${newStatus}.`);
+    //     dispatch(setDrawerStatus(false));
+    // };
+
+    const handleStatusChange = async (customerID: string, customerStatus: string) => {
+        const token = localStorage.getItem("authToken");
+
+        if (!token) {
+            toast.error("Authentication is missing. Redirecting to login.", { position: "top-right" });
+            setTimeout(() => router.push("/"), 2000);
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/auth/updateCustomer`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ customerID, customerStatus }),
+            });
+
+            if (!response.ok) {
+                const errorMessage =
+                    response.status === 401
+                        ? "Session expired. Please log in again."
+                        : `Failed to update status: ${response.statusText}`;
+                toast.error(errorMessage, { position: "top-right" });
+                setTimeout(() => router.push("/"), 2000);
+                throw new Error(errorMessage);
+            }
+
+            const newStatus = customerStatus === "Active" ? "Inactive" : "Active";
+            dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
+            toast.success(`Customer status updated to ${newStatus}.`, { position: "top-right" });
+
+            dispatch(setDrawerStatus(false));
+        } catch (error: any) {
+            toast.error(
+                error.message || "An unexpected error occurred. Redirecting to login.",
+                { position: "top-right" }
+            );
+            setTimeout(() => router.push("/"), 2000);
+            console.error("Error updating customer status:", error);
+        }
+    };
 
     const TimelineComponent = () => {
         const currentDateTime = new Date();
@@ -138,17 +196,6 @@ const CustomerDetailPage: React.FC = () => {
                 }
             </section>
         );
-    };
-
-    const handleToggle = () => {
-        dispatch(setDrawerStatus(false));
-    };
-
-    const handleStatusChange = (customerID: string, customerStatus: string) => {
-        const newStatus = customerStatus === 'Active' ? 'Inactive' : 'Active';
-        dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
-        toast.success(`Customer status updated to ${newStatus}.`);
-        dispatch(setDrawerStatus(false));
     };
 
     const renderCustomerPreview = () => (

@@ -6,7 +6,7 @@ import RightBar from "@/components/rightbar";
 
 function Page() {
     return (
-        <section className="flex gap-4 animate-fadeIn">
+        <section className="flex gap-4">
             <section className="w-[70%] flex flex-col gap-4">
                 <Chart />
                 <RecentOrder />

@@ -21,8 +21,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     useEffect(() => {
         const fetchData = async () => {
             const token = localStorage.getItem("authToken");
+
             if (!token) {
-                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+                toast.error("Authentication is missing. Redirecting to login.", {
+                    position: "top-right",
+                });
                 setTimeout(() => router.push("/"), 2000);
                 return;
             }
@@ -32,13 +35,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 });
 
                 if (!response.ok) {
-                    setTimeout(() => router.push("/"), 1000);
-                    throw new Error(`Failed to fetch data: ${response.statusText}`);
+                    const errorMessage =
+                        response.status === 401
+                            ? "Session expired. Please log in again."
+                            : `Failed to fetch data: ${response.statusText}`;
+
+                    toast.error(errorMessage, { position: "top-right" });
+                    setTimeout(() => router.push("/"), 2000);
+                    throw new Error(errorMessage);
                 }
 
                 const dashboardData = await response.json();
@@ -48,9 +57,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 dispatch(setTopProduct(dashboardData.topProductData));
                 dispatch(setCustomerTraffic(dashboardData.CustomerTrafficData));
             } catch (error: any) {
-                toast.error(error.message || "An unknown error occurred.", { position: "top-right" });
+                console.error("Error fetching dashboard data:", error);
+                toast.error(
+                    error.message || "An unknown error occurred. Please try again later.",
+                    { position: "top-right" }
+                );
                 setTimeout(() => router.push("/"), 1000);
-                console.error("Error fetching data:", error);
             } finally {
                 setIsLoading(false);
             }

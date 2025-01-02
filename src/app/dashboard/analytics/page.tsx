@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useEffect } from "react";
@@ -11,6 +12,7 @@ import OrderStat from "@/components/OrderStatistics";
 import { toast } from "keep-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { useRouter } from "next/navigation";
 import { setAddToCart, setLoading } from "@/redux/slices/commonSlice";
 
 const calculatePercentageChange = (currentValue: number, previousValue: number): string => {
@@ -76,6 +78,7 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
 
 const Page: React.FC = () => {
     const dispatch = useDispatch();
+    const router = useRouter()
     const { loading } = useSelector((state: RootState) => state.menu);
     const { orders } = useSelector((state: RootState) => state.order);
     const { products } = useSelector((state: RootState) => state.product);
@@ -99,7 +102,7 @@ const Page: React.FC = () => {
             id: 2,
             title: "Total Orders",
             value: totalOrders,
-            previousValue: 16,
+            previousValue: 10,
             bgColor: "bg-gradient-to-br from-green-500 to-green-300",
             icon1: <RxCube className="w-[1.2rem] h-[1.2rem] text-white" />,
         },
@@ -107,7 +110,7 @@ const Page: React.FC = () => {
             id: 3,
             title: "Total Products",
             value: totalProducts,
-            previousValue: 8,
+            previousValue: 6,
             bgColor: "bg-gradient-to-br from-orange-500 to-orange-300",
             icon1: <CgNotes className="w-[1.2rem] h-[1.2rem] text-white" />,
         },
@@ -115,7 +118,7 @@ const Page: React.FC = () => {
             id: 4,
             title: "New Customers",
             value: totalCustomers,
-            previousValue: 9,
+            previousValue: 7,
             bgColor: "bg-gradient-to-br from-red-500 to-red-300",
             icon1: <FiUsers className="w-[1.2rem] h-[1.2rem] text-white" />,
         },
@@ -126,10 +129,8 @@ const Page: React.FC = () => {
             const token = localStorage.getItem("authToken");
 
             if (!token) {
-                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
-                setTimeout(() => {
-                    window.location.href = "/";
-                }, 2000);
+                toast.error("Authentication is missing. Redirecting to login", { position: "top-right" });
+                setTimeout(() => router.push("/"), 2000);
                 return;
             }
 
@@ -142,21 +143,29 @@ const Page: React.FC = () => {
                     },
                 });
 
-                if (response.ok) {
-                    const data = await response.json();
-                    dispatch(setAddToCart(data));
-                } else {
-                    toast.error("Failed to fetch data.", { position: "top-right" });
+                if (!response.ok) {
+                    const errorMessage =
+                        response.status === 401
+                            ? "Session expired. Please log in again."
+                            : `Failed to fetch data: ${response.statusText}`;
+                    toast.error(errorMessage, { position: "top-right" });
+                    return;
                 }
-            } catch (error) {
-                toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+
+                const data = await response.json();
+                dispatch(setAddToCart(data));
+            } catch (error: any) {
+                toast.error(error.message || "An unexpected error occurred. Redirecting to login.", { position: "top-right" });
+                setTimeout(() => router.push("/"), 2000);
+                console.error("Error fetching customer data:", error);
             } finally {
                 dispatch(setLoading(false));
             }
         };
 
         fetchData();
-    }, [dispatch]);
+    }, [dispatch, router]);
+
 
     return loading ? (
         <div className="fixed inset-0 flex justify-center items-center bg-white dark:bg-[#263445] z-50">

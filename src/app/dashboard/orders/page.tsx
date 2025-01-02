@@ -89,7 +89,7 @@ const Page: React.FC = () => {
         const fetchData = async () => {
             const token = localStorage.getItem("authToken");
             if (!token) {
-                toast.error("Token not received. Redirecting to login.", { position: "top-right" });
+                toast.error("Authentication is missing. Redirecting to login", { position: "top-right" });
                 setTimeout(() => router.push("/"), 2000);
                 return;
             }
@@ -104,15 +104,23 @@ const Page: React.FC = () => {
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Failed to fetch data: ${response.statusText}`);
+                    const errorMessage =
+                        response.status === 401
+                            ? "Session expired. Please log in again."
+                            : `Failed to fetch data: ${response.statusText}`;
+
+                    toast.error(errorMessage, { position: "top-right" });
+                    setTimeout(() => router.push("/"), 2000);
+                    throw new Error(errorMessage);
                 }
 
                 const orderdata = await response.json();
                 dispatch(setOrder(orderdata.orders));
                 dispatch(setOrderMonthlyData(orderdata.MonthlyOrders))
             } catch (error: any) {
-                toast.error(error.message || "An unknown error occurred.", { position: "top-right" });
-                console.error("Error fetching data:", error);
+                toast.error(error.message || "An unexpected error occurred. Redirecting to login.", { position: "top-right" });
+                setTimeout(() => router.push("/"), 2000);
+                console.error("Error fetching customer data:", error);
             } finally {
                 setIsLoading(false);
             }

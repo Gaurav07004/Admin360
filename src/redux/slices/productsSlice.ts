@@ -169,7 +169,11 @@ const productSlice = createSlice({
             state.selectedProduct = action.payload;
         },
         setProduct: (state, action: PayloadAction<Product[]>) => {
-            state.products = action.payload.sort((a, b) => {
+            const products = action.payload;
+
+            const updatedProducts = updateStockStatus(products);
+
+            state.products = updatedProducts.sort((a, b) => {
                 if (a.productID < b.productID) return -1;
                 if (a.productID > b.productID) return 1;
                 return 0;
@@ -186,8 +190,11 @@ const productSlice = createSlice({
             });
             state.productMonthlyData = sortedData;
         },
+        clearProducts: (state) => {
+            state.products = [];
+        },
     },
 });
 
-export const { updateProductStatus, updateProductStock, setFormData, updateFormData, setFiles, setImageUrl, deleteFile, setDrawerStatus, setSelectedProduct, setProductDrawerStatus, setProduct, setProductMonthlyData } = productSlice.actions;
+export const { updateProductStatus, clearProducts, updateProductStock, setFormData, updateFormData, setFiles, setImageUrl, deleteFile, setDrawerStatus, setSelectedProduct, setProductDrawerStatus, setProduct, setProductMonthlyData } = productSlice.actions;
 export default productSlice.reducer;
