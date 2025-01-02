@@ -96,7 +96,7 @@ const loginAdmin = async (req: NextApiRequest, res: NextApiResponse) => {
             isActive: admin.isActive,
         };
 
-        const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '1h' });
+        const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '50m' });
 
         await sendSuccessLoginEmail('flyease93@gmail.com');
 
