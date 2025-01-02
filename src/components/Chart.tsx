@@ -77,7 +77,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
     const badgeBackgroundColor = isPositive ? "bg-green-100 dark:bg-green-800" : "bg-red-100 dark:bg-red-800";
     const badgeTextColor = isPositive ? "text-green-600 dark:text-green-400" : "text-red-500 dark:text-red-400";
 
-    const currentOrders = json;
+    const currentOrders = orders && orders.length > 0 ? orders : json;
     const itemCountMap = currentOrders.reduce((acc, product) => {
         if (acc[product.itemName]) {
             acc[product.itemName]++;
@@ -194,11 +194,17 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
 const AreaChartComponent: React.FC = () => {
     const { lineChartData } = useSelector((state: RootState) => state.menu);
 
-    const totalRevenue: number = lineChartData?.reduce((acc: number, item: DataPoint) => acc + item.value, 0) || 0;
-    const gainedThisMonth: number = lineChartData?.length > 1 ? lineChartData[lineChartData.length - 1].value - lineChartData[lineChartData.length - 2].value : 0;
+    const currentMonthIndex = new Date().getMonth();
+    const reorderedData = [
+        ...lineChartData.slice(currentMonthIndex + 1),
+        ...lineChartData.slice(0, currentMonthIndex + 1)
+    ];
 
-    const initialPrice = lineChartData?.[0]?.value || 0;
-    const finalPrice = lineChartData?.[lineChartData.length - 1]?.value || 0;
+    const totalRevenue: number = reorderedData?.reduce((acc: number, item: DataPoint) => acc + item.value, 0) || 0;
+    const gainedThisMonth: number = reorderedData?.length > 1 ? reorderedData[reorderedData.length - 1].value - reorderedData[reorderedData.length - 2].value : 0;
+
+    const initialPrice = reorderedData?.[0]?.value || 0;
+    const finalPrice = reorderedData?.[reorderedData.length - 1]?.value || 0;
     const percentageChange = ((finalPrice - initialPrice) / initialPrice) * 100 || 0;
 
     const isPositive = percentageChange >= 0;
@@ -206,12 +212,6 @@ const AreaChartComponent: React.FC = () => {
     const icon = isPositive ? <PiArrowUpRightBold /> : <PiArrowDownRightBold />;
     const badgeBackgroundColor = isPositive ? "bg-green-100 dark:bg-green-800" : "bg-red-100 dark:bg-red-800";
     const badgeTextColor = isPositive ? "text-green-600 dark:text-green-400" : "text-red-500 dark:text-red-400";
-
-    const currentMonthIndex = new Date().getMonth();
-    const reorderedData = [
-        ...lineChartData.slice(currentMonthIndex + 1),
-        ...lineChartData.slice(0, currentMonthIndex + 1)
-    ];
 
     return (
         <>
