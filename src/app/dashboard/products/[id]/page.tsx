@@ -16,6 +16,7 @@ const CustomerDetailPage: React.FC = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const { drawerStatus, productDrawerStatus, selectedProduct } = useSelector((state: RootState) => state.product);
+    const { adminData } = useSelector((state: RootState) => state.user);
     const drawerRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -62,6 +63,11 @@ const CustomerDetailPage: React.FC = () => {
         if (!token) {
             toast.error('Token not found. Redirecting to login.');
             setTimeout(() => router.push('/login'), 1000);
+            return;
+        }
+
+        if (adminData.adminID === 'AD82914') {
+            toast.error("You are not authorized to update this account.", { position: "top-right" });
             return;
         }
 

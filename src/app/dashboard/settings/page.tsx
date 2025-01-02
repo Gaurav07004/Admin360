@@ -52,6 +52,11 @@ function Profile() {
             profileImage: imageUrl,
         };
 
+        if (adminData.adminID === 'AD82914') {
+            toast.error("You are not authorized to update this account.", { position: "top-right" });
+            return;
+        }
+
         try {
             const updateResponse = await fetch(`/api/auth/updateAccount`, {
                 method: "PUT",
@@ -66,7 +71,7 @@ function Profile() {
                 const errorMessage =
                     updateResponse.status === 401
                         ? "Session expired. Please log in again."
-                        : `"Unable to connect. Please try again in a few moments"`;
+                        : "Unable to connect. Please try again in a few moments.";
                 toast.error(errorMessage, { position: "top-right" });
                 setTimeout(() => router.push("/"), 1000);
                 return;
@@ -86,7 +91,7 @@ function Profile() {
                 const fetchErrorMessage =
                     fetchResponse.status === 401
                         ? "Session expired. Please log in again."
-                        : "Unable to connect. Please try again in a few moments";
+                        : "Unable to connect. Please try again in a few moments.";
                 toast.error(fetchErrorMessage, { position: "top-right" });
                 setTimeout(() => router.push("/"), 1000);
                 return;
