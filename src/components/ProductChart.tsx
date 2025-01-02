@@ -33,8 +33,8 @@ const CustomTooltip = ({
 }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-[#333] text-white dark:text-gray-300 p-2 rounded text-sm shadow-lg">
-                <h4 className="font-bold">{payload[0].payload.month}</h4>
+            <div className="bg-teal-700 text-white p-3 rounded text-xs shadow-lg">
+                <h4 className="font-semibold">Month: {payload[0].payload.month}</h4>
                 <p>{`${chartConfig.sold.label}: ${payload[0].payload.sold}`}</p>
                 <p>{`${chartConfig.returned.label}: ${payload[1].payload.returned}`}</p>
             </div>

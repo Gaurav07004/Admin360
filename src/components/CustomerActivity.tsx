@@ -92,16 +92,23 @@ const SalesFunnelChart = () => {
         };
     };
 
-    const CustomTooltip = ({ active, payload }: { active: boolean, payload: any[] }) => {
+    const CustomTooltip = ({ active, payload }: { active: boolean; payload: any[] }) => {
         if (active && payload && payload.length) {
+            const { timeRange, price } = payload[0].payload;
+
+            const formattedPrice = formatNumberWithK(price || 0);
+
             return (
-                <div className={`bg-[#ff6600a9] text-white p-2 rounded text-xs shadow-lg`}>
-                    <p>{`${formatNumberWithK(payload[0].payload.price)}`}</p>
+                <div className="bg-orange-500 text-white p-3 rounded text-xs shadow-lg max-w-[250px]">
+                    <p className="font-semibold">{`Time: ${timeRange}`}</p>
+                    <p>{`Log: ${formattedPrice}`}</p>
                 </div>
             );
         }
+
         return null;
     };
+
 
     return (
         <section className="bg-white dark:bg-[#263445] rounded-[1rem] py-5 px-7 w-full">

@@ -23,12 +23,17 @@ const formatToKOrL = (value: number): string => {
     return value.toString();
 };
 
+function addLeadingZero(num: number): string {
+    return num < 10 ? `0${num}` : `${num}`;
+}
+
 const PieChartTooltip: React.FC<{ payload?: any, active?: boolean }> = ({ payload, active }) => {
     if (active && payload && payload.length) {
         const { name, value } = payload[0];
         return (
-            <div className="bg-[#FF9D3D] text-white p-2 rounded text-sm z-50">
-                <p>{`${name}: ${formatToKOrL(value)}`}</p>
+            <div className="bg-orange-500 text-white p-3 rounded text-xs shadow-lg z-50">
+                <p className="font-semibold">{`Product: ${name}`}</p>
+                <p>{`Count: ${addLeadingZero(value)}`}</p>
             </div>
         );
     }
@@ -38,9 +43,9 @@ const PieChartTooltip: React.FC<{ payload?: any, active?: boolean }> = ({ payloa
 const AreaChartTooltip: React.FC<{ payload?: any, label?: string, active?: boolean }> = ({ payload, label, active }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-[#FF9D3D] text-white p-2 rounded text-sm shadow-lg border-[1.5px] border-[#FF6500]">
-                <p>{label}</p>
-                <p>{`Price: ₹${formatToKOrL(payload[0].value)}`}</p>
+            <div className="bg-orange-500 text-white p-3 rounded text-xs shadow-lg border-[1.5px] border-[#FF6500]">
+                <p className="font-semibold">Month: {label}</p>
+                <p>{`Gained: ₹${formatToKOrL(payload[0].value)}`}</p>
             </div>
         );
     }
@@ -125,7 +130,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                             );
                         })}
                     </div>
-                    <ResponsiveContainer width="100%" height="100%" className="absolute top-2 left-60 flex justify-center items-center">
+                    <ResponsiveContainer width="100%" height="100%" className="z-50 absolute top-2 left-60 flex justify-center items-center">
                         <PieChart>
                             <Pie
                                 cx="50%"

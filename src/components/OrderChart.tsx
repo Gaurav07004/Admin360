@@ -31,8 +31,8 @@ const CustomTooltip = ({
 }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-[#006989] text-white p-2 rounded text-sm shadow-lg">
-                <h4 className="font-bold">{payload[0].payload.month}</h4>
+            <div className="bg-[#006989] text-white p-3 rounded text-xs shadow-lg">
+                <h4 className="font-semibold">Month: {payload[0].payload.month}</h4>
                 <p className="text-white">{`Order Running: ${payload[0].payload.OrderRunning}`}</p>
                 <p className="text-white">{`On Process: ${payload[1].payload.OnProcess}`}</p>
             </div>

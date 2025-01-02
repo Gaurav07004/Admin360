@@ -73,7 +73,7 @@ const loginAdmin = async (req: NextApiRequest, res: NextApiResponse) => {
             isActive: admin.isActive,
         };
 
-        const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '10m' });
+        const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '20m' });
 
         return res.status(200).json({ message: "Login successful", token });
     } catch (error) {

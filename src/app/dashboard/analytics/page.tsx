@@ -33,14 +33,18 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
     const percentageChange = calculatePercentageChange(value, previousValue);
     const isPositive = parseFloat(percentageChange) > 0;
 
-    const formatToKOrL = (value: number): string => {
-        if (value >= 100000) {
-            return `${(value / 100000).toFixed(2)}L`;
-        } else if (value >= 1000) {
-            return `${(value / 1000).toFixed(2)}K`;
+    const formatNumber = (num: number): string => {
+        const formattedNum = num < 10 ? `0${num}` : `${num}`;
+
+        if (num >= 100000) {
+            return `${(num / 100000).toFixed(2)}L`;
+        } else if (num >= 1000) {
+            return `${(num / 1000).toFixed(2)}K`;
         }
-        return value.toString();
+
+        return formattedNum;
     };
+
 
     return (
         <div className="bg-white dark:bg-[#263445] rounded-[1rem] px-6 py-6 flex flex-col gap-4 w-full shadow-xs">
@@ -51,7 +55,7 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ title, value, previousVal
                     </div>
                     <div className="text-gray-700 font-semibold text-lg dark:text-gray-300">{title}</div>
                 </div>
-                <div className="text-gray-800 font-bold text-xl dark:text-gray-400">{formatToKOrL(value)}</div>
+                <div className="text-gray-800 font-bold text-xl dark:text-gray-400">{formatNumber(value)}</div>
             </div>
             <div className="text-gray-600 dark:text-gray-300 text-xs font-semibold mt-3 flex items-center gap-2">
                 <span
