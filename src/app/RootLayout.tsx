@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
     const router = useRouter();
     const [isMobile, setIsMobile] = useState(false);
-    const [initialPath, setInitialPath] = useState<string>('');
+    const [lastPath, setLastPath] = useState<string>('');
 
     const checkScreenSize = () => {
         if (window.innerWidth < 1025) {
@@ -33,20 +33,21 @@ export default function RootLayout({
     }, []);
 
     useEffect(() => {
-        if (!initialPath) {
-            setInitialPath(window.location.pathname);
+        const currentPath = window.location.pathname;
+        if (lastPath !== currentPath) {
+            setLastPath(currentPath);
         }
 
         if (isMobile) {
-            if (window.location.pathname !== "/notFound") {
+            if (currentPath !== "/notFound") {
                 router.push("/notFound");
             }
         } else {
-            if (window.location.pathname === "/notFound" && initialPath !== "/notFound") {
-                router.push(initialPath);
+            if (currentPath === "/notFound" && lastPath !== "/notFound") {
+                router.push(lastPath);
             }
         }
-    }, [isMobile, initialPath, router]);
+    }, [isMobile, lastPath, router]);
 
     return (
         <html lang="en">
