@@ -98,6 +98,7 @@ const CustomerDetailPage: React.FC = () => {
             dispatch(updateCustomerStatus({ customerID, customerStatus: newStatus }));
             toast.success(`Customer status updated to ${newStatus}.`, { position: "top-right" });
 
+            dispatch(setDrawerStatus(false));
             const customerResponse = await fetch(`/api/auth/customer`, {
                 method: "GET",
                 headers: {
@@ -118,7 +119,6 @@ const CustomerDetailPage: React.FC = () => {
             }
 
             const customerData = await customerResponse.json();
-            dispatch(setDrawerStatus(false));
             dispatch(setCustomer(customerData));
 
         } catch (error: any) {
