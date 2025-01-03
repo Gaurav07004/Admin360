@@ -291,7 +291,7 @@ const ForgotPasswordModal = () => {
                             onKeyDown={(e) => handleOtpKeyDown(e, index)}
                             maxLength={1}
                             autoComplete="off"
-                            className="w-12 h-12 p-3 border border-gray-300 dark:border-gray-500 dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 focus:outline-none text-center"
+                            className="w-12 h-15 p-3 border border-gray-300 dark:border-gray-500 dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm placeholder:text-gray-400 focus:outline-none text-center"
                         />
                     ))}
                 </div>
@@ -472,7 +472,7 @@ const ForgotPasswordModal = () => {
         <Modal open={modal}>
             <ModalContent className="w-[35%] max-w-[600px] mx-auto p-6 rounded-xl shadow-lg">
                 <ModalHeader className="relative mb-8 flex flex-col items-center justify-center space-y-4">
-                    <div className="w-5 h-5 bg-white z-50 absolute -top-2 -right-2"></div>
+                    <div className="w-5 h-5 bg-white dark:bg-[#1c222b] z-50 absolute -top-2 -right-2"></div>
                     <div className="flex h-[8.5rem] w-[8.5rem] items-center justify-center rounded-full border border-gray-200 bg-gray-50 ">
                         <Image src={logo} alt="logo" width={120} height={60} objectFit="cover" />
                     </div>
@@ -483,7 +483,7 @@ const ForgotPasswordModal = () => {
                 </ModalHeader>
 
                 {currentSection === 1 && renderEmailSection()}
-                {currentSection === 2 && renderOTPSection()}
+                {currentSection === 1 && renderOTPSection()}
                 {currentSection === 3 && renderPasswordSection()}
                 {currentSection === 4 && renderSuccessSection()}
 

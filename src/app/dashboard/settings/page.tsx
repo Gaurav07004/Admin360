@@ -276,7 +276,6 @@ function Profile() {
                         </section>
                     </form>
                 </section>
-                <ForgetPassword />
                 <section className="w-[30%] mt-4 border border-gray-300 dark:border-gray-500 py-4 px-6 rounded-xl">
                     <div>
                         <p className="text-md font-semibold text-[#5e6574] mb-[0.15rem] dark:text-gray-300">Admin Information</p>
@@ -285,6 +284,7 @@ function Profile() {
                     <Upload />
                 </section>
             </section>
+            <ForgetPassword />
         </div>
     );
 }

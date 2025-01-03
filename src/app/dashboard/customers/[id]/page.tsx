@@ -118,8 +118,8 @@ const CustomerDetailPage: React.FC = () => {
             }
 
             const customerData = await customerResponse.json();
-            dispatch(setCustomer(customerData));
             dispatch(setDrawerStatus(false));
+            dispatch(setCustomer(customerData));
 
         } catch (error: any) {
             toast.error("Unable to connect. Please check your network.", { position: "top-right" });
