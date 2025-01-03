@@ -83,18 +83,13 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
     const badgeTextColor = isPositive ? "text-green-600 dark:text-green-400" : "text-red-500 dark:text-red-400";
 
     const currentOrders = orders && orders.length > 0 ? orders : json;
-    const itemCountMap = currentOrders.reduce((acc, product) => {
-        if (acc[product.itemName]) {
-            acc[product.itemName]++;
-        } else {
-            acc[product.itemName] = 1;
-        }
 
+    const itemCountMap = currentOrders.reduce((acc, product) => {
+        acc[product.itemName] = (acc[product.itemName] || 0) + 1;
         return acc;
     }, {} as Record<string, number>);
 
-
-    const totalOrder = Object.values(itemCountMap).reduce((acc, count) => acc + count, 0)
+    const totalOrder = currentOrders.length;
 
     return (
         <section className="flex justify-start items-center gap-5 w-full">
@@ -102,7 +97,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                 <div className="flex flex-col justify-between w-[75%] relative h-auto min-h-[7.6rem]">
                     <p className="text-lg text-left font-semibold mb-[1.25rem] text-gray-600 dark:text-gray-300">Product Sold</p>
                     <div className="flex flex-wrap items-center gap-2 w-full">
-                        {Object.entries(itemCountMap).map(([itemName]) => {
+                        {Object.entries(itemCountMap).map(([itemName, count]) => {
                             const badgeColor = getBadgeColor(itemName);
 
                             const getBadgeClasses = () => {
@@ -156,6 +151,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                                         <Cell
                                             key={`cell-${index}`}
                                             fill={badgeColor}
+                                            className="border-none"
                                         />
                                     );
                                 })}
@@ -168,7 +164,7 @@ const ProductSold: React.FC<{ totalRevenue: number }> = ({ totalRevenue }) => {
                             {addLeadingZero(totalOrder)}
                         </div>
                         <div className="text-[14px] font-medium text-gray-600 dark:text-gray-300">
-                            Product
+                            Products
                         </div>
                     </div>
                 </div>

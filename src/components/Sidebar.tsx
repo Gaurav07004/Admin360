@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import Link from "next/link";
@@ -8,14 +8,8 @@ import { Divider, toast } from "keep-react";
 import Image from "next/image";
 import logo from "@/Assets/New_Logo.png";
 import profilePic from "@/Assets/Men.jpg";
-import {
-    PiBoundingBoxLight,
-    PiShoppingCartSimpleLight,
-    PiChartLineUpLight,
-    PiCubeLight,
-    PiUsersThreeLight,
-} from "react-icons/pi";
-import { CiSettings, CiLogout } from "react-icons/ci";
+import { PiBoundingBoxLight, PiUser, PiShoppingCartSimpleLight, PiChartLineUpLight, PiCubeLight, PiUsersThreeLight } from "react-icons/pi";
+import { CiLogout } from "react-icons/ci";
 import { usePathname } from "next/navigation";
 import { setForm } from "@/redux/slices/commonSlice";
 import { useRouter } from "next/navigation";
@@ -37,9 +31,9 @@ const menuConfig = [
         ],
     },
     {
-        title: "Account",
+        title: "Settings",
         items: [
-            { name: "Settings", icon: CiSettings, href: "/dashboard/settings" },
+            { name: "Account", icon: PiUser, href: "/dashboard/settings" },
             { name: "Log out", icon: CiLogout, href: "#" },
         ],
     },
@@ -52,12 +46,7 @@ const Sidebar: React.FC = () => {
     const pathname = usePathname();
     const fullName = `${accountData?.firstName} ${accountData?.lastName}`;
 
-    const renderMenuItem = (
-        menu: string,
-        MenuIcon: React.ComponentType<{ className?: string }>,
-        href: string,
-        notification?: number
-    ) => {
+    const renderMenuItem = (menu: string, MenuIcon: React.ComponentType<{ className?: string }>, href: string, notification?: number) => {
         const isActive = pathname === href;
 
         return (
@@ -77,47 +66,34 @@ const Sidebar: React.FC = () => {
                             <MenuIcon className="w-5 h-5" />
                             <span className="ml-2">{menu}</span>
                         </div>
-                        {notification && (
-                            <span className="py-[0.3rem] px-2 text-xs text-white bg-[#ff6600c1] rounded-md">
-                                {notification}
-                            </span>
-                        )}
+                        {notification && <span className="py-[0.3rem] px-2 text-xs text-white bg-[#ff6600c1] rounded-md">{notification}</span>}
                     </div>
                 </Link>
             </li>
         );
     };
 
-    const handleLogout = async (e: React.MouseEvent) => {
-        e.preventDefault();
-
+    const handleLogout = async () => {
         try {
-            const response = await fetch("/api/auth/logout", {
-                method: "POST",
-            });
-
-            if (response.ok) {
-                dispatch(setForm({
+            dispatch(
+                setForm({
                     email: "",
                     password: "",
                     firstName: "",
                     lastName: "",
                     role: "",
-                    adminID: ""
-                }))
-                localStorage.removeItem("authToken");
+                    adminID: "",
+                })
+            );
 
-                toast.success("Logout successful! Redirecting to login.", { position: "top-right" });
+            localStorage.removeItem("authToken");
 
-                setTimeout(() => router.push("/"), 1000);
-            } else {
-                const errorData = await response.json();
-                const errorMessage = errorData.message || "Something went wrong. Please try again.";
-                toast.error(errorMessage, { position: "top-right" });
-            }
+            toast.success("Logout successful! Redirecting to login.", { position: "top-right" });
+
+            await router.replace("/");
         } catch (error) {
-            console.error("An error occurred during logout:", error);
-            toast.error("Unable to connect. Please check your network.", { position: "top-right" });
+            toast.error("An error occurred while logging out. Please try again.", { position: "top-right" });
+            console.error("Logout Error:", error);
         }
     };
 

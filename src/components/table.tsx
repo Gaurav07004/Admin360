@@ -130,7 +130,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ data, columns, caption,
                                     placeholder="Search"
                                     className="outline-none p-2 dark:bg-[#263445] text-gray-400 border border-gray-300 dark:border-gray-500 rounded-md placeholder:text-[0.9rem] w-[15rem] shadow-sm"
                                 />
-                                <div className="absolute right-1 p-[0.4rem] bg-orange-400 rounded-md text-white">
+                                <div className="absolute right-1 p-[0.4rem] rounded-md bg-orange-200 dark:bg-orange-900 text-orange-700 dark:text-orange-200">
                                     <FiSearch className="w-5 h-5" />
                                 </div>
                             </div>
