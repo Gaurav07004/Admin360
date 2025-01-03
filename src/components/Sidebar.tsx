@@ -90,7 +90,7 @@ const Sidebar: React.FC = () => {
 
             toast.success("Logout successful! Redirecting to login.", { position: "top-right" });
 
-            await router.replace("/");
+            setTimeout(() => router.push("/"), 1000);
         } catch (error) {
             toast.error("An error occurred while logging out. Please try again.", { position: "top-right" });
             console.error("Logout Error:", error);
