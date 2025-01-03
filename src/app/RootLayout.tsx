@@ -51,7 +51,7 @@ export default function RootLayout({
 
     return (
         <html lang="en">
-            <body className={`font-sans antialiased h-screen overflow-hidden dark:bg-slate-800`}>
+            <body className={`font-sans antialiased h-screen overflow-hidden bg-[#e9e9e997] dark:bg-slate-800`}>
                 <StoreProvider>
                     <ToastWrapper
                         richColors={false}
