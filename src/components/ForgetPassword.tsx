@@ -483,7 +483,7 @@ const ForgotPasswordModal = () => {
                 </ModalHeader>
 
                 {currentSection === 1 && renderEmailSection()}
-                {currentSection === 1 && renderOTPSection()}
+                {currentSection === 2 && renderOTPSection()}
                 {currentSection === 3 && renderPasswordSection()}
                 {currentSection === 4 && renderSuccessSection()}
 
