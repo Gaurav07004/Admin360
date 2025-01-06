@@ -1,27 +1,28 @@
-# Admin 360 - Administrative Dashboard (h2)
+# Admin 360 - Administrative Dashboard (h3)
 
 Admin 360 is a desktop-only administrative dashboard for managing customer data, orders, products, and analytics. The project leverages Next.js, TypeScript, Tailwind CSS, Redux, and MongoDB to provide real-time data management and dynamic data visualizations.
 
-Key Features
-Dynamic Dashboards: Displays real-time data for customers, orders, and products, providing insights through visualizations such as bar graphs, timelines, and sales funnels.
+# Key Features (h3)
+  1. Dynamic Dashboards: Displays real-time data for customers, orders, and products, providing insights through visualizations such as bar graphs, timelines, and sales funnels.
 
-Admin Authentication & Permissions: Role-based admin authentication with features to update profiles, change passwords, and manage access.
+  2. Admin Authentication & Permissions: Executed role-based access control (RBAC) and secure authentication with JWT to enhance system security.
 
-Advanced Analytics: Implements comprehensive analytics for sales, orders, customer traffic, and product performance.
+  3. Optimized Performance: Utilized server-side rendering (SSR) and static site generation (SSG), improving page load times and SEO.
 
-Dark Mode: Provides a Dark Mode toggle for a customized user experience.
+  4. Efficient Global State Management: Leveraged Redux to optimize data fetching and reduce load times.
 
-Non-Responsive Layout: Restricts access to the dashboard to desktop and laptop devices by implementing a non-responsive design, ensuring optimized viewing on larger screens.
+  5. Dark Mode: Integrated Dark Mode for enhanced user experience, providing seamless theme switching.
 
-Technologies Used
+  6. Non-Responsive Layout: Implemented a non-responsive design to restrict access to the dashboard on desktop and laptop devices, ensuring optimized viewing on larger screens.
+
+# Technologies Used (h3)
 Frontend: Next.js, TypeScript, Tailwind CSS
 Backend: MongoDB (Database)
-State Management: Redux.
+State Management: Redux
 
-Live Demo
-Check out the live demo of the Admin 360 dashboard hosted on Vercel:
-Admin 360 Dashboard
+# Live Demo (h3)
+Check out the live demo of the Admin 360 dashboard hosted on Vercel: https://admin360.vercel.app/
 
-Credentials for Demo
+# Credentials for Demo (h3)
 Email: admin@example.com
 Password: Admin123
