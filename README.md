@@ -1,4 +1,4 @@
-**Admin 360 - Administrative Dashboard**
+# Admin 360 - Administrative Dashboard (h2)
 
 Admin 360 is a desktop-only administrative dashboard for managing customer data, orders, products, and analytics. The project leverages Next.js, TypeScript, Tailwind CSS, Redux, and MongoDB to provide real-time data management and dynamic data visualizations.
 
