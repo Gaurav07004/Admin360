@@ -16,9 +16,11 @@ Admin 360 is a desktop-only administrative dashboard for managing customer data,
   6. Non-Responsive Layout: Implemented a non-responsive design to restrict access to the dashboard on desktop and laptop devices, ensuring optimized viewing on larger screens.
 
 ### Technologies Used
-Frontend: Next.js, TypeScript, Tailwind CSS
-Backend: MongoDB (Database)
-State Management: Redux
+  1. Frontend: Next.js, TypeScript, Tailwind CSS
+     
+  2. Backend: MongoDB (Database)
+  
+  3. State Management: Redux
 
 ### Live Demo
 Check out the live demo of the Admin 360 dashboard hosted on Vercel: https://admin360.vercel.app/
