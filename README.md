@@ -26,6 +26,6 @@ Admin 360 is a desktop-only administrative dashboard for managing customer data,
 Check out the live demo of the Admin 360 dashboard hosted on Vercel: https://admin360.vercel.app/
 
 ### Credentials for Demo
-Email: admin@example.com
+Email: demo@admin360.com
 
-Password: Admin123
+Password: demo@12345
