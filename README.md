@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Admin 360 - Administrative Dashboard
+Admin 360 is a desktop-only administrative dashboard for managing customer data, orders, products, and analytics. The project leverages Next.js, TypeScript, Tailwind CSS, Redux, and MongoDB to provide real-time data management and dynamic data visualizations.
 
-## Getting Started
+Key Features
+Dynamic Dashboards: Displays real-time data for customers, orders, and products, providing insights through visualizations such as bar graphs, timelines, and sales funnels.
 
-First, run the development server:
+Admin Authentication & Permissions: Role-based admin authentication with features to update profiles, change passwords, and manage access.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Advanced Analytics: Implements comprehensive analytics for sales, orders, customer traffic, and product performance.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Dark Mode: Provides a Dark Mode toggle for a customized user experience.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Non-Responsive Layout: Restricts access to the dashboard to desktop and laptop devices by implementing a non-responsive design, ensuring optimized viewing on larger screens.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Technologies Used
+Frontend: Next.js, TypeScript, Tailwind CSS
+Backend: MongoDB (Database)
+State Management: Redux.
 
-## Learn More
+Live Demo
+Check out the live demo of the Admin 360 dashboard hosted on Vercel:
+Admin 360 Dashboard
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Credentials for Demo
+Email: admin@example.com
+Password: Admin123
