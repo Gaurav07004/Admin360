@@ -27,4 +27,5 @@ Check out the live demo of the Admin 360 dashboard hosted on Vercel: https://adm
 
 ### Credentials for Demo
 Email: admin@example.com
+
 Password: Admin123
